@@ -1,0 +1,31 @@
+<div class="m-header">
+    <div @click="logoClick" class="logo">
+        <i class="iconfont logoIcon">&#xe625;</i>
+        <p>抖数科技</p>
+      </div>
+    <el-menu :default-active="activeIndex"
+            class="el-menu-demo" background-color="transparent" text-color="white" active-text-color="white"
+            mode="horizontal"
+            @select="handleSelect" router>
+        <el-menu-item index="1" >词根雷达</el-menu-item>
+        <el-menu-item index="2" >标签实验室</el-menu-item>
+        <el-menu-item index="3" >产品订购</el-menu-item>
+        <el-menu-item index="4" >帮助中心</el-menu-item>
+    </el-menu>
+    <div class="login">
+        <a v-if="!isLogin" @click="resetActiveIndex(0)">登录</a>
+        <a v-if="!isLogin" @click="resetActiveIndex(1)">注册</a>
+        <div class="shopName" v-else>
+          <span>{{name}}</span>
+            <el-dropdown  size="small" @command="loginOut">
+                <span class="el-dropdown-link"><i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item command="退出登录">退出登录</el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+        </div>
+
+    </div>
+    <input style="display:none;" id="taobao-extension-data" @change="getTaobaoData" />
+</div>

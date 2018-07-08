@@ -1,0 +1,52 @@
+<div class="d-container">
+    <div class="d-login">
+        <div class="r-header">
+          <div>
+              <i class="iconfont logo">&#xe625;</i>
+          </div>
+          <h1 v-if="active === 0">登录抖数账号</h1>
+          <h1 v-else-if="active === 1">登录淘宝账号</h1>
+          <h1 v-else="active === 2">店铺名称</h1>
+        </div>
+        <div class="r-content">
+          <div v-if="active === 0" class="wrapBox" style="height: 270px; margin-top: 15px;">
+              <div class="box">
+                  <span class="same"><i class="iconfont iconDec">&#xe618;</i></span>
+                  <el-input class="phones" placeholder="手机号码" v-model="vipName">
+                  </el-input>
+              </div>
+              <div class="box">
+                  <span class="same"><i class="iconfont iconDec">&#xe62d;</i></span>
+                  <el-input placeholder="密码" v-model="vipPwd">
+                  </el-input>
+              </div>
+              <div class="boxS">
+                <p>
+                    <el-checkbox label="自动登录"></el-checkbox>
+                    <span  class="registerAndForget"><router-link  to="/register">注册抖数账号</router-link> | <router-link to="/forgetPassword">忘记密码?</router-link></span>
+                </p>
+              </div>
+              <div class="boxS">
+                  <el-button style="width: 100%;" type="primary">登录抖数账号</el-button>
+              </div>
+          </div>
+          <div v-if="active === 1" class="wrapBox" style="height: 170px; margin-top: 100px;">
+            <div class="boxS">
+                <el-button v-if="!taobaoLoading" type="primary" size="medium" @click="loginToTaobao">去登录</el-button>
+                <el-button v-else type="primary" size="medium" :loading="taobaoLoading">登录中</el-button>
+            </div>
+          </div>
+          <div v-if="active === 2" class="wrapBox" style="height: 200px; margin-top: 50px;">
+            <div class="box">
+              <span class="same"><i class="iconfont iconDec">&#xe627;</i></span>
+              <el-input disabled v-model="taobaoName">
+              </el-input>
+            </div>
+            <div class="boxS">
+              <el-button size="medium" type="primary" @click="bindTaobao">完 成</el-button>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+

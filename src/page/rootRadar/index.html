@@ -1,0 +1,104 @@
+<div class="root-radar">
+  <div class="aside">
+    <div class="goodsInfo">
+      <!-- 图片，暂时用div代替 -->
+      <div class="imgShow"></div>
+      <div class="pricedate">
+        <!-- goodsPrice -->
+        <p class="priceP">价格：123</p>
+        <p>上架时间：</p>
+        <!-- putawayDate -->
+        <p>2018-08-08</p>
+        <!-- putawayDetailDate -->
+        <p>08:08:03</p>
+      </div>
+    </div>
+    <p>这是商品名称</p>
+
+    <el-button type="primary">添加商品监控</el-button>
+        <el-autocomplete
+        class="searchMonitoring"
+        v-model="state4"
+        prefix-icon="el-icon-search"
+        :fetch-suggestions="querySearchAsync"
+        placeholder="请输入内容"
+        @select="handleSelect"
+      >
+    </el-autocomplete>
+    <div class="goodsList">
+      <!-- flex布局 -->
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <el-button style="width: 100%;" type="primary">订购额度</el-button>
+    <div class="limit">
+      您还剩余<em> 8个 </em>额度～
+    </div>
+  </div>
+  <div class="content">
+      <!-- <el-card shadow="hover">
+          <div class="wrap-title" v-loading="searchLoading">
+              <span v-if="isShow">
+                  <span class="u-pic2 ml10"><img :src="goodsUrl" /></span>
+                  <span class="u-title">{{goodsTitle}}</span>
+                  <i v-if="!isCollect" class="iconfont icon-guanzhu u-sc" @click="collect"></i>
+                  <i v-else class="iconfont icon-guanzhu1 u-sc" @click="cancelCollect"></i>
+              </span>
+              <div class="m-select">
+                  <el-dropdown size="small" @command="chooseZd">
+                      <span class="el-dropdown-link">
+                          {{czd}}<i class="el-icon-arrow-down el-icon--right"></i>
+                      </span>
+                      <el-dropdown-menu slot="dropdown">
+                          <el-dropdown-item command="全部终端">全部终端</el-dropdown-item>
+                          <el-dropdown-item command="移动端">移动端</el-dropdown-item>
+                          <el-dropdown-item command="PC端">PC端</el-dropdown-item>
+                      </el-dropdown-menu>
+                  </el-dropdown>
+                  <el-dropdown size="small" class="ml20" trigger="hover" :hide-on-click="true" @command="chooseDate">
+                      <span class="el-dropdown-link">
+                          {{turnNealDay}}<i class="el-icon-arrow-down el-icon--right"></i>
+                      </span>
+                      <el-dropdown-menu slot="dropdown">
+                          <el-dropdown-item :command="`最近1天${oneDay}`">
+                              <span class="m-time-dropDown">最近1天<span class="time">{{oneDay}}</span></span>
+                          </el-dropdown-item>
+                          <el-dropdown-item :command="`最近7天${sevenDay}`">
+                              <span class="m-time-dropDown">最近7天<span class="time">{{sevenDay}}</span></span>
+                          </el-dropdown-item>
+                          <el-dropdown-item :command="`最近30天${thirtyDay}`">
+                              <span class="m-time-dropDown">最近30天<span class="time">{{thirtyDay}}</span></span>
+                          </el-dropdown-item>
+                          <el-dropdown-item command="自定义" divided>
+                              <span class="m-time-dropDown">自定义
+                                  <span class="time">
+                                      <el-date-picker
+                                          v-model="customTime"
+                                          type="daterange"
+                                          class="m-datepicker"
+                                          size="mini"
+                                          format="yyyy-MM-dd"
+                                          value-format="yyyy-MM-dd"
+                                          range-separator="至"
+                                          start-placeholder="开始日期"
+                                          end-placeholder="结束日期">
+                                      </el-date-picker>
+                                  </span>
+                              </span>
+                          </el-dropdown-item>
+                      </el-dropdown-menu>
+                  </el-dropdown>
+              </div>
+          </div>
+      </el-card> -->
+    </div>
+</div>

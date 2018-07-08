@@ -1,0 +1,250 @@
+<div class="m-tool">
+    <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb-item>易数工具</el-breadcrumb-item>
+        <el-breadcrumb-item>词根雷达</el-breadcrumb-item>
+    </el-breadcrumb>
+    <div class="wrap-search">
+        <div class="mb10">
+            <el-input class="u-search" v-model="searchInput" placeholder="请输入商品URL或商品ID">
+                <i slot="prefix" class="el-icon-search"></i>
+            </el-input>
+            <el-button type="primary" @click="searchGoods(searchInput)">搜 索</el-button>
+        </div>
+        <div class="wrap-pic">
+            <label>重点关注：</label>
+            <ul class="clearfix">
+                <li v-for="(item, index) in focusOn" :key="index">
+                    <el-popover
+                        placement="bottom"
+                        title=""
+                        width="200"
+                        trigger="hover"
+                        :content="item.name">
+                        <span class="u-pic" slot="reference" @click="searchGoods(item.itemId)"><img :src="item.image" /></span>
+                    </el-popover>
+                </li>
+            </ul>
+        </div>
+        <div class="wrap-pic">
+            <label>最近浏览：</label>
+            <ul class="clearfix">
+                <li v-for="(item, index) in recentBrowse" :key="index">
+                    <el-popover
+                        placement="bottom"
+                        title=""
+                        width="200"
+                        trigger="hover"
+                        :content="item.name">
+                        <span class="u-pic" slot="reference" @click="searchGoods(item.itemId)"><img :src="item.image" /></span>
+                    </el-popover>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <el-card shadow="hover">
+        <div class="wrap-title" v-loading="searchLoading">
+            <span v-if="isShow">
+                <span class="u-pic2 ml10"><img :src="goodsUrl" /></span>
+                <span class="u-title">{{goodsTitle}}</span>
+                <i v-if="!isCollect" class="iconfont icon-guanzhu u-sc" @click="collect"></i>
+                <i v-else class="iconfont icon-guanzhu1 u-sc" @click="cancelCollect"></i>
+            </span>
+            <div class="m-select">
+                <el-dropdown size="small" @command="chooseZd">
+                    <span class="el-dropdown-link">
+                        {{czd}}<i class="el-icon-arrow-down el-icon--right"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item command="全部终端">全部终端</el-dropdown-item>
+                        <el-dropdown-item command="移动端">移动端</el-dropdown-item>
+                        <el-dropdown-item command="PC端">PC端</el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+                <el-dropdown size="small" class="ml20" trigger="hover" :hide-on-click="true" @command="chooseDate">
+                    <span class="el-dropdown-link">
+                        {{turnNealDay}}<i class="el-icon-arrow-down el-icon--right"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item :command="`最近1天${oneDay}`">
+                            <span class="m-time-dropDown">最近1天<span class="time">{{oneDay}}</span></span>
+                        </el-dropdown-item>
+                        <el-dropdown-item :command="`最近7天${sevenDay}`">
+                            <span class="m-time-dropDown">最近7天<span class="time">{{sevenDay}}</span></span>
+                        </el-dropdown-item>
+                        <el-dropdown-item :command="`最近30天${thirtyDay}`">
+                            <span class="m-time-dropDown">最近30天<span class="time">{{thirtyDay}}</span></span>
+                        </el-dropdown-item>
+                        <el-dropdown-item command="自定义" divided>
+                            <span class="m-time-dropDown">自定义
+                                <span class="time">
+                                    <el-date-picker
+                                        v-model="customTime"
+                                        type="daterange"
+                                        class="m-datepicker"
+                                        size="mini"
+                                        format="yyyy-MM-dd"
+                                        value-format="yyyy-MM-dd"
+                                        range-separator="至"
+                                        start-placeholder="开始日期"
+                                        end-placeholder="结束日期">
+                                    </el-date-picker>
+                                </span>
+                            </span>
+                        </el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+            </div>
+        </div>
+    </el-card>
+    <el-card v-if="isShow" class="box-card mt20" shadow="hover" v-loading="singleItemLoading">
+        <div slot="header" class="clearfix">
+            <span>单品整体分析</span>
+        </div>
+        <div v-if="checkboxListFlag" class="m-checkbox-tip">最多选择2项</div>
+        <el-checkbox-group v-model="checkList" :min="1" :max="2" @change="changeCheckList">
+            <el-checkbox v-for="(item, index) in checkListGroup" :key="index"
+                :label="item.label" :disabled="item.disabled" @click.native="checkCheckbox">
+            </el-checkbox>
+        </el-checkbox-group>
+        <lineChart chart-id="lineChart" height="300"
+                   :chart-data="singleChartsData">
+        </lineChart>
+    </el-card>
+    <el-card v-if="isShow" class="box-card mt20" shadow="hover">
+        <div slot="header" class="clearfix">
+            <span>单品词根分析</span>
+        </div>
+        <div class="u-root">
+            <span class="ml10" v-for="(item, index) in root" :key="index">{{item.root}}</span>
+        </div>
+        <div class="mb20">
+            <span>排序字段：</span>
+            <el-dropdown size="small" @command="choosePxzd">
+                <span class="el-dropdown-link">
+                    {{pxzd}}<i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item command="标题分词排序">标题分词排序</el-dropdown-item>
+                    <el-dropdown-item command="效率分">效率分</el-dropdown-item>
+                    <el-dropdown-item command="竞争度">竞争度</el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+        </div>
+        <div v-if="checkboxList2Flag" class="m-checkbox-tip">最多选择2项</div>
+        <el-checkbox-group v-model="checkList2" :min="1" :max="2">
+            <el-checkbox label="直通车花费" @click.native="checkCheckbox2"></el-checkbox>
+            <el-checkbox label="直通车访客数" @click.native="checkCheckbox2"></el-checkbox>
+            <el-checkbox label="自然搜索访客数" @click.native="checkCheckbox2"></el-checkbox>
+            <el-checkbox label="直通车转化率" @click.native="checkCheckbox2"></el-checkbox>
+            <el-checkbox label="自然搜索转化率" @click.native="checkCheckbox2"></el-checkbox>
+            <el-checkbox label="直通车成交量" @click.native="checkCheckbox2"></el-checkbox>
+            <el-checkbox label="自然搜索成交量" @click.native="checkCheckbox2"></el-checkbox>
+        </el-checkbox-group>
+        <div v-for="(item, index) in wrapData" :key="index"
+             class="m-box" @mouseenter="enter(index)" @mouseleave="leave(index)">
+            <div class="clearfix">
+                <div class="left">
+                    <h2>{{item.root}}</h2>
+                    <p><label>大盘展现指数：</label>{{item.grailRevel}}</p>
+                    <p><label>较上一周涨幅：</label>{{item.grailIncrease}}</p>
+                    <p><label>效率分：</label>{{item.efficiency}}</p>
+                    <p><label>竞争度：</label>{{item.competition}}</p>
+                </div>
+                <div class="right">
+                    <div class="right-in">
+                        <lineChart :chart-id="`lineChart-${index}`" height="200"
+                                   :chart-data="item.rootChartsData">
+                        </lineChart>
+                    </div>
+                </div>
+            </div>
+            <div class="operater">
+                <b>操作：</b>
+                <span @click="lookTableData(index)">
+                    查看表格数据
+                    <i v-if="!item.lookTableVisible" class="el-icon-caret-bottom"></i>
+                    <i v-else class="el-icon-caret-top"></i>
+                </span>
+                <span @click="comparedData(index)">
+                    同词根宝贝对比
+                    <i v-if="!item.comparedVisible" class="el-icon-caret-bottom"></i>
+                    <i v-else class="el-icon-caret-top"></i>
+                </span>
+                <span @click="lookWordAnalysis(index)">
+                    相关搜索词分析
+                    <i v-if="!item.wordAnalysisVisible" class="el-icon-caret-bottom"></i>
+                    <i v-else class="el-icon-caret-top"></i>
+                </span>
+            </div>
+            <transition name="down">
+                <div v-if="item.lookTableVisible" class="u-border">
+                    <toolTableData :table-data="item.tableData" :loading="item.loading"></toolTableData>
+                    <!-- <pagination :page-size="item.tablePage.pageSize"
+                                :current-page="item.tablePage.currentPage"
+                                :total-records="item.tablePage.totalRecords"
+                                :index="index"
+                                @currentChange="handleCurrentChange">
+                    </pagination> -->
+                </div>
+                <div v-if="item.wordAnalysisVisible" class="u-border">
+                    <toolAnalysisData :word-data="item.wordData" :loading="item.loading"></toolAnalysisData>
+                    <pagination :page-size="item.wordPage.pageSize"
+                                :current-page="item.wordPage.currentPage"
+                                :total-records="item.wordPage.totalRecords"
+                                :index="index"
+                                @currentChange="handleCurrentChange2">
+                    </pagination>
+                </div>
+                <div v-if="item.comparedVisible" class="same u-border">
+                    <toolComparedData :index="index"
+                                      :compared-data="item.comparedData"
+                                      :loading="item.loading"
+                                      :root="item.root"
+                                      :grail-revel="item.grailRevel"
+                                      :check-list2="checkList2"
+                                      @checkList="subInfoGetData">
+                    </toolComparedData>
+                    <pagination :page-size="item.comparedPage.pageSize"
+                                :current-page="item.comparedPage.currentPage"
+                                :total-records="item.comparedPage.totalRecords"
+                                :index="index"
+                                @currentChange="handleCurrentChange3">
+                    </pagination>
+                </div>
+            </transition>
+            <i v-if="item.deleteFlag" class="el-icon-circle-close i-close" @click="deleteData(index, item.id)"></i>
+        </div>
+        <div v-loading="itemLoading" style="height:100px;"></div>
+        <div class="add-world mb20">
+            <p @click="addWord">+</p>
+            <span>添加自定义词根</span>
+        </div>
+    </el-card>
+    <div v-else class="u-init-tip"><span>请先选择某一商品，才能进行词根雷达分析</span></div>
+    <!-- 添加自定义词根弹框 -->
+    <el-dialog
+        title="添加自定义词根"
+        :visible.sync="addWorldVisible"
+        width="500">
+        <el-input v-model="wordInput" placeholder="请输入自定义词根"></el-input>
+        <span slot="footer" class="dialog-footer">
+            <el-button @click="addWorldVisible = false">取 消</el-button>
+            <el-button type="primary" @click="saveAddWord">确 定</el-button>
+        </span>
+    </el-dialog>
+    <!-- 检测是否登录过期弹框 -->
+    <el-dialog
+        title="温馨提示"
+        :visible.sync="taobaoLoginVisible"
+        :close-on-click-modal="false"
+        width="500">
+        <p v-if="!dataSearchFlag" style="text-align:center;">正在准备数据，请稍等</p>
+        <p v-else style="text-align:center;">淘宝登陆已失效，为保障产品能正常使用，请前往登陆!</p>
+        <span v-if="dataSearchFlag" slot="footer" class="dialog-footer">
+            <!-- <el-button @click="taobaoLoginVisible = false">取 消</el-button> -->
+            <el-button v-if="!taobaoLoading" type="primary" @click="loginToTaobao">去登陆</el-button>
+            <el-button v-else type="primary" size="medium" :loading="taobaoLoading">登录中</el-button>
+        </span>
+    </el-dialog>
+    <backTop></backTop>
+</div>

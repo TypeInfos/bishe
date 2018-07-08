@@ -1,0 +1,102 @@
+.m-header{
+  background:linear-gradient(-90deg,rgba(22,69,125,1),rgba(24,136,163,1));
+  height: 50px;
+  .logo{
+    width: 150px;
+    height: 100%;
+    float: left;
+    .logoIcon{
+      margin-left: 20px;
+      font-size: 35px;
+      color: #1CCADA;
+      line-height: 50px;
+      float: left;
+    }
+    p{
+      float: left;
+      margin-left: 10px;
+      font-size: 15px;
+      color: white;
+      line-height: 50px;
+    }
+  }
+  .logo:hover{
+    cursor: pointer;
+  }
+  .login{
+    float: right;
+    font-size: 16px;
+    margin-top: 14px;
+    margin-right: 20px;
+    .shopName{
+      span{
+        color: rgba(235, 235, 235, 0.9);
+      }
+    }
+    a{
+      color: #fff;
+      margin-right: 10px;
+      cursor: pointer;
+      &:hover{
+        color: #eee;
+      }
+    }
+    .el-dropdown{
+      // font-size:12px;
+      cursor: pointer;
+      color:#fff;
+    }
+  }
+
+  .el-menu--horizontal>.el-menu-item{
+    height: 50px;
+    line-height: 50px;
+  }
+  .el-menu-demo{
+    display: inline-block;
+  }
+  .el-menu--horizontal{
+    border: none;
+  }
+  .el-menu--horizontal>.el-submenu .el-submenu__title{
+    height: 50px;
+    line-height: 50px;
+  }
+  .el-submenu__title i{
+    color: #fff;
+  }
+  .el-menu--horizontal>.el-submenu.is-active .el-submenu__title{
+    border-bottom-color: #ffd04b !important;
+  }
+}
+.el-menu--horizontal{
+  border-bottom: none !important;
+}
+.el-menu--popup{
+  background:#fff !important;
+  padding: 5px !important;
+  .submenu{
+    width: 350px;
+    min-height: 180px;
+    background: #fff;
+    .el-menu-item{
+      background: #fff !important;
+      color: #333 !important;
+      font-size: 12px;
+      float: left;
+      .new-tip{
+        margin-left: 4px;
+        background: #00C09C;
+        color: #fff;
+        padding: 2px 4px;
+        border-radius: 2px;
+        font-size: 12px;
+        transform: scale(0.8);
+        display: inline-block;
+        height: 15px;
+        line-height: 17px;
+        width: 11px;
+      }
+    }
+  }
+}
