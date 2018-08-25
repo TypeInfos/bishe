@@ -1209,7 +1209,7 @@ export default {
       this.$axios.post(this.$api.tagScore, param)
         .then((res) => {
           this.tagScore = Number(res.data.score);
-          this.tagScore = Number(50); // 测试笑脸专用
+          //this.tagScore = Number(50); // 测试笑脸专用
           document.querySelector('.bgcolor').style.height = `${this.tagScore}%`;
         });
     },

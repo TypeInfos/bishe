@@ -83,7 +83,7 @@
             // 执行完一次后delay秒后才能再执行一次
             fn.canRun = true;
         }, delay)
-    },
+      },
       turnMyDate(str) {
         str = parseInt(str);
         if (str != "" || str != null) {
@@ -178,6 +178,10 @@
     mounted() {
       // console.log(this.focusOn)
       window.addEventListener('scroll', this.handleScroll)
+    },
+    beforeDestroy() {
+      //一定要在Destroy时或者之前，移除scroll的监听
+      window.removeEventListener('scroll', this.handleScroll)
     },
     watch: {
       focusOn(val) {
