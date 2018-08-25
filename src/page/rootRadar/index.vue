@@ -334,9 +334,11 @@
         let ele = document.querySelector('.card');
         let originalStyle = window.getComputedStyle(ele);
         if (scrollTop > 93.6) {
-          ele.style.position = 'fixed';
-          ele.style.width = 'calc(100% - 497px)';
-          ele.style.margin = '-80px 0 0 0';
+          ele.style.position = 'sticky';
+          ele.style.top = `${scrollTop-60}px`;
+          // ele.style.position = 'fixed';
+          // ele.style.width = 'calc(100% - 497px)';
+          // ele.style.margin = '-80px 0 0 0';
         } else {
           ele.style = originalStyle;
         }
@@ -1233,6 +1235,7 @@
         this.showTableDataDialog = true;
         this.tableData = this.wrapData[index].tableData;
         this.totalData = this.wrapData[index].totalData;
+        console.log(this.wrapData);
       },
       // 词根分析 递归获取词根数据
       getRootData(root) {
@@ -1243,6 +1246,9 @@
             const frontData = this.turnEndDataToJson(res.data.list);
             const rootChartsData = this.turnData(this.checkList2, frontData, this.checkListGroup2);
             let newRoot = Object.assign([], root);
+            console.log("----------------frontData---------------");
+            console.log(frontData);
+            console.log("-------------------End-------------------");
             newRoot.splice(0, 1);
             if (this.wrapData.length < 3) {
               this.rootAnalysisCompleteLoading = false;
@@ -1301,7 +1307,7 @@
               totalzCost: frontData.total.zCost, // 总的 直通车花费
               totalnUv: frontData.total.nUv, // 总的 自然搜索访客数
               rootChartsData,
-              tableData: res.data,
+              tableData: res.data.list,
               rootName: res.data.rootName,
               id: res.data.id, //  词根id
               efficiency: res.data.efficiency, // 效率分
@@ -1335,13 +1341,15 @@
               loading: false,
               deleteFlag: false,
               rootChartsData,
-              tableData: res.data,
+              tableData: res.data.list,
               totalzCost: frontData.total.zCost,
               totalnUv: frontData.total.nUv,
               rootName: res.data.rootName,
               id: res.data.id, //  词根id
               efficiency: res.data.efficiency, // 效率分
               singleRootData: frontData, // 单条词根数据
+              totalData:frontData.total,
+              
             };
             if (this.wrapData.length < 4) {
               this.wrapData.splice(0, 0, temp);
@@ -1373,13 +1381,14 @@
               loading: false,
               deleteFlag: false,
               rootChartsData,
-              tableData: res.data,
+              tableData: res.data.list,
               totalzCost: frontData.total.zCost,
               totalnUv: frontData.total.nUv,
               rootName: res.data.rootName,
               id: res.data.id, //  词根id
               efficiency: res.data.efficiency, // 效率分
               singleRootData: frontData, // 单条词根数据
+              totalData:frontData.total
             };
             if (this.wrapData.length < 4) {
               this.wrapData.splice(0, 0, temp);

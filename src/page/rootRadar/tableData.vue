@@ -70,7 +70,7 @@
 
 <script>
   export default {
-    props: ["tableData", "totalData"],
+    props: ["tableData", "totalData"],
     methods: {
       getSummaries(param) {
         const {
