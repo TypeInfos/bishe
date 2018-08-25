@@ -131,6 +131,4 @@ export default {
 };
 </script>
 <style lang="less">
-    .m-table-data{
-    }
 </style>

@@ -51,6 +51,7 @@
         }
         .contentPlan{
           padding-left: 20px !important;
+          font-size: 12px;
         }
       }
       .planSelect{
@@ -176,12 +177,13 @@
     }
     .groupAnalyze{
       .dialogButton{
-        width: 80%;
+        width: 60%;
         min-width: 550px;
         display: flex;
         justify-content: space-between;
         margin-bottom: 10px;
         button{
+          font-size: 12px;
           padding: 11px 16px;
         }
       }
@@ -226,6 +228,7 @@
           }
         }
         .groupBody{
+          font-size: 12px;
           .cell{
             text-align: center;
           }
@@ -471,14 +474,18 @@
       height: 25px;
       line-height: 25px;
     }
+    .checkedBox{
+      overflow-y: auto;
+      max-height: 245px;
+    }
     .checkedDiv{
       background: #fff;
-    border: 1px dotted #979797;
-    margin: 0 0 7px;
-    padding: 0 15px;
-    width: 110px;
-    height: 25px;
-    line-height: 25px;
+      border: 1px dotted #979797;
+      margin: 0 0 7px;
+      padding: 0 15px;
+      width: 110px;
+      height: 25px;
+      line-height: 25px;
     }
   }
   .confirm{
@@ -489,6 +496,13 @@
     margin-right: 80px;
     button{
       padding: 11px 16px;
+    }
+    .checkList-cancel{
+      @cancle();
+    }
+
+    .checkList-confirm{
+      @confirm();
     }
   }
 }
@@ -538,7 +552,6 @@
         .myDefinedP{
           margin-top: 20px;
           margin-bottom: 14px;
-          marb
           .el-input{
             width: 180px;
             input{
@@ -577,10 +590,13 @@
               .el-input__suffix-inner{
                 .el-input__icon{
                   line-height: 30px;
+                  .el-icon-circle-close 
+                  {
+                    .is-show-close{
+                      line-height: 50px;
+                    }
+                  }
                 }
-                // .el-icon-circle-close{
-                //   line-height: 30px;
-                // }
               }
             }
           }
@@ -589,29 +605,15 @@
       .btnCancel{
         border-radius: 4px;
         padding: 0 16px; //宽度由padding左右16px决定
-        height: 36px;
-        font-size: 12px;
-        background: @white;
-        color: @green;
+        @cancle();
         border:1px solid @green;
-      }
-      .btnCancel:hover{
-        background: @green;
-        color: @white;
       }
       .btnConfirm{
         border-radius: 4px;
         padding: 0 16px; //宽度由padding左右16px决定
-        height: 36px;
-        font-size: 12px;
-        background: @green;
-        color: @white;
+        @confirm();
         border:1px solid @green;
         margin-left: 53px;
-        &:hover{
-          background: @white;
-          color: @green;
-        }
       }
     }
   }
@@ -684,29 +686,15 @@
       .btnCancel{
         border-radius: 4px;
         padding: 0 16px; //宽度由padding左右16px决定
-        height: 36px;
-        font-size: 14px;
-        background: @white;
-        color: @green;
+        @cancle();
         border:1px solid @green;
-      }
-      .btnCancel:hover{
-        background: @green;
-        color: @white;
       }
       .btnConfirm{
         border-radius: 4px;
         padding: 0 16px; //宽度由padding左右16px决定
-        height: 36px;
-        font-size: 14px;
-        background: @green;
-        color: @white;
+        @confirm();
         border:1px solid @green;
         margin-left: 53px;
-      }
-      .btnConfirm:hover{
-        background:@green;
-        color: @white;
       }
     }
   }
@@ -823,29 +811,15 @@
       .btnCancel{
         border-radius: 4px;
         padding: 0 16px; //宽度由padding左右16px决定
-        height: 36px;
-        font-size: 14px;
-        background: @white;
-        color: @green;
+        @cancle();
         border:1px solid @green;
-      }
-      .btnCancel:hover{
-        background: @green;
-        color: @white;
       }
       .btnConfirm{
         border-radius: 4px;
         padding: 0 16px; //宽度由padding左右16px决定
-        height: 36px;
-        font-size: 14px;
-        background: @white;
-        color:@green;
+        @confirm();
         border:1px solid @green;
         margin-left: 53px;
-      }
-      .btnConfirm:hover{
-        background:@green;
-        color: @white;
       }
     }
   }
@@ -855,23 +829,27 @@
   .el-dialog__body{
     height: 250px;
     background: rgba(216, 216, 216, 0.08539999999999999);
+    text-align: center;
     .peopleRateContent{
-      width: 220px;
+      width: 100%;
       margin: 0 auto;
-      position: relative;
+      text-align: center;
       p:nth-child(1){
         margin-top: 40px;
-        font-size:16px;
+        font-size:14px;
         color:rgba(51,51,51,1);
+        
       }
       p:nth-child(2){
-        width: 120px;
+        text-align: center;
+        width: 100%;
         // margin: 14px auto;
         // margin-left: 20px;
         margin-bottom: 50px;
         .el-select{
           .el-input{
             .el-input__inner{
+              
               height: 30px;
               border: none;
               background: rgba(216, 216, 216, 0.08539999999999999);
@@ -889,29 +867,15 @@
       .btnCancel{
         border-radius: 4px;
         padding: 0 16px; //宽度由padding左右16px决定
-        height: 36px;
-        font-size: 14px;
-        background: @white;
-        color: @green;
+        @cancle();
         border:1px solid @green;
-      }
-      .btnCancel:hover{
-        background: @green;
-        color: @white;
       }
       .btnConfirm{
         border-radius: 4px;
         padding: 0 16px; //宽度由padding左右16px决定
-        height: 36px;
-        font-size: 14px;
-        background: @white;
-        color:@green;
+        @confirm();
         border:1px solid @green;
         margin-left: 53px;
-      }
-      .btnConfirm:hover{
-        background:@green;
-        color: @white;
       }
     }
   }
@@ -958,29 +922,15 @@
       .btnCancel{
         border-radius: 4px;
         padding: 0 16px; //宽度由padding左右16px决定
-        height: 36px;
-        font-size: 14px;
-        background: @white;
-        color: @green;
+        @cancle();
         border:1px solid @green;
-      }
-      .btnCancel:hover{
-        background: @green;
-        color: @white;
       }
       .btnConfirm{
         border-radius: 4px;
         padding: 0 16px; //宽度由padding左右16px决定
-        height: 36px;
-        font-size: 14px;
-        background: @white;
-        color:@green;
+        @confirm();
         border:1px solid @green;
         margin-left: 53px;
-      }
-      .btnConfirm:hover{
-        background:@green;
-        color: @white;
       }
     }
   }
@@ -1040,6 +990,9 @@
     tr{
       td:first-child{
         position: absolute;
+      }
+      th{
+        font-size: 12px; 
       }
     }
   }

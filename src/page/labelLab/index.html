@@ -110,18 +110,22 @@
               </div>
               <h4>选择指标</h4>
               <div class="left">
-                <el-checkbox-group class="checkListDiv" v-model="checkIndexList" :min="2" :max="6">
+                <el-checkbox-group class="checkListDiv" v-model="checkIndexList" :min="2">
                   <el-checkbox v-for="(item, index) in checkIndexListGroup" :key="index" :label="item.label" @click.native="checkCheckbox">
                   </el-checkbox>
                 </el-checkbox-group>
               </div>
               <div class="right">
                 <h4>展示指标顺序</h4>
-                <div class="checkedDiv" v-for="item in checkIndexList">{{item}}</div>
+                <div class="checkedBox">
+                  <draggable v-model="checkIndexList" :options="{group:'IndexList'}">
+                    <div class="checkedDiv" v-for="item in checkIndexList">{{item}}</div>
+                  </draggable>
+                </div> 
               </div>
               <div class="confirm">
-                <el-button type="primary" @click="showIndexCancel">取消</el-button>
-                <el-button type="primary" @click="showIndexConfirm">确定</el-button>
+                <el-button type="primary" @click="showIndexCancel" class="checkList-cancel">取消</el-button>
+                <el-button type="primary" @click="showIndexConfirm" class="checkList-confirm">确定</el-button>
               </div>
             </div>
             <div slot="reference" class="selectDate">
@@ -139,7 +143,7 @@
         <el-button type="primary" @click="promotion(1)">参与推广</el-button>
         <el-button type="primary" @click="promotion(0)">暂停推广</el-button>
         <el-button type="primary" @click="deleteCrowd">删除人群</el-button>
-        <el-button :disabled=true type="primary">群组移动</el-button>
+        <!-- <el-button :disabled=true type="primary">群组移动</el-button> -->
       </div>
       <div class="allTableHeaderContainer">
         <el-checkbox class="checkAll" label="切换" v-model="checkAllGroup" @change="handleCheckAllChange"></el-checkbox>

@@ -1394,6 +1394,9 @@ export default {
     document.getElementsByClassName('el-container')[0].style.height = 'auto';
     document.getElementsByClassName('el-main')[0].style.height = 'auto';
   },
+  beforeDestroy() {
+    window.removeEventListener('scroll',this.handleScroll);
+  },
   computed: {
     currentRptkey() {
       switch (this.source) {

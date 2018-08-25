@@ -60,7 +60,7 @@ export default {
   },
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
   .m-backtop{
     position: fixed;
     right: 10px;
