@@ -199,7 +199,18 @@
           <el-button class="rootAnalysisTabelData" @click="rootAnalysisDetailData(index)" type="text">查看详情</el-button>
           <div class="rootEchartLeft">
             <h1>{{item.rootName}}</h1>
-            <p>最近7天效率分</p>
+            <p>最近7天效率分
+              <el-popover
+              placement="top-start"
+              width="400"
+              trigger="hover"
+              content="近七天的词根效率分，代表的是这个词根对于搜索流量拉动作用的效果评分。
+              例如，AB两个词根同样花费了100块钱，其中A词根搜索增长了200个自然搜索访客，B词根增长了120个自然搜索流量。
+              那么A词根的词根效率分会高于B词根。
+              词根效率分综合了直通车花费，直通车点击，自然搜索关键词，自然搜索访客数等多项数据指标综合计算而成。">
+                <i class="iconfontFuncView" slot="reference" >&#xe7c6;</i>
+              </el-popover>
+            </p>
             <div class="effi">
               <p>{{item.efficiency}}</p>
             </div>
@@ -255,7 +266,7 @@
     </div>
   </div>
   <el-dialog class="rootRadartableDataSort" :title="tableDataTitle" :visible.sync="showTableDataDialog">
-      <tableData :table-data="tableData" ></tableData>
+      <tableData :table-data="tableData" :total-data="totalData"></tableData>
   </el-dialog>
   <showGoodsAside ref="showGoodsAside" :focus-on="focusOn"
   @focusDialogToTrue="addGoodsFocusDialogFun"
@@ -266,7 +277,6 @@
     @showDataForEchart="checkDataForEchart"
     :unFocusLoading="unFocusListLoading">
   </showGoodsAside>
-  <backTop></backTop>
   <el-collapse-transition>
     <guidance v-if="showGuidance"></guidance>
   </el-collapse-transition>

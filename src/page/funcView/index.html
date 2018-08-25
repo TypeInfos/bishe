@@ -25,14 +25,7 @@
             </div>
         </div>
         <div class="twoBtn">
-            <el-popover
-                placement="bottom"
-                title=""
-                width="150"
-                trigger="click"
-                content="暂无视频，8月8日晚上线～">
-                <el-button slot="reference" type="primary">查看教程</el-button>
-            </el-popover>
+            <el-button slot="reference" type="primary" @click="lookUseVideo">查看教程</el-button>
             <el-button type="primary" style="margin-left: 50px;"  @click="use">立即使用</el-button>
         </div>
     </div>
@@ -60,6 +53,10 @@
                 <p>通过人群标签金字塔模型智能分析数据，高效调整标签投放</p>
                 <p class="slogan">人机交互 遇见智能</p>
             </div>
+        </div>
+        <div class="twoBtn">
+            <el-button slot="reference" type="primary" @click="lookUseVideo">查看教程</el-button>
+            <el-button type="primary" style="margin-left: 50px;"  @click="use">立即使用</el-button>
         </div>
     </div>
     <div class="hole">

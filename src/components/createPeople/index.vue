@@ -36,7 +36,9 @@ export default {
       para:[],   //保存要传给插件的参数数组
       peopleCheckList:[],   //check-group的v-model
       crowdId:[],      //给后端的参数
-      editorExtensionId:"lnbdcilfaojoldgckojoidnafpagkjbn",
+      // editorExtensionId:'lnbdcilfaojoldgckojoidnafpagkjbn',
+      // lnbdcilfaojoldgckojoidnafpagkjbn   上线ID
+      // cpnmealmpgcapggbgjgfahpiifbbooef  测试ID
 
     }
   },
@@ -47,7 +49,7 @@ export default {
     init(){
       // 发送一个(简单的请求：
       console.log(this.firstCat);
-      chrome.runtime.sendMessage(this.editorExtensionId, {
+      chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
         type : 'getLayoutExt',
         firstCat:this.firstCat,
         campaignId : this.campaignId,
@@ -115,7 +117,7 @@ export default {
       console.log(this.para);
           // 我们希望与之通信的扩展程序标识符。
       // 发送一个简单的请求：
-      chrome.runtime.sendMessage(this.editorExtensionId, {
+      chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
         type : 'getCrowdCount',
         selectTagOptions:this.para,
         wordList:this.wordList,
@@ -127,7 +129,7 @@ export default {
     },
     confirmBtn(){
       // console.log();
-      chrome.runtime.sendMessage(this.editorExtensionId, {
+      chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
         type : 'addCrowd',
         firstCat : this.firstCat,
         adGroupId : this.adGroupId,

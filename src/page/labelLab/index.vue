@@ -329,6 +329,22 @@ export default {
     };
   },
   methods: {
+    //gjfAdd 进入页面先判断是否订购产品
+      checkOrder(){
+        this.$axios.post(this.$api.checkOrder,{
+          pid:1      //pid为1是词根雷达
+        }).then((res)=>{
+          if(res.data){
+            this.getShopId();
+          }else{
+            this.$message({
+              message:res.message,
+              type:'warning'
+            });
+            this.$router.push('/buy1');
+          }
+        });
+      },
     // 关闭createPeople dialog
     closeCreatePeopleDialog() {
       this.createPeopleDialog = false;
@@ -1368,7 +1384,9 @@ export default {
   beforeCreate() {},
   // 请求axios
   created() {
-    this.getShopId();
+    // this.getShopId();
+    //进入页面先判断是否订购产品
+      this.checkOrder();
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll);

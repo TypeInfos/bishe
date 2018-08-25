@@ -18,11 +18,12 @@
         <a v-if="!isLogin" @click="resetActiveIndex(1)">注册</a>
         <div class="shopName" v-else>
           <span>{{globaTaobaoName}}</span>
-            <el-dropdown  size="small" @command="loginOut">
+            <el-dropdown  size="small"><!-- @command="loginOut" -->
                 <span class="el-dropdown-link"><i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item command="退出登录">退出登录</el-dropdown-item>
+                    <span @click="loginOut"><el-dropdown-item>退出登录</el-dropdown-item></span>
+                    <span @click="goToMyOrder"><el-dropdown-item>我的订购</el-dropdown-item></span>
                 </el-dropdown-menu>
             </el-dropdown>
         </div>

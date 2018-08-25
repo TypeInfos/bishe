@@ -36,9 +36,9 @@
         }
       }
     },
-    mounted() {
+    // mounted() {
     //  this.getUserInfo();
-    },
+    // },
     methods: {
       logoClick() {
         // 开发阶段先定义为刷新当前页面，上线后定位到首页。
@@ -56,7 +56,7 @@
             location.reload();
             break;
           case '3':
-          this.$router.push('/tempBqsys');
+          this.$router.push('/labelLab');
             location.reload();
             break;
           case '4':
@@ -64,7 +64,7 @@
             location.reload();
             break;
           case '5':
-          this.$router.push('/buy');
+          this.$router.push('/buy1');
             location.reload();
           break;
           case '6':
@@ -83,17 +83,16 @@
         }
       },
       // 获取用户信息
-      getUserInfo() {
-        this.$axios.get(this.$api.info).then((res) => {
-          // this.$store.dispatch('login');
-          // console.log('login')
-          // this.$store.dispatch('setTaobaoName',{
-          //   name:JSON.parse(data).runAsShopTitle
-          // })
-        }).catch(error=>{
-          console.log(error)
-        })
-      },
+      // getUserInfo() {
+        // this.$axios.get(this.$api.info).then((res) => {
+        //   this.$store.dispatch('login');
+        //   this.$store.dispatch('setTaobaoName', {
+        //     name: res.data.name
+        //   })
+        // }).catch(error => {
+        //   console.log(error)
+        // })
+      // },
       // 退出登录
       loginOut() {
         this.$store.dispatch('logout');
@@ -104,6 +103,10 @@
           this.$router.push('/login');
           location.reload();
         });
+      },
+      goToMyOrder(){
+        this.$router.push('/myOrder');
+        location.reload();
       },
       // 接收插件数据
       getTaobaoData() {

@@ -2,7 +2,8 @@
     <div class="d-login">
         <div class="r-header">
           <div>
-              <i class="iconfont logo">&#xe625;</i>
+              <!-- <i class="iconfont logo">&#xe625;</i> -->
+              <img src="../../assets/logo_login.png" width="80" height="87" alt="">
           </div>
           <h1 v-if="active === 0">登录抖数账号</h1>
           <h1 v-else-if="active === 1">登录淘宝账号</h1>
@@ -34,7 +35,7 @@
           </div>
           <div v-if="active === 1" class="wrapBox" style="height: 170px; margin-top: 100px;">
             <div class="boxS">
-                <el-button v-if="!taobaoLoading" size="medium" @click="loginToTaobao">去登录</el-button>
+                <el-button v-if="!taobaoLoading" type="primary" size="medium" @click="loginToTaobao">去登录</el-button>
                 <el-button v-else type="primary"  size="medium" :loading="taobaoLoading">登录中</el-button>
             </div>
           </div>
