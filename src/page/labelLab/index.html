@@ -1,0 +1,339 @@
+<div class="label-lab">
+  <div class="label-right" v-loading="initGroupLoading" v-show=true>
+    <el-card class="wrap-title" shadow="hover">
+      <!-- v-loading="searchLoading" -->
+      <el-dropdown class="terminal" trigger="click" size="small" @command="chooseZd">
+        <span class="el-dropdown-link">
+          {{czd}}
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="全部终端">全部终端</el-dropdown-item>
+          <el-dropdown-item command="PC端">PC端</el-dropdown-item>
+          <el-dropdown-item command="移动端">移动端</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+      <el-dropdown class="source" trigger="click" size="small" @command="chooseLy">
+        <span class="el-dropdown-link">
+          {{source}}
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item command="全部来源">全部来源</el-dropdown-item>
+          <el-dropdown-item command="站内">站内</el-dropdown-item>
+          <el-dropdown-item command="站外">站外</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+      <datePicker @refreshDate="refreshDate"></datePicker>
+      <el-button class="oneKeyButton" type="text" @click="oneKey">一键创建人群</el-button>
+    </el-card>
+    <!--  -->
+    <el-card class="box-card mt20 labGroup" v-loading="groupListLoading" shadow="hover">
+      <div slot="header" class="clearfix">
+        <span class="headerContent">标签群组分层概况</span>
+        <el-button class="annotation" type="text">指标注释</el-button>
+      </div>
+      <div class="groupInfo">
+        <div v-if="tagScore <= 30" class="labelLevel">
+          <p>标签化程度</p>
+          <div class="face">
+            <div class="bgcolor" style="background-color:rgb(251, 21, 83); ">
+              <img src="../../assets/cry.png">
+            </div>
+          </div>
+          <h3>{{tagScore}}%</h3>
+          <p>标签化程度较低，将会影响您的推广质量</p>
+        </div>
+        <div v-else-if="tagScore > 30 && tagScore <= 70" class="labelLevel">
+          <p>标签化程度</p>
+          <div class="face">
+            <div class="bgcolor" style="background-color: rgb(253,175,37); ">
+              <img src="../../assets/normal.png">
+            </div>
+          </div>
+          <h3>{{tagScore}}%</h3>
+          <p>标签化程度中等，请进行优化</p>
+        </div>
+        <div v-else class="labelLevel">
+          <p>标签化程度</p>
+          <div class="face">
+            <div class="bgcolor" style="background-color:rgb(38,231,67); ">
+              <img src="../../assets/smail.png">
+            </div>
+          </div>
+          <h3>{{tagScore}}%</h3>
+          <p>标签化程度不错，请再接再厉哦~</p>
+        </div>
+        <div class="pyramid">
+          <div class="tri1"></div>
+          <div class="tri2"></div>
+        </div>
+      </div>
+    </el-card>
+    <!-- 标签整体数据趋势 -->
+    <el-card class="box-card mt20 tendency" shadow="hover">
+      <div slot="header" class="clearfix">
+        <span class="headerContent">标签群组分层概况</span>
+        <!-- 先不加等8月份后再进行优化 -->
+        <el-button class="annotation" type="text">指标注释</el-button>
+        <div v-if="checkboxListFlag" class="m-checkbox-tip">
+          <i class="el-icon-warning"></i>
+          最多选择2项
+        </div>
+      </div>
+      <div class="checkListContainer">
+        <el-checkbox-group class="checkListDiv" v-model="checkList" :max="2" @change="checkListChange">
+          <el-checkbox v-for="(item, index) in checkListGroup" :key="index" :label="item.label" @click.native="checkListGroupClick">
+          </el-checkbox>
+        </el-checkbox-group>
+        <div class="selectSurplus">
+          <span>已选 {{checkSurplus}}/2</span>
+          <el-button @click="resetCheckBoxList1" type="text">清空</el-button>
+        </div>
+      </div>
+      <div v-if="tendencyAnalysShow" class="globalAnalysis">
+        <lineChart chart-id="lineChart" :chart-data="labelTendencyData">
+        </lineChart>
+      </div>
+    </el-card>
+    <!-- 群组详细分析及管理 -->
+    <el-card class="box-card mt20 groupAnalyze" v-loading="groupAnalyzeLoading" shadow="hover">
+      <div slot="header" class="clearfix">
+        <span class="headerContent">群组详细分析及管理</span>
+        <div class="showIndex">
+          <el-popover popper-class="mySelectIndex" :value="groupAnalyzePopStatus" @hide="hide" @show="show" :visible-arrow=false placement="bottom"
+            width="500" trigger="click">
+            <div class="selectIndex">
+              <div v-if="checkboxIndexListFlag" class="m-checkbox-tip">
+                <i class="el-icon-warning"></i>
+                最多选择6项
+              </div>
+              <h4>选择指标</h4>
+              <div class="left">
+                <el-checkbox-group class="checkListDiv" v-model="checkIndexList" :min="2" :max="6">
+                  <el-checkbox v-for="(item, index) in checkIndexListGroup" :key="index" :label="item.label" @click.native="checkCheckbox">
+                  </el-checkbox>
+                </el-checkbox-group>
+              </div>
+              <div class="right">
+                <h4>展示指标顺序</h4>
+                <div class="checkedDiv" v-for="item in checkIndexList">{{item}}</div>
+              </div>
+              <div class="confirm">
+                <el-button type="primary" @click="showIndexCancel">取消</el-button>
+                <el-button type="primary" @click="showIndexConfirm">确定</el-button>
+              </div>
+            </div>
+            <div slot="reference" class="selectDate">
+              展示指标
+              <i class="el-icon-arrow-down el-icon--right"></i>
+            </div>
+          </el-popover>
+        </div>
+
+      </div>
+      <div class="dialogButton">
+        <el-button type="primary" @click="createGroupBtn">创建群组</el-button>
+        <el-button type="primary" @click="peopleRateBtn">人群评级</el-button>
+        <el-button type="primary" @click="peopleUpdatePremium">修改溢价</el-button>
+        <el-button type="primary" @click="promotion(1)">参与推广</el-button>
+        <el-button type="primary" @click="promotion(0)">暂停推广</el-button>
+        <el-button type="primary" @click="deleteCrowd">删除人群</el-button>
+        <el-button :disabled=true type="primary">群组移动</el-button>
+      </div>
+      <div class="allTableHeaderContainer">
+        <el-checkbox class="checkAll" label="切换" v-model="checkAllGroup" @change="handleCheckAllChange"></el-checkbox>
+        <el-table :data="headerData" class="allTableHeader" type="index" @sort-change="sortAllTable">
+          <el-table-column prop="name" label="人群名称">
+          </el-table-column>
+          <el-table-column v-for="item in finalCheckIndexList" sortable :key="item.label" :prop="item.name" :label="item.label">
+          </el-table-column>
+        </el-table>
+      </div>
+      <draggable v-model="groupList" :options="{group:'groupList'}">
+        <div v-for="(item,index) in groupList" :key="index" class="groups">
+          <div class="groupHeader">
+            <i v-if="!item.extend" class="el-icon-plus add" @click="showTable(index)"></i>
+            <i v-else class="el-icon-minus add" @click="showTable(index)"></i>
+            <span class="groupName">{{item.groupName}}</span>
+            <!-- 传入ref -->
+            <el-button type="text" @click="selectAllCheck('table' + index)">全选</el-button>
+            <el-button type="text" @click="createCrowd(index)">创建人群</el-button>
+            <el-button type="text" @click="updateGroupName(index)">修改群组名称</el-button>
+            <el-button type="text" @click="moveCrowd('table' + index)">人群移动</el-button>
+            <el-button type="text" @click="deleteGroup(index)">删除</el-button>
+          </div>
+          <el-collapse-transition>
+            <div class="groupNameDiv" v-if="item.extend">
+              <el-table :ref="'table' + index" :data="item.list" :show-header=false :key="index" class="groupBody">
+                <el-table-column type="selection" width="60">
+                </el-table-column>
+                <el-table-column prop="name">
+                  <template slot-scope="scope">
+                    <div class="crowdName">
+                      <p class="title">{{scope.row.name}}</p>
+                      <p v-if="scope.row.onlineStatus == 0" class="status">已暂停</p>
+                      <el-tooltip content="当前人群溢价比下一层级的最高溢价低，会导致该人群失效，请及时进行调整" :visible-arrow=false placement="bottom" effect="light">
+                        <i v-if="scope.row.warning" class="iconfont warmFlag">&#xe655;</i>
+                      </el-tooltip>
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column v-for="itemData in finalCheckIndexList" sortable :key="itemData.label" :prop="itemData.name" :label="itemData.label">
+                </el-table-column>
+              </el-table>
+              <el-table :data="item.total" :show-header=false class="groupTotal">
+                <el-table-column label="人群名称" prop="name">
+                </el-table-column>
+                <el-table-column v-for="itemData in finalCheckIndexList" sortable :key="itemData.label" :prop="itemData.name" :label="itemData.label">
+                </el-table-column>
+              </el-table>
+            </div>
+          </el-collapse-transition>
+        </div>
+      </draggable>
+    </el-card>
+  </div>
+  <div :class="{'label-left':true,'isFixed':asideFixed}" v-loading="groupListLoading">
+    <div class="goodsInfo">
+      <div class="imgShow">
+        <img :src="'https://' + imgUrl">
+      </div>
+      <div class="namePrice">
+        <p>{{planName}}</p>
+        <p class="priceP">价格：{{goodsPrice}}</p>
+      </div>
+    </div>
+    <a :href="goodsUrl" class="goodsName" target="_blank">{{goodsName}}</a>
+    <transition name="el-fade-in-linear">
+      <div v-if="selectPlanFlag" class="selectPlan" v-loading="loadingPlans">
+        <el-input v-model="fiterPlansInput" class="filterPlans" placeholder="搜索计划" suffix-icon="el-icon-search" clearable></el-input>
+        <el-select class="planSelect" v-model="selectPlanStatus" @change="changeSelect" placeholder="全部计划">
+          <el-option v-for="item in allPlanStatus" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
+        </el-select>
+        <el-menu class="planNav" text-color="#4A90E2" default-active=1 :unique-opene=true>
+          <el-submenu index="1">
+            <template slot="title">
+              <i class="el-icon-view"></i>
+              <span>全部计划</span>
+            </template>
+            <el-menu-item v-for="(item,index) in resultPlans" :key="index" class="contentPlan" @click="selectPlan(index)" index="1">{{item.title}}</el-menu-item>
+          </el-submenu>
+        </el-menu>
+      </div>
+    </transition>
+    <div v-if="!selectPlanFlag" class="selectGoods">
+      <el-button plain class="backPlan" @click="backPlan" clearable>返回计划列表</el-button>
+      <el-input v-model="fiterGoodsInput" class="filterPlans" placeholder="请输入商品关键字" suffix-icon="el-icon-search" clearable></el-input>
+      <div class="goodsList">
+        <!-- flex布局 -->
+        <div v-for="(item, index) in resultGoods" :key="index">
+          <el-popover placement="bottom" width="150" :open-delay=100 visible-arrow="false" trigger="hover" value-key="title" :content="item.title">
+            <span class="u-pic" slot="reference" @click="searchGoods(index)">
+              <img :src="item.imgUrl" />
+            </span>
+            </span>
+          </el-popover>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 创建群组 -->
+  <el-dialog :visible.sync="createGroupDialog" v-loading="createGroupLoading" :show-close=false :modal=false class="createGroups">
+    <div slot="title" class="header">
+      <h2>创建群组</h2>
+      <el-button icon="el-icon-close" @click="closeCreateModal"></el-button>
+    </div>
+    <div class="createGroupsContent">
+      <p>
+        <el-radio v-model="radio" label="1" @change="radioChange">标准群组</el-radio>
+        <el-radio v-model="radio" label="2" @change="radioChange">自定义群组</el-radio>
+      </p>
+      <div class="myDefinedGroup" v-if="showMyDefinedGroup">
+        <p class="myDefinedP">
+          <el-input placeholder="请输入群组名称" v-model="createGroupName"></el-input>
+        </p>
+        <p class="errorP" v-if="showErrorCreateGroup">群组名称重复</p>
+      </div>
+      <div class="standardGroup" v-if="showStandardGroup">
+        <el-select v-model="createGroups" clearable placeholder="">
+          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
+        </el-select>
+      </div>
+      <el-button type="primary" plain class="btnCancel" @click="btnCreateCancel">取消</el-button>
+      <el-button type="primary" class="btnConfirm" :disabled="createGroupDisabled" @click="btnCreateConfirm">确定</el-button>
+    </div>
+  </el-dialog>
+  <!-- 修改群组名字 -->
+  <el-dialog :visible.sync="modifyGroupsDialog" v-loading="modifyGroupLoading" :show-close=false :modal=false class="modifyGroups">
+    <div slot="title" class="header">
+      <h2>修改群组名称</h2>
+      <el-button icon="el-icon-close" @click="modifyGroupsCloseModel"></el-button>
+    </div>
+    <div class="modifyGroupsContent">
+      <p>
+        <el-input placeholder="请输入群组名称" v-model="modifyGroupName"></el-input>
+      </p>
+      <p class="errorP" v-if="modifyGroupRepeat">群组名称重复</p>
+      <el-button type="primary" plain class="btnCancel" @click="modifyGroupCancel">取消</el-button>
+      <el-button type="primary" :disabled="modifyGroupNameDisable" class="btnConfirm" @click="modifyGroupConfirm">确定</el-button>
+    </div>
+  </el-dialog>
+  <!-- 人群评级 -->
+  <el-dialog :visible.sync="peopleRateDialog" v-loading="peopleRateLoading" :show-close=false :modal=false class="peopleRate">
+    <div slot="title" class="header">
+      <h2>人群评级</h2>
+      <el-button icon="el-icon-close" @click="peopleRatecloseModal"></el-button>
+    </div>
+    <div class="peopleRateContent">
+      <p>请设置人群评级</p>
+      <p>
+        <el-select v-model="rate" clearable placeholder="评级">
+          <el-option v-for="item in peopleRateOptions" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
+        </el-select>
+      </p>
+      <el-button type="primary" plain class="peopleRateDialog" @click="peopleRateCancel">取消</el-button>
+      <el-button type="primary" class="peopleRateDialog" :disabled="peopleRateDisable" @click="peopleRateConfirm">确定</el-button>
+    </div>
+  </el-dialog>
+  <!-- 修改溢价 -->
+  <el-dialog :visible.sync="premiumDialog" :show-close=false v-loading="premiumLoading" :modal=false class="premium">
+    <div slot="title" class="header">
+      <h2>修改溢价</h2>
+      <el-button icon="el-icon-close" @click="premiumcloseModal"></el-button>
+    </div>
+    <div class="premiumContent">
+      <p>将溢价修改为：</p>
+      <p>
+        <el-input placeholder="5-300整数" v-on:input="betweenRange()" v-model="premium"></el-input>&nbsp; %
+      </p>
+      <p class="errorP" v-if="premiumError">您所输入的溢价范围有误</p>
+      <el-button type="primary" plain class="btnCancel" @click="premiumCancel">取消</el-button>
+      <el-button type="primary" class="btnConfirm" :disabled="premiumDisable" @click="premiumConfirm">确定</el-button>
+    </div>
+  </el-dialog>
+  <!-- peoplemove -->
+  <el-dialog :visible.sync="peopleMoveDialog" v-loading="peopleMoveLoading" :show-close=false :modal=false class="peopleMove">
+    <div slot="title" class="header">
+      <h2>人群移动</h2>
+      <el-button icon="el-icon-close" @click="peopleMovecloseModal"></el-button>
+    </div>
+    <div class="peopleRateContent">
+      <p>请选择目标群组：</p>
+      <p>
+        <el-select v-model="targetGroup" clearable>
+          <el-option v-for="item in groupList" :key="item.groupName" :label="item.groupName" :value="item.groupId">
+          </el-option>
+        </el-select>
+      </p>
+      <el-button type="primary" plain class="btnCancel" @click="peopleMoveCancel">取消</el-button>
+      <el-button type="primary" class="btnConfirm" :disabled="peopleMoveDisabled" @click="peopleMoveConfirm">确定</el-button>
+    </div>
+  </el-dialog>
+  <createPeople :createPeopleDialog="createPeopleDialog" :firstCat="currentFirstCat" :campaignId="currentCampaignId" :adGroupId="currentAdGroupId"
+    :groupId="currentCreateGroupId" @closeDialog="closeCreatePeopleDialog" @refreshData="refreshData"></createPeople>
+
+</div>

@@ -1,0 +1,351 @@
+.isFixed{
+  position:fixed !important;
+  top:0 !important;
+  z-index:999;
+}
+.aside{
+  overflow: hidden;
+  // position: relative;
+  width: 230px;
+  // float: right;
+  // background-color: azure;
+
+  .refresh{
+    height: 30px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    p{
+      font-size: 12px;
+      line-height: 30px;
+      // padding-left: 10px;
+    }
+    .refreshButton{
+      // position: relative;
+      // right: 10px;
+      width: 30px;
+      height: 30px;
+      line-height: 28px;
+      margin: auto 0;
+      cursor: pointer;
+      // animation: refreshRotate 1s infinite linear;
+      color: #1CCADA;
+      text-align: center;
+    }
+    @keyframes refreshRotate {
+      from{
+        transform: rotate(0deg);
+      }
+      to{
+        transform: rotate(720deg);
+      }
+    }
+  }
+
+  .goodsName{
+    width: 90%;
+    display: block;
+    margin: 2px auto;
+    color: #4A90E2;
+  }
+  .goodsInfo{
+    width: 210px;
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+    .imgShow{
+      width: 100px;
+      height: 100px;
+      background-color: white;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .pricedate{
+      font-size: 12px;
+      box-sizing: border-box;
+      padding: 20px 0 20px 0;
+      width: 100px;
+      height: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .putawayDate{
+        p{
+          margin-top: 4px;
+          text-align: left;
+        }
+      }
+      .priceP{
+        text-align: left;
+      }
+      // p{
+      //   color:gray;
+      //   margin-left: 15px;
+      //   margin-top: 4px;
+      // }
+    }
+  }
+  .searchMonitoring{
+    width: 220px;
+    margin: 5px;
+    .el-input__inner{
+      height: 36px;
+    }
+    .el-input__suffix{
+      line-height: 36px;
+    }
+  }
+  button{
+    width: 226px;
+    margin: 2px;
+    padding: 10px 20px;
+  }
+  .goodsList{
+    display: flex;
+    width: 220px;
+    margin:5px 10px 5px 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    min-height: 160px;
+    position: relative;
+    max-height: 440px;
+    overflow-y: scroll;
+    div{
+      width: 100px;
+      margin-top: 10px;
+      height: 100px;
+      position: relative;
+      overflow: hidden;
+      .img-delete{
+        font-size: 20px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        &:hover{
+          cursor: pointer;
+          color: rgb(251,21,83);
+        }
+      }
+
+      .u-pic{
+        cursor: pointer;
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+        span{
+          width: 100%;
+          height: 100%;
+          top: 0;
+          right: 0;
+          position: absolute;
+        }
+        .status0{
+          background-color: transparent;
+        }
+        .status1{
+          img{
+            width: 65%;
+            height: 65%;
+            margin: auto;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+          }
+          p{
+            color: aliceblue;
+            margin-top: 60px;
+          }
+          background-color: rgba(184, 182, 182, 0.363);
+        }
+        .status2{
+          img{
+            width: 65%;
+            height: 65%;
+            margin: auto;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+          }
+          p{
+            color: aliceblue;
+            margin-top: 60px;
+          }
+          background-color: rgba(184, 182, 182, 0.363);
+        }
+      }
+    }
+    .limit{
+      width: 100%;
+      position: relative;
+      height: 30px;
+      .lastNum{
+        width: 100%;
+        text-align: right;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin-top: 20px;
+        em{
+          color: red;
+        }
+      }
+    }
+  }
+}
+
+.searchShowName{
+  line-height: 30px;
+  max-width: 290px;
+  text-overflow : ellipsis;
+white-space : nowrap;
+overflow : hidden;
+  float: left;
+}
+.showName{
+  line-height: 30px;
+  max-width: 280px;
+  text-overflow : ellipsis;
+white-space : nowrap;
+overflow : hidden;
+  float: left;
+}
+
+// 下拉框 模版
+.my-autocomplete{
+  li{
+    height: 30px;
+    padding:0 5px;
+    .showImg{
+      width: 30px;
+      height: 30px;
+      float: left;
+      margin-right: 2px;
+    }
+
+    button{
+      height: 30px;
+      float: right;
+      border:0;
+      padding: 0;
+      span{
+      line-height: 30px;
+      display: inline-block;
+      }
+    }
+  }
+}
+
+
+
+
+//  模态框 CSS
+.el-dialog{
+  width: 650px;
+  .el-dialog__header{
+
+    padding: 0;
+    height: 40px;
+    box-shadow: 0 0.5px 2px #dcdcdc;
+    .header{
+      width: 100%;
+      height: 100%;
+      h2{
+        width: 560px;
+        float: left;
+        line-height: 40px;
+        margin: 0;
+        padding-left: 50px;
+        font-size: 18px;
+      }
+      button{
+        position: relative;
+        width: 40px;
+        box-shadow: -0.5px 0 2px #dcdcdc;
+        height: 40px;
+        text-align: center;
+        margin: 0;
+        border-style: none;
+        i{
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 40px;
+          line-height: 40px;
+          font-size: 30px;
+        }
+      }
+    }
+  }
+}
+
+
+.el-dialog__body{
+  position: relative;
+  height: 300px;
+  .content{
+    width: 100%;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    p{
+      text-align: center;
+      margin: 5px;
+      color: rgb(150,150,150);
+    }
+    .searchAllGoodsInfo{
+      width: 60%;
+      min-width: 300px;
+      margin: 5px auto;
+    }
+  }
+  .edu{
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    span{
+      em{
+        color: rgb(251,21,83);
+        font-style: none;
+      }
+    }
+  }
+}
+.addWordDialog{
+  position: relative;
+  .m-checkbox-tip{
+    position: absolute;
+    height:25px;
+    width: 100px;
+    background-color: #4BCA81;
+    line-height:25px;
+    text-align: center;
+    top:0;
+    bottom: 0;
+    margin:auto;
+    left:0;
+    right:0;
+    color: rgb(251, 251, 251);
+    border-radius: 2px;
+  }
+}
+
+.deleteWordButton{
+  button{
+    width:100px;
+
+  }
+}

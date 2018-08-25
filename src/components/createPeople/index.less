@@ -1,0 +1,288 @@
+.el-dialog{
+  width: 650px;
+  .el-dialog__header{
+    padding: 0;
+    height: 40px;
+    box-shadow: 0 0.5px 2px #dcdcdc;
+    .header{
+      width: 100%;
+      height: 100%;
+      h2{
+        width: 560px;
+        float: left;
+        line-height: 40px;
+        margin: 0;
+        padding-left: 50px;
+        font-size: 18px;
+      }
+      button{
+        position: relative;
+        width: 40px;
+        box-shadow: -0.5px 0 2px #dcdcdc;
+        height: 40px;
+        text-align: center;
+        margin: 0;
+        border-style: none;
+        i{
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 40px;
+          line-height: 40px;
+          font-size: 30px;
+        }
+      }
+    }
+  }
+}
+.createPeople{
+  .el-dialog__body{
+    height: 380px;
+    background: rgba(216, 216, 216, 0.08539999999999999);
+    .createPeopleContent{
+      width: 520px;
+      height: 350px;
+      // margin: 0 auto;
+      margin-left: 100px;
+        .name{
+          margin-top: 20px;
+          margin-bottom: 10px;
+          position: relative;
+          .star{
+            color: red;
+            position: absolute;
+            left: -10px;
+            top: 8px;
+          }
+          .el-input{
+            width: 200px;
+            .el-input__inner{
+              width: 240px;
+              height: 30px;
+              margin-right: 0;
+            }
+          }
+          .mustWrite{
+            position: absolute;
+            top: 5px;
+            color: red;
+          }
+        }
+      .peopleProperty{
+        display: flex;
+        flex-direction: column;
+        width: 80%; 
+        //设置所有的多选框 宽度都为100px
+        .el-checkbox{
+          width: 100px;
+        }
+        .prefix0{
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: start;
+          .prefixspan{
+            position: relative;
+            left: -40px;
+          }
+          .el-checkbox-group{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            width: 88%;
+            margin-left: -27px;
+            margin-top: 4px;
+            .prefix3{
+              margin-left: 0;
+            }
+          }
+        }
+        .prefix1{
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: start;
+          .el-checkbox-group{
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: 15px;
+            margin-top: 4px;
+            .el-checkbox{
+              width: 40px;
+            }
+          }
+        }
+        .prefix2{
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: start;
+          .el-checkbox-group{
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: 15px;
+            margin-top: 4px;
+            width: 88%;
+            .prefix3{
+              margin-left: 0;
+            }
+            .prefix6{
+              margin-left: 0;
+            }
+          }
+        }
+        .prefix3{
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: start;
+          .prefixspan{
+            position: relative;
+            left: -55px;
+          }
+          .el-checkbox-group{
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: 47px;
+            margin-top: -15px;
+            width: 90%;
+            .prefix3{
+              margin-left: 0;
+            }
+            .prefix6{
+              margin-left: 0;
+            }
+          }
+        }
+      }
+      .weatherProperty{
+        display: flex;
+        flex-direction: column;
+        width: 80%; 
+        .prefix0{
+          display: flex;
+          flex-wrap: wrap;
+          .el-checkbox-group{
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: 15px;
+            margin-top: 4px;
+            width: 88%;
+            .el-checkbox{
+              width: 60px;
+            }
+            .prefix4{
+              margin-left: 0;
+            }
+          }
+        }
+        .prefix1{
+          display: flex;
+          flex-wrap: wrap;
+          .prefixspan{
+            position: relative;
+            left: -27px;
+          }
+          .el-checkbox-group{
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: -13px;
+            margin-top: 4px;
+            width: 80%;
+            .prefix2{
+              margin-left: 0;
+            }
+            .prefix3{
+              margin-left: 0;
+            }
+            .prefix4{
+              margin-left: 0;
+            }
+          }
+        }
+        .prefix2{
+          display: flex;
+          flex-wrap: wrap;
+          .prefixspan{
+            position: relative;
+            left: -27px;
+          }
+          .el-checkbox-group{
+            display: flex;
+            flex-wrap: wrap;
+            margin-left: -13px;
+            margin-top: 4px;
+            width: 80%;
+          }
+        }
+      }
+        .premium{
+          margin-top: 15px;
+          .premiumP{
+            // width:84px;
+            height:17px;
+            // font-size:12px;
+            color:rgba(51,51,51,1);
+            // line-height:17px;
+          }
+          .el-input{
+            width: 180px;
+            .el-input__inner{
+              // width:180px;
+              height:30px;
+              padding-left: 12px;
+              border-radius:4px;
+              // margin-bottom: 50px;
+            }
+            input:hover{
+              border:1px solid rgba(28,202,218,1);
+            }
+          }
+          .errorP{
+            font-size:10px;
+            color:rgba(208,2,27,1);
+            padding-left: 50px;
+            position: absolute;
+            // bottom: 70px;
+          }
+          .overPeople{
+            font-size:14px;
+            color:rgba(74,74,74,1);
+            margin-left: 50px;
+            b{
+              font-size:24px;
+            }
+          }
+        }
+        .twoBtn{
+          margin-top: 30px;
+          text-align: center;
+          .btnCancel{
+            border-radius: 4px;
+            padding: 0 16px; //宽度由padding左右16px决定
+            height: 36px;
+            font-size: 14px;
+            background:rgba(255,255,255,1);
+            color:rgba(28,202,218,1);
+            border:1px solid rgba(28,202,218,1);
+          }
+          .btnCancel:hover{
+            background:rgba(28,202,218,1);
+            color:rgba(255,255,255,1);
+          }
+          .btnConfirm{
+            border-radius: 4px;
+            padding: 0 16px; //宽度由padding左右16px决定
+            height: 36px;
+            font-size: 14px;
+            background:rgba(255,255,255,1);
+            color:rgba(28,202,218,1);
+            border:1px solid rgba(28,202,218,1);
+            margin-left: 53px;
+          }
+          .btnConfirm:hover{
+            background:rgba(28,202,218,1);
+            color:rgba(255,255,255,1);
+          }
+        }
+    }
+  }
+}
+
+  

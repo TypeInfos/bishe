@@ -1,0 +1,47 @@
+<div class="myDatePicker">
+    <el-popover
+    popper-class="myDatePop"
+    placement="bottom"
+    :value="myDatePopStatus"
+    @hide="hide"
+    @show="show"
+    width="500" trigger="click">
+        <div class="selectDateContent">
+          <div class="range">
+              <h3>日期范围</h3>
+              <el-date-picker
+              v-model="myDateTime"
+              ref="datePicker"
+              type="daterange"
+              range-separator="-"
+              :picker-options="pickerOptions"
+              format="yyyy-MM-dd"
+              value-format="yyyy-MM-dd"
+              visible-arrow=false
+              start-placeholder="开始日期"
+              end-placeholder="结束日期">
+            </el-date-picker>
+          </div>
+          <div class="select">
+              <h3>快捷选择</h3>
+              <div class="dateTimeBtn">
+                  <el-radio-group @change="changeDate" class="dataTimeRadio" v-model="dateModel" size="medium">
+                      <el-radio-button label="今天" ></el-radio-button>
+                      <el-radio-button label="昨天"></el-radio-button>
+                      <el-radio-button label="过去7天"></el-radio-button>
+                      <el-radio-button label="过去14天"></el-radio-button>
+                      <el-radio-button label="过去30天"></el-radio-button>
+                    </el-radio-group>
+              </div>
+          </div>
+          <div class="confirm">
+              <el-button type="primary" @click="cancel">取消</el-button>
+              <el-button type="primary" @click="confirmDate">确定</el-button>
+          </div>
+        </div>
+        <div slot="reference" class="selectDate">
+        {{finalContent}}
+        <i class="el-icon-arrow-down el-icon--right"></i>
+        </div>
+      </el-popover>
+</div>

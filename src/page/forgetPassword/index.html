@@ -1,0 +1,61 @@
+<div class="d-container">
+  <div class="d-register">
+    <div class="r-header">
+      <h1>忘记密码</h1>
+    </div>
+    <div class="r-content">
+      <div class="wrapBox" style="height: 380px; margin-top: 15px;">
+        <div class="box">
+          <span class="same">
+            <i class="iconfont iconDec">&#xe618;</i>
+          </span>
+          <span class="dec">+86</span>
+          <el-input class="phones" placeholder="请输入手机号" v-model="phoneNum">
+          </el-input>
+        </div>
+        <div class="box captchaBox">
+          <span class="same">
+            <i class="iconfont iconDec">&#xe61b;</i>
+          </span>
+          <el-input class="captcha" placeholder="验证码" v-model="code">
+          </el-input>
+          <el-button v-if="!timeFlag" type="primary" @click="getCode">{{ codeName }}</el-button>
+          <el-button v-else size="mini" type="primary">{{time}} 秒</el-button>
+        </div>
+        <div class="box">
+          <transition name="el-fade-in-linear">
+          <span class="secretError" v-if="showSecretError1">密码格式错误</span>
+          </transition>
+          <span class="same"><i class="iconfont iconDec">&#xe62d;</i></span>
+          <el-input v-popover:popover1 type="password"  placeholder="密码" v-model="pwd" @input="hideSecretError1"></el-input>
+          <el-popover ref="popover1" placement="bottom-start" popper-class="pwdPopover" @hide="secretError1" title="" width="250" trigger="focus" content="密码长度 8~16 位，由英文和数字组成">
+          </el-popover>
+        </div>
+        <div class="box">
+            <transition name="el-fade-in-linear">
+            <span class="secretError" v-if="showSecretError2">密码格式错误</span>
+            </transition>
+            <transition name="el-fade-in-linear">
+            <span class="secretError" v-if="showreSecretError" style="width: 108px;">两次密码输入不一致</span>
+            </transition>
+            <span class="same"><i class="iconfont iconDec">&#xe636;</i></span>
+            <el-input v-popover:popover2 type="password"  placeholder="重复密码" v-model="rePwd" @input="hideSecretError2"></el-input>
+            <el-popover ref="popover2" placement="bottom-start" popper-class="pwdPopover" @hide="secretError2" title="" width="250" trigger="focus" content="密码长度 8~16 位，由英文和数字组成">
+            </el-popover>
+        </div>
+        <div class="boxS">
+
+        </div>
+        <div class="boxS">
+          <el-button style="width: 100%;" @click="forgetPwd" type="primary">修改密码</el-button>
+        </div>
+
+      </div>
+    </div>
+    <div class="r-footer">
+      <p>如果您不想修改密码，则可在此
+        <router-link to="/login">登录</router-link>
+      </p>
+    </div>
+  </div>
+</div>

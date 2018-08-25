@@ -1,0 +1,86 @@
+<div class="d-container">
+    <div class="d-register">
+        <div class="r-header">
+          <h1 v-if="active === 0">注册抖数账号</h1>
+          <h1 v-else-if="active === 1">登录淘宝账号</h1>
+          <h1 v-else="active === 2">绑定淘宝账户</h1>
+        </div>
+        <div class="r-content" v-loading="registerLoading" element-loading-text="请稍后">
+            <el-form>
+          <div v-if="active === 0" class="wrapBox" style="height: 380px; margin-top: 15px;">
+              <div class="box">
+                  <span class="same"><i class="iconfont iconDec">&#xe618;</i></span>
+                  <span class="dec">+86</span>
+                  <el-input class="phones" placeholder="请输入手机号" v-model="phoneNum">
+                  </el-input>
+              </div>
+              <div class="box captchaBox">
+                  <span  class="same"><i class="iconfont iconDec">&#xe61b;</i></span>
+                  <el-input class="captcha" placeholder="验证码" v-model="code">
+                  </el-input>
+                  <el-button v-if="!timeFlag" :loading="codeLoading" type="primary" @click="getCode">{{ codeName }}</el-button>
+                  <el-button v-else size="mini" type="primary">{{time}} 秒</el-button>
+              </div>
+              <!-- 起始gjfAdd -->
+              <div class="box">
+                  <transition name="el-fade-in-linear">
+                  <span class="secretError" v-if="showSecretError1">密码格式错误</span>
+                  </transition>
+                  <span class="same"><i class="iconfont iconDec">&#xe62d;</i></span>
+                  <el-input v-popover:popover1 type="password"  placeholder="密码" v-model="pwd" @input="hideSecretError1"></el-input>
+                  <el-popover ref="popover1" placement="bottom-start" popper-class="pwdPopover" @hide="secretError1" title="" width="250" trigger="focus" content="密码长度 8~16 位，由英文和数字组成">
+                  </el-popover>
+              </div>
+              <div class="box">
+                  <transition name="el-fade-in-linear">
+                  <span class="secretError" v-if="showSecretError2">密码格式错误</span>
+                  </transition>
+                  <transition name="el-fade-in-linear">
+                  <span class="secretError" v-if="showreSecretError" style="width: 108px;">两次密码输入不一致</span>
+                  </transition>
+                  <span class="same"><i class="iconfont iconDec">&#xe636;</i></span>
+                  <el-input v-popover:popover2 type="password"  placeholder="重复密码" v-model="rePwd" @input="hideSecretError2"></el-input>
+                  <el-popover ref="popover2" placement="bottom-start" popper-class="pwdPopover" @hide="secretError2" title="" width="250" trigger="focus" content="密码长度 8~16 位，由英文和数字组成">
+                  </el-popover>
+              </div>
+              <!-- 结束gjfAdd -->
+              <div class="box">
+                  <span class="same"><i class="iconfont iconDec">&#xe600;</i></span>
+                  <el-input placeholder="负责人微信号" v-model="wechart">
+                  </el-input>
+              </div>
+              <div class="boxS">
+                <p class="agreed">
+                    <el-checkbox class="agreedCheck" label="我已阅读并同意遵守" v-model="agreed"></el-checkbox>
+                    <span><em class="lawer">法律声明</em> 和 <em class="lawer">隐私条款</em></span>
+                </p>
+              </div>
+              <div class="boxS">
+                  <el-button style="width: 100%;" @click="register" type="primary">注册</el-button>
+              </div>
+          </div>
+          <div v-else-if="active === 1" class="wrapBox" style="height: 45px; margin-top: 184px;">
+              <div class="box">
+                <el-button class="loginLoading" v-if="!taobaoLoading" type="primary" size="medium" @click="loginToTaobao">去登录</el-button>
+                <el-button class="loginLoading" v-else type="primary" size="medium" :loading="taobaoLoading">登录中</el-button>
+              </div>
+          </div>
+          <div v-else class="wrapBox" style="height: 200px; margin-top:105px;">
+            <div class="box">
+              <span class="same"><i class="iconfont iconDec">&#xe627;</i></span>
+              <el-input disabled v-model="taobaoName">
+              </el-input>
+            </div>
+            <div class="boxS">
+              <el-button v-if="active === 2"  size="medium" type="primary" @click="bindTaobao">绑 定</el-button>
+              <el-button v-else  size="medium" type="primary" @click="finish">完 成</el-button>
+            </div>
+          </div>
+          </el-form>
+        </div>
+        <div class="r-footer">
+          <p>如果您已拥有抖数账号，则可在此<router-link to="/login">登录</router-link></p>
+        </div>
+      </div>
+</div>
+

@@ -1,0 +1,19 @@
+<div class="hello">
+    <el-dialog :visible.sync="addGoodsFocuDialog" :show-close=false :modal=false class="premium">
+    <div slot="title" class="header">
+        <h2>修改溢价</h2>
+        <el-button icon="el-icon-close" @click="closeModal"></el-button>
+        <div v-if="addWordSucceed" class="m-checkbox-tip">
+        <!-- <i class="el-icon-success"></i>
+        添加成功 -->
+        </div>
+    </div>
+    <div class="premiumContent">
+    <p>将溢价修改为：</p>
+    <p><el-input placeholder="5-300整数" v-on:input="betweenRange()" v-model="price"></el-input>&nbsp; %</p>
+    <p class="errorP" v-if="showErrorP">您所输入的溢价范围有误</p>
+    <el-button type="primary" plain class="btnCancel">取消</el-button>
+    <el-button type="primary" class="btnConfirm">确定</el-button>
+    </div>
+    </el-dialog>
+</div>

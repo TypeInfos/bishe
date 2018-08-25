@@ -1,0 +1,23 @@
+<div class="hello">
+    <el-dialog :visible.sync="addGoodsFocuDialog" :show-close=false :modal=false class="guidance">
+    <div slot="title" class="header">
+        <h2>温馨提示</h2>
+        <el-button icon="el-icon-close" @click="closeModal"></el-button>
+        <div v-if="addWordSucceed" class="m-checkbox-tip">
+        <!-- <i class="el-icon-success"></i>
+        添加成功 -->
+        </div>
+    </div>
+    <div class="guidanceContent">
+    <p>感谢您使用抖数产品，为了您更好地体验产品，建议您：</p>
+    <div class="twoBtn">
+        <el-button type="primary" plain @click="lookFuncView">查看功能概览</el-button>
+        <el-button type="primary" plain @click="lookUse">查看使用教程</el-button>
+    </div>
+    <p>如您已了解，请开始您的抖数之旅吧：</p>
+    <div class="oneBtn">
+        <el-button type="primary" @click="closeModal">立即使用</el-button>
+    </div>
+    </div>
+    </el-dialog>
+</div>

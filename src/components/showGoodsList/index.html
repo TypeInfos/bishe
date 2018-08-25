@@ -1,0 +1,68 @@
+<div :class="{'aside':true,'isFixed':asideFixed}">
+  <div v-loading="goodsInfoLoading" element-loading-text="加载商品信息" element-loading-spinner="el-icon-loading">
+      <div class="goodsInfo">
+          <div class="imgShow">
+            <img :src="imgUrl">
+          </div>
+          <div class="pricedate">
+            <!-- goodsPrice -->
+            <p class="priceP">价格：{{goodsPrice}}</p>
+            <div class="putawayDate">
+              <p>上架时间：</p>
+              <!-- putawayDate -->
+              <p>{{putawayDate}}</p>
+            </div>
+          </div>
+        </div>
+        <a :href="goodsUrl" target="_blank" class="goodsName">{{goodsTitle}}</a>
+        <el-button type="primary" @click="addGoodsFocus">添加商品监控</el-button>
+        <!-- 过滤关注商品列表 -->
+        <el-input
+        placeholder="请输入内容"
+        v-model="searchState"
+        class="searchMonitoring"
+        prefix-icon="el-icon-search"
+        clearable>
+      </el-input>
+        <!-- 取消关注 -->
+        <el-dialog :visible.sync="cancelFocus" :show-close=false :modal=false>
+          <div slot="title" class="header">
+            <h2>取消关注</h2>
+            <el-button icon="el-icon-close" @click="cancelFocus = false"></el-button>
+          </div>
+          <div class="deleteWordContent">
+            <p>是否确定取消关注“{{cancelFocusWordName}}”?取消之后将 无法查看该商品词根雷达的数据，请谨慎操作!
+            </p>
+            <div class="deleteWordButton">
+              <el-button type="primary" @click="cancelFocusWord">确定</el-button>
+              <el-button type="primary" @click="cancelFocus = false">取消</el-button>
+            </div>
+          </div>
+        </el-dialog>
+        <div class="refresh">
+          <i class="iconfont refreshButton" ref="myRefresh" @click="refreshGoodsData">&#xe60a;</i>
+          <p>刷新获取商品数据准备情况</p>
+        </div>
+        <div class="goodsList">
+          <!-- flex布局 -->
+          <div v-for="(item, index) in filterFocusOn" :key="index" @mouseenter="enter(index)" @mouseleave="leave(index)">
+            <el-popover placement="bottom" width="150" :open-delay=100 visible-arrow="false" trigger="hover" value-key="title" :content="item.title">
+              <span class="u-pic" slot="reference" @click="searchGoods(index)">
+                <img :src="item.imgUrl" />
+                <span :class="'status' + item.status">
+                  <img v-if="item.status == 1" src="../../assets/svg/rings.svg" alt="加载中">
+                  <p v-if="item.status == 1">加载中</p>
+                  <img v-if="item.status == 2" src="../../assets/svg/grid.svg" alt="未加载">
+                  <p v-if="item.status == 2">未加载</p>
+                </span>
+              </span>
+            </el-popover>
+            <i v-if="item.deleteFlag" class="el-icon-close img-delete" @click="deleteFocusGoods(index)"></i>
+          </div>
+          <div class="limit">
+            <span class="lastNum">您还剩余
+              <em> 20个 </em>额度～</span>
+          </div>
+        </div>
+  </div>
+</div>

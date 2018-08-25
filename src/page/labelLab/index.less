@@ -1,0 +1,1059 @@
+@import url("variable.less");
+.isFixed{
+  position:fixed !important;
+  top:0 !important;
+  z-index:999;
+}
+.el-main,.m-header{
+  min-width: 1375px;
+}
+
+.el-icon-circle-close{
+  line-height: 40px !important;
+}
+.el-card__header{
+  position: relative;
+  .headerContent{
+    font-size: 16px;
+    color: #333333;
+    font-weight: 500;
+  }
+  .annotation{
+    float: right;
+    padding: 0;
+    margin:0;
+    line-height: 20px;
+    color: #4A90E2;
+    &:hover{
+      color: @green;
+    }
+  }
+}
+.label-lab{
+  width: 100%;
+  min-width: 1175px;
+  .label-left{
+    overflow: hidden;
+    // position: relative;
+    width: 230px;
+    background-color: @white;
+    float: right;
+    .selectPlan{
+      .filterPlans{
+        width: 220px;
+        margin: 5px;
+      }
+      .planNav{
+        border:none;
+        .el-menu{
+          max-height: 300px;
+          overflow-y: scroll;
+        }
+        .contentPlan{
+          padding-left: 20px !important;
+        }
+      }
+      .planSelect{
+        width: 220px;
+        margin-left: 5px;
+      }
+    }
+    .goodsInfo{
+      width: 210px;
+      margin: 10px;
+      display: flex;
+      justify-content: space-between;
+      .imgShow{
+        width: 100px;
+        height: 100px;
+        background-color: @white;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .namePrice{
+        display: flex;
+        justify-content: space-between;
+        box-sizing: border-box;
+        padding:5px 0 5px;
+        flex-direction: column;
+        width: 100px;
+        height: 100px;;
+      }
+
+    }
+    .goodsName{
+      width: 90%;
+      display: block;
+      margin: 2px auto;
+      color: #4A90E2;
+    }
+
+    .selectGoods{
+      width: 100%;
+      .goodsList{
+        display: flex;
+    width: 220px;
+    margin:5px 10px 5px 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    min-height: 160px;
+    position: relative;
+    max-height: 440px;
+    overflow-y: scroll;
+    div{
+      width: 100px;
+      margin-top: 10px;
+      height: 100px;
+      position: relative;
+      .u-pic{
+        cursor: pointer;
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+      }
+      .backPlan{
+        width: 210px;
+        margin: 5px 10px 0 10px;
+      }
+      .filterPlans{
+        width: 210px;
+        margin: 10px;
+
+      }
+    }
+  }
+  .label-right{
+    background-color: azure;
+    width: calc(100% - 255px);
+    float: right;
+    margin-left: 25px;
+    min-height: 1000px;
+    min-width: 920px;
+    .wrap-title{
+      .el-card__body{
+        position: relative;
+        display: flex;
+        justify-content: center;
+        .el-dropdown-link{
+          font-size: 12px;
+        }
+        .terminal{
+          cursor: pointer;
+          margin-right: 10px;
+            &:hover{
+              color: black;
+            }
+          }
+          .source{
+            margin-right: 10px;
+          cursor: pointer;
+            &:hover{
+              color: black;
+            }
+          }
+          .oneKeyButton{
+            float: right;
+            position: absolute;
+            right: 10px;
+            line-height: 12px;
+            padding: 0;
+            margin: 0;
+            span{
+              font-size: 12px;
+            }
+          }
+      }
+    }
+    .groupAnalyze{
+      .dialogButton{
+        width: 80%;
+        min-width: 550px;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        button{
+          padding: 11px 16px;
+        }
+      }
+      .showIndex{
+        font-size: 12px;
+        cursor: pointer;
+        float: right;
+        padding: 0;
+        margin:0;
+        line-height: 20px;
+        color: #4A90E2;
+        &:hover{
+          color: #53A2FC;
+        }
+      }
+      .groups{
+        width: 100%;
+        .groupHeader{
+          .add{
+            border: 1px solid #999999;
+            color: #999999;
+            &:hover{
+              cursor: pointer;
+              border: 1px solid black;
+              color:black;
+            }
+          }
+          .groupName{
+            font-size: 12px;
+            display: inline-block;
+            margin: 0 20px 0 5px;
+          }
+
+          button{
+            span{
+            font-size: 12px;
+              color: #4A90E2;
+              &:hover{
+                color: #53A2FC;
+              }
+            }
+          }
+        }
+        .groupBody{
+          .cell{
+            text-align: center;
+          }
+          .el-table-column--selection{
+            >.cell{
+              padding-left: 34px;
+            }
+          }
+        }
+        .groupTotal{
+          .cell{
+            text-align: center;
+          }
+          width: calc(100% - 60px);
+          margin-left: 60px;
+        }
+      }
+      .allTableHeaderContainer{
+        padding: 0 0 0 60px;
+        .cell{
+          text-align: center;
+        }
+        .checkAll{
+          float: left;
+          margin-left: -60px;
+          width: 60px;
+          line-height: 59px;
+          >span{
+            margin-left: 34px;
+          }
+        }
+        .allTableHeader{
+          .el-table__body-wrapper{
+            display: none;
+          }
+        }
+      }
+
+    }
+    .labGroup{
+      .el-card__body{
+        padding: 0;
+        .groupInfo{
+          width: 920px;
+          margin: 0 auto;
+          box-sizing: border-box;
+          .labelLevel{
+            float: left;
+            width: 200px;
+            margin-top: 107px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            p{
+              color: #333333;
+              font-size:13px;
+              margin: 5px 0 10px 0;
+            }
+            h3{
+              margin: 12px 0 12px 0;
+            }
+            .face{
+              width: 132px;
+              height: 132px;
+              border-radius: 50%;
+              overflow: hidden;
+              position: relative;
+              .bgcolor{
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+
+                img{
+                  width: 132px;
+                  height: 132px;
+                  position: absolute;
+                  z-index: 1;
+                  bottom: 0;
+                  left: 0;
+                }
+                }
+            }
+          }
+          .pyramid{
+            position: relative;
+            float: left;
+            width: 720px;
+            height: 415px;
+            margin: 20px 0;
+            background-image: linear-gradient(to bottom,rgb(28, 133, 224),#73B5FF);
+            .tri1{
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 0;
+              height: 0;
+              border-top: 415px solid white;
+              border-right: 240px solid transparent;
+            }
+            .tri2{
+              position: absolute;
+              right: 0;
+              top: 0;
+              width: 0;
+              height: 0;
+              border-top: 415px solid white;
+              border-left: 240px solid transparent;
+            }
+            .p1{
+              text-align: center;
+
+              span{
+                i{
+                  font-size: 14px;
+                  color: white;
+                }
+                padding-top: 15px;
+                font-size: 14px;
+                color: rgba(255, 255, 255, 0.801);
+              }
+
+            }
+            .p2{
+              display: flex;
+              justify-content: space-between;
+              span{
+                color: rgba(255, 255, 255, 0.801);
+                font-size: 12px;
+
+              }
+            }
+          }
+        }
+      }
+
+    }
+    .tendency{
+      width: 100%;
+      height: 100%;
+      .checkListContainer{
+        overflow: hidden;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 0 150px 0 0;
+        .checkListDiv{
+          width: 100%;
+          float: left;
+          label{
+            margin: 2px;
+          }
+        }
+
+      .selectSurplus{
+        margin-right: -150px;
+        right: -150px;
+        float: left;
+        width: 150px;
+        text-align: center;
+        line-height: 22px;
+        span{
+          color: rgb(153, 153, 153);
+          margin-right: 10px;
+        }
+        button{
+          margin:0;
+          padding: 0;
+          border: 0;
+          span{
+            color: #0088FE;
+            &:hover{
+            color: rgb(251, 21, 83);
+            }
+          }
+        }
+      }
+      }
+    }
+
+  }
+}
+.statusPop{
+  width: 210px;
+  .popper__arrow{
+    display: none;
+  }
+}
+.focus-transform-arrow-icon{
+  transition: transform 0.2s;
+  transform: rotate(-180deg);
+}
+.unfocus-transform-arrow-icon{
+  transition: transform 0.2s;
+  transform: rotate(0deg);
+}
+.selectIndex{
+  width: 500px;
+  position: relative;
+  .m-checkbox-tip{
+    position: absolute;
+    height:25px;
+    width: 150px;
+    background-color: #FFBC2F;
+    line-height:25px;
+    text-align: center;
+    top:-20px;
+    bottom: 0;
+    margin:auto;
+    left:0;
+    right:0;
+    color: rgb(251, 251, 251);
+    border-radius: 2px;
+  }
+    h4{
+      margin: 20px 0 10px 10px;
+    }
+  .left{
+    float: left;
+    height: 300px;
+    width: 250px;
+    .checkListDiv{
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      label{
+        width: 100px;
+        margin-left: 10px;
+      }
+    }
+  }
+  .right{
+    float: left;
+    margin-left: 20px;
+    height: 300px;
+    width: 160px;
+    h4{
+      margin: 0 0 7px;
+      width: 110px;
+      height: 25px;
+      line-height: 25px;
+    }
+    .checkedDiv{
+      background: #fff;
+    border: 1px dotted #979797;
+    margin: 0 0 7px;
+    padding: 0 15px;
+    width: 110px;
+    height: 25px;
+    line-height: 25px;
+    }
+  }
+  .confirm{
+    float: right;
+    width: 160px;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 80px;
+    button{
+      padding: 11px 16px;
+    }
+  }
+}
+.rowStyle{
+  position: relative;
+}
+
+.crowdName{
+  position: relative;
+  p{
+    text-align: center;
+  }
+  .status{
+    font-size: 12px;
+    color: #cccccc;
+  }
+  .warmFlag{
+    cursor: pointer;
+    position:absolute;
+    color: #E63248;
+    font-size: 18px;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    line-height: 45px;
+  }
+}
+.pyramidStyle{
+  margin: 0 auto;
+  background-color: transparent;
+}
+
+
+// gjf  creategroup dialog
+.createGroups{
+  .el-dialog__body{
+    height: 250px;
+    background: rgba(216, 216, 216, 0.08539999999999999);
+    .createGroupsContent{
+      width: 220px;
+      margin: 20px auto;
+      position: relative;
+      // p:nth-child(1){
+      //   // height: 25px;
+      // }
+      .myDefinedGroup{
+        .myDefinedP{
+          margin-top: 20px;
+          margin-bottom: 14px;
+          marb
+          .el-input{
+            width: 180px;
+            input{
+              width:180px;
+              height:30px;
+              padding-left: 12px;
+              border-radius:4px;
+              margin-bottom: 50px;
+            }
+            input:hover{
+              border:1px solid @green;
+            }
+          }
+        }
+        .errorP{
+          font-size:10px;
+          color: @red;
+          position: absolute;
+          top: 20px;
+        }
+      }
+      .standardGroup{
+        .el-select{
+          width: 180px;
+          margin-bottom: 64px;
+          margin-top: 20px;
+          .el-input{
+            input{
+              height: 30px;
+              border-radius:4px;
+            }
+            input:hover{
+              border:1px solid @green;
+            }
+            .el-input__suffix{
+              .el-input__suffix-inner{
+                .el-input__icon{
+                  line-height: 30px;
+                }
+                // .el-icon-circle-close{
+                //   line-height: 30px;
+                // }
+              }
+            }
+          }
+        }
+      }
+      .btnCancel{
+        border-radius: 4px;
+        padding: 0 16px; //宽度由padding左右16px决定
+        height: 36px;
+        font-size: 14px;
+        background: @white;
+        color: @green;
+        border:1px solid @green;
+      }
+      .btnCancel:hover{
+        background: @green;
+        color: @white;
+      }
+      .btnConfirm{
+        border-radius: 4px;
+        padding: 0 16px; //宽度由padding左右16px决定
+        height: 36px;
+        font-size: 14px;
+        background: @green;
+        color: @white;
+        border:1px solid @green;
+        margin-left: 53px;
+      }
+      .btnConfirm:hover{
+        background:@green;
+        color: @white;
+      }
+    }
+  }
+}
+
+//modify group
+.createGroups{
+  .el-dialog__body{
+    height: 250px;
+    background: rgba(216, 216, 216, 0.08539999999999999);
+    .createGroupsContent{
+      width: 220px;
+      margin: 20px auto;
+      position: relative;
+      // p:nth-child(1){
+      //   // height: 25px;
+      // }
+      .myDefinedGroup{
+        .myDefinedP{
+          margin-top: 20px;
+          margin-bottom: 14px;
+          marb
+          .el-input{
+            width: 180px;
+            input{
+              width:180px;
+              height:30px;
+              padding-left: 12px;
+              border-radius:4px;
+              margin-bottom: 50px;
+            }
+            input:hover{
+              border:1px solid @green;
+            }
+          }
+        }
+        .errorP{
+          font-size:10px;
+          color: @red;
+          position: absolute;
+          top: 20px;
+        }
+      }
+      .standardGroup{
+        .el-select{
+          width: 180px;
+          margin-bottom: 64px;
+          margin-top: 20px;
+          .el-input{
+            input{
+              height: 30px;
+              border-radius:4px;
+            }
+            input:hover{
+              border:1px solid @green;
+            }
+            .el-input__suffix{
+              .el-input__suffix-inner{
+                .el-input__icon{
+                  line-height: 30px;
+                }
+                // .el-icon-circle-close{
+                //   line-height: 30px;
+                // }
+              }
+            }
+          }
+        }
+      }
+      .btnCancel{
+        border-radius: 4px;
+        padding: 0 16px; //宽度由padding左右16px决定
+        height: 36px;
+        font-size: 14px;
+        background: @white;
+        color: @green;
+        border:1px solid @green;
+      }
+      .btnCancel:hover{
+        background: @green;
+        color: @white;
+      }
+      .btnConfirm{
+        border-radius: 4px;
+        padding: 0 16px; //宽度由padding左右16px决定
+        height: 36px;
+        font-size: 14px;
+        background: @green;
+        color: @white;
+        border:1px solid @green;
+        margin-left: 53px;
+      }
+      .btnConfirm:hover{
+        background:@green;
+        color: @white;
+      }
+    }
+  }
+}
+
+
+
+
+.el-dialog{
+  width: 650px;
+  .el-dialog__header{
+    padding: 0;
+    height: 40px;
+    box-shadow: 0 0.5px 2px #dcdcdc;
+    .header{
+      width: 100%;
+      height: 100%;
+      h2{
+        width: 560px;
+        float: left;
+        line-height: 40px;
+        margin: 0;
+        padding-left: 50px;
+        font-size: 14px;
+      }
+      button{
+        position: relative;
+        width: 40px;
+        box-shadow: -0.5px 0 2px #dcdcdc;
+        height: 40px;
+        text-align: center;
+        margin: 0;
+        border-style: none;
+        i{
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 40px;
+          line-height: 40px;
+          font-size: 30px;
+        }
+      }
+    }
+  }
+}
+.el-card__header{
+  position: relative;
+  .headerContent{
+    font-size: 16px;
+    color: #333333;
+    font-weight: 500;
+  }
+  .annotation{
+    float: right;
+    padding: 0;
+    margin:0;
+    line-height: 20px;
+    color: #4A90E2;
+    &:hover{
+      color: rgb(251, 21, 83);
+    }
+  }
+  .m-checkbox-tip{
+    position: absolute;
+    height:25px;
+    width: 100px;
+    background-color: #FFBC2F;
+    line-height:25px;
+    text-align: center;
+    top:0;
+    bottom: 0;
+    margin:auto;
+    left:0;
+    right:0;
+    color: @white;
+    border-radius: 2px;
+  }
+  .rootContentWarn{
+    width: 180px;
+  }
+}
+
+//modify group
+.modifyGroups{
+  .el-dialog__body{
+    height: 250px;
+    background: rgba(216, 216, 216, 0.08539999999999999);
+    .modifyGroupsContent{
+      width: 220px;
+      margin: 0 auto;
+      position: relative;
+      p:nth-child(1){
+        margin-top: 43px;
+        .el-input{
+          width: 180px;
+          input{
+            width:180px;
+            height:30px;
+            padding-left: 12px;
+            border-radius:4px;
+            margin-bottom: 50px;
+          }
+          input:hover{
+            border:1px solid @green;
+          }
+        }
+      }
+      .errorP{
+        font-size:10px;
+        color: @red;
+        position: absolute;
+        top: 30px;
+      }
+      .btnCancel{
+        border-radius: 4px;
+        padding: 0 16px; //宽度由padding左右16px决定
+        height: 36px;
+        font-size: 14px;
+        background: @white;
+        color: @green;
+        border:1px solid @green;
+      }
+      .btnCancel:hover{
+        background: @green;
+        color: @white;
+      }
+      .btnConfirm{
+        border-radius: 4px;
+        padding: 0 16px; //宽度由padding左右16px决定
+        height: 36px;
+        font-size: 14px;
+        background: @white;
+        color:@green;
+        border:1px solid @green;
+        margin-left: 53px;
+      }
+      .btnConfirm:hover{
+        background:@green;
+        color: @white;
+      }
+    }
+  }
+}
+// peopleRate
+.peopleRate{
+  .el-dialog__body{
+    height: 250px;
+    background: rgba(216, 216, 216, 0.08539999999999999);
+    .peopleRateContent{
+      width: 220px;
+      margin: 0 auto;
+      position: relative;
+      p:nth-child(1){
+        margin-top: 43px;
+        font-size:16px;
+        color:rgba(51,51,51,1);
+      }
+      p:nth-child(2){
+        width: 120px;
+        // margin: 14px auto;
+        // margin-left: 20px;
+        margin-bottom: 50px;
+        .el-select{
+          .el-input{
+            .el-input__inner{
+              height: 30px;
+              border: none;
+              background: rgba(216, 216, 216, 0.08539999999999999);
+            }
+            .el-input__suffix{
+              .el-input__suffix-inner{
+                .el-input__icon{
+                  line-height: 0;
+                }
+              }
+            }
+          }
+        }
+      }
+      .btnCancel{
+        border-radius: 4px;
+        padding: 0 16px; //宽度由padding左右16px决定
+        height: 36px;
+        font-size: 14px;
+        background: @white;
+        color: @green;
+        border:1px solid @green;
+      }
+      .btnCancel:hover{
+        background: @green;
+        color: @white;
+      }
+      .btnConfirm{
+        border-radius: 4px;
+        padding: 0 16px; //宽度由padding左右16px决定
+        height: 36px;
+        font-size: 14px;
+        background: @white;
+        color:@green;
+        border:1px solid @green;
+        margin-left: 53px;
+      }
+      .btnConfirm:hover{
+        background:@green;
+        color: @white;
+      }
+    }
+  }
+}
+// 溢价
+.premium{
+  .el-dialog__body{
+    height: 250px;
+    background: rgba(216, 216, 216, 0.08539999999999999);
+    .premiumContent{
+      width: 220px;
+      margin: 0 auto;
+      margin-top: 20px;
+      position: relative;
+      p:nth-child(1){
+        width:84px;
+        height:17px;
+        font-size:12px;
+        color:rgba(51,51,51,1);
+        line-height:17px;
+      }
+      p:nth-child(2){
+        .el-input{
+          width: 180px;
+          input{
+            width:180px;
+            height:30px;
+            padding-left: 12px;
+            border-radius:4px;
+            margin-bottom: 50px;
+            margin-top: 20px;
+          }
+          input:hover{
+            border:1px solid @green;
+          }
+        }
+      }
+      .errorP{
+        font-size:10px;
+        color: @red;
+        position: absolute;
+        bottom: 70px;
+      }
+      .btnCancel{
+        border-radius: 4px;
+        padding: 0 16px; //宽度由padding左右16px决定
+        height: 36px;
+        font-size: 14px;
+        background: @white;
+        color: @green;
+        border:1px solid @green;
+      }
+      .btnCancel:hover{
+        background: @green;
+        color: @white;
+      }
+      .btnConfirm{
+        border-radius: 4px;
+        padding: 0 16px; //宽度由padding左右16px决定
+        height: 36px;
+        font-size: 14px;
+        background: @white;
+        color:@green;
+        border:1px solid @green;
+        margin-left: 53px;
+      }
+      .btnConfirm:hover{
+        background:@green;
+        color: @white;
+      }
+    }
+  }
+}
+//peopleMove
+.peopleMove{
+  .el-dialog__body{
+    height: 250px;
+    background: rgba(216, 216, 216, 0.08539999999999999);
+    .peopleRateContent{
+      width: 220px;
+      margin: 0 auto;
+      position: relative;
+      p:nth-child(1){
+        margin-top: 43px;
+        font-size:12px;
+        color:rgba(74,74,74,1);
+      }
+      p:nth-child(2){
+        width: 180px;
+        margin-top: 14px;
+        margin-bottom: 50px;
+      }
+      .btnCancel{
+        border-radius: 4px;
+        padding: 0 16px; //宽度由padding左右16px决定
+        height: 36px;
+        font-size: 14px;
+        background: @white;
+        color: @green;
+        border:1px solid @green;
+      }
+      .btnCancel:hover{
+        background: @green;
+        color: @white;
+      }
+      .btnConfirm{
+        border-radius: 4px;
+        padding: 0 16px; //宽度由padding左右16px决定
+        height: 36px;
+        font-size: 14px;
+        background: @white;
+        color: @green;
+        border:1px solid @green;
+        margin-left: 53px;
+      }
+      .btnConfirm:hover{
+        background: @green;
+        color: @white;
+      }
+    }
+  }
+}
+
+.el-table__footer{
+  .has-gutter{
+    tr{
+      td:first-child{
+        position: absolute;
+      }
+    }
+  }
+}
+
+// 拖拽时的效果样式
+.sortable-ghost{
+  opacity: .5;
+  color: @white !important;
+  background: @green !important;
+}
+
+.el-table_2_column_6{
+  .el-table-column--selection{
+    border-bottom: 1px solid @white;
+  }
+}

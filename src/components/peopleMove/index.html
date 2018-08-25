@@ -1,0 +1,25 @@
+<div class="hello">
+    <el-dialog :visible.sync="addGoodsFocuDialog" :show-close=false :modal=false class="peopleRate">
+    <div slot="title" class="header">
+        <h2>人群移动</h2>
+        <el-button icon="el-icon-close" @click="closeModal"></el-button>
+        <div v-if="addWordSucceed" class="m-checkbox-tip">
+        <!-- <i class="el-icon-success"></i>
+        添加成功 -->
+        </div>
+    </div>
+    <div class="peopleRateContent">
+    <p>请选择目标群组：</p>
+    <p><el-select v-model="rate" clearable placeholder="">
+        <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+        </el-option>
+    </el-select></p>
+    <el-button type="primary" plain class="btnCancel">取消</el-button>
+    <el-button type="primary" class="btnConfirm">确定</el-button>
+    </div>
+    </el-dialog>
+</div>
