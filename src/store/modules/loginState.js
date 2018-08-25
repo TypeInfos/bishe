@@ -2,7 +2,7 @@
 const state = {
   isLogin: false,
   bindTaobaoName: '',
-  editorExtensionId:'hoiafcjgbaeikocdimflfaaejkbhfoha',  //本地ID
+  editorExtensionId:'kagajpfmnpdpboplehmphbppflfmihnp',  //本地ID
   // lnbdcilfaojoldgckojoidnafpagkjbn   上线ID
   // cpnmealmpgcapggbgjgfahpiifbbooef  测试ID
 };
