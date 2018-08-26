@@ -2,7 +2,7 @@
 
 </template>
 
-<style lang="less" src="./index.less" scoped>
+<style lang="less" src="./index.less">
 
 </style>
 
@@ -55,14 +55,14 @@ export default {
       modifyGroupRepeat: false, // 修改群组名字 检查是否名字重复
       modifyGroupName: '', // 修改群组名字input
       modifyGroupNameDisable: false,
-      initGroupLoading: false, // 初始化群组 loading
-      initGroupLoadingText: '',
+      initGroupLoading: true, // 初始化群组 loading
+      initGroupLoadingText: '请先选择计划和商品之后，才能在此查看数据哦～',
       peopleMoveLoading: false, // 人群移动弹窗的loading
       labelTendencyData: [], // 标签趋势数据
       saveLabelTendencyData: [], // 保存 已经转换完的数据
       createPeopleDialog: false, // 创建人群的dialog
       peopleMoveTableRef: '',
-      tagScore: 0,
+      tagScore: 0, // 标签化分数
       tableRowNode: [],
       loadingPlans: false,
       allPlans: [], // 所有计划
@@ -80,6 +80,7 @@ export default {
       currentUpdateGroupId: '', // 将要修改的群组
       currentToken: null, // 当前token
       loginName: '', // 用户的登陆手机号
+      oneKeyTimer: null, // 一键登录进度条的计时器
       groupAnalyzeLoading: false, // 群组分析loading
       modifyGroupLoading: false, // 修改群组名的loading
       peopleRateLoading: false, // 修改人群loading
@@ -331,6 +332,7 @@ export default {
   },
   methods: {
     // gjfAdd 进入页面先判断是否订购产品
+
     checkOrder() {
       this.$axios.post(this.$api.checkOrder, {
         pid: 1, // pid为1是词根雷达
@@ -859,8 +861,6 @@ export default {
     // 一键创建人群
     oneKey() {
       const param = this.setParams();
-      this.initGroupLoadingText = '加载中，请稍后';
-      this.initGroupLoading = true;
       const cookieValue = {
         adGroupId: this.currentAdGroupId,
         productId: this.currentProductId,
@@ -871,15 +871,35 @@ export default {
         linkUrl: this.linkUrl,
         campaignId: this.currentCampaignId,
       };
+
       this.$axios.post(this.$api.ifFirstTag, cookieValue)
         .then((res) => {
           if (res) {
-            this.$confirm('是否一键创建人群, 是否继续?', '提示', {
+            this.$confirm(`注意：一键创建人群将快捷帮您创建好标准化的金字塔群组及人群，
+            同时会同步删除商品直通车后台精选人群的人群数据并按照标准化人群进行创建，
+            请谨慎操作！`, '提示', {
               confirmButtonText: '确定',
               cancelButtonText: '取消',
               closeOnClickModal: false,
-              type: 'info',
+              type: 'warning',
             }).then(() => {
+              let complete = false;
+              this.initGroupLoadingText = 0;
+              this.initGroupLoading = true;
+              this.oneKeyTimer = setInterval(() => {
+                if (this.initGroupLoadingText < 90) {
+                  this.initGroupLoadingText = this.initGroupLoadingText + (Math.random() * 1.5);
+                } else {
+                  this.initGroupLoadingText = this.initGroupLoadingText + (Math.random() * 0.4);
+                  if (this.initGroupLoadingText >= 99.6) {
+                    clearInterval(this.oneKeyTimer);
+                  }
+                  if (complete) {
+                    this.initGroupLoadingText = 100;
+                    this.initGroupLoading = false;
+                  }
+                }
+              }, 500);
               this.$axios.post(this.$api.initGroup, {
                 adGroupId: this.currentAdGroupId,
                 productId: this.currentProductId,
@@ -887,6 +907,7 @@ export default {
               })
                 .then((res) => {
                   this.initGroupLoading = false;
+                  complete = true;
                   this.$message({
                     type: 'success',
                     message: '创建成功!',
@@ -904,12 +925,14 @@ export default {
                       this.labelTendency();
                     });
                 });
-            }).catch(() => {});
+            }).catch((err) => {
+              console.log(err);
+            });
           } else {
             this.initGroupLoading = false;
             this.$message({
-              type: 'info',
-              message: '改该商品已一键创建人群',
+              type: 'warning',
+              message: '该商品已一键创建人群，无需重复点击',
             });
           }
         });
