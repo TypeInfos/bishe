@@ -1,5 +1,5 @@
 <div class="label-lab">
-  <div class="label-right" v-loading="initGroupLoading" v-show=true>
+  <div class="label-right" v-loading="initGroupLoading" :element-loading-text="initGroupLoadingText" v-show=true>
     <el-card class="wrap-title" shadow="hover">
       <!-- v-loading="searchLoading" -->
       <el-dropdown class="terminal" trigger="click" size="small" @command="chooseZd">
@@ -121,7 +121,7 @@
                   <draggable v-model="checkIndexList" :options="{group:'IndexList'}">
                     <div class="checkedDiv" v-for="item in checkIndexList">{{item}}</div>
                   </draggable>
-                </div> 
+                </div>
               </div>
               <div class="confirm">
                 <el-button type="primary" @click="showIndexCancel" class="checkList-cancel">取消</el-button>

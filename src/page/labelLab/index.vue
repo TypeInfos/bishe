@@ -2,7 +2,7 @@
 
 </template>
 
-<style lang="less" src="./index.less">
+<style lang="less" src="./index.less" scoped>
 
 </style>
 
@@ -56,6 +56,7 @@ export default {
       modifyGroupName: '', // 修改群组名字input
       modifyGroupNameDisable: false,
       initGroupLoading: false, // 初始化群组 loading
+      initGroupLoadingText: '',
       peopleMoveLoading: false, // 人群移动弹窗的loading
       labelTendencyData: [], // 标签趋势数据
       saveLabelTendencyData: [], // 保存 已经转换完的数据
@@ -329,22 +330,22 @@ export default {
     };
   },
   methods: {
-    //gjfAdd 进入页面先判断是否订购产品
-      checkOrder(){
-        this.$axios.post(this.$api.checkOrder,{
-          pid:1      //pid为1是词根雷达
-        }).then((res)=>{
-          if(res.data){
-            this.getShopId();
-          }else{
-            this.$message({
-              message:res.message,
-              type:'warning'
-            });
-            this.$router.push('/buy1');
-          }
-        });
-      },
+    // gjfAdd 进入页面先判断是否订购产品
+    checkOrder() {
+      this.$axios.post(this.$api.checkOrder, {
+        pid: 1, // pid为1是词根雷达
+      }).then((res) => {
+        if (res.data) {
+          this.getShopId();
+        } else {
+          this.$message({
+            message: res.message,
+            type: 'warning',
+          });
+          this.$router.push('/buy1');
+        }
+      });
+    },
     // 关闭createPeople dialog
     closeCreatePeopleDialog() {
       this.createPeopleDialog = false;
@@ -682,7 +683,7 @@ export default {
           }
         }
       }
-      
+
       param.level = this.rate;
       this.$axios.post(this.$api.levelCrowd, param)
         .then((res) => {
@@ -858,6 +859,7 @@ export default {
     // 一键创建人群
     oneKey() {
       const param = this.setParams();
+      this.initGroupLoadingText = '加载中，请稍后';
       this.initGroupLoading = true;
       const cookieValue = {
         adGroupId: this.currentAdGroupId,
@@ -1041,6 +1043,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning',
         }).then(() => {
+          this.initGroupLoadingText = '加载中，请稍等';
           this.initGroupLoading = true;
           this.$axios.post(this.$api.deleteCrowd, param)
             .then((res) => {
@@ -1209,13 +1212,14 @@ export default {
       this.$axios.post(this.$api.tagScore, param)
         .then((res) => {
           this.tagScore = Number(res.data.score);
-          //this.tagScore = Number(50); // 测试笑脸专用
+          // this.tagScore = Number(50); // 测试笑脸专用
           document.querySelector('.bgcolor').style.height = `${this.tagScore}%`;
         });
     },
     // 获取群组list
     getCrowdInfo() {
       const param = this.setParams();
+      this.initGroupLoadingText = '加载中，请稍后';
       this.initGroupLoading = true;
       const cookieValue = {
         adGroupId: this.currentAdGroupId,
@@ -1385,8 +1389,8 @@ export default {
   // 请求axios
   created() {
     // this.getShopId();
-    //进入页面先判断是否订购产品
-      this.checkOrder();
+    // 进入页面先判断是否订购产品
+    this.checkOrder();
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll);
@@ -1395,7 +1399,7 @@ export default {
     document.getElementsByClassName('el-main')[0].style.height = 'auto';
   },
   beforeDestroy() {
-    window.removeEventListener('scroll',this.handleScroll);
+    window.removeEventListener('scroll', this.handleScroll);
   },
   computed: {
     currentRptkey() {
