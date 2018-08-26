@@ -77,7 +77,7 @@ module.exports = {
     'consistent-return': 0,
     'no-useless-return': 0,
     'max-len': 0,
-    'prefer-const': false,
+    'prefer-const': 0,
     'linebreak-style': ["off", "windows"],
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
