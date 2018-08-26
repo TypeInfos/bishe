@@ -1,104 +1,283 @@
 <div class="root-radar">
-  <div class="aside">
-    <div class="goodsInfo">
-      <!-- 图片，暂时用div代替 -->
-      <div class="imgShow"></div>
-      <div class="pricedate">
-        <!-- goodsPrice -->
-        <p class="priceP">价格：123</p>
-        <p>上架时间：</p>
-        <!-- putawayDate -->
-        <p>2018-08-08</p>
-        <!-- putawayDetailDate -->
-        <p>08:08:03</p>
+  <el-dialog v-loading="initGoodsFocusLoading"
+  element-loading-text="正在为您添加商品监控"
+    class="initGoodsInfo" :visible.sync="firstFocusGoods" :close-on-click-modal=false :lock-scroll=true :show-close=false
+    :modal=true>
+    <div slot="title" class="header addWordDialog">
+      <h2>添加初始化商品</h2>
+      <div v-if="overflowSurplus" class="m-checkbox-tip">
+        <i class="el-icon-success"></i>
+        添加成功
       </div>
     </div>
-    <p>这是商品名称</p>
-
-    <el-button type="primary">添加商品监控</el-button>
-        <el-autocomplete
-        class="searchMonitoring"
-        v-model="state4"
-        prefix-icon="el-icon-search"
-        :fetch-suggestions="querySearchAsync"
-        placeholder="请输入内容"
-        @select="handleSelect"
-      >
-    </el-autocomplete>
-    <div class="goodsList">
-      <!-- flex布局 -->
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+    <el-input placeholder="请输入内容" v-model="initGoodsName" prefix-icon="el-icon-search" clearable>
+    </el-input>
+    <!--  -->
+    <div v-loading="unFocusListLoading">
+      <div class="imgList">
+        <div class="imgShow" v-for="(item, index) in result" :key="index">
+          <el-popover placement="bottom" width="150" :open-delay=100 visible-arrow="false" trigger="hover" value-key="title" :content="item.title">
+            <span class="u-pic" slot="reference" @click="selectItem(index)">
+              <img :src="item.imgUrl" />
+            </span>
+          </el-popover>
+          <i v-if="item.selectFlag" class="el-icon-success img-select"></i>
+        </div>
+      </div>
     </div>
-    <el-button style="width: 100%;" type="primary">订购额度</el-button>
-    <div class="limit">
-      您还剩余<em> 8个 </em>额度～
+
+    <p>可选{{selectSurplus}}/20</p>
+    <div class="block">
+      <el-pagination background  :page-size=16 :current-page.sync="firstFocusGoodsCurrentPage" layout="prev, pager, next" :total="firstFocusGoodsTotalPage">
+      </el-pagination>
+    </div>
+    <div class="edu">
+      <el-button @click="initFocusGoodsList" :disabled="selectSurplus < 1 ? true : false" type="primary">确定</el-button>
+    </div>
+  </el-dialog>
+
+  <el-dialog v-loading="addGoodsFocusloading"
+  element-loading-text="正在为您添加商品监控"
+    class="initGoodsInfo in" :visible.sync="addGoodsFocusDialog" :close-on-click-modal=false :lock-scroll=true
+    :modal=true>
+    <div slot="title" class="header addWordDialog">
+      <h2>添加关注商品</h2>
+      <div v-if="overflowSurplus" class="m-checkbox-tip">
+        <i class="el-icon-success"></i>
+        添加成功
+      </div>
+    </div>
+    <el-input placeholder="请输入内容" v-model="initGoodsName" prefix-icon="el-icon-search" clearable>
+    </el-input>
+    <!--  -->
+    <div class="imgList" v-loading="unFocusListLoading">
+      <div class="imgShow" v-for="(item, index) in result" :key="index">
+        <el-popover placement="bottom" width="150" :open-delay=100 visible-arrow="false" trigger="hover" value-key="title" :content="item.title">
+          <span class="u-pic" slot="reference" @click="selectItem(index)">
+            <img :src="item.imgUrl" />
+          </span>
+        </el-popover>
+        <i v-if="item.selectFlag" class="el-icon-success img-select"></i>
+      </div>
+    </div>
+    <p>可选{{selectSurplus}}/20</p>
+    <div class="block">
+      <el-pagination background  :page-size=16 :current-page.sync="firstFocusGoodsCurrentPage" layout="prev, pager, next" :total="firstFocusGoodsTotalPage">
+      </el-pagination>
+    </div>
+    <div class="edu">
+      <el-button @click="addFocusBtn" :disabled="selectSurplus < 1 ? true : false" type="primary">确定</el-button>
+    </div>
+  </el-dialog>
+
+  <div class="containerContent">
+    <div class="content">
+      <el-alert
+        v-if="!allStatusComplete"
+        title="您的数据正在准备中，请勿关闭浏览器或者退出登录，否则可能导致数据异常~"
+        type="warning"
+        :closable=false
+        center>
+      </el-alert>
+    <div class="card">
+        <div class="wrap-title">
+          <div class="m-select">
+            <el-dropdown size="small" @command="chooseZd">
+              <span class="el-dropdown-link">
+                {{czd}}
+                <i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="全部终端">全部终端</el-dropdown-item>
+                <el-dropdown-item command="PC端">PC端</el-dropdown-item>
+                <el-dropdown-item command="移动端">移动端</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+            <el-dropdown size="small" class="ml20" trigger="hover" :hide-on-click="true" @command="chooseDate">
+              <span class="el-dropdown-link">
+                {{turnNealDay}}
+                <i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item :command="`最近30天${thirtyDay}`">
+                  <span class="m-time-dropDown">最近30天
+                    <span class="time">{{thirtyDay}}</span>
+                  </span>
+                </el-dropdown-item>
+                <el-dropdown-item command="自定义" divided>
+                  <span class="m-time-dropDown">自定义
+                    <span class="time">
+                      <div class="block">
+                        <el-date-picker v-model="customTime" type="datetimerange" :picker-options="pickerOptions" range-separator="至" start-placeholder="开始日期"
+                          end-placeholder="结束日期" align="right" popper-class="gjfComponent" format="yyyy-MM-dd">
+                        </el-date-picker>
+                      </div>
+                    </span>
+                  </span>
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
+        </div>
+        <el-button class="repairBtn" type="primary" :loading="repairDataStatus" @click="repairData" plain>修复数据</el-button>
+        <el-button class="importBtn" disabled type="primary" plain>导入数据</el-button>
+      </div>
+      <!-- </el-card> -->
+      <!-- v-loading="singleItemLoading" -->
+      <el-card v-if="isShow" class="box-card mt20"  element-loading-text="为您加载商品详细数据，请稍后" v-loading="checkGoodsInfoDataLoading" shadow="hover">
+        <div slot="header" class="clearfix">
+          <span class="headerContent">单品整体分析</span>
+          <!-- 先不加等8月份后再进行优化 -->
+          <!-- <el-button class="annotation" type="text">指标注释</el-button> -->
+          <div v-if="checkboxListFlag" class="m-checkbox-tip">
+            <i class="el-icon-warning"></i>
+            最多选择2项
+          </div>
+        </div>
+        <div class="checkListContainer">
+          <el-checkbox-group class="checkListDiv" v-model="checkList" :max="2">
+            <el-checkbox v-for="(item, index) in checkListGroup" :key="index" :label="item.label" @click.native="checkCheckbox">
+            </el-checkbox>
+          </el-checkbox-group>
+          <div class="selectSurplus">
+            <span>已选 {{checkSurplus}}/2</span>
+            <el-button @click="resetCheckBoxList1" type="text">清空</el-button>
+          </div>
+        </div>
+        <div v-if="globalAnalysisShow" class="globalAnalysis" v-loading="singleItemLoading" element-loading-text="拼命加载中">
+          <el-button class="globalAnalysisTabelData" @click="globalAnalysisDetailData" type="text">查看详情</el-button>
+          <lineChart  chart-id="lineChart" :chart-data="singleChartsData">
+          </lineChart>
+        </div>
+      </el-card>
+      <el-card v-if="isShow"  element-loading-text="为您加载商品详细数据，请稍后" v-loading="checkGoodsInfoDataLoading" class="box-card mt20" shadow="hover">
+        <div slot="header" class="clearfix">
+          <span class="headerContent">单品词根分析</span>
+          <!-- 先不加等8月份后再进行优化 -->
+          <!-- <el-button class="annotation" type="text">指标注释</el-button> -->
+          <div v-if="checkboxList2Flag" class="m-checkbox-tip">
+            <i class="el-icon-warning"></i>
+            最多选择2项
+          </div>
+          <div v-if="checkboxRootsListFlag" class="m-checkbox-tip rootContentWarn">
+            <i class="el-icon-warning"></i>
+            最多选择4项，可以切换哦～
+          </div>
+        </div>
+        <div class="roots">
+          <el-checkbox-group class="rootContent" v-model="checkListRoot" :max="4" @click.native="checkCheckbox3" size="medium" v-loading="itemLoading">
+            <el-checkbox-button v-for="(item, index) in root" :label="item" :key="index">{{item}}</el-checkbox-button>
+          </el-checkbox-group>
+        </div>
+        <div class="checkListContainer2">
+          <div class="sortData" v-if="rootAnalysisCompleteLoading">
+            <p>排序字段：</p>
+            <el-dropdown size="small" class="pxzd" @command="choosePxzd">
+              <span class="el-dropdown-link">
+                {{pxzd}}
+                <i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="词根效率分">词根效率分</el-dropdown-item>
+                <el-dropdown-item command="直通车花费">直通车花费</el-dropdown-item>
+                <el-dropdown-item command="自然搜索访客数">自然搜索访客数</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
+          <el-checkbox-group class="checkListDiv" v-model="checkList2" :max="2">
+            <el-checkbox v-for="(item, index) in checkListGroup2" :key="index" :label="item.label" @click.native="checkCheckbox2">
+            </el-checkbox>
+          </el-checkbox-group>
+          <div class="selectSurplus">
+            <span>已选 {{checkSurplus2}}/2</span>
+            <el-button @click="resetCheckBoxList2" type="text">清空</el-button>
+          </div>
+        </div>
+        <!--ID 为喵点-->
+        <div v-for="(item, index) in wrapData" :key="index" class="rootEcharts" :id="item.root" @mouseenter="enter(index)" @mouseleave="leave(index)">
+          <el-button class="deleteAnaysis" @click="deleteAnaysis(index)" type="text">删除词根</el-button>
+          <el-button class="rootAnalysisTabelData" @click="rootAnalysisDetailData(index)" type="text">查看详情</el-button>
+          <div class="rootEchartLeft">
+            <h1>{{item.rootName}}</h1>
+            <p>最近7天效率分
+              <el-popover
+              placement="top-start"
+              width="400"
+              trigger="hover"
+              content="近七天的词根效率分，代表的是这个词根对于搜索流量拉动作用的效果评分。
+              例如，AB两个词根同样花费了100块钱，其中A词根搜索增长了200个自然搜索访客，B词根增长了120个自然搜索流量。
+              那么A词根的词根效率分会高于B词根。
+              词根效率分综合了直通车花费，直通车点击，自然搜索关键词，自然搜索访客数等多项数据指标综合计算而成。">
+                <i class="iconfontFuncView" slot="reference" >&#xe7c6;</i>
+              </el-popover>
+            </p>
+            <div class="effi">
+              <p>{{item.efficiency}}</p>
+            </div>
+            <div class="handleButton">
+              <el-button @click="" disabled type="text">关键词操作</el-button>
+              <el-button @click="" disabled type="text">同词根宝贝对比</el-button>
+              <el-button @click="" disabled type="text">相关搜索词分析</el-button>
+            </div>
+          </div>
+          <!-- 渲染每个词根的图表 -->
+          <div class="rootEchartRight">
+            <lineChart :chart-id="`lineChart-${index}`" :chart-data="item.rootChartsData">
+            </lineChart>
+          </div>
+        </div>
+        <div v-loading="!rootAnalysisCompleteLoading" element-loading-text="为您加载词根数据" style="height:100px;"></div>
+        <h3 v-if="maxEcharts" class="maxH3">最多只能显示四个词根的数据哦～</h3>
+        <h3 v-else="maxEcharts" class="maxH3">最多可以显示四个词根的数据哦～</h3>
+        <div class="add-world mb20">
+          <p @click="addWorldVisible = true">+</p>
+          <span>添加自定义词根</span>
+        </div>
+      </el-card>
+      <!-- 删除词根 -->
+      <el-dialog :visible.sync="deleteWorldVisible" :show-close=false>
+        <div slot="title" class="header">
+          <h2>删除词根</h2>
+          <el-button icon="el-icon-close" @click="deleteWorldVisible = false"></el-button>
+        </div>
+        <div class="deleteWordContent">
+          <p>是否确定删除词根“”?</p>
+          <div class="deleteWordButton">
+            <el-button type="primary" @click="saveAddWord">确定</el-button>
+            <el-button type="primary" @click="deleteWorldVisible = false">取消</el-button>
+          </div>
+        </div>
+      </el-dialog>
+      <!-- 添加自定义词根 -->
+      <el-dialog :visible.sync="addWorldVisible" :show-close=false>
+        <div slot="title" class="header">
+          <h2>添加自定义词根</h2>
+          <el-button icon="el-icon-close" @click="addWorldVisible = false"></el-button>
+        </div>
+        <div class="addWordContent">
+          <el-input placeholder="请输入内容" v-model="wordInput" clearable>
+          </el-input>
+          <div class="addCustomWordButton">
+            <el-button type="primary" @click="saveAddWord">确定</el-button>
+            <el-button type="primary" @click="addWorldVisible = false">取消</el-button>
+          </div>
+        </div>
+      </el-dialog>
     </div>
   </div>
-  <div class="content">
-      <!-- <el-card shadow="hover">
-          <div class="wrap-title" v-loading="searchLoading">
-              <span v-if="isShow">
-                  <span class="u-pic2 ml10"><img :src="goodsUrl" /></span>
-                  <span class="u-title">{{goodsTitle}}</span>
-                  <i v-if="!isCollect" class="iconfont icon-guanzhu u-sc" @click="collect"></i>
-                  <i v-else class="iconfont icon-guanzhu1 u-sc" @click="cancelCollect"></i>
-              </span>
-              <div class="m-select">
-                  <el-dropdown size="small" @command="chooseZd">
-                      <span class="el-dropdown-link">
-                          {{czd}}<i class="el-icon-arrow-down el-icon--right"></i>
-                      </span>
-                      <el-dropdown-menu slot="dropdown">
-                          <el-dropdown-item command="全部终端">全部终端</el-dropdown-item>
-                          <el-dropdown-item command="移动端">移动端</el-dropdown-item>
-                          <el-dropdown-item command="PC端">PC端</el-dropdown-item>
-                      </el-dropdown-menu>
-                  </el-dropdown>
-                  <el-dropdown size="small" class="ml20" trigger="hover" :hide-on-click="true" @command="chooseDate">
-                      <span class="el-dropdown-link">
-                          {{turnNealDay}}<i class="el-icon-arrow-down el-icon--right"></i>
-                      </span>
-                      <el-dropdown-menu slot="dropdown">
-                          <el-dropdown-item :command="`最近1天${oneDay}`">
-                              <span class="m-time-dropDown">最近1天<span class="time">{{oneDay}}</span></span>
-                          </el-dropdown-item>
-                          <el-dropdown-item :command="`最近7天${sevenDay}`">
-                              <span class="m-time-dropDown">最近7天<span class="time">{{sevenDay}}</span></span>
-                          </el-dropdown-item>
-                          <el-dropdown-item :command="`最近30天${thirtyDay}`">
-                              <span class="m-time-dropDown">最近30天<span class="time">{{thirtyDay}}</span></span>
-                          </el-dropdown-item>
-                          <el-dropdown-item command="自定义" divided>
-                              <span class="m-time-dropDown">自定义
-                                  <span class="time">
-                                      <el-date-picker
-                                          v-model="customTime"
-                                          type="daterange"
-                                          class="m-datepicker"
-                                          size="mini"
-                                          format="yyyy-MM-dd"
-                                          value-format="yyyy-MM-dd"
-                                          range-separator="至"
-                                          start-placeholder="开始日期"
-                                          end-placeholder="结束日期">
-                                      </el-date-picker>
-                                  </span>
-                              </span>
-                          </el-dropdown-item>
-                      </el-dropdown-menu>
-                  </el-dropdown>
-              </div>
-          </div>
-      </el-card> -->
-    </div>
+  <el-dialog class="rootRadartableDataSort" :title="tableDataTitle" :visible.sync="showTableDataDialog">
+      <tableData :table-data="tableData" :total-data="totalData"></tableData>
+  </el-dialog>
+  <showGoodsAside ref="showGoodsAside" :focus-on="focusOn"
+  @focusDialogToTrue="addGoodsFocusDialogFun"
+  :goodsInfoLoading="goodsInfoLoading"
+    :un-focus="unFocus"
+    @updateUnFocusData="unFocusList"
+    @updateFocusData="focusList"
+    @showDataForEchart="checkDataForEchart"
+    :unFocusLoading="unFocusListLoading">
+  </showGoodsAside>
+  <el-collapse-transition>
+    <guidance v-if="showGuidance"></guidance>
+  </el-collapse-transition>
 </div>

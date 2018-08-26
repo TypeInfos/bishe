@@ -23,25 +23,31 @@
           <el-button v-else size="mini" type="primary">{{time}} 秒</el-button>
         </div>
         <div class="box">
-          <span class="same">
-            <i class="iconfont iconDec">&#xe62d;</i>
-          </span>
-          <el-popover ref="popover" placement="right" title="标题" width="200" trigger="focus" content="这是一段内容,这是一段内容,这是一段内容,这是一段内容。">
+          <transition name="el-fade-in-linear">
+          <span class="secretError" v-if="showSecretError1">密码格式错误</span>
+          </transition>
+          <span class="same"><i class="iconfont iconDec">&#xe62d;</i></span>
+          <el-input v-popover:popover1 type="password"  placeholder="密码" v-model="pwd" @input="hideSecretError1"></el-input>
+          <el-popover ref="popover1" placement="bottom-start" popper-class="pwdPopover" @hide="secretError1" title="" width="250" trigger="focus" content="密码长度 8~16 位，由英文和数字组成">
           </el-popover>
-          <el-input placeholder="密码" v-popover:popover v-model="pwd"></el-input>
         </div>
         <div class="box">
-          <span class="same">
-            <i class="iconfont iconDec">&#xe636;</i>
-          </span>
-          <el-input placeholder="重复密码" v-model="rePwd">
-          </el-input>
+            <transition name="el-fade-in-linear">
+            <span class="secretError" v-if="showSecretError2">密码格式错误</span>
+            </transition>
+            <transition name="el-fade-in-linear">
+            <span class="secretError" v-if="showreSecretError" style="width: 108px;">两次密码输入不一致</span>
+            </transition>
+            <span class="same"><i class="iconfont iconDec">&#xe636;</i></span>
+            <el-input v-popover:popover2 type="password"  placeholder="重复密码" v-model="rePwd" @input="hideSecretError2"></el-input>
+            <el-popover ref="popover2" placement="bottom-start" popper-class="pwdPopover" @hide="secretError2" title="" width="250" trigger="focus" content="密码长度 8~16 位，由英文和数字组成">
+            </el-popover>
         </div>
         <div class="boxS">
 
         </div>
         <div class="boxS">
-          <el-button style="width: 100%;" @click="register" type="primary">修改密码</el-button>
+          <el-button style="width: 100%;" @click="forgetPwd" type="primary">修改密码</el-button>
         </div>
 
       </div>

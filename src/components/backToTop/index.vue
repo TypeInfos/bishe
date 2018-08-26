@@ -17,10 +17,10 @@ export default {
       const t = document.documentElement.scrollTop || document.body.scrollTop;
       // 当滚动到距离顶部200px时，返回顶部的锚点显示
       if (t >= 300) {
-        console.log('底部');
+        // console.log('底部');
         this.isShow = true;
       } else { // 恢复正常
-        console.log('没底部');
+        // console.log('没底部');
         this.isShow = false;
       }
     };
@@ -52,7 +52,7 @@ export default {
         display: inline-block;
         width: 50px;
         height: 50px;
-        background: rgb(247, 184, 79);
+        background: #1CCADA;
         border-radius:50%;
         font-size: 28px;
         text-align: center;
@@ -61,7 +61,7 @@ export default {
         margin-bottom:5px;
         opacity: 0.8;
         &:hover{
-            background: rgb(238, 170, 53);
+            background: #1CCADA;
         }
     }
   }

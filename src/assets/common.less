@@ -2,7 +2,7 @@ html,body{
   margin:0;
   padding:0;
   width: 100%;
-  height: 100%;
+  // height: 100%;
 }
 
 body{
@@ -12,18 +12,23 @@ body{
   background-color: #F6F4F7;
   position: relative;
   box-sizing: border-box;
-  scrollbar-shadow-color: blue;
-  scrollbar-highlight-color: blue;
+
+  // scrollbar-shadow-color: blue;
+  // scrollbar-highlight-color: blue;
+
   #app{
     height: 100%;
      width: 100%;
   }
    .el-container{
-      height: 100%;
       width: 100%;
+      height: 100%;
+      min-width: 1000px;
+      //  container 和 main 的height都为100%时是登录注册界面的，因为那个时候可以把footer向下顶
       .el-main{
-        height: 80%;
-        min-height: 700px;
+        height: 100%;
+        width: 100%;
+        
       }
    }
 }
@@ -93,10 +98,15 @@ span, i, label, b{
 }
 // 饿了么样式重置
 .el-header{
+  min-width: 1375px;
   padding:0;
+}
+.el-footer{
+  min-width: 1375px;
 }
 .el-main{
   padding: 10px 100px;
+  min-width: 1375px;
 }
 .el-checkbox__label{
   font-size:12px !important;

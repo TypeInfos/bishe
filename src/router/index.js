@@ -1,27 +1,24 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Tool from '@/page/tool/index';
-import Login from '@/page/login/index';
-import Register from '@/page/register/index';
-import MyTest from '@/page/mytest/index'
 import NewRegister from '@/page/newRegister/index'
-import inputTest from '@/components/inputComponent'
 import newLogin from '@/page/newLogin/index'
 import rootRadar from '@/page/rootRadar/index'
 import forgetPassword from '@/page/forgetPassword/index'
-
+import tempBqsys from '@/page/tempBqsys/index'
+import wisdomSearch from '@/page/wisdomSearch/index'
+import buy1 from '@/page/buy1/index'
+import buy2 from '@/page/buy2/index'
+import myOrder from '@/page/myOrder/index'
+import funcView from '@/page/funcView/index'
+import test from '@/components/datePicker/index';
+import labelLab from '@/page/labelLab/index'
 Vue.use(Router);
 
 export default new Router({
   routes: [
     {
       path: '/',
-      component: Tool,
-    },
-    {
-      path: '/tool',
-      name: 'Tool',
-      component: Tool,
+      component: rootRadar,
     },
     {
       path: '/login',
@@ -34,23 +31,54 @@ export default new Router({
       component: NewRegister,
     },
     {
-      path:'/test',
-      name:'test',
-      component:MyTest
-    },
-    {
-      path: '/testInput',
-      name: 'testInput',
-      component: inputTest,
-    },
-    {
       path: '/rootRadar',
       name: 'rootRadar',
       component: rootRadar,
-    },{
+    }
+    ,{
       path: '/forgetPassword',
       name: 'forgetPassword',
       component: forgetPassword,
+    },
+    {
+        path: '/tempBqsys',
+        name: 'tempBqsys',
+        component: tempBqsys,
+    },
+    {
+      path: '/wisdomSearch',
+      name: 'wisdomSearch',
+      component: wisdomSearch,
+    },
+    {
+      path: '/funcView',
+      name: 'funcView',
+      component: funcView,
+    },
+    {
+      path: '/buy1',
+      name: 'buy1',
+      component: buy1,
+    },
+    {
+      path: '/buy2',
+      name: 'buy2',
+      component: buy2,
+    },
+    {
+      path: '/myOrder',
+      name: 'myOrder',
+      component: myOrder,
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: test,
+    },
+    {
+      path: '/labelLab',
+      name: 'labelLab',
+      component: labelLab,
     }
   ],
 });

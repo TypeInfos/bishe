@@ -108,6 +108,7 @@ export default {
   },
   methods: {
     init() {
+      // 拷贝一份 数据
       const comparedData = Object.assign([], this.comparedData);
       comparedData.forEach((item) => {
         this.checkListGroup.forEach((item1) => {
@@ -201,7 +202,6 @@ export default {
     // checkCheckbox
     checkCheckbox(val) {
       const name = val.toElement.defaultValue || val.toElement.innerText;
-      
       if (this.checkList.length === 2) {
         let flag = false;
         this.checkList.forEach((item) => {

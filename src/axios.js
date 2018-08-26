@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Notification } from 'element-ui';
+import { Message } from 'element-ui';
 import qs from 'qs';
 import blacklist from './blacklist';
 import router from './router';
@@ -46,11 +46,12 @@ service.interceptors.response.use(
         }
       });
       if (!flag) {
-        Notification({
+        Message({
           message: response.data.message,
           title: 'warning',
+          showClose:true,
           type: 'warning',
-          duration: 5000, // 显示时长  单位s
+          duration: 4000, // 显示时长  单位s
         });
       }
       return Promise.reject(response.data.message);
@@ -62,11 +63,12 @@ service.interceptors.response.use(
   },
   (error) => {
     if (error.message !== undefined && error.request !== undefined) {
-      Notification({
+      Message({
         message: '服务器未知错误',
         title: 'error',
         type: 'error',
-        duration: 5000, // 显示时长  单位s
+        showClose:true,
+        duration: 4000, // 显示时长  单位s
       });
     }
     return Promise.reject(error);

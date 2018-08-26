@@ -18,8 +18,6 @@
         name: '',
       };
     },
-    watch: {
-    },
     computed: {
       isLogin: {
         get: function() {
@@ -28,28 +26,51 @@
         set: function() {
           return false;
         }
+      },
+      globaTaobaoName:{
+        get: function() {
+          return this.$store.getters.taobaoName;
+        },
+        set: function() {
+          return false;
+        }
       }
     },
-    mounted() {
-      this.getUserInfo();
-    },
+    // mounted() {
+    //  this.getUserInfo();
+    // },
     methods: {
       logoClick() {
         // 开发阶段先定义为刷新当前页面，上线后定位到首页。
+        this.$router.push('/rootRadar');
         location.reload();
       },
       handleSelect(key, keyPath) {
         switch (key) {
-          case 1:
-            this.$router.push('/rootRadar');
-            window.location.reload();
+          case '1':
+            this.$router.push('/funcView');
+            location.reload();
             break;
-          case 2:
+          case '2':
+          this.$router.push('/rootRadar');
+            location.reload();
             break;
-          case 3:
+          case '3':
+          this.$router.push('/labelLab');
+            location.reload();
             break;
-          case 4:
+          case '4':
+          this.$router.push('/wisdomSearch');
+            location.reload();
             break;
+          case '5':
+          this.$router.push('/buy1');
+            location.reload();
+          break;
+          case '6':
+          // this.$router.push('/tempBqsys');
+          //   location.reload();
+          // break;
           default:
             break;
         }
@@ -62,18 +83,30 @@
         }
       },
       // 获取用户信息
-      getUserInfo() {
-        this.$axios.get(this.$api.info).then((res) => {
-          this.$store.dispatch('login');
-          this.name = res.data.name;
-        });
-      },
+      // getUserInfo() {
+        // this.$axios.get(this.$api.info).then((res) => {
+        //   this.$store.dispatch('login');
+        //   this.$store.dispatch('setTaobaoName', {
+        //     name: res.data.name
+        //   })
+        // }).catch(error => {
+        //   console.log(error)
+        // })
+      // },
       // 退出登录
       loginOut() {
+        this.$store.dispatch('logout');
+        this.$store.dispatch('setTaobaoName', {
+          name: ''
+        });
         this.$axios.get(this.$api.logout).then(() => {
           this.$router.push('/login');
-          window.location.reload();
+          location.reload();
         });
+      },
+      goToMyOrder(){
+        this.$router.push('/myOrder');
+        location.reload();
       },
       // 接收插件数据
       getTaobaoData() {

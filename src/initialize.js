@@ -1,4 +1,5 @@
 import Vue from 'vue';
+
 import {
   Pagination,
   Dialog,
@@ -72,6 +73,10 @@ import * as utils from './utils/helper';
 import axios from './axios';
 import api from './api';
 
+import VueCookies from 'vue-cookies'
+import CollapseTransition from 'element-ui/lib/transitions/collapse-transition';
+Vue.component(CollapseTransition.name, CollapseTransition)
+Vue.use(VueCookies)
 Vue.use(Pagination);
 Vue.use(Dialog);
 Vue.use(Autocomplete);
@@ -136,6 +141,7 @@ Vue.use(Main);
 Vue.use(Footer);
 Vue.use(Loading.directive);
 
+
 Vue.prototype.$loading = Loading.service;
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;
@@ -154,3 +160,5 @@ Vue.prototype.$message = Message;
 Vue.prototype.$utils = utils;
 Vue.prototype.$axios = axios;
 Vue.prototype.$api = api;
+
+

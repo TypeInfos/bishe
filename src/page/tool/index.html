@@ -43,12 +43,12 @@
     </div>
     <el-card shadow="hover">
         <div class="wrap-title" v-loading="searchLoading">
-            <span v-if="isShow">
-                <span class="u-pic2 ml10"><img :src="goodsUrl" /></span>
-                <span class="u-title">{{goodsTitle}}</span>
-                <i v-if="!isCollect" class="iconfont icon-guanzhu u-sc" @click="collect"></i>
-                <i v-else class="iconfont icon-guanzhu1 u-sc" @click="cancelCollect"></i>
-            </span>
+            <!--<span v-if="isShow">-->
+                <!--<span class="u-pic2 ml10"><img :src="goodsUrl" /></span>-->
+                <!--<span class="u-title">{{goodsTitle}}</span>-->
+                <!--<i v-if="!isCollect" class="iconfont icon-guanzhu u-sc" @click="collect"></i>-->
+                <!--<i v-else class="iconfont icon-guanzhu1 u-sc" @click="cancelCollect"></i>-->
+            <!--</span>-->
             <div class="m-select">
                 <el-dropdown size="small" @command="chooseZd">
                     <span class="el-dropdown-link">
@@ -110,6 +110,7 @@
                    :chart-data="singleChartsData">
         </lineChart>
     </el-card>
+    <!-- 单品词根分析 -->
     <el-card v-if="isShow" class="box-card mt20" shadow="hover">
         <div slot="header" class="clearfix">
             <span>单品词根分析</span>
@@ -140,6 +141,8 @@
             <el-checkbox label="直通车成交量" @click.native="checkCheckbox2"></el-checkbox>
             <el-checkbox label="自然搜索成交量" @click.native="checkCheckbox2"></el-checkbox>
         </el-checkbox-group>
+
+        <!-- 渲染每个数据 -->
         <div v-for="(item, index) in wrapData" :key="index"
              class="m-box" @mouseenter="enter(index)" @mouseleave="leave(index)">
             <div class="clearfix">

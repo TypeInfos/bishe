@@ -6,15 +6,21 @@ const path = require('path')
 
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/mdm':{
+        target: 'http://192.168.1.110:8080',
+        pathRewrite:{
+          '^/mdm':'/mdm'
+        }
+      }
+    },
 
     // Various Dev Server settings
     // host: 'localhost', // can be overwritten by process.env.HOST
-    host: '127.0.0.1',
+    host: 'http://192.168.1.110',
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
@@ -34,11 +40,14 @@ module.exports = {
      */
 
     // https://webpack.js.org/configuration/devtool/#development
-    devtool: 'cheap-module-eval-source-map',
+      //默认 devtool: 'cheap-module-eval-source-map',
+      devtool: 'eval-source-map',
+
 
     // If you have problems debugging vue-files in devtools,
     // set this to false - it *may* help
     // https://vue-loader.vuejs.org/en/options.html#cachebusting
+    // 默认为true
     cacheBusting: true,
 
     cssSourceMap: true
@@ -51,7 +60,8 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: './',
+    // assetsPublicPath: './',
+    assetsPublicPath: '/',     //如果是./   打包background大相对路径的图片就无法显示
 
     /**
      * Source Maps

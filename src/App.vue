@@ -9,19 +9,24 @@
       <el-footer height="80" style="padding:0;">
         <newFooter></newFooter></el-footer>
     </el-container>
+  <customerService></customerService>
+  <backToTop></backToTop>
   </div>
 </template>
 
 <script>
 import headerWrap from './components/headerWrap';
-import newHeader from './components/newHeader'
-import newFooter from './components/newFooter';
+import newFooter from './components/finalFooter';
+import customerService from './components/customerService';
+import backToTop from './components/backToTop';
+
 export default {
   name: 'App',
   components: {
-    newHeader,
     newFooter,
     headerWrap,
+    customerService,
+    backToTop,
   },
 };
 </script>

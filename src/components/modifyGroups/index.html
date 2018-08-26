@@ -1,0 +1,18 @@
+<div class="hello">
+    <el-dialog :visible.sync="addGoodsFocuDialog" :show-close=false :modal=false class="modifyGroups">
+    <div slot="title" class="header">
+        <h2>修改群组名称</h2>
+        <el-button icon="el-icon-close" @click="closeModal"></el-button>
+        <div v-if="addWordSucceed" class="m-checkbox-tip">
+        <!-- <i class="el-icon-success"></i>
+        添加成功 -->
+        </div>
+    </div>
+    <div class="modifyGroupsContent">
+    <p><el-input placeholder="请输入群组名称" v-model="groupName" @change="nameRepeat"></el-input></p>
+    <p class="errorP" v-if="showErrorP">群组名称重复</p>
+    <el-button type="primary" plain class="btnCancel">取消</el-button>
+    <el-button type="primary" class="btnConfirm">确定</el-button>
+    </div>
+    </el-dialog>
+</div>
