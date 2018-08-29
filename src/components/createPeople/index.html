@@ -16,7 +16,7 @@
             <div class="name">
                 <span class="star">*</span>
                 <span>名称：</span>
-                <el-input placeholder="男+18-24岁" v-model="name" @input="nameMust"></el-input>
+                <el-input placeholder="男+18-24岁" v-model="name"></el-input>
                 <span class="mustWrite" v-if="showMustWrite">必填</span>
             </div>
             <!-- 人口属性人群 -->
@@ -43,7 +43,7 @@
             </div>
             <div class="premium">
                 <span class="premiumP">溢价：</span>
-                <el-input v-on:input="betweenRange()" placeholder="5-300整数" v-model="price"></el-input>&nbsp; %
+                <el-input placeholder="5-300整数" v-model="price"></el-input>&nbsp; %
                 <span class="overPeople">覆盖人群
                     <b>{{ overPeopleNumber | NumFormat }}</b> 人</span>
                 <p class="errorP" v-if="showErrorP">您所输入的溢价范围有误</p>
@@ -51,7 +51,7 @@
 
             <div class="twoBtn">
                 <el-button type="primary" plain class="btnCancel" @click="btnCancel">取消</el-button>
-                <el-button type="primary" class="btnConfirm" :disabled="confirmDisabled" @click="confirmBtn">确定</el-button>
+                <el-button type="primary" class="btnConfirm" @click="confirmBtn">确定</el-button>
             </div>
         </div>
     </el-dialog>

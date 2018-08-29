@@ -1,0 +1,20 @@
+<div class="hello">
+    <el-dialog :visible.sync="addGoodsFocuDialog" :show-close=false :modal=false class="checkProduct">
+    <div slot="title" class="header">
+        <h2>温馨提示</h2>
+        <el-button icon="el-icon-close" @click="closeModal"></el-button>
+        <div v-if="addWordSucceed" class="m-checkbox-tip">
+        <!-- <i class="el-icon-success"></i>
+        添加成功 -->
+        </div>
+    </div>
+    <div class="checkProductContent">
+        <p>您的使用期限还有</p>
+        <p style="font-size:28px;color:coral;">{{ day }}<span>天</span></p>
+        <p>为了方便您的使用，您可以前往订购</p>
+        <div class="ontBtn">
+            <el-button type="primary" class="buyBtn" @click="goBuy">订购</el-button>
+        </div>
+    </div>
+    </el-dialog>
+</div>

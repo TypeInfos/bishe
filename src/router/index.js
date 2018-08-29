@@ -18,7 +18,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: rootRadar,
+      component: newLogin,
     },
     {
       path: '/login',
