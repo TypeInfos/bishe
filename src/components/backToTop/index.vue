@@ -1,5 +1,5 @@
 <template>
-    <div :class="isShow ? 'm-backtop opacity1' : 'm-backtop'" @click="backTop">
+    <div :class="isShow ? 'm-backtop opacity1' : 'm-backtop'" @click="backToTop">
         <span>^</span><br/>
         返回顶部
     </div>
@@ -9,37 +9,58 @@ export default {
   data() {
     return {
       isShow: false,
+      interval: null,
+      visibilityHeight: 400,
+      backPosition: 0,
     };
   },
   mounted() {
-    window.onscroll = () => {
-      // 变量t是滚动条滚动时，距离顶部的距离
-      const t = document.documentElement.scrollTop || document.body.scrollTop;
-      // 当滚动到距离顶部200px时，返回顶部的锚点显示
-      if (t >= 300) {
-        // console.log('底部');
-        this.isShow = true;
-      } else { // 恢复正常
-        // console.log('没底部');
-        this.isShow = false;
-      }
-    };
+    window.addEventListener('scroll', this.handleScroll);
+    // window.onscroll = () => {
+    //   // 变量t是滚动条滚动时，距离顶部的距离
+    //   const t = document.documentElement.scrollTop || document.body.scrollTop;
+    //   // 当滚动到距离顶部200px时，返回顶部的锚点显示
+    //   if (t >= 300) {
+    //     // console.log('底部');
+    //     this.isShow = true;
+    //   } else { // 恢复正常
+    //     // console.log('没底部');
+    //     this.isShow = false;
+    //   }
+    // };
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll);
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   },
   methods: {
-    backTop() {
-    //   const t = document.documentElement.scrollTop || document.body.scrollTop;
-      const timer = setInterval(() => {
-        const aa = document.documentElement.scrollTop - 300;
-        document.documentElement.scrollTop = aa;
-        if (document.documentElement.scrollTop <= 0) {
-          clearInterval(timer);
+    handleScroll() {
+      this.isShow = window.pageYOffset > this.visibilityHeight;
+    },
+    backToTop() {
+      const start = window.pageYOffset;
+      let i = 0;
+      this.interval = setInterval(() => {
+        const next = Math.floor(this.easeInOutQuad(10 * i, start, -start, 500));
+        if (next <= this.backPosition) {
+          window.scrollTo(0, this.backPosition);
+          clearInterval(this.interval);
+        } else {
+          window.scrollTo(0, next);
         }
-      }, 30);
+        i++;
+      }, 16.7);
+    },
+    easeInOutQuad(t, b, c, d) {
+      if ((t /= d / 2) < 1) return c / 2 * t * t + b;
+      return -c / 2 * (--t * (t - 2) - 1) + b;
     },
   },
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
   .m-backtop{
     position: fixed;
     right: 10px;

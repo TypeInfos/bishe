@@ -1,7 +1,9 @@
 <template src="./index.html">
 
 </template>
+<style lang="less" src="./index.less">
 
+</style>
 <script>
 export default {
   name: 'premium',
@@ -16,7 +18,7 @@ export default {
   methods:{
     closeModal(){
       this.addGoodsFocuDialog = ! this.addGoodsFocuDialog ;
-        this.$cookies.set('isFirstTime', 'exist',60 * 60 * 24 * 30);  
+      this.$cookies.set('isFirstTime', 'exist',60 * 60 * 24 * 30);
     },
     betweenRange(){
       if(this.price>300 || this.price<5) {
@@ -28,13 +30,11 @@ export default {
     lookFuncView(){
       this.$router.push('/funcView');
     },
-    lookUse(){
-
+    lookUseVideo(){
+      window.open('https://v.doushudata.com/video.html');
     },
   }
 }
 </script>
 
-<style lang="less" src="./index.less">
 
-</style>

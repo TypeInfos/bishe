@@ -1,6 +1,7 @@
-const absUrl = window.location.href;
-// const path = 'https://data.doushudata.com/edoushu';
-const path = 'http://192.168.1.109:8082/edoushu';
+// const absUrl = window.location.href;
+let path = 'http://192.168.1.111:8082/edoushu'; // 阿炳
+// let path = 'https://data.doushudata.com/edoushu';   //上线版
+// let path = 'https://data.yishubox.com/edoushu'    //测试版
 // if (absUrl.match('edoushu.com')) {
 //   path = 'https://www.edoushu.com/';
 // }
@@ -64,6 +65,13 @@ const api = {
   tagChart: `${path}/tagChart`, // 标签趋势
   createCrowd: `${path}/createCrowd`, // 创建人群
   levelCrowd: `${path}/levelCrowd`, // 修改人群评级
+
+  // 产品订购
+  getPay: `${path}/getPay`, // 提交订单
+  getOrderList: `${path}/getOrderList`, // 获取订单列表
+  getOrderStatus: `${path}/getOrderStatus`, // 获取当前订单号的支付状态
+
+  checkOrder: `${path}/checkOrder`, // 进入每个功能页面前判断是否订购该功能产品
 };
 
 export default api;

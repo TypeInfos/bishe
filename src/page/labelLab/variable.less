@@ -1,3 +1,25 @@
-@green:rgba(28,202,218,1);
-@white:rgba(255,255,255,1);
-@red:rgba(208,2,27,1);
+@green: rgba(28, 202, 218, 1);
+@white: rgba(255, 255, 255, 1);
+@red: rgba(208, 2, 27, 1);
+@confirm: {
+  font-size: 12px;
+  height: 36px;
+  color: @white;
+  background: @green;
+  margin-left: 53px;
+  &:hover {
+    color: @green;
+    background: @white;
+  }
+};
+
+@cancle: {
+  font-size: 12px;
+  height: 36px;
+  color: @green;
+  background: @white;
+  &:hover {
+    color: @white;
+    background: @green;
+  }
+};

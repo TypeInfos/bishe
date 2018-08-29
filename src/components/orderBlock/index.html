@@ -1,0 +1,14 @@
+<div :v-if="orderBlockInfo" class="orderBlockHole">
+    <p style="font-size:18px;"><b>{{ orderBlockInfo.firstLine }}<br/>{{ orderBlockInfo.secondLine }}</b></p>
+    <p style="text-decoration: line-through;color:rgba(155,155,155,1);">{{ orderBlockInfo.thirdLine }}</p>
+    <p style="color:rgba(155,155,155,1);">¥<em style="font-size:36px;font-weight: 700;color: #4A4A4A;">{{ orderBlockInfo.fourthLine }}</em>元/年</p>
+    <p style="color:#7999F2;">{{ orderBlockInfo.fifthLine }}</p>
+    <p>{{ orderBlockInfo.sixthLine }}<br/> {{ orderBlockInfo.seventhLine }}
+        <br/> {{ orderBlockInfo.eightthLine }}
+        <br/> {{ orderBlockInfo.ninthLine }}
+        <br/> {{ orderBlockInfo.tenthLine }}
+        <br/> {{ orderBlockInfo.eleventhLine }}
+    </p>
+    <img :src="orderBlockInfo.twelfthLine" alt="">
+    <el-button type="primary" class="buyBtn" @click="buyBtn">订购</el-button>
+</div>

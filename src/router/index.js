@@ -1,16 +1,17 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import NewRegister from '@/page/newRegister/index';
-import newLogin from '@/page/newLogin/index';
-import rootRadar from '@/page/rootRadar/index';
-import forgetPassword from '@/page/forgetPassword/index';
-import tempBqsys from '@/page/tempBqsys/index';
-import wisdomSearch from '@/page/wisdomSearch/index';
-import buy from '@/page/buy/index';
-import funcView from '@/page/funcView/index';
+import NewRegister from '@/page/newRegister/index'
+import newLogin from '@/page/newLogin/index'
+import rootRadar from '@/page/rootRadar/index'
+import forgetPassword from '@/page/forgetPassword/index'
+import tempBqsys from '@/page/tempBqsys/index'
+import wisdomSearch from '@/page/wisdomSearch/index'
+import buy1 from '@/page/buy1/index'
+import buy2 from '@/page/buy2/index'
+import myOrder from '@/page/myOrder/index'
+import funcView from '@/page/funcView/index'
 import test from '@/components/datePicker/index';
-import labelLab from '@/page/labelLab/index';
-
+import labelLab from '@/page/labelLab/index'
 Vue.use(Router);
 
 export default new Router({
@@ -33,16 +34,16 @@ export default new Router({
       path: '/rootRadar',
       name: 'rootRadar',
       component: rootRadar,
-    },
-    {
+    }
+    ,{
       path: '/forgetPassword',
       name: 'forgetPassword',
       component: forgetPassword,
     },
     {
-      path: '/tempBqsys',
-      name: 'tempBqsys',
-      component: tempBqsys,
+        path: '/tempBqsys',
+        name: 'tempBqsys',
+        component: tempBqsys,
     },
     {
       path: '/wisdomSearch',
@@ -55,19 +56,29 @@ export default new Router({
       component: funcView,
     },
     {
-      path: '/buy',
-      name: 'buy',
-      component: buy,
+      path: '/buy1',
+      name: 'buy1',
+      component: buy1,
     },
-    // {
-    //   path: '/test',
-    //   name: 'test',
-    //   component: test,
-    // }
+    {
+      path: '/buy2',
+      name: 'buy2',
+      component: buy2,
+    },
+    {
+      path: '/myOrder',
+      name: 'myOrder',
+      component: myOrder,
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: test,
+    },
     {
       path: '/labelLab',
       name: 'labelLab',
       component: labelLab,
-    },
+    }
   ],
 });

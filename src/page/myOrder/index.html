@@ -1,0 +1,71 @@
+<div class="myOrderContainer">
+    <div class="hole-container">
+        <div class="hole">
+            <div class="title">
+                <span style="font-size:18px;">我的订购</span>
+                <span><a target="_blank" href="http://www.baidu.com"style="color:#0088FE;">去开发票</a></span>
+            </div>
+            <el-table
+            :data="myOrderTableData"
+            style="width:100%;">
+                <el-table-column
+                prop="title"
+                label="产品名称"
+                width="280">
+                </el-table-column>
+                <el-table-column
+                prop="payTime"
+                label="订单产生时间"
+                width="180">
+                </el-table-column>
+                <el-table-column
+                prop="beginTime"
+                label="服务开始时间"
+                width="180">
+                </el-table-column>
+                <el-table-column
+                prop="endTime"
+                label="服务结束时间"
+                width="180">
+                </el-table-column>
+                <el-table-column
+                prop="orderTime"
+                label="订购时长"
+                width="120">
+                </el-table-column>
+                <el-table-column
+                prop="payPrice"
+                label="费用"
+                width="120">
+                </el-table-column>
+                <el-table-column
+                prop="status"
+                label="状态"
+                width="120"
+                :formatter="changeStatus">
+                </el-table-column>
+                <el-table-column
+                fixed="right"
+                label="操作"
+                width="120">
+                <template slot-scope="scope">
+                    <el-button 
+                    @click.native.prevent="goBuy(scope.$index,myOrderTableData)"
+                    type="text"
+                    size="small" style="color:#0088FE;">
+                    订购
+                    </el-button>
+                </template>
+                </el-table-column>
+            </el-table>
+            <!-- <el-pagination
+            small
+            layout="prev, pager, next"
+            background
+            :page-size=6
+            :current-page.sync="pageChange"
+            :total="goodsTotalPage">
+            </el-pagination> -->
+        </div>
+    </div>
+</div>

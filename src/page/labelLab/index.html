@@ -1,5 +1,5 @@
 <div class="label-lab">
-  <div class="label-right" v-loading="initGroupLoading" v-show=true>
+  <div class="label-right" v-loading="initGroupLoading" :element-loading-text="initGroupLoadingText" v-show=true>
     <el-card class="wrap-title" shadow="hover">
       <!-- v-loading="searchLoading" -->
       <el-dropdown class="terminal" trigger="click" size="small" @command="chooseZd">
@@ -73,7 +73,7 @@
     <!-- 标签整体数据趋势 -->
     <el-card class="box-card mt20 tendency" shadow="hover">
       <div slot="header" class="clearfix">
-        <span class="headerContent">标签群组分层概况</span>
+        <span class="headerContent">标签整体数据趋势</span>
         <!-- 先不加等8月份后再进行优化 -->
         <el-button class="annotation" type="text">指标注释</el-button>
         <div v-if="checkboxListFlag" class="m-checkbox-tip">
@@ -110,18 +110,22 @@
               </div>
               <h4>选择指标</h4>
               <div class="left">
-                <el-checkbox-group class="checkListDiv" v-model="checkIndexList" :min="2" :max="6">
+                <el-checkbox-group class="checkListDiv" v-model="checkIndexList" :min="2">
                   <el-checkbox v-for="(item, index) in checkIndexListGroup" :key="index" :label="item.label" @click.native="checkCheckbox">
                   </el-checkbox>
                 </el-checkbox-group>
               </div>
               <div class="right">
                 <h4>展示指标顺序</h4>
-                <div class="checkedDiv" v-for="item in checkIndexList">{{item}}</div>
+                <div class="checkedBox">
+                  <draggable v-model="checkIndexList" :options="{group:'IndexList'}">
+                    <div class="checkedDiv" v-for="item in checkIndexList">{{item}}</div>
+                  </draggable>
+                </div>
               </div>
               <div class="confirm">
-                <el-button type="primary" @click="showIndexCancel">取消</el-button>
-                <el-button type="primary" @click="showIndexConfirm">确定</el-button>
+                <el-button type="primary" @click="showIndexCancel" class="checkList-cancel">取消</el-button>
+                <el-button type="primary" @click="showIndexConfirm" class="checkList-confirm">确定</el-button>
               </div>
             </div>
             <div slot="reference" class="selectDate">
@@ -257,7 +261,7 @@
         <p class="errorP" v-if="showErrorCreateGroup">群组名称重复</p>
       </div>
       <div class="standardGroup" v-if="showStandardGroup">
-        <el-select v-model="createGroups" clearable placeholder="">
+        <el-select v-model="createGroups" placeholder="">
           <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
@@ -290,13 +294,13 @@
     <div class="peopleRateContent">
       <p>请设置人群评级</p>
       <p>
-        <el-select v-model="rate" clearable placeholder="评级">
+        <el-select v-model="rate" placeholder="评级">
           <el-option v-for="item in peopleRateOptions" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
       </p>
-      <el-button type="primary" plain class="peopleRateDialog" @click="peopleRateCancel">取消</el-button>
-      <el-button type="primary" class="peopleRateDialog" :disabled="peopleRateDisable" @click="peopleRateConfirm">确定</el-button>
+      <el-button type="primary" class="peopleRateDialogCancel" @click="peopleRateCancel">取消</el-button>
+      <el-button type="primary" class="peopleRateDialogConfirm" :disabled="peopleRateDisable" @click="peopleRateConfirm">确定</el-button>
     </div>
   </el-dialog>
   <!-- 修改溢价 -->
@@ -335,5 +339,4 @@
   </el-dialog>
   <createPeople :createPeopleDialog="createPeopleDialog" :firstCat="currentFirstCat" :campaignId="currentCampaignId" :adGroupId="currentAdGroupId"
     :groupId="currentCreateGroupId" @closeDialog="closeCreatePeopleDialog" @refreshData="refreshData"></createPeople>
-
 </div>

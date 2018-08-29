@@ -5,3 +5,11 @@
 <style lang="less" src="./index.less">
 
 </style>
+<script>
+  export default{
+    name:'temp',
+    mounted(){
+      
+    },
+  }
+</script>

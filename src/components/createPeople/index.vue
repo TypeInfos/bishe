@@ -28,7 +28,7 @@ export default {
       sexRadio:'',
       checked:'',
       monthAverageLimitRadio:'',
-      overPeopleNumber:'-',
+      overPeopleNumber:'-',     //覆盖人群的数量
       //jy
       wordList:'',    //保存插件需要的一大串文字
       peoplePropertyObj:[],
@@ -36,7 +36,9 @@ export default {
       para:[],   //保存要传给插件的参数数组
       peopleCheckList:[],   //check-group的v-model
       crowdId:[],      //给后端的参数
-      editorExtensionId:"lnbdcilfaojoldgckojoidnafpagkjbn",
+      // editorExtensionId:'lnbdcilfaojoldgckojoidnafpagkjbn',
+      // lnbdcilfaojoldgckojoidnafpagkjbn   上线ID
+      // cpnmealmpgcapggbgjgfahpiifbbooef  测试ID
 
     }
   },
@@ -47,7 +49,7 @@ export default {
     init(){
       // 发送一个(简单的请求：
       console.log(this.firstCat);
-      chrome.runtime.sendMessage(this.editorExtensionId, {
+      chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
         type : 'getLayoutExt',
         firstCat:this.firstCat,
         campaignId : this.campaignId,
@@ -115,7 +117,7 @@ export default {
       console.log(this.para);
           // 我们希望与之通信的扩展程序标识符。
       // 发送一个简单的请求：
-      chrome.runtime.sendMessage(this.editorExtensionId, {
+      chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
         type : 'getCrowdCount',
         selectTagOptions:this.para,
         wordList:this.wordList,
@@ -127,7 +129,7 @@ export default {
     },
     confirmBtn(){
       // console.log();
-      chrome.runtime.sendMessage(this.editorExtensionId, {
+      chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
         type : 'addCrowd',
         firstCat : this.firstCat,
         adGroupId : this.adGroupId,
@@ -166,6 +168,7 @@ export default {
       // console.log(radio);
       this.peopleCheckList = []; //每次切换单选都清空多选框群组的数组
       this.para = [] ;   //清空传给插件的数组
+      this.overPeopleNumber = '-';   //每次切换单选 初始化覆盖人群的数量
       console.log('peopleCheckList数组清空了'+this.peopleCheckList);
       console.log('para数组清空了'+this.para);
       if(this.radio == 2){

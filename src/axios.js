@@ -49,7 +49,7 @@ service.interceptors.response.use(
         Message({
           message: response.data.message,
           title: 'warning',
-          showClose: true,
+          showClose:true,
           type: 'warning',
           duration: 4000, // 显示时长  单位s
         });
@@ -67,7 +67,7 @@ service.interceptors.response.use(
         message: '服务器未知错误',
         title: 'error',
         type: 'error',
-        showClose: true,
+        showClose:true,
         duration: 4000, // 显示时长  单位s
       });
     }

@@ -1,0 +1,39 @@
+.el-container{
+    height: 100% !important;
+    //  container 和 main 的height都为100%时是登录注册界面的，因为那个时候可以把footer向下顶
+    .el-main{
+      height: 100% !important;
+    }
+  }
+.myOrderContainer{
+    width: 100%;
+    height: calc(100vh - 150px) !important;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    .hole-container{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+            .hole{
+            padding: 40px 50px;
+            width:955px;
+            height:553px;
+            background:rgba(255,255,255,1);
+            border-radius:8px;
+            display:flex;
+            flex-direction: column;
+            justify-content: space-between;
+            .title{
+                display: flex;
+                justify-content: space-between;
+                padding: 0 10px;
+                margin-bottom: 10px;
+            }
+            .el-pagination{
+                text-align: right;
+                margin-top: 20px;
+            }
+        }
+    }
+}

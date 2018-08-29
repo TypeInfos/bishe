@@ -44,63 +44,76 @@
       },
       // 易数账号登录
       ysLogin() {
-        //
+        let data = '';
         this.loginLoading = true;
-        this.$axios.post(this.$api.checkProduct, {
-            phone: this.vipName
-          })
-          .then(res => {
-            if (res.data) {
-              this.$axios.post(this.$api.login, {
-                loginName: this.vipName,
-                password: this.vipPwd,
-              }).then((res) => {
-                this.$message({
-                  showClose: true,
-                  message: '抖数账号登录成功',
-                  type: 'success'
-                });
-                this.token = res.data;
-                this.$axios.get(this.$api.info).then((res) => {
-                  this.loginLoading = false;
-                  this.bindTaobaoName = res.data.name;
-                  const data = document.getElementById('taobao-extension-data').value;
-                  if (data === '{}' || data === '') {
-                    this.isLoginTaobao = false;
-                    this.active = 1;
-                  } else {
-                    this.isLoginTaobao = true;
-                    this.taobaoName = JSON.parse(data).runAsShopTitle;
-                    if (this.taobaoName != this.bindTaobaoName) {
-                      this.active = 3;
-                    } else {
-                      this.active = 2;
-                    }
-                  }
-                })
-              }).catch(err => {
-                this.loginLoading = false;
+      //   this.$axios.post(this.$api.checkProduct, {
+      //       phone: this.vipName
+      //     })
+      //     .then(res => {
+            // if (res.data) {
+            this.$axios.post(this.$api.login, {
+              loginName: this.vipName,
+              password: this.vipPwd,
+            }).then((res) => {
+              this.$message({
+                showClose: true,
+                message: '抖数账号登录成功',
+                type: 'success'
               });
-              //gjfAdd
-              if (this.rememberPwd == true) {
-                this.$cookies.set('vipName', this.vipName, 60 * 60 * 24 * 30);
-                this.$cookies.set('vipPwd', this.vipPwd, 60 * 60 * 24 * 30);
-              }
-            } else {
-              this.loginLoading = false;
-              this.$confirm(`您的7天免费试用已到期，如需继续使用请联系客服！`, '内测提示', {
-                confirmButtonText: '确 定',
-                cancelButtonText: '取 消',
-                type: 'info',
-              }).then(res => {
-                this.openDialog();
-              }).catch(res => {
-                console.log(error)
+              this.token = res.data;
+              console.log(`token${this.token}`)
+              this.$axios.get(this.$api.info).then((res) => {
+                this.loginLoading = false;
+                this.bindTaobaoName = res.data.name;
+                try {
+                  chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
+                      type: 'getShopInfo',
+                    },
+                    (response) => {
+                      console.log(response);
+                      if (response.code != 400) {
+                        data = response.shopInfo;
+                      }
+                    })
+                } catch (error) {
+                  this.$alert('请安装插件', '提示', );
+                }
+                if (data === '{}' || data === '') {
+                  this.isLoginTaobao = false;
+                  this.active = 1;
+                } else {
+                  this.isLoginTaobao = true;
+                  this.taobaoName = data.runAsShopTitle;
+                  if (this.taobaoName != this.bindTaobaoName) {
+                    this.active = 3;
+                  } else {
+                    this.active = 2;
+                  }
+                }
               })
+            }).catch(err => {
+              this.loginLoading = false;
+            });
+            //gjfAdd
+            if (this.rememberPwd == true) {
+              this.$cookies.set('vipName', this.vipName, 60 * 60 * 24 * 30);
+              this.$cookies.set('vipPwd', this.vipPwd, 60 * 60 * 24 * 30);
             }
-          }).catch(error => {
-            this.loginLoading = false;
-          })
+            // } else {
+            //   this.loginLoading = false;
+            //   this.$confirm(`您的7天免费试用已到期，如需继续使用请联系客服！`, '内测提示', {
+            //     confirmButtonText: '确 定',
+            //     cancelButtonText: '取 消',
+            //     type: 'info',
+            //   }).then(res => {
+            //     this.openDialog();
+            //   }).catch(res => {
+            //     console.log(error)
+            //   })
+            // }
+      //     }).catch(error => {
+      //       this.loginLoading = false;
+      //     })
       },
       /**
        * 二维码弹窗
@@ -147,28 +160,36 @@
         this.$store.dispatch('setTaobaoName', {
           name: this.taobaoName
         });
-        this.$router.push('/rootRadar');
+        this.$router.push('/funcView');
         location.reload();
       },
       // 开启监听，是否已登录
       watchLogin() {
         this.timer = setInterval(() => {
-          const data = document.getElementById('taobao-extension-data').value;
-          if (data === '{}' || data === '') {
-            this.isLoginTaobao = false;
-          } else {
-            // 和 插件绑定的 淘宝名字
-            this.taobaoName = JSON.parse(data).runAsShopTitle;
-            if (this.taobaoName != this.bindTaobaoName) {
-              this.active = 3;
-            } else {
-              this.active = 2;
-              this.isLoginTaobao = true;
-              clearInterval(this.timer);
-            }
+          try {
+            chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
+                type: 'getShopInfo',
+              },
+              response => {
+                if (response.code == 400) {
+                  this.isLoginTaobao = false;
+                } else {
+                  this.taobaoName = response.shopInfo.runAsShopTitle;
+                  if (this.taobaoName != this.bindTaobaoName) {
+                    this.active = 3;
+                  } else {
+                    this.active = 2;
+                    this.isLoginTaobao = true;
+                    clearInterval(this.timer);
+                  }
+                }
+              })
+          } catch (error) {
+            clearInterval(this.timer);
+            this.$alert('请安装插件', '提示', );
           }
         }, 500);
-      }
+      },
     },
   }
 </script>
