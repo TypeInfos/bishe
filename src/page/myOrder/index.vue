@@ -12,15 +12,7 @@ export default {
         return{
             goodsTotalPage:6, //用户下的订单商品总页数
             pageChange:1,      //当前页的监听事件
-            myOrderTableData:[{
-                productName:'基础版（词根雷达+标签实验室）',
-                orderBeginTime:'2018-06-26 08:08:08',
-                serviceBeginTime:'2018-06-26',
-                serviceEndTime:'2019-06-26',
-                buyTime:'12个月',
-                cost:'2980',
-                state:'使用中',
-            }],
+            myOrderTableData:[],
         }
     },
     created(){
@@ -43,19 +35,30 @@ export default {
         },
         getOrderList(){
             this.$axios.get(this.$api.getOrderList).then((res)=>{
-                this.productName = res.data.title;
-                this.orderBeginTime = res.data.payTime;
-                this.serviceBeginTime = res.data.beginTime;
-                this.serviceEndTime = res.data.endTime;
-                this.buyTime = res.data.payPrice;
-                this.cost = res.data.orderTime;
-                this.state = res.data.status;
+                // console.log(res.data);
+                this.myOrderTableData=res.data;
+                console.log(this.myOrderTableData)
+                // this.myOrderTableData[0].productName = res.data.title;
+                // this.myOrderTableData[0].orderBeginTime = res.data.payTime;
+                // this.myOrderTableData[0].serviceBeginTime = res.data.beginTime;
+                // this.myOrderTableData[0].serviceEndTime = res.data.endTime;
+                // this.myOrderTableData[0].buyTime = res.data.payPrice;
+                // this.myOrderTableData[0].cost = res.data.orderTime;
+                // this.myOrderTableData[0].state = res.data.status;
             });
         },
         goBuy(index, rows){
             console.log(index+rows);
             this.$router.push('/buy1');
         },
+        changeStatus(row, column, cellValue, index){
+            if(cellValue == true){
+                return '使用中'
+            }
+            if(cellValue == false){
+                return '已过期'
+            }
+        }
     },
     watch:{
         pageChange(val){

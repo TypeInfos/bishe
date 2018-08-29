@@ -83,7 +83,7 @@
             // 执行完一次后delay秒后才能再执行一次
             fn.canRun = true;
         }, delay)
-      },
+    },
       turnMyDate(str) {
         str = parseInt(str);
         if (str != "" || str != null) {

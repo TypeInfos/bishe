@@ -1,6 +1,6 @@
 <div class="buy2-container">
     <div class="hole-container">
-        <div class="hole" v-loading="payLoading" :element-loading-spinner="spinner"  :element-loading-text="payingText" element-loading-background="rgba(0, 0, 0, 0.5)">
+        <div class="hole" v-loading="payLoading" customClass="payingLoading" :element-loading-spinner="spinner"  :element-loading-text="payingText" element-loading-background="rgba(0, 0, 0, 0.5)">
             <h1>订单信息</h1>
             <el-table
             :data="orderInfoTableData"

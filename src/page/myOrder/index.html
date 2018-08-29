@@ -9,39 +9,40 @@
             :data="myOrderTableData"
             style="width:100%;">
                 <el-table-column
-                prop="productName"
+                prop="title"
                 label="产品名称"
                 width="280">
                 </el-table-column>
                 <el-table-column
-                prop="orderBeginTime"
+                prop="payTime"
                 label="订单产生时间"
                 width="180">
                 </el-table-column>
                 <el-table-column
-                prop="serviceBeginTime"
+                prop="beginTime"
                 label="服务开始时间"
                 width="180">
                 </el-table-column>
                 <el-table-column
-                prop="serviceEndTime"
+                prop="endTime"
                 label="服务结束时间"
                 width="180">
                 </el-table-column>
                 <el-table-column
-                prop="buyTime"
+                prop="orderTime"
                 label="订购时长"
                 width="120">
                 </el-table-column>
                 <el-table-column
-                prop="cost"
+                prop="payPrice"
                 label="费用"
                 width="120">
                 </el-table-column>
                 <el-table-column
-                prop="state"
+                prop="status"
                 label="状态"
-                width="120">
+                width="120"
+                :formatter="changeStatus">
                 </el-table-column>
                 <el-table-column
                 fixed="right"

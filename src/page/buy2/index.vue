@@ -21,7 +21,7 @@
         shouldPay: '¥2980', //应付金额
         orderId: '', //订单编号
         payWay: '', //支付方式
-        showTick: false, //显示支付宝的icon打勾
+        showTick: true, //显示支付宝的icon打勾
         spinner: 'el-icon-loading', //支付中的icon类名
         payingText: '支付中', //支付中的文本
         showCloseLoading: false, //显示支付中加载框 右上角的关闭icon
@@ -89,8 +89,7 @@
               this.$axios.post(this.$api.getOrderStatus, {
                 orderId: this.orderId
               }).then((res) => {
-                console.log(res.data.status);
-                console.log(this.spinner)
+                console.log('status:'+res.data.status);
                 if (res.data.status == 0) {
                   this.payLoading = true;
                   this.payingText = '支付中';
@@ -102,11 +101,19 @@
                     document.querySelector('.el-loading-spinner').children[0].classList.remove('el-icon-loading')
                     document.querySelector('.el-loading-spinner').children[0].classList.add('el-icon-circle-check')
                     this.spinner = 'el-icon-circle-check';
-                    console.log(this.spinner)
-                    this.payingText = '支付成功';
-                    setTimeout(() => {
-                      this.$router.push('/rootRadar');
-                    }, 3000);
+                    let dTime=5;
+                    let daojishi=setInterval(()=>{
+                      this.payingText = '支付成功!'+' '+dTime+'秒之后跳转...';
+                      dTime-=1;
+                      if(dTime<0){
+                        this.$router.push('/rootRadar');
+                        window.clearInterval(daojishi);
+                      }
+                    },1000);
+                    //支付成功 3秒之后跳转到词根雷达页面
+                    // setTimeout(() => {
+                      // this.$router.push('/rootRadar');
+                    // }, 3000);
                   });
                   window.clearInterval(timer);
                 }
@@ -132,6 +139,7 @@
       closeLoading() {
         this.payLoading = false; //关闭支付的加载框
         this.showCloseLoading = false; //关闭支付的加载框右上角的icon
+        window.clearInterval(timer);   //关闭支付 也得关闭轮训 否则加载框还会出现
       },
     },
     watch: {

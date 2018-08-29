@@ -60,7 +60,8 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: './',
+    // assetsPublicPath: './',
+    assetsPublicPath: '/',     //如果是./   打包background大相对路径的图片就无法显示
 
     /**
      * Source Maps

@@ -44,6 +44,9 @@
       height: 350px;
       // margin: 0 auto;
       margin-left: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
         .name{
           margin-top: 20px;
           margin-bottom: 10px;
@@ -56,6 +59,7 @@
           }
           .el-input{
             width: 200px;
+            margin-left: 10px;
             .el-input__inner{
               width: 240px;
               height: 30px;
@@ -75,6 +79,7 @@
         //设置所有的多选框 宽度都为100px
         .el-checkbox{
           width: 100px;
+          margin-left: 10px;
         }
         .prefix0{
           display: flex;
@@ -155,6 +160,10 @@
         display: flex;
         flex-direction: column;
         width: 80%; 
+        //设置所有的多选框 宽度都为100px
+        .el-checkbox{
+          margin-left: 10px;
+        }
         .prefix0{
           display: flex;
           flex-wrap: wrap;
@@ -223,6 +232,7 @@
           }
           .el-input{
             width: 180px;
+            margin-left: 10px;
             .el-input__inner{
               // width:180px;
               height:30px;
@@ -252,7 +262,8 @@
         }
         .twoBtn{
           margin-top: 30px;
-          text-align: center;
+          // text-align: center;
+
           .btnCancel{
             border-radius: 4px;
             padding: 0 16px; //宽度由padding左右16px决定
@@ -261,6 +272,7 @@
             background:rgba(255,255,255,1);
             color:rgba(28,202,218,1);
             border:1px solid rgba(28,202,218,1);
+            margin-left: 57px;
           }
           .btnCancel:hover{
             background:rgba(28,202,218,1);

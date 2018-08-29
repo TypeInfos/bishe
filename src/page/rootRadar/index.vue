@@ -336,7 +336,6 @@
         if (scrollTop > 93.6) {
           ele.style.position = 'sticky';
           ele.style.top = `${scrollTop-60}px`;
-          // ele.style.position = 'fixed';
           // ele.style.width = 'calc(100% - 497px)';
           // ele.style.margin = '-80px 0 0 0';
         } else {
@@ -1235,7 +1234,6 @@
         this.showTableDataDialog = true;
         this.tableData = this.wrapData[index].tableData;
         this.totalData = this.wrapData[index].totalData;
-        console.log(this.wrapData);
       },
       // 词根分析 递归获取词根数据
       getRootData(root) {

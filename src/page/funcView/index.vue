@@ -25,11 +25,30 @@ export default {
           console.log(error);
         });
     },
-    use() {
-      this.$router.push("/labelLab");
+    use(item) {
+      switch(item){
+        case 'rootRadar':
+          this.$router.push("/rootRadar");
+          break;
+        case 'labelLab':
+          this.$router.push("/labelLab");
+          break;
+        default:
+          break;
+      }
     },
-    lookUseVideo() {
-      window.open("about:blank");
+    lookUseVideo(item) {
+      switch(item){
+        case 'rootRadar':
+          window.open("https://v.doushudata.com/video.html");
+          break;
+        case 'labelLab':
+          window.open("about:blank");
+          break;
+        default:
+          break;
+      }
+      
     }
   }
 };

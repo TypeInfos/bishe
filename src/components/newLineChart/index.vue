@@ -82,20 +82,15 @@
           },
           legend: {
             selectedMode: true,
-            left:(function(){
-              if(tempData.length > 1){
-                return 'center'
-              }else{
-                return 100;
-              }
-            })(),
-            top:(function(){
-              if(tempData.length > 1){
-                return 'middle'
-              }else{
-
-              }
-            })(),
+            left:tempData.length > 1?100:'center',
+            // (function(){
+            //   if(tempData.length > 1){
+            //     return 'center'
+            //   }else{
+            //     return 100;
+            //   }
+            // })(),
+            top:tempData.length>1?'top':'middle',
             padding: [
               5,
               20,

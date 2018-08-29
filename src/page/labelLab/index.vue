@@ -331,23 +331,22 @@ export default {
     };
   },
   methods: {
-    // gjfAdd 进入页面先判断是否订购产品
-
-    checkOrder() {
-      this.$axios.post(this.$api.checkOrder, {
-        pid: 1, // pid为1是词根雷达
-      }).then((res) => {
-        if (res.data) {
-          this.getShopId();
-        } else {
-          this.$message({
-            message: res.message,
-            type: 'warning',
-          });
-          this.$router.push('/buy1');
-        }
-      });
-    },
+    //gjfAdd 进入页面先判断是否订购产品
+      checkOrder(){
+        this.$axios.post(this.$api.checkOrder,{
+          pid:1      //pid为1是词根雷达
+        }).then((res)=>{
+          if(res.data){
+            this.getShopId();
+          }else{
+            this.$message({
+              message:res.message,
+              type:'warning'
+            });
+            this.$router.push('/buy1');
+          }
+        });
+      },
     // 关闭createPeople dialog
     closeCreatePeopleDialog() {
       this.createPeopleDialog = false;
@@ -685,7 +684,6 @@ export default {
           }
         }
       }
-
       param.level = this.rate;
       this.$axios.post(this.$api.levelCrowd, param)
         .then((res) => {
@@ -861,6 +859,7 @@ export default {
     // 一键创建人群
     oneKey() {
       const param = this.setParams();
+      this.initGroupLoading = true;
       const cookieValue = {
         adGroupId: this.currentAdGroupId,
         productId: this.currentProductId,
