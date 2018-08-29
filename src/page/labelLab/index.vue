@@ -331,22 +331,22 @@ export default {
     };
   },
   methods: {
-    //gjfAdd 进入页面先判断是否订购产品
-      checkOrder(){
-        this.$axios.post(this.$api.checkOrder,{
-          pid:1      //pid为1是词根雷达
-        }).then((res)=>{
-          if(res.data){
-            this.getShopId();
-          }else{
-            this.$message({
-              message:res.message,
-              type:'warning'
-            });
-            this.$router.push('/buy1');
-          }
-        });
-      },
+    // gjfAdd 进入页面先判断是否订购产品
+    checkOrder() {
+      this.$axios.post(this.$api.checkOrder, {
+        pid: 1, // pid为1是词根雷达
+      }).then((res) => {
+        if (res.data) {
+          this.getShopId();
+        } else {
+          this.$message({
+            message: res.message,
+            type: 'warning',
+          });
+          this.$router.push('/buy1');
+        }
+      });
+    },
     // 关闭createPeople dialog
     closeCreatePeopleDialog() {
       this.createPeopleDialog = false;
@@ -367,7 +367,7 @@ export default {
         };
         console.log(param);
         this.$axios.post(this.$api.deleteGroup, param)
-          .then((res) => {
+          .then(() => {
             this.getCrowdInfo();
             this.$message({
               type: 'success',
@@ -544,7 +544,6 @@ export default {
         if (index === 1) {
           yAxisIndex = 1;
         }
-        const seriesData = item.box;
         series.push({
           name: item.name,
           smooth: true,
@@ -635,14 +634,14 @@ export default {
       for (let i = 0; i < this.groupList.length; i++) {
         const tableS = `table${i}`;
         const selection = this.$refs[tableS][0].selection;
-        if (selection.length != 0) {
+        if (selection.length !== 0) {
           for (const v of selection) {
             param.crowdIdList.push(v.crowdId);
           }
         }
       }
       this.$axios.post(this.$api.updateDiscount, param)
-        .then((res) => {
+        .then(() => {
           this.$message({
             showClose: true,
             message: '成功修改溢价',
@@ -678,15 +677,17 @@ export default {
       for (let i = 0; i < this.groupList.length; i++) {
         const tableS = `table${i}`;
         const selection = this.$refs[tableS][0].selection;
+        console.log(selection);
         if (selection.length !== 0) {
-          for (const v of selection) {
+          for (let v of selection) {
+            console.log(v);
             param.crowdIdList.push(v.crowdId);
           }
         }
       }
       param.level = this.rate;
       this.$axios.post(this.$api.levelCrowd, param)
-        .then((res) => {
+        .then(() => {
           this.peopleRateDialog = false;
           this.peopleRateLoading = false;
           this.$message({
@@ -705,7 +706,7 @@ export default {
     refreshDate(startTime, endtime) {
       this.startTime = startTime;
       this.endTime = endtime;
-      if (this.currentAdGroupId != '') {
+      if (this.currentAdGroupId !== '') {
         this.getCrowdInfo();
       }
     },
@@ -737,7 +738,7 @@ export default {
         },
         (response) => {
           try {
-            if (response.code == 200) {
+            if (response.code === 200) {
               this.currentShopid = response.currentShopid;
               this.$axios.post(this.$api.checkBind, {
                 id: this.currentShopid,
@@ -751,7 +752,7 @@ export default {
                 }
               });
             } else {
-              alert('你当前没有登陆淘宝，请登陆淘宝！');
+              this.$alert('你当前没有登陆淘宝，请登陆淘宝！');
               this.$router.push('/login');
               window.location.reload();
             }
@@ -772,7 +773,7 @@ export default {
         groupName: this.modifyGroupName,
         adGroupId: this.currentAdGroupId,
         groupId: this.currentUpdateGroupId,
-      }).then((res) => {
+      }).then(() => {
         this.groupList[this.operatIngIndex].groupName = this.modifyGroupName;
         this.modifyGroupLoading = false;
         this.modifyGroupsDialog = false;
@@ -789,11 +790,11 @@ export default {
     // 创建群组
     radioChange() {
       this.createGroupName = '';
-      if (this.radio == 1) {
+      if (this.radio === 1) {
         this.showStandardGroup = true;
         this.showMyDefinedGroup = false;
       }
-      if (this.radio == 2) {
+      if (this.radio === 2) {
         this.showMyDefinedGroup = true;
         this.showStandardGroup = false;
       }
@@ -828,7 +829,7 @@ export default {
       this.$axios.post(this.$api.addGroup, {
         groupName: this.createGroupName,
         adGroupId: this.currentAdGroupId,
-      }).then((res) => {
+      }).then(() => {
         this.$message({
           showClose: true,
           message: '创建群组成功',
@@ -904,7 +905,7 @@ export default {
                 productId: this.currentProductId,
                 firstCat: this.currentFirstCat,
               })
-                .then((res) => {
+                .then(() => {
                   this.initGroupLoading = false;
                   complete = true;
                   this.$message({
@@ -912,13 +913,13 @@ export default {
                     message: '创建成功!',
                   });
                   this.$axios.post(this.$api.getCrowd, param)
-                    .then((res) => {
-                      for (let i = 0; i < res.data.length; i++) {
-                        res.data[i] = Object.assign({
+                    .then((response) => {
+                      for (let i = 0; i < response.data.length; i++) {
+                        response.data[i] = Object.assign({
                           extend: true,
-                        }, res.data[i]);
+                        }, response.data[i]);
                       }
-                      this.groupList = res.data;
+                      this.groupList = response.data;
                       this.trapezoid();
                       this.getScoreRenderTag();
                       this.labelTendency();
@@ -973,13 +974,13 @@ export default {
           type: 'token',
           token: this.currentToken,
         },
-        (response) => {
+        () => {
           console.log('token send succeed');
         });
       } catch (error) {
         this.$alert('没有安装正确的插件，请联系官网客服', '警告', {
           confirmButtonText: '确定',
-          callback: (action) => {
+          callback: () => {
             this.$message({
               type: 'warn',
               message: '没有安装正确的插件，请联系官网客服',
@@ -1016,7 +1017,7 @@ export default {
       for (let i = 0; i < this.groupList.length; i++) {
         const tableS = `table${i}`;
         const selection = this.$refs[tableS][0].selection;
-        if (selection.length != 0) {
+        if (selection.length !== 0) {
           for (const v of selection) {
             param.crowdIdList.push(v.crowdId);
           }
@@ -1024,9 +1025,9 @@ export default {
       }
       if (param.crowdIdList.length > 0) {
         this.$axios.post(this.$api.updateStatus, param)
-          .then((res) => {
+          .then(() => {
             this.getCrowdInfo();
-            if (onlineStatus == 1) {
+            if (onlineStatus === 1) {
               this.$message({
                 showClose: true,
                 message: '参与推广成功',
@@ -1053,7 +1054,7 @@ export default {
       for (let i = 0; i < this.groupList.length; i++) {
         const tableS = `table${i}`;
         const selection = this.$refs[tableS][0].selection;
-        if (selection.length != 0) {
+        if (selection.length !== 0) {
           for (const v of selection) {
             param.crowdIdList.push(v.crowdId);
           }
@@ -1068,7 +1069,7 @@ export default {
           this.initGroupLoadingText = '加载中，请稍等';
           this.initGroupLoading = true;
           this.$axios.post(this.$api.deleteCrowd, param)
-            .then((res) => {
+            .then(() => {
               this.initGroupLoading = false;
               this.getCrowdInfo();
               this.$message({
@@ -1155,7 +1156,7 @@ export default {
       this.finalCheckIndexList = [];
       for (let i = 0; i < this.checkIndexList.length; i++) {
         for (let j = 0; j < this.checkIndexListGroup.length; j++) {
-          if (this.checkIndexList[i] == this.checkIndexListGroup[j].label) {
+          if (this.checkIndexList[i] === this.checkIndexListGroup[j].label) {
             this.finalCheckIndexList.push(this.checkIndexListGroup[j]);
             break;
           }
@@ -1255,7 +1256,7 @@ export default {
         campaignId: this.currentCampaignId,
       };
       this.$axios.post(this.$api.ifFirstTag, cookieValue)
-        .then((res) => {
+        .then(() => {
           this.$cookies.set(`${this.loginName}Item`, JSON.stringify(cookieValue));
           this.$axios.post(this.$api.getCrowd, param)
             .then((res) => {
@@ -1266,6 +1267,7 @@ export default {
               }
               this.initGroupLoading = false;
               this.groupList = res.data;
+              console.log(this.groupList);
               this.trapezoid();
               this.getScoreRenderTag();
               this.labelTendency();
@@ -1284,7 +1286,7 @@ export default {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
       const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft;
       const offsetTop = leftEle.offsetTop;
-      if (this.asideFixed == false) {
+      if (this.asideFixed === false) {
         if (scrollTop > offsetTop) {
           this.asideFixed = true;
         }
@@ -1302,7 +1304,7 @@ export default {
       // 改变终端时重新请求当前数据
       this.czd = val;
       console.log(this.czd);
-      if (this.currentAdGroupId != '') {
+      if (this.currentAdGroupId !== '') {
         this.getCrowdInfo();
       }
     },
@@ -1311,7 +1313,7 @@ export default {
        */
     chooseLy(val) {
       this.source = val;
-      if (this.currentAdGroupId != '') {
+      if (this.currentAdGroupId !== '') {
         this.getCrowdInfo();
       }
     },
@@ -1400,11 +1402,22 @@ export default {
           node.style.display = 'flex';
           node.style.justifyContent = 'space-between';
           node.style.flexDirection = 'column';
-          temp = 240 + (nodeHeight / Math.sqrt(3)) * 2.1 * i;
+          temp = 240 + ((nodeHeight / Math.sqrt(3)) * 2.1 * i);
           node.style.width = `${temp}px`;
           pyramid.appendChild(node);
         }
       });
+    },
+    formatterPercent(row, column) {
+      if (column.label === '溢价') {
+        return `${row.discount}%`;
+      }
+      return row[this.finalCheckIndexList.filter(i => i.label === column.label)[0].name];
+    },
+    formatterPeopleRate(row) {
+      if (row.level) {
+        return row.level;
+      } return '-';
     },
   },
   beforeCreate() {},
@@ -1447,7 +1460,7 @@ export default {
   },
   watch: {
     checkList(val) {
-      if (val.length == 0) {
+      if (val.length === 0) {
         this.tendencyAnalysShow = false;
       } else {
         this.tendencyAnalysShow = true;
@@ -1458,7 +1471,7 @@ export default {
     },
     // 输入框 过滤计划
     fiterPlansInput(val) {
-      if (val.trim() == '') {
+      if (val.trim() === '') {
         this.filterInputPlans = this.allPlans;
       } else {
         const arr = [];
@@ -1470,30 +1483,28 @@ export default {
         this.filterInputPlans = arr;
       }
       this.resultPlans = this.filterInputPlans.filter((value) => {
-        if (this.selectPlanStatus == -1) {
+        if (this.selectPlanStatus === -1) {
           return value;
-        } else if (this.selectPlanStatus == 1) {
-          return value.status == 1;
+        } else if (this.selectPlanStatus === 1) {
+          return value.status === 1;
         }
-        return value.status != 1;
-
-        console.log(this.selectPlanStatus);
+        return value.status !== 1;
       });
     },
     // 下拉框选择计划状态
     selectPlanStatus(val) {
       this.resultPlans = this.filterInputPlans.filter((value) => {
-        if (val == -1) {
+        if (val === -1) {
           return value;
-        } else if (val == 1) {
-          return value.status == 1;
+        } else if (val === 1) {
+          return value.status === 1;
         }
-        return value.status != 1;
+        return value.status !== 1;
       });
     },
     // 过滤商品列表
     fiterGoodsInput(val) {
-      if (val.trim() == '') {
+      if (val.trim() === '') {
         this.resultGoods = this.planOfGoodsList;
       } else {
         const arr = [];
@@ -1506,21 +1517,21 @@ export default {
       }
     },
     modifyGroupName(val) {
-      if (val.trim() == '') {
+      if (val.trim() === '') {
         this.modifyGroupNameDisable = true;
       } else {
         this.antiShake(this.checkGroupName, null, 400, null);
       }
     },
     createGroupName(val) {
-      if (val == '') {
+      if (val === '') {
         this.createGroupDisabled = true;
       } else {
         this.antiShake(this.checkCreateGroupName, null, 400, null);
       }
     },
     rate(val) {
-      if (val == '') {
+      if (val === '') {
         this.peopleRateDisable = true;
       } else {
         this.peopleRateDisable = false;
@@ -1528,13 +1539,13 @@ export default {
     },
     // 人群移动的v-mode
     targetGroup(val) {
-      if (val == '') {
+      if (val === '') {
         this.peopleMoveDisabled = true;
       } else {
         this.peopleMoveDisabled = false;
       }
     },
-    groupAnalyzePopStatus(val) {
+    groupAnalyzePopStatus() {
       this.checkIndexList = this.tempCheckIndexList;
     },
   },
