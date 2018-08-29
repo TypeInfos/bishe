@@ -366,7 +366,6 @@ export default {
           groupId: this.groupList[index].groupId,
           campaignId: this.currentCampaignId,
         };
-        console.log(param);
         this.$axios.post(this.$api.deleteGroup, param)
           .then(() => {
             this.getCrowdInfo();
@@ -556,8 +555,6 @@ export default {
           // }
         });
       });
-      console.log('这里是total');
-      console.log(total);
       const wrap = {
         total,
         checkList,
@@ -846,9 +843,7 @@ export default {
       for (let i = 0; i < this.groupList.length; i++) {
         const tableS = `table${i}`;
         const selection = this.$refs[tableS][0].selection;
-        console.log('selection', selection.length)
         if (selection.length > 0) {
-          console.log('buwei 0')
           for (const v of selection) {
             this.checkedPeople.push(v);
           }
@@ -861,26 +856,19 @@ export default {
     // 全选 =》 每个群组可以全选各自群组下的 人群
     selectAllCheck(refValue, index) {
       this.$refs[refValue][0].toggleAllSelection();
-      console.log(this.$refs[refValue][0].selection.length)
       if (this.$refs[refValue][0].selection.length < this.groupList[index].list.length) {
-        console.log('add products')
         this.groupList[index].list.forEach(i => {
           if (this.checkedPeople.indexOf(i) === -1) {
             this.checkedPeople.push(i)
           }
-        })
+        });
       } else {
-        console.log('delete products')
-        this.checkedPeople = this.checkedPeople.filter(i => {
-          return this.groupList[index].list.every(j => j.crowdId !== i.crowdId)
-        })
+        this.checkedPeople = this.checkedPeople.filter(i => this.groupList[index].list.every(j => j.crowdId !== i.crowdId))
       }
-      // this.getCheckedPeople();
     },
     // 创建人群到当前群组
     createCrowd(index) {
       this.currentCreateGroupId = this.groupList[index].groupId;
-      console.log(this.currentCreateGroupId);
       this.createPeopleDialog = true;
     },
     // 创建人群创建成功后 刷新数据
@@ -956,7 +944,6 @@ export default {
                     });
                 });
             }).catch((err) => {
-              console.log(err);
             });
           } else {
             this.initGroupLoading = false;
@@ -990,8 +977,6 @@ export default {
           this.currentAdGroupId = result.adGroupId;
           this.planName = result.planName;
           this.getCrowdInfo();
-        } else {
-          console.log('本地没有cookie');
         }
       }).catch((error) => {
         console.log(error);
@@ -1004,9 +989,7 @@ export default {
           type: 'token',
           token: this.currentToken,
         },
-        () => {
-          console.log('token send succeed');
-        });
+        () => {});
       } catch (error) {
         this.$alert('没有安装正确的插件，请联系官网客服', '警告', {
           confirmButtonText: '确定',
@@ -1143,7 +1126,6 @@ export default {
     // 限制选择6个 指标
     checkCheckbox(val) {
       const name = val.toElement.defaultValue || val.toElement.innerText;
-      console.log(name);
       if (this.checkIndexList.length === 6) {
         let flag = false;
         this.checkIndexList.forEach((item) => {
@@ -1173,7 +1155,6 @@ export default {
        * 展示指标的 取消按钮
        */
     showIndexCancel() {
-      console.log(this.groupAnalyzePopStatus);
       this.groupAnalyzePopStatus = false;
       this.checkIndexList = this.tempCheckIndexList;
     },
@@ -1204,8 +1185,6 @@ export default {
     // 每个群组的展示按钮
     showTable(index) {
       this.groupList[index].extend = !this.groupList[index].extend;
-      console.log(index);
-      console.log(this.groupList[index].extend);
     },
     /**
        * 选择计划
@@ -1332,7 +1311,6 @@ export default {
     chooseZd(val) {
       // 改变终端时重新请求当前数据
       this.czd = val;
-      console.log(this.czd);
       if (this.currentAdGroupId !== '') {
         this.getCrowdInfo();
       }
@@ -1362,7 +1340,6 @@ export default {
        * 排序 所有表
        */
     sortAllTable(props) {
-      console.log(this.groupList);
       const order = props.order;
       const prop = props.prop;
       for (let i = 0; i < this.groupList.length; i++) {
@@ -1488,7 +1465,6 @@ export default {
       }
       this.checkSurplus = val.length;
       this.labelTendencyData = this.turnData(this.checkList, this.saveLabelTendencyData, this.checkListGroup);
-      console.log(this.labelTendencyData);
     },
     // 输入框 过滤计划
     fiterPlansInput(val) {
