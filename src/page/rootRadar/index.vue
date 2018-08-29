@@ -318,7 +318,7 @@
         this.$axios.post(this.$api.checkOrder,{
           pid:1      //pid为1是词根雷达
         }).then((res)=>{
-          if(res.data){
+          if(res.data >= 0){
             this.getShopId();
           }else{
             this.$message({

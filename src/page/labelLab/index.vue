@@ -675,8 +675,10 @@ export default {
       for (let i = 0; i < this.groupList.length; i++) {
         const tableS = `table${i}`;
         const selection = this.$refs[tableS][0].selection;
+        console.log(selection);
         if (selection.length !== 0) {
-          for (const v of selection) {
+          for (let v of selection) {
+            console.log(v);
             param.crowdIdList.push(v.crowdId);
           }
         }
@@ -859,11 +861,11 @@ export default {
       if (this.$refs[refValue][0].selection.length < this.groupList[index].list.length) {
         this.groupList[index].list.forEach(i => {
           if (this.checkedPeople.indexOf(i) === -1) {
-            this.checkedPeople.push(i)
+            this.checkedPeople.push(i);
           }
         });
       } else {
-        this.checkedPeople = this.checkedPeople.filter(i => this.groupList[index].list.every(j => j.crowdId !== i.crowdId))
+        this.checkedPeople = this.checkedPeople.filter(i => this.groupList[index].list.every(j => j.crowdId !== i.crowdId));
       }
     },
     // 创建人群到当前群组
@@ -935,15 +937,15 @@ export default {
                       for (let i = 0; i < res.data.length; i++) {
                         res.data[i] = Object.assign({
                           extend: true,
-                        }, res.data[i]);
+                        }, response.data[i]);
                       }
-                      this.groupList = res.data;
+                      this.groupList = response.data;
                       this.trapezoid();
                       this.getScoreRenderTag();
                       this.labelTendency();
                     });
                 });
-            }).catch((err) => {
+            }).catch(() => {
             });
           } else {
             this.initGroupLoading = false;
@@ -1276,6 +1278,7 @@ export default {
               }
               this.initGroupLoading = false;
               this.groupList = res.data;
+              console.log(this.groupList);
               this.trapezoid();
               this.getScoreRenderTag();
               this.labelTendency();
@@ -1413,6 +1416,17 @@ export default {
           pyramid.appendChild(node);
         }
       });
+    },
+    formatterPercent(row, column) {
+      if (column.label === '溢价') {
+        return `${row.discount}%`;
+      }
+      return row[this.finalCheckIndexList.filter(i => i.label === column.label)[0].name];
+    },
+    formatterPeopleRate(row) {
+      if (row.level) {
+        return row.level;
+      } return '-';
     },
   },
   beforeCreate() {},

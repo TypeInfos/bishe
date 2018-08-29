@@ -98,13 +98,14 @@
             message: "请同意法律声明和隐私条款",
             type: "warning"
           });
-        } else {
-          // else if(!this.inviteCode) {
-          //   this.$message({
-          //     message: '无效的邀请码',
-          //     type: 'warning'
-          //   });
-          // }
+        } 
+        // else if(!this.inviteCode) {
+        //     this.$message({
+        //       message: '无效的邀请码',
+        //       type: 'warning'
+        //     });
+        //   }
+          else {
           this.registerLoading = true;
           this.$axios
             .post(this.$api.register, {
