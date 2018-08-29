@@ -28,7 +28,7 @@ export default {
       sexRadio:'',
       checked:'',
       monthAverageLimitRadio:'',
-      overPeopleNumber:'-',
+      overPeopleNumber:'-',     //覆盖人群的数量
       //jy
       wordList:'',    //保存插件需要的一大串文字
       peoplePropertyObj:[],
@@ -168,6 +168,7 @@ export default {
       // console.log(radio);
       this.peopleCheckList = []; //每次切换单选都清空多选框群组的数组
       this.para = [] ;   //清空传给插件的数组
+      this.overPeopleNumber = '-';   //每次切换单选 初始化覆盖人群的数量
       console.log('peopleCheckList数组清空了'+this.peopleCheckList);
       console.log('para数组清空了'+this.para);
       if(this.radio == 2){

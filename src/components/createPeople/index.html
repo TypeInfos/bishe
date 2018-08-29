@@ -1,5 +1,5 @@
 <div class="hello">
-    <el-dialog v-loading="loading" :visible.sync="createPeopleDialog" :show-close=false :modal=false class="createPeople">
+    <el-dialog v-loading="loading" :visible.sync="createPeopleDialog" :show-close=false :modal=false :close-on-click-modal=false class="createPeople">
         <div slot="title" class="header">
             <h2>创建人群</h2>
             <el-button icon="el-icon-close" @click="closeModal"></el-button>

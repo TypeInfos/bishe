@@ -101,7 +101,7 @@
                     document.querySelector('.el-loading-spinner').children[0].classList.remove('el-icon-loading')
                     document.querySelector('.el-loading-spinner').children[0].classList.add('el-icon-circle-check')
                     this.spinner = 'el-icon-circle-check';
-                    let dTime=3;
+                    let dTime=5;
                     let daojishi=setInterval(()=>{
                       this.payingText = '支付成功!'+' '+dTime+'秒之后跳转...';
                       dTime-=1;
