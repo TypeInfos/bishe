@@ -2,7 +2,11 @@
 const state = {
   isLogin: false,
   bindTaobaoName: '',
+<<<<<<< HEAD
   editorExtensionId:'ecieoimbedmijllodncamebieonaboff',  //本地ID
+=======
+  editorExtensionId: 'lemdejnloabdfhcinbhpedggonhdafhm', // 本地ID
+>>>>>>> 1e2545eb603bae5da38983432d2e6ae350f6a171
   // lnbdcilfaojoldgckojoidnafpagkjbn   上线ID
   // cpnmealmpgcapggbgjgfahpiifbbooef  测试ID
 };
@@ -16,7 +20,7 @@ const mutations = {
   },
   setTaobaoName(state, payload) {
     state.bindTaobaoName = payload.name;
-  }
+  },
 };
 // actions
 const actions = {
@@ -28,13 +32,13 @@ const actions = {
   },
   setTaobaoName(context, payload) {
     context.commit('setTaobaoName', payload);
-  }
+  },
 };
 
 const getters = {
   login: state => state.isLogin,
   taobaoName: state => state.bindTaobaoName,
-  editorExtensionId: state => state.editorExtensionId
+  editorExtensionId: state => state.editorExtensionId,
 };
 
 export default {
