@@ -72,6 +72,7 @@ export default {
       resultGoods: [], // 过滤输入框后的商品列表
       groupList: [], // 群组的所有结果
       checkAllGroup: false, // 全选checkBox
+      checkedPeople: [], // lhr: 选中的人群集合
       currentCampaignId: '', // 当前计划Id
       currentAdGroupId: '', // 当前计划商品id
       currentProductId: '', // 当前商品的 productId
@@ -836,14 +837,29 @@ export default {
         this.createGroupName = '';
         this.createGroupLoading = false;
         this.createGroupDialog = false;
-
         // 重新请求数据，重新渲染金字塔
         this.getCrowdInfo();
       });
     },
+    getCheckedPeople() {
+      this.checkedPeople = [];
+      for (let i = 0; i < this.groupList.length; i++) {
+        const tableS = `table${i}`;
+        const selection = this.$refs[tableS][0].selection;
+        if (selection.length !== 0) {
+          for (const v of selection) {
+            this.checkedPeople.push(v);
+          }
+        }
+      }
+    },
+    handleSelectPeople() {
+      this.getCheckedPeople();
+    },
     // 全选 =》 每个群组可以全选各自群组下的 人群
     selectAllCheck(refValue) {
       this.$refs[refValue][0].toggleAllSelection();
+      this.getCheckedPeople();
     },
     // 创建人群到当前群组
     createCrowd(index) {
@@ -1257,7 +1273,7 @@ export default {
         .then(() => {
           this.$cookies.set(`${this.loginName}Item`, JSON.stringify(cookieValue));
           this.$axios.post(this.$api.getCrowd, param)
-            .then(() => {
+            .then((res) => {
               for (let i = 0; i < res.data.length; i++) {
                 res.data[i] = Object.assign({
                   extend: true,
@@ -1442,6 +1458,9 @@ export default {
         default:
           return 2;
       }
+    },
+    isPeopleSelected() {
+      return !!this.checkedPeople.length;
     },
   },
   watch: {
