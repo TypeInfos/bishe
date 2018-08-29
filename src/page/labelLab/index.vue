@@ -846,7 +846,9 @@ export default {
       for (let i = 0; i < this.groupList.length; i++) {
         const tableS = `table${i}`;
         const selection = this.$refs[tableS][0].selection;
-        if (selection.length !== 0) {
+        console.log('selection', selection.length)
+        if (selection.length > 0) {
+          console.log('buwei 0')
           for (const v of selection) {
             this.checkedPeople.push(v);
           }
@@ -857,9 +859,23 @@ export default {
       this.getCheckedPeople();
     },
     // 全选 =》 每个群组可以全选各自群组下的 人群
-    selectAllCheck(refValue) {
+    selectAllCheck(refValue, index) {
       this.$refs[refValue][0].toggleAllSelection();
-      this.getCheckedPeople();
+      console.log(this.$refs[refValue][0].selection.length)
+      if (this.$refs[refValue][0].selection.length < this.groupList[index].list.length) {
+        console.log('add products')
+        this.groupList[index].list.forEach(i => {
+          if (this.checkedPeople.indexOf(i) === -1) {
+            this.checkedPeople.push(i)
+          }
+        })
+      } else {
+        console.log('delete products')
+        this.checkedPeople = this.checkedPeople.filter(i => {
+          return this.groupList[index].list.every(j => j.crowdId !== i.crowdId)
+        })
+      }
+      // this.getCheckedPeople();
     },
     // 创建人群到当前群组
     createCrowd(index) {
@@ -1460,7 +1476,7 @@ export default {
       }
     },
     isPeopleSelected() {
-      return !!this.checkedPeople.length;
+      return this.checkedPeople.length > 0;
     },
   },
   watch: {
