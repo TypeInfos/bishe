@@ -1,42 +1,49 @@
-.serviceContainer{
+.serviceContainer {
     position: fixed;
     right: 0;
-    top:30%;
+    top: 30%;
     width: 60px;
-    height: 300px;;
-    background:transparent;
+    height: 300px;
+    ;
+    background: transparent;
     z-index: 3000;
-    .holeContainer{
+    .holeContainer {
         height: 100%;
         text-align: center;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        .hole{
+        .hole {
             // border-bottom: 1px gray solid;
             padding-bottom: 10px;
             margin-bottom: 10px;
-            cursor: pointer;
-            // img{
+            cursor: pointer; // img{
             //     width: 100%;
             //     height: 20px;
             // }
-            .serviceIco{
-                font-size: 45px;
-                color: #1CCADA;
+            .serviceIco {
+                padding: 3px;
+                font-size: 30px;
+                // color: #1CCADA;
                 opacity: 0.5;
                 transition: opacity 0.5s;
             }
-            .serviceIco:hover{
+            .serviceIco:hover {
+                border-radius: 4px;
+                background: #eee;
                 opacity: 1;
             }
-            span{
+            span {
                 color: #1CCADA;
             }
         }
+        .hole:hover span {
+            color: #ab2b2b;
+        }
     }
 }
-.weixin{
+
+.weixin {
     // background: url('~@/assets/xd.jpg');    //kzp
     background: url(../../assets/xd.jpg);
     background-size: contain;
