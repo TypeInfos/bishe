@@ -20,7 +20,7 @@ export default {
       showErrorP:false,         //显示溢价范围有误的提示
       showPeopleProperty:true,  //显示人口属性人群整块
       showWeatherProperty:true, //显示天气属性人群整块
-      confirmDisabled:true,
+      // confirmDisabled:true,
       loading:false,
       price:'',
       name:'',
@@ -64,15 +64,16 @@ export default {
     },
     closeModal(){
       this.$emit('closeDialog');
+      this.overPeopleNumber = '-';  //每次关闭弹框，初始化覆盖人群数
     },
     nameMust(){
-      if(this.name == '' ){
-        this.showMustWrite = true;
-        this.confirmDisabled = true;
-      }else{
-        this.showMustWrite = false;
-        this.confirmDisabled = false;
-      }
+      // if(this.name == '' ){
+      //   this.showMustWrite = true;
+      //   this.confirmDisabled = true;
+      // }else{
+      //   this.showMustWrite = false;
+      //   this.confirmDisabled = false;
+      // }
     },
     btnCancel(){
       this.closeModal();
@@ -88,14 +89,14 @@ export default {
         return false;
     },
     checkboxChange(postfix,prefixIndex,postfixIndex,obj){
-      console.log(postfix.tagName);
-      console.log(postfixIndex);
+      // console.log(postfix.tagName);
+      // console.log(postfixIndex);
       let ckState = this.contains(this.peopleCheckList,postfix.tagName);
-      console.log(ckState);
+      // console.log(ckState);
       if(ckState){
         // this.peopleCheckList.push(postfix.tagName);  //把每次点击的字段添加到数组    //不用手动添加了 element的label自动添加到v-model的peopleCheckList数组里了
-        console.log('这是添加操作的');
-        console.log(this.peopleCheckList);
+        // console.log('这是添加操作的');
+        // console.log(this.peopleCheckList);
         this.para.push(obj[prefixIndex].tagOptions[postfixIndex]);   //添加一个tagOptions数组
       }else{
         let i = this.peopleCheckList.indexOf(postfix);  
@@ -103,9 +104,9 @@ export default {
         this.peopleCheckList.splice(i, 1); 
         } 
         // this.peopleCheckList.splice(postfix.tagName,1);  //把每次点击的字段从数组删除   //splice删除不精确 最好是遍历再splice删除
-        console.log(this.peopleCheckList);
+        // console.log(this.peopleCheckList);
         let tagNameState = this.contains(this.para,postfix.tagName);
-        console.log('tagNameState的状态是'+tagNameState);
+        // console.log('tagNameState的状态是'+tagNameState);
         if (!tagNameState) { 
           let p = this.para.indexOf(postfix); 
           if (p > -1) { 
@@ -114,7 +115,7 @@ export default {
         } 
       }
       // console.log('给插件的数组'+this.para);
-      console.log(this.para);
+      // console.log(this.para);
           // 我们希望与之通信的扩展程序标识符。
       // 发送一个简单的请求：
       chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
@@ -123,13 +124,29 @@ export default {
         wordList:this.wordList,
         },
       (response) => {
-        console.log(response);
+        // console.log(response);
         this.overPeopleNumber = response.result ;
       });
     },
     confirmBtn(){
       // console.log();
-      chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
+      if(!this.name){
+        this.$message({
+          message:'名称不能为空',
+          type:'warning'
+        });
+      }else if(this.overPeopleNumber == '-' || this.overPeopleNumber == 0){
+        this.$message({
+          message:'覆盖人群数量无意义',
+          type:'warning'
+        });
+      }else if(this.price >300 || this.price <5){
+        this.$message({
+          message:'溢价范围有误',
+          type:'warning'
+        });
+      }else{
+        chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
         type : 'addCrowd',
         firstCat : this.firstCat,
         adGroupId : this.adGroupId,
@@ -154,15 +171,16 @@ export default {
         this.$message.error('人群创建重复！');
       }
       });
+      }
     },
     betweenRange(){
-      if(this.price>300 || this.price<5) {
-        this.showErrorP = true;
-        this.confirmDisabled = false;
-      }else{
-        this.confirmDisabled = true;
-        this.showErrorP = false;
-      }
+      // if(this.price>300 || this.price<5) {
+      //   this.showErrorP = true;
+      //   this.confirmDisabled = false;
+      // }else{
+      //   this.confirmDisabled = true;
+      //   this.showErrorP = false;
+      // }
     },
     radioChange(radio){
       // console.log(radio);

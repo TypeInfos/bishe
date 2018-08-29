@@ -98,9 +98,9 @@
                   // nextTick 获取更新后的DOM
                   this.$nextTick(() => {
                     //只能用传统方法才改得掉icon
-                    document.querySelector('.el-loading-spinner').children[0].classList.remove('el-icon-loading')
-                    document.querySelector('.el-loading-spinner').children[0].classList.add('el-icon-circle-check')
-                    this.spinner = 'el-icon-circle-check';
+                    document.querySelector('.el-loading-spinner').children[0].classList.remove('el-icon-loading');
+                    document.querySelector('.el-loading-spinner').children[0].classList.add('el-icon-circle-check');
+                    // this.spinner = 'el-icon-circle-check';
                     let dTime=5;
                     let daojishi=setInterval(()=>{
                       this.payingText = '支付成功!'+' '+dTime+'秒之后跳转...';
@@ -110,10 +110,6 @@
                         window.clearInterval(daojishi);
                       }
                     },1000);
-                    //支付成功 3秒之后跳转到词根雷达页面
-                    // setTimeout(() => {
-                      // this.$router.push('/rootRadar');
-                    // }, 3000);
                   });
                   window.clearInterval(timer);
                 }
@@ -122,7 +118,7 @@
                     //只能用传统方法才改得掉icon
                     document.querySelector('.el-loading-spinner').children[0].classList.remove('el-icon-loading')
                     document.querySelector('.el-loading-spinner').children[0].classList.add('el-icon-circle-close')
-                    this.spinner = 'el-icon-circle-close';
+                    // this.spinner = 'el-icon-circle-close';
                     this.payingText = '订单超时';
                   });
                   window.clearInterval(timer);

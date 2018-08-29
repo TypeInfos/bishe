@@ -82,7 +82,7 @@
           },
           legend: {
             selectedMode: true,
-            left:tempData.length > 1?100:'center',
+            left:tempData.series[0].data.length > 1?100:'center',
             // (function(){
             //   if(tempData.length > 1){
             //     return 'center'
@@ -90,7 +90,7 @@
             //     return 100;
             //   }
             // })(),
-            top:tempData.length>1?'top':'middle',
+            top:tempData.series[0].data.length>1?'top':'middle',
             padding: [
               5,
               20,

