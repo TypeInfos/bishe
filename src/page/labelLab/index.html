@@ -193,7 +193,9 @@
               :key="index"
               :class="'scroll-group' + index"
               class="groupBody scroll-groups"
-              @select="handleSelectPeople">
+              @select="handleSelectPeople"
+              @cell-mouse-enter="hoverShowBtn"
+              @cell-mouse-leave="hoverHideBtn">
               <el-table-column
                 fixed
                 type="selection"
@@ -209,8 +211,10 @@
                       <i v-if="!scope.row.warning" class="iconfont warmFlag">&#xe655;</i>
                     </el-tooltip>
                     <el-tooltip content="暂停推广" :visible-arrow=false placement="bottom" effect="light">
-                      <i v-if="scope.row.onlineStatus" class="iconfont icon-zanting"></i>
-                      <i v-else class="iconfont icon-kaishi"></i>
+                      <i v-if="scope.row.onlineStatus" class="iconfont icon-zanting iconSelector hidden-btn"></i>
+                    </el-tooltip>
+                    <el-tooltip content="开始推广" :visible-arrow=false placement="bottom" effect="light">
+                      <i v-if="!scope.row.onlineStatus" class="iconfont icon-kaishi iconSelector hidden-btn"></i>
                     </el-tooltip>
                     <span class="title">{{scope.row.name}}</span>
                   </div>

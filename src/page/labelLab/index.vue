@@ -333,6 +333,7 @@ export default {
         '展现量',
         '点击量',
       ], // 已选择的checkbox
+      isHoverShowBtn: false,
     };
   },
   methods: {
@@ -1435,6 +1436,14 @@ export default {
       if (row.level) {
         return row.level;
       } return '-';
+    },
+    hoverShowBtn(row, column, cell, event) {
+      cell.parentNode.querySelector('.iconSelector').classList.remove('hidden-btn');
+      // row.isShow = false;
+    },
+    hoverHideBtn(row, column, cell, event) {
+      cell.parentNode.querySelector('.iconSelector').classList.add('hidden-btn');
+      // row.isShow = true;
     },
   },
   beforeCreate() {},
