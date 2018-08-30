@@ -17,8 +17,11 @@ import peopleMove from '@/components/peopleMove/index';
 import lineChart from '@/components/newLineChart/index';
 import createPeople from '@/components/createPeople/index';
 
+import groupMixins from './mixins/group';
+
 export default {
   name: 'labelLab',
+  mixins: [groupMixins],
   components: {
     datePicker,
     createGroup,
@@ -195,21 +198,22 @@ export default {
       ],
       // 保存上一次的 checkList
       tempCheckIndexList: ['溢价', '展现量', '点击量', '花费'],
-      finalCheckIndexList: [{
-        label: '溢价',
-        name: 'discount',
-      },
-      {
-        label: '展现量',
-        name: 'impression',
-      },
-      {
-        label: '点击量',
-        name: 'click',
-      }, {
-        label: '花费',
-        name: 'cost',
-      },
+      finalCheckIndexList: [
+        {
+          label: '溢价',
+          name: 'discount',
+        },
+        {
+          label: '展现量',
+          name: 'impression',
+        },
+        {
+          label: '点击量',
+          name: 'click',
+        }, {
+          label: '花费',
+          name: 'cost',
+        },
       ],
       // 人群评级
       peopleRateDialog: false,
@@ -933,13 +937,15 @@ export default {
                     message: '创建成功!',
                   });
                   this.$axios.post(this.$api.getCrowd, param)
-                    .then(() => {
-                      for (let i = 0; i < res.data.length; i++) {
-                        res.data[i] = Object.assign({
+                    .then((resp) => {
+                      for (let i = 0; i < resp.data.length; i++) {
+                        resp.data[i] = Object.assign({
                           extend: true,
-                        }, response.data[i]);
+                        }, resp.data[i]);
                       }
-                      this.groupList = response.data;
+                      this.groupList = resp.data;
+                      // hr: 在这里 为 groupList添加总和数据 添加事件和绑定
+                      this.initTableEvents();
                       this.trapezoid();
                       this.getScoreRenderTag();
                       this.labelTendency();
@@ -1279,6 +1285,8 @@ export default {
               this.initGroupLoading = false;
               this.groupList = res.data;
               console.log(this.groupList);
+              // hr: 绑定事件
+              this.initTableScroll();
               this.trapezoid();
               this.getScoreRenderTag();
               this.labelTendency();

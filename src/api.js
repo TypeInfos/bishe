@@ -1,7 +1,7 @@
 // const absUrl = window.location.href;
 let path = 'http://192.168.1.111:8082/edoushu'; // 阿炳
 // let path = 'https://data.doushudata.com/edoushu';   //上线版
-// let path = 'https://data.yishubox.com/edoushu'    //测试版
+// let path = 'https://data.yishubox.com/edoushu'; // 测试版
 // if (absUrl.match('edoushu.com')) {
 //   path = 'https://www.edoushu.com/';
 // }
