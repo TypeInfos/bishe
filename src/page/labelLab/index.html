@@ -170,7 +170,7 @@
             <!-- 传入ref -->
             <el-button type="text" @click="selectAllCheck('table' + index, index)">全选</el-button>
             <el-button type="text" @click="createCrowd(index)">创建人群</el-button>
-            <el-button type="text" @click="updateGroupName(index)">修改群组名称</el-button>
+            <el-button type="text" @click="updateGroupName(index)" :disabled="groupList[index].index<100 || groupList[index].index>600">修改群组名称</el-button>
             <el-button type="text" @click="moveCrowd('table' + index)">人群移动</el-button>
             <el-button type="text" @click="deleteGroup(index)">删除</el-button>
           </div>
@@ -287,21 +287,21 @@
     </div>
     <div class="createGroupsContent">
       <p>
-        <el-radio v-model="radio" label="1" @change="radioChange">标准群组</el-radio>
+        <!-- <el-radio v-model="radio" label="1" @change="radioChange">标准群组</el-radio> -->
         <el-radio v-model="radio" label="2" @change="radioChange">自定义群组</el-radio>
       </p>
-      <div class="myDefinedGroup" v-if="showMyDefinedGroup">
+      <div class="myDefinedGroup" >
         <p class="myDefinedP">
           <el-input placeholder="请输入群组名称" v-model="createGroupName"></el-input>
         </p>
         <p class="errorP" v-if="showErrorCreateGroup">群组名称重复</p>
       </div>
-      <div class="standardGroup" v-if="showStandardGroup">
+      <!-- <div class="standardGroup" v-if="showStandardGroup">
         <el-select v-model="createGroups" placeholder="">
           <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
           </el-option>
         </el-select>
-      </div>
+      </div> -->
       <el-button type="primary" plain class="btnCancel" @click="btnCreateCancel">取消</el-button>
       <el-button type="primary" class="btnConfirm" :disabled="createGroupDisabled" @click="btnCreateConfirm">确定</el-button>
     </div>
@@ -318,7 +318,7 @@
       </p>
       <p class="errorP" v-if="modifyGroupRepeat">群组名称重复</p>
       <el-button type="primary" plain class="btnCancel" @click="modifyGroupCancel">取消</el-button>
-      <el-button type="primary" :disabled="modifyGroupNameDisable" class="btnConfirm" @click="modifyGroupConfirm">确定</el-button>
+      <el-button type="primary" :disabled="modifyGroupNameDisable" class="btnConfirm" @click="modifyGroupConfirm(modifyGroupName)">确定</el-button>
     </div>
   </el-dialog>
   <!-- 人群评级 -->

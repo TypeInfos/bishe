@@ -1,4 +1,8 @@
 <div class="funcViewContainer">
+    <div class="lastDay" v-if="(day-0)<7 && (day-0)>0">
+        <i class="iconfontFuncView triangle">&#xe652;</i>
+        <span class="day">使用剩余<br>{{ day }}天</span>
+    </div>
     <div class="hole">
         <div class="title">
             <h1>词根雷达</h1>

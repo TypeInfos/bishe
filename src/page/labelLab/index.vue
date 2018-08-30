@@ -95,8 +95,8 @@ export default {
       premium: '', // 溢价input
       premiumError: false,
       premiumDisable: true,
-      radio: '1',
-      showMyDefinedGroup: '',
+      radio: '2',
+      // showMyDefinedGroup: '',
       // 标准群组的属性
       showStandardGroup: true,
       // 人群移动
@@ -788,14 +788,14 @@ export default {
     // 创建群组
     radioChange() {
       this.createGroupName = '';
-      if (this.radio === 1) {
-        this.showStandardGroup = true;
-        this.showMyDefinedGroup = false;
-      }
-      if (this.radio === 2) {
-        this.showMyDefinedGroup = true;
-        this.showStandardGroup = false;
-      }
+      // if (this.radio === 1) {
+      //   this.showStandardGroup = true;
+      //   this.showMyDefinedGroup = false;
+      // }
+      // if (this.radio === 2) {
+      //   this.showMyDefinedGroup = true;
+      //   this.showStandardGroup = false;
+      // }
     },
     closeCreateModal() {
       this.createGroupDialog = false;
@@ -1009,7 +1009,7 @@ export default {
       this.operatIngIndex = index;
       this.modifyGroupsDialog = true;
       this.currentUpdateGroupId = this.groupList[index].groupId;
-      this.modifyGroupName = this.groupList[index].groupName;
+      // this.modifyGroupName = this.groupList[index].groupName;
     },
     // 人群移动
     moveCrowd(refValue) {
