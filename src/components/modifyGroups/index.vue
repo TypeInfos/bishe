@@ -18,9 +18,9 @@ export default {
       this.addGoodsFocuDialog = ! this.addGoodsFocuDialog ;
     },
     nameRepeat(){
-      if(this.groupName == groupName){
-        this.showErrorP = true ;
-      }
+      // if(this.groupName){
+      //   this.showErrorP = true ;
+      // }
     },
   }
 }

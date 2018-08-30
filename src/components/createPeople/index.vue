@@ -48,7 +48,7 @@ export default {
   methods:{
     init(){
       // 发送一个(简单的请求：
-      console.log(this.firstCat);
+      // console.log(this.firstCat);
       chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
         type : 'getLayoutExt',
         firstCat:this.firstCat,
@@ -155,7 +155,7 @@ export default {
         discount : this.price*1+100,
       },
       (response) => {
-        console.log(response);
+        // console.log(response);
         if(response.code == 200 ){
           this.crowdId.push(response.crowdId);
         this.loading = true;
@@ -187,8 +187,8 @@ export default {
       this.peopleCheckList = []; //每次切换单选都清空多选框群组的数组
       this.para = [] ;   //清空传给插件的数组
       this.overPeopleNumber = '-';   //每次切换单选 初始化覆盖人群的数量
-      console.log('peopleCheckList数组清空了'+this.peopleCheckList);
-      console.log('para数组清空了'+this.para);
+      // console.log('peopleCheckList数组清空了'+this.peopleCheckList);
+      // console.log('para数组清空了'+this.para);
       if(this.radio == 2){
         this.showPeopleProperty = false;
         this.showWeatherProperty = true;
