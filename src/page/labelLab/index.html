@@ -208,13 +208,20 @@
                 <template slot-scope="scope">
                   <div class="crowdName">
                     <el-tooltip content="当前人群溢价比下一层级的最高溢价低，会导致该人群失效，请及时进行调整" :visible-arrow=false placement="bottom" effect="light">
-                      <i v-if="!scope.row.warning" class="iconfont warmFlag">&#xe655;</i>
+                      <i v-if="scope.row.warning" class="iconfont warmFlag">&#xe655;</i>
                     </el-tooltip>
                     <el-tooltip content="暂停推广" :visible-arrow=false placement="bottom" effect="light">
-                      <i v-if="scope.row.onlineStatus" class="iconfont icon-zanting iconSelector hidden-btn"></i>
+                      <i
+                        v-if="scope.row.onlineStatus"
+                        class="iconfont icon-zanting
+                        iconSelector hidden-btn"
+                        @click="promotionIcon(0,scope.row.crowdId)"></i>
                     </el-tooltip>
                     <el-tooltip content="开始推广" :visible-arrow=false placement="bottom" effect="light">
-                      <i v-if="!scope.row.onlineStatus" class="iconfont icon-kaishi iconSelector hidden-btn"></i>
+                      <i
+                        v-if="!scope.row.onlineStatus"
+                        class="iconfont icon-kaishi iconSelector hidden-btn"
+                        @click="promotionIcon(1,scope.row.crowdId)"></i>
                     </el-tooltip>
                     <span class="title">{{scope.row.name}}</span>
                   </div>

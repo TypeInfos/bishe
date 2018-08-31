@@ -333,7 +333,6 @@ export default {
         '展现量',
         '点击量',
       ], // 已选择的checkbox
-      isHoverShowBtn: false,
     };
   },
   methods: {
@@ -1065,6 +1064,36 @@ export default {
           });
       }
     },
+    // 1=> 参与推广 2=> 暂停推广
+    // 这是hover暂停开始按钮的点击事件
+    promotionIcon(onlineStatus, crowdId) {
+      const param = {
+        adGroupId: this.currentAdGroupId,
+        campaignId: this.currentCampaignId,
+        onlineStatus,
+        productId: this.currentProductId,
+        crowdIdList: [],
+      };
+      param.crowdIdList.push(crowdId);
+      this.$axios.post(this.$api.updateStatus, param)
+        .then(() => {
+          this.getCrowdInfo();
+          if (onlineStatus === 1) {
+            this.$message({
+              showClose: true,
+              message: '参与推广成功',
+              type: 'success',
+            });
+          } else {
+            this.$message({
+              showClose: true,
+              message: '暂停推广成功',
+              type: 'success',
+            });
+          }
+        });
+      console.log(param);
+    },
     // 删除人群
     deleteCrowd() {
       const param = {
@@ -1439,6 +1468,7 @@ export default {
     },
     hoverShowBtn(row, column, cell, event) {
       cell.parentNode.querySelector('.iconSelector').classList.remove('hidden-btn');
+      console.log(row.crowdId);
       // row.isShow = false;
     },
     hoverHideBtn(row, column, cell, event) {
