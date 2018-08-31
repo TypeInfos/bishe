@@ -6,7 +6,7 @@ yarn-debug.log*
 yarn-error.log*
 
 build/webpack.dev.conf.js
-src/store/modules/loginState.js
+loginState.js
 
 # Editor directories and files
 .idea

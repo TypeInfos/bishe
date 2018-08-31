@@ -5,7 +5,8 @@
         :show-close=false
         :modal=false
         :close-on-click-modal=false
-        class="createPeople">
+        class="createPeople"
+        @close="clearChecked">
         <div slot="title" class="header">
             <h2>创建人群</h2>
             <el-button icon="el-icon-close" @click="closeModal"></el-button>

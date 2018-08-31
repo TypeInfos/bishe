@@ -75,7 +75,11 @@ export default {
       //   this.confirmDisabled = false;
       // }
     },
+    clearChecked() {
+      this.peopleCheckList = [];
+    },
     btnCancel() {
+      this.clearChecked();
       this.closeModal();
     },
     // 判断元素是否存在数组内
@@ -128,7 +132,7 @@ export default {
         };
         chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, param, cb);
       };
-      this.timer = setTimeout(sendMessage, 1000);
+      this.timer = setTimeout(sendMessage, 500);
     },
     confirmBtn() {
       if (!this.name) {
