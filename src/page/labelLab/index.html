@@ -161,7 +161,7 @@
             :formatter="formatterPeopleRate">
           </el-table-column>
           <el-table-column
-            :width="150"
+            :min-width="tableCellWidth"
             v-for="item in finalCheckIndexList"
             sortable :key="item.label"
             :prop="item.name"
@@ -234,7 +234,7 @@
                 :formatter="formatterPeopleRate">
               </el-table-column>
               <el-table-column
-                :width="150"
+                :min-width="tableCellWidth"
                 v-for="itemData in finalCheckIndexList"
                 :key="itemData.label"
                 sortable

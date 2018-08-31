@@ -333,6 +333,7 @@ export default {
         '展现量',
         '点击量',
       ], // 已选择的checkbox
+      tableCellWidth: 150, // 动态去改变表格的宽度
     };
   },
   methods: {
@@ -679,10 +680,8 @@ export default {
       for (let i = 0; i < this.groupList.length; i++) {
         const tableS = `table${i}`;
         const selection = this.$refs[tableS][0].selection;
-        console.log(selection);
         if (selection.length !== 0) {
           for (let v of selection) {
-            console.log(v);
             param.crowdIdList.push(v.crowdId);
           }
         }
@@ -910,16 +909,17 @@ export default {
               let complete = false;
               this.initGroupLoadingText = 0;
               this.initGroupLoading = true;
+              let cout = 0;
               this.oneKeyTimer = setInterval(() => {
-                if (this.initGroupLoadingText < 90) {
-                  this.initGroupLoadingText = this.initGroupLoadingText + (Math.random() * 1.5);
+                if (cout < 90) {
+                  this.initGroupLoadingText = `正在加载${parseFloat(cout + (Math.random() * 1.5)).toFixed(2)}`;
                 } else {
-                  this.initGroupLoadingText = this.initGroupLoadingText + (Math.random() * 0.4);
-                  if (this.initGroupLoadingText >= 99.6) {
+                  this.initGroupLoadingText = `正在加载${parseFloat(cout + (Math.random() * 0.4)).toFixed(2)}`;
+                  if (cout >= 99.6) {
                     clearInterval(this.oneKeyTimer);
                   }
                   if (complete) {
-                    this.initGroupLoadingText = 100;
+                    this.initGroupLoadingText = '加载完成';
                     this.initGroupLoading = false;
                   }
                 }
@@ -1092,7 +1092,6 @@ export default {
             });
           }
         });
-      console.log(param);
     },
     // 删除人群
     deleteCrowd() {
@@ -1314,7 +1313,6 @@ export default {
               }
               this.initGroupLoading = false;
               this.groupList = res.data;
-              console.log(this.groupList);
               // hr: 绑定事件
               this.initTableScroll();
               this.trapezoid();
@@ -1466,12 +1464,11 @@ export default {
         return row.level;
       } return '-';
     },
-    hoverShowBtn(row, column, cell, event) {
+    hoverShowBtn(row, column, cell) {
       cell.parentNode.querySelector('.iconSelector').classList.remove('hidden-btn');
-      console.log(row.crowdId);
       // row.isShow = false;
     },
-    hoverHideBtn(row, column, cell, event) {
+    hoverHideBtn(row, column, cell) {
       cell.parentNode.querySelector('.iconSelector').classList.add('hidden-btn');
       // row.isShow = true;
     },
@@ -1606,6 +1603,11 @@ export default {
     groupAnalyzePopStatus() {
       this.checkIndexList = this.tempCheckIndexList;
     },
+    // finalCheckIndexList(val) {
+    //   const sumWidth = document.querySelector('.allTableHeaderContainer').clientWidth;
+    //   let cellWidth = (sumWidth - 300 - 150 - 60) / val.length;
+    //   this.tableCellWidth = cellWidth > 150 ? cellWidth : 150;
+    // },
   },
 };
 </script>
