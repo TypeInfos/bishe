@@ -1,11 +1,15 @@
 <div class="hello">
-    <el-dialog v-loading="loading" :visible.sync="createPeopleDialog" :show-close=false :modal=false :close-on-click-modal=false class="createPeople">
+    <el-dialog
+        v-loading="loading"
+        :visible.sync="createPeopleDialog"
+        :show-close=false
+        :modal=false
+        :close-on-click-modal=false
+        class="createPeople">
         <div slot="title" class="header">
             <h2>创建人群</h2>
             <el-button icon="el-icon-close" @click="closeModal"></el-button>
             <div v-if="addWordSucceed" class="m-checkbox-tip">
-                <!-- <i class="el-icon-success"></i>
-        添加成功 -->
             </div>
         </div>
         <div class="createPeopleContent">
@@ -21,19 +25,37 @@
             </div>
             <!-- 人口属性人群 -->
             <div class="peopleProperty" v-if="showPeopleProperty">
-                <div :class="setClass(prefixIndex)" :v-model="prefixIndex" v-for="(prefix,prefixIndex) in peoplePropertyObj" :key="prefixIndex">
+                <div
+                    :class="setClass(prefixIndex)"
+                    :v-model="prefixIndex"
+                    v-for="(prefix,prefixIndex) in peoplePropertyObj"
+                    :key="prefixIndex">
                     <span :class="setClass('span')">{{ prefix.name }}:</span>
                     <el-checkbox-group v-model="peopleCheckList">
-                        <el-checkbox :class="setClass(postfixIndex)" v-for="(postfix,postfixIndex) in prefix.tagOptions" :key="postfixIndex" :label="postfix.tagName" @change="checkboxChange(postfix,prefixIndex,postfixIndex,peoplePropertyObj)">{{ postfix.tagName }}</el-checkbox>
+                        <el-checkbox
+                            :class="setClass(postfixIndex)"
+                            v-for="(postfix,postfixIndex) in prefix.tagOptions"
+                            :key="postfixIndex"
+                            :label="postfix.tagName"
+                            @change="checkboxChange(postfix,prefixIndex,postfixIndex,peoplePropertyObj)">{{ postfix.tagName }}</el-checkbox>
                     </el-checkbox-group>
                 </div>
             </div>
             <!-- 天气属性人群 -->
             <div class="weatherProperty" v-if="showWeatherProperty">
-                <div :class="setClass(prefixIndex)" :v-model="prefixIndex" v-for="(prefix,prefixIndex) in weatherPropertyObj" :key="prefixIndex">
+                <div
+                    :class="setClass(prefixIndex)"
+                    :v-model="prefixIndex"
+                    v-for="(prefix,prefixIndex) in weatherPropertyObj"
+                    :key="prefixIndex">
                     <span :class="setClass('span')">{{ prefix.name }}:</span>
                     <el-checkbox-group v-model="peopleCheckList">
-                        <el-checkbox :class="setClass(postfixIndex)" v-for="(postfix,postfixIndex) in prefix.tagOptions" :key="postfixIndex" :label="postfix.tagName" @change="checkboxChange(postfix,prefixIndex,postfixIndex,weatherPropertyObj)">{{ postfix.tagName }}</el-checkbox>
+                        <el-checkbox
+                            :class="setClass(postfixIndex)"
+                            v-for="(postfix,postfixIndex) in prefix.tagOptions"
+                            :key="postfixIndex"
+                            :label="postfix.tagName"
+                            @change="checkboxChange(postfix,prefixIndex,postfixIndex,weatherPropertyObj)">{{ postfix.tagName }}</el-checkbox>
                     </el-checkbox-group>
                 </div>
                 <!-- <div class="temperature">
