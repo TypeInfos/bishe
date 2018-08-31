@@ -32,6 +32,8 @@ module.exports = {
       js: 'never',
       vue: 'never'
     }],
+    'semi': 0,
+    'space-before-function-paren': ['off', 'error'],
     // disallow reassignment of function parameters
     // disallow parameter object manipulation except for specific exclusions
     'no-param-reassign': ['error', {

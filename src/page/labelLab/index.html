@@ -1,5 +1,5 @@
 <div class="label-lab">
-  <div class="label-right" v-loading="initGroupLoading" :element-loading-text="initGroupLoadingText" v-show=true>
+  <div v-loading="initGroupLoading" v-if="isSelectGoods" class="label-right" :element-loading-text="initGroupLoadingText">
     <el-card class="wrap-title" shadow="hover">
       <!-- v-loading="searchLoading" -->
       <el-dropdown class="terminal" trigger="click" size="small" @command="chooseZd">
@@ -176,7 +176,7 @@
           <i v-else class="el-icon-minus add" @click="showTable(index)"></i>
           <span class="groupName">{{item.groupName}}</span>
           <!-- 传入ref -->
-          <el-button type="text" @click="selectAllCheck('table' + index, index)">全选</el-button>
+          <el-button type="text" @click="selectAllCheck('table' + index, index)" :class="'select-all-people'+index">全选</el-button>
           <el-button type="text" @click="createCrowd(index)">创建人群</el-button>
           <el-button type="text" @click="updateGroupName(index)">修改群组名称</el-button>
           <el-button type="text" @click="moveCrowd('table' + index)">人群移动</el-button>
@@ -248,6 +248,9 @@
       </div>
       <!-- </draggable> -->
     </el-card>
+  </div>
+  <div class="label-right-empty" v-show="!isSelectGoods">
+    <div>请先选择计划和商品之后，才能在此查看数据哦～</div>
   </div>
   <div :class="{'label-left':true,'isFixed':asideFixed}" v-loading="groupListLoading">
     <div class="goodsInfo">

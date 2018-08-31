@@ -59,7 +59,7 @@ export default {
       modifyGroupName: '', // 修改群组名字input
       modifyGroupNameDisable: false,
       initGroupLoading: true, // 初始化群组 loading
-      initGroupLoadingText: '请先选择计划和商品之后，才能在此查看数据哦～',
+      initGroupLoadingText: '加载中，请稍后',
       peopleMoveLoading: false, // 人群移动弹窗的loading
       labelTendencyData: [], // 标签趋势数据
       saveLabelTendencyData: [], // 保存 已经转换完的数据
@@ -334,6 +334,7 @@ export default {
         '点击量',
       ], // 已选择的checkbox
       tableCellWidth: 150, // 动态去改变表格的宽度
+      isSelectGoods: false, // 是否选择了右侧的商品
     };
   },
   methods: {
@@ -860,6 +861,7 @@ export default {
     },
     // 全选 =》 每个群组可以全选各自群组下的 人群
     selectAllCheck(refValue, index) {
+      console.log('selectAllCheck')
       this.$refs[refValue][0].toggleAllSelection();
       if (this.$refs[refValue][0].selection.length < this.groupList[index].list.length) {
         this.groupList[index].list.forEach(i => {
@@ -907,7 +909,7 @@ export default {
               type: 'warning',
             }).then(() => {
               let complete = false;
-              this.initGroupLoadingText = 0;
+              this.initGroupLoadingText = '';
               this.initGroupLoading = true;
               let cout = 0;
               this.oneKeyTimer = setInterval(() => {
@@ -1212,15 +1214,18 @@ export default {
       }
       this.tempCheckIndexList = this.checkIndexList;
     },
-    //
-    handleCheckAllChange() {
-      for (let i = 0; i < this.groupList.length; i++) {
-        const tableS = `table${i}`;
-        this.$refs[tableS][0].toggleAllSelection();
-      }
+    // kzp: 全选
+    handleCheckAllChange(v) {
+      this.checkedPeople = v ? this.groupList.reduce((all, curr) => all.concat(curr.list), []) : []
+      this.groupList.forEach((g, gIndex) => {
+        const t = this.$refs[`table${gIndex}`][0]
+        g.list.forEach(p => {
+          t.toggleRowSelection(p, v)
+        })
+      })
     },
     // 每个群组的展示按钮
-    showTable(index) {
+    showTable (index) {
       this.groupList[index].extend = !this.groupList[index].extend;
     },
     /**
@@ -1237,10 +1242,10 @@ export default {
         this.planOfGoodsList = res.data;
         this.resultGoods = res.data;
         this.loadingPlans = false;
-      });
+      })
     },
     // 左侧商品 选择
-    searchGoods(index) {
+    searchGoods (index) {
       this.goodsName = this.resultGoods[index].title;
       this.goodsPrice = this.resultGoods[index].price;
       this.goodsUrl = this.resultGoods[index].linkUrl;
@@ -1290,6 +1295,7 @@ export default {
       const param = this.setParams();
       this.initGroupLoadingText = '加载中，请稍后';
       this.initGroupLoading = true;
+      this.isSelectGoods = true;
       const cookieValue = {
         adGroupId: this.currentAdGroupId,
         productId: this.currentProductId,
