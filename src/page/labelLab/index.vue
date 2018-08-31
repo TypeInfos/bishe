@@ -928,30 +928,30 @@ export default {
                 adGroupId: this.currentAdGroupId,
                 productId: this.currentProductId,
                 firstCat: this.currentFirstCat,
-              })
-                .then(() => {
-                  this.initGroupLoading = false;
-                  complete = true;
-                  this.$message({
-                    type: 'success',
-                    message: '创建成功!',
-                  });
-                  this.$axios.post(this.$api.getCrowd, param)
-                    .then((resp) => {
-                      for (let i = 0; i < resp.data.length; i++) {
-                        resp.data[i] = Object.assign({
-                          extend: true,
-                        }, resp.data[i]);
-                      }
-                      this.groupList = resp.data;
-                      // hr: 在这里 为 groupList添加总和数据 添加事件和绑定
-                      this.initTableEvents();
-                      this.trapezoid();
-                      this.getScoreRenderTag();
-                      this.labelTendency();
-                    });
+              }).then(() => {
+                this.initGroupLoading = false;
+                complete = true;
+                this.$message({
+                  type: 'success',
+                  message: '创建成功!',
                 });
+                this.$axios.post(this.$api.getCrowd, param)
+                  .then((resp) => {
+                    for (let i = 0; i < resp.data.length; i++) {
+                      resp.data[i] = Object.assign({
+                        extend: true,
+                      }, resp.data[i]);
+                    }
+                    this.groupList = resp.data;
+                    // hr: 在这里 为 groupList添加总和数据 添加事件和绑定
+                    this.initTableEvents();
+                    this.trapezoid();
+                    this.getScoreRenderTag();
+                    this.labelTendency();
+                  });
+              });
             }).catch(() => {
+              this.initGroupLoading = false;
             });
           } else {
             this.initGroupLoading = false;
