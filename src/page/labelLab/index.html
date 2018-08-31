@@ -104,10 +104,10 @@
           <el-popover popper-class="mySelectIndex" :value="groupAnalyzePopStatus" @hide="hide" @show="show" :visible-arrow=false placement="bottom"
             width="500" trigger="click">
             <div class="selectIndex">
-              <div v-if="checkboxIndexListFlag" class="m-checkbox-tip">
+              <!-- <div v-if="checkboxIndexListFlag" class="m-checkbox-tip">
                 <i class="el-icon-warning"></i>
                 最多选择6项
-              </div>
+              </div> -->
               <h4>选择指标</h4>
               <div class="left">
                 <el-checkbox-group class="checkListDiv" v-model="checkIndexList" :min="2">

@@ -101,10 +101,10 @@ export default {
           itemWidth: 30,
           // 图例的参数 {name}累计：数值
           formatter(name) {
-            if (name.toString().indexOf('率') != -1) {
-              return `${name }累计:${tempData.total[name.toString()] }%`;
+            if (name.toString().indexOf('率') !== -1) {
+              return `${name}累计:${tempData.total[name.toString()]}%`;
             }
-            return `${name }累计:${tempData.total[name.toString()]}`;
+            return `${name}累计:${tempData.total[name.toString()]}`;
           },
           data: this.chartData.checkList,
         },
