@@ -10,5 +10,9 @@
         <br/> {{ orderBlockInfo.eleventhLine }}
     </p>
     <img :src="orderBlockInfo.twelfthLine" alt="">
-    <el-button type="primary" class="buyBtn" @click="buyBtn">订购</el-button>
+    <div>
+        <el-button type="primary" class="buyBtn half" @click="toRootRadar" v-if="isBuy">去使用</el-button>
+        <el-button type="primary" class="buyBtn half" @click="buyBtn">订购</el-button>
+    </div>
+    <p v-if="isBuy">到期时间：{{endTime}}</p>
 </div>

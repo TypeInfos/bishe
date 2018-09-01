@@ -2,13 +2,13 @@
 const id = {
   lhr: 'lemdejnloabdfhcinbhpedggonhdafhm',
   kzp: 'kagajpfmnpdpboplehmphbppflfmihnp',
+  test: 'cpnmealmpgcapggbgjgfahpiifbbooef',
+  online: 'lnbdcilfaojoldgckojoidnafpagkjbn',
 };
 const state = {
   isLogin: false,
   bindTaobaoName: '',
-  editorExtensionId: id.kzp, // lhr:本地ID
-  // lnbdcilfaojoldgckojoidnafpagkjbn   上线ID
-  // cpnmealmpgcapggbgjgfahpiifbbooef  测试ID
+  editorExtensionId: id.kzp, // 插件ID
 };
 // mutations
 const mutations = {

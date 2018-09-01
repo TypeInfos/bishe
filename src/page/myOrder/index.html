@@ -18,7 +18,7 @@
                 label="订单产生时间"
                 width="180">
                 </el-table-column>
-                <el-table-column
+                <!-- <el-table-column
                 prop="beginTime"
                 label="服务开始时间"
                 width="180">
@@ -26,7 +26,7 @@
                 <el-table-column
                 prop="endTime"
                 label="服务结束时间"
-                width="180">
+                width="180"> -->
                 </el-table-column>
                 <el-table-column
                 prop="orderTime"
@@ -49,7 +49,7 @@
                 label="操作"
                 width="120">
                 <template slot-scope="scope">
-                    <el-button 
+                    <el-button
                     @click.native.prevent="goBuy(scope.$index,myOrderTableData)"
                     type="text"
                     size="small" style="color:#0088FE;">
