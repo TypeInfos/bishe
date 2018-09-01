@@ -77,6 +77,8 @@ export default {
     },
     clearChecked() {
       this.peopleCheckList = [];
+      this.name = ''
+      this.price = ''
     },
     btnCancel() {
       this.clearChecked();

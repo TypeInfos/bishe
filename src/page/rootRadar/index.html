@@ -1,4 +1,8 @@
 <div class="root-radar">
+  <!-- <div class="expired-wrapper"> -->
+  <div class="expired-wrapper" v-if="expiredDays >= 0 && expiredDays <= 7">
+    <expired :day="expiredDays"></expired>
+  </div>
   <el-dialog v-loading="initGoodsFocusLoading"
   element-loading-text="正在为您添加商品监控"
     class="initGoodsInfo" :visible.sync="firstFocusGoods" :close-on-click-modal=false :lock-scroll=true :show-close=false
@@ -35,7 +39,6 @@
       <el-button @click="initFocusGoodsList" :disabled="selectSurplus < 1 ? true : false" type="primary">确定</el-button>
     </div>
   </el-dialog>
-
   <el-dialog v-loading="addGoodsFocusloading"
   element-loading-text="正在为您添加商品监控"
     class="initGoodsInfo in" :visible.sync="addGoodsFocusDialog" :close-on-click-modal=false :lock-scroll=true
@@ -69,7 +72,6 @@
       <el-button @click="addFocusBtn" :disabled="selectSurplus < 1 ? true : false" type="primary">确定</el-button>
     </div>
   </el-dialog>
-
   <div class="containerContent">
     <div class="content">
       <el-alert
@@ -268,9 +270,11 @@
   <el-dialog class="rootRadartableDataSort" :title="tableDataTitle" :visible.sync="showTableDataDialog">
       <tableData :table-data="tableData" :total-data="totalData"></tableData>
   </el-dialog>
-  <showGoodsAside ref="showGoodsAside" :focus-on="focusOn"
-  @focusDialogToTrue="addGoodsFocusDialogFun"
-  :goodsInfoLoading="goodsInfoLoading"
+  <showGoodsAside
+    ref="showGoodsAside"
+    :focus-on="focusOn"
+    @focusDialogToTrue="addGoodsFocusDialogFun"
+    :goodsInfoLoading="goodsInfoLoading"
     :un-focus="unFocus"
     @updateUnFocusData="unFocusList"
     @updateFocusData="focusList"

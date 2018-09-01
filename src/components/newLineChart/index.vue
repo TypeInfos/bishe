@@ -32,6 +32,7 @@ export default {
       const option = {
         color: colors,
         tooltip: {
+          show: this.chartData.xAxisData.length > 1,
           // 坐标轴触发
           trigger: 'axis',
           // 坐标轴指示器配置项
@@ -76,21 +77,12 @@ export default {
           },
         },
         grid: {
-          // grid 组件离容器左侧的距离。
           left: '50',
-          // grid 组件离容器右侧的距离。
           right: '50',
         },
         legend: {
           selectedMode: true,
           left: tempData.series[0].data.length > 1 ? 100 : 'center',
-          // (function(){
-          //   if(tempData.length > 1){
-          //     return 'center'
-          //   }else{
-          //     return 100;
-          //   }
-          // })(),
           top: tempData.series[0].data.length > 1 ? 'top' : 'middle',
           padding: [
             5,
@@ -99,7 +91,6 @@ export default {
             5,
           ],
           itemWidth: 30,
-          // 图例的参数 {name}累计：数值
           formatter(name) {
             if (name.toString().indexOf('率') !== -1) {
               return `${name}累计:${tempData.total[name.toString()]}%`;
@@ -110,6 +101,7 @@ export default {
         },
         xAxis: [{
           type: 'category',
+          show: this.chartData.xAxisData.length > 1,
           axisTick: {
             // 可以保证刻度线和标签对齐
             alignWithLabel: true,

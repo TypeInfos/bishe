@@ -7,12 +7,13 @@
 </style>
 
 <script>
+import moment from 'moment';
+import guidance from '@/components/guidance/index'
 import lineChart from '@/components/newLineChart';
 import showGoodsAside from '@/components/showGoodsList'
+import expired from '@/components/expired'
 import backTop from '../../components/backToTop';
-import moment from 'moment';
 import tableData from './tableData'
-import guidance from '@/components/guidance/index'
 
 export default {
   name: 'rootRadar',
@@ -22,9 +23,12 @@ export default {
     showGoodsAside,
     tableData,
     guidance,
+    expired,
   },
   data() {
     return {
+      expiredDays: -1,
+      expiredTop: 0,
       showGuidance: false,
       currentShopid: '',
       firstFocusGoodsCurrentPage: 1, // 关注商品弹窗的当前页数
@@ -297,7 +301,7 @@ export default {
   },
   // 在这里请求axios
   created() {
-    if (this.$cookies.isKey('isFirstTime') == false) {
+    if (this.$cookies.isKey('isFirstTime') === false) {
       this.showGuidance = true;
     } else {
       this.showGuidance = false;
@@ -318,9 +322,10 @@ export default {
       this.$axios.post(this.$api.checkOrder, {
         pid: 1, // pid为1是词根雷达
       }).then((res) => {
+        this.expiredDays = res.data
         if (res.data >= 0) {
           this.getShopId();
-        }else {
+        } else {
           this.$message({
             message: res.message,
             type: 'warning',
@@ -330,8 +335,14 @@ export default {
       });
     },
     handleScroll() {
-      let scrollTop = document.documentElement.scrollTop;
+      let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
       let ele = document.querySelector('.card');
+      let expired = document.querySelector('.expired-wrapper');
+      if (scrollTop > 50) {
+        expired.style.top = '0px'
+      } else {
+        expired.style.top = `${50 - scrollTop}px`
+      }
       let originalStyle = window.getComputedStyle(ele);
       if (scrollTop > 93.6) {
         ele.style.position = 'sticky';
@@ -359,7 +370,6 @@ export default {
           // }
         } else {
           this.result[index].selectFlag = false;
-          console.log()
           for (let i = 0; i < this.userSelectedItem.length; i++) {
             if (this.userSelectedItem[i] == this.result[index].itemId) {
               this.userSelectedItem.splice(i, 1);
@@ -375,12 +385,11 @@ export default {
         },
         response => {
           try {
-            if (response.code == 200) {
+            if (response.code === 200) {
               this.currentShopid = response.currentShopid
               this.$axios.post(this.$api.checkBind, {
                 id: this.currentShopid,
               }).then(res => {
-                console.log(res.data);
                 if (res.data) {
                   this.isFirstLogin();
                   this.getUserInfo();
@@ -397,14 +406,12 @@ export default {
             }
           } catch (error) {
             alert('插件ID与前端不匹配')
-            console.log('插件ID与前端不匹配');
             this.$router.push('/login');
             window.location.reload();
           }
         });
       } catch (error) {
         alert('插件ID与前端不匹配')
-        console.log('插件ID与前端不匹配');
         this.$router.push('/login');
         window.location.reload();
       }
@@ -645,8 +652,8 @@ export default {
       clearTimeout(fn.timeoutID);
       //  在delay秒之内连续触发会刷新setTimeout，从而不能执行到fn
       fn.timeoutID = setTimeout(() => {
-          fn.call(context, args);
-        }, delay)
+        fn.call(context, args);
+      }, delay)
     },
     // 修改数据按钮
     repairData() {
@@ -742,8 +749,7 @@ export default {
         temp.push(this.currentTitle);
         this.checkGoodsInfoDataLoading = true;
         this.$axios.post(this.$api.checkData, this.setParams(temp))
-          .then(res => {
-            console.log('checkData')
+          .then(() => {
             if (this.setintervalCheckItemDataId != null) {
               clearInterval(this.setintervalCheckItemDataId);
               this.setintervalCheckItemDataId = null;
@@ -1197,7 +1203,6 @@ export default {
         // }
         // tempData.push(total);
         // this.singleTableData = tempData;
-        // console.log(this.singleChartsData)
         this.singleTableData = res.data;
         this.globalAnalysisShow = true;
         this.singleChartsData = this.turnData(this.checkList, this.saveSingleData, this.checkListGroup);
@@ -1243,9 +1248,6 @@ export default {
           const frontData = this.turnEndDataToJson(res.data.list);
           const rootChartsData = this.turnData(this.checkList2, frontData, this.checkListGroup2);
           let newRoot = Object.assign([], root);
-          console.log('----------------frontData---------------');
-          console.log(frontData);
-          console.log('-------------------End-------------------');
           newRoot.splice(0, 1);
           if (this.wrapData.length < 3) {
             this.rootAnalysisCompleteLoading = false;
@@ -1361,7 +1363,6 @@ export default {
         });
       } else {
         this.rootAnalysisCompleteLoading = true;
-        console.log('自定义结束')
         this.itemLoading = false;
       }
     },
@@ -1400,7 +1401,6 @@ export default {
         });
       } else {
         this.rootAnalysisCompleteLoading = true;
-        console.log('添加未加载词根结束')
         this.itemLoading = false;
       }
     },
@@ -1440,7 +1440,6 @@ export default {
         if (this.firstDateInit) {
           this.firstDateInit = false;
         } else {
-          console.log(`最近30天:请求开始时间${this.curBegin} 请求结束时间${this.curEnd}`)
           this.getSingleItem();
           this.wrapData = [];
           this.getRootData(this.root);
@@ -1452,7 +1451,6 @@ export default {
     },
     // 监听自定义时间设置
     customTime(val) {
-      console.log(val)
       let start = new Date(val[0]);
       let end = new Date(val[1]);
       this.curBegin = `${start.getFullYear()}-${start.getMonth() + 1}-${start.getDate()}`;
@@ -1497,13 +1495,11 @@ export default {
     },
     // 词根显示的个数的监听
     checkListRoot(val) {
-      console.log(val);
       if (val.length >= 4) {
         this.maxEcharts = true;
       } else {
         this.maxEcharts = false;
       }
-      console.log([val[val.length - 1]])
       if (this.rootAnalysisCompleteLoading) {
         // 判断concealData 是否取到 我们想要的数据，现在暂时不用这个，
         let flag = false;
@@ -1532,17 +1528,13 @@ export default {
     },
     // 当添加商品的dialog关闭后 用户所选的就清楚
     addGoodsFocusDialog(val) {
-      console.log(val)
       if (!val) {
-        console.log('addGoodsFocusDialog false')
         this.initGoodsName = '';
         this.userSelectedItem = [];
-      }else {
+      } else {
         this.unFocusList();
       }
     },
   },
-
-
 }
 </script>
