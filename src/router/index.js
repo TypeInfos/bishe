@@ -12,6 +12,7 @@ import myOrder from '@/page/myOrder/index'
 import funcView from '@/page/funcView/index'
 import test from '@/components/datePicker/index';
 import labelLab from '@/page/labelLab/index'
+
 Vue.use(Router);
 
 export default new Router({
@@ -34,16 +35,16 @@ export default new Router({
       path: '/rootRadar',
       name: 'rootRadar',
       component: rootRadar,
-    }
-    ,{
+    },
+    {
       path: '/forgetPassword',
       name: 'forgetPassword',
       component: forgetPassword,
     },
     {
-        path: '/tempBqsys',
-        name: 'tempBqsys',
-        component: tempBqsys,
+      path: '/tempBqsys',
+      name: 'tempBqsys',
+      component: tempBqsys,
     },
     {
       path: '/wisdomSearch',
@@ -79,6 +80,11 @@ export default new Router({
       path: '/labelLab',
       name: 'labelLab',
       component: labelLab,
-    }
+    },
+    {
+      path: '/guide',
+      name: 'GuidePage',
+      component: () => import('@/page/guidePages/temp'),
+    },
   ],
 });

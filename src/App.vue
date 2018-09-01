@@ -3,11 +3,13 @@
     <el-container>
       <el-header style="height:50px;">
         <headerWrap></headerWrap>
-        </el-header>
+      </el-header>
       <el-main>
-        <router-view/></el-main>
+        <router-view/>
+      </el-main>
       <el-footer height="80" style="padding:0;">
-        <newFooter></newFooter></el-footer>
+        <newFooter></newFooter>
+      </el-footer>
     </el-container>
   <customerService></customerService>
   <backToTop></backToTop>

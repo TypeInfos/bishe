@@ -16,6 +16,7 @@ import premium from '@/components/premium/index';
 import peopleMove from '@/components/peopleMove/index';
 import lineChart from '@/components/newLineChart/index';
 import createPeople from '@/components/createPeople/index';
+import expired from '@/components/expired'
 
 import groupMixins from './mixins/group';
 
@@ -32,9 +33,11 @@ export default {
     lineChart,
     createPeople,
     draggable,
+    expired,
   },
   data() {
     return {
+      expiredDays: -1,
       editorExtensionId: 'bjddgpdnmmkpmdhoajcfpgkfnjkmbcmj', // 插件ID
       czd: '全部终端', // 终端展示
       source: '全部来源', // 全部来源
@@ -341,8 +344,9 @@ export default {
     // gjfAdd 进入页面先判断是否订购产品
     checkOrder() {
       this.$axios.post(this.$api.checkOrder, {
-        pid: 1, // pid为1是词根雷达
+        pid: 2, // pid为1是词根雷达
       }).then((res) => {
+        this.expiredDays = res.data
         if (res.data) {
           this.getShopId();
         } else {
@@ -1346,6 +1350,12 @@ export default {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
       const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft;
       const offsetTop = leftEle.offsetTop;
+      let expired = document.querySelector('.expired-wrapper');
+      if (scrollTop > 50) {
+        expired.style.top = '0px'
+      } else {
+        expired.style.top = `${50 - scrollTop}px`
+      }
       if (this.asideFixed === false) {
         if (scrollTop > offsetTop) {
           this.asideFixed = true;

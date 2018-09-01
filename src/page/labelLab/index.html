@@ -1,4 +1,8 @@
 <div class="label-lab">
+  <div class="expired-wrapper" v-if="expiredDays >= 0 && expiredDays <= 7">
+  <!-- <div class="expired-wrapper"> -->
+    <expired :day="expiredDays"></expired>
+  </div>
   <div v-loading="initGroupLoading" v-if="isSelectGoods" class="label-right" :element-loading-text="initGroupLoadingText">
     <el-card class="wrap-title" shadow="hover">
       <!-- v-loading="searchLoading" -->
