@@ -578,6 +578,13 @@ export default {
           this.saveLabelTendencyData = [];
           this.saveLabelTendencyData = this.turnEndDataToJson(res.data);
           this.labelTendencyData = this.turnData(this.checkList, this.saveLabelTendencyData, this.checkListGroup);
+          // lhr: 修改趋势图一天的样式
+          this.labelTendencyData.yAxis.forEach(i => {
+            i.show = this.labelTendencyData.xAxisData.length > 1
+          })
+          this.labelTendencyData.series.forEach(i => {
+            i.showSymbol = this.labelTendencyData.xAxisData.length > 1
+          })
         });
     },
     // 保留2位小数
