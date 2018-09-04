@@ -62,16 +62,16 @@ export default {
         });
         this.token = res.data;
         console.log(`token${this.token}`)
-        this.$axios.get(this.$api.info).then((res) => {
+        this.$axios.get(this.$api.info).then((resp) => {
           this.loginLoading = false;
-          this.bindTaobaoName = res.data.name;
+          this.bindTaobaoName = resp.data.name;
           try {
             chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
               type: 'getShopInfo',
             },
             (response) => {
               console.log(response);
-              if (response.code != 400) {
+              if (response.code !== 400) {
                 data = response.shopInfo;
               }
             })
@@ -84,12 +84,14 @@ export default {
           } else {
             this.isLoginTaobao = true;
             this.taobaoName = data.runAsShopTitle;
-            if (this.taobaoName != this.bindTaobaoName) {
+            if (this.taobaoName !== this.bindTaobaoName) {
               this.active = 3;
             } else {
               this.active = 2;
             }
           }
+        }).catch(error => {
+          console.log('get Info err', error)
         })
       }).catch(err => {
         this.loginLoading = false;
@@ -99,21 +101,6 @@ export default {
         this.$cookies.set('vipName', this.vipName, 60 * 60 * 24 * 30);
         this.$cookies.set('vipPwd', this.vipPwd, 60 * 60 * 24 * 30);
       }
-      // } else {
-      //   this.loginLoading = false;
-      //   this.$confirm(`您的7天免费试用已到期，如需继续使用请联系客服！`, '内测提示', {
-      //     confirmButtonText: '确 定',
-      //     cancelButtonText: '取 消',
-      //     type: 'info',
-      //   }).then(res => {
-      //     this.openDialog();
-      //   }).catch(res => {
-      //     console.log(error)
-      //   })
-      // }
-      //     }).catch(error => {
-      //       this.loginLoading = false;
-      //     })
     },
     /**
        * 二维码弹窗

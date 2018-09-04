@@ -907,7 +907,7 @@ export default {
         linkUrl: this.linkUrl,
         campaignId: this.currentCampaignId,
       };
-
+      this.initGroupLoading = true;
       this.$axios.post(this.$api.ifFirstTag, cookieValue)
         .then((res) => {
           // if (res) {
@@ -922,21 +922,19 @@ export default {
             this.groupList = null; // 清空grouplist数据
             let complete = false;
             this.initGroupLoadingText = '';
-            this.initGroupLoading = true;
-            let cout = 0;
+            let count = 0;
             this.oneKeyTimer = setInterval(() => {
-              if (cout < 80) {
+              if (count < 80) {
                 count += parseFloat(Math.random() * 1.5)
                 this.initGroupLoadingText = `正在加载${count.toFixed(2)}%`;
               } else {
                 count += parseFloat(Math.random() * 0.4)
                 this.initGroupLoadingText = `正在加载${count.toFixed(2)}%`;
-                if (cout >= 99.6) {
+                if (count >= 99.6) {
                   clearInterval(this.oneKeyTimer);
                 }
                 if (complete) {
                   this.initGroupLoadingText = '加载完成';
-                  this.initGroupLoading = false;
                 }
               }
             }, 500);
@@ -945,20 +943,19 @@ export default {
               productId: this.currentProductId,
               firstCat: this.currentFirstCat,
             }).then(() => {
-              this.initGroupLoading = false;
-              complete = true;
-              this.$message({
-                type: 'success',
-                message: '创建成功!',
-              });
               this.$axios.post(this.$api.getCrowd, param)
                 .then((resp) => {
+                  this.$message({
+                    type: 'success',
+                    message: '创建成功!',
+                  });
                   for (let i = 0; i < resp.data.length; i++) {
                     resp.data[i] = Object.assign({
                       extend: true,
                     }, resp.data[i]);
                   }
                   this.groupList = resp.data;
+                  this.initGroupLoading = false;
                   // hr: 在这里 为 groupList添加总和数据 添加事件和绑定
                   this.initTableEvents();
                   this.trapezoid();
