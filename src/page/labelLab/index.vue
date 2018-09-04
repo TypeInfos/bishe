@@ -919,15 +919,16 @@ export default {
               closeOnClickModal: false,
               type: 'warning',
             }).then(() => {
+              this.groupList = null; // 清空grouplist数据
               let complete = false;
               this.initGroupLoadingText = '';
               this.initGroupLoading = true;
               let cout = 0;
               this.oneKeyTimer = setInterval(() => {
                 if (cout < 90) {
-                  this.initGroupLoadingText = `正在加载${parseFloat(cout + (Math.random() * 1.5)).toFixed(2)}`;
+                  this.initGroupLoadingText = `正在加载${parseFloat(cout + (Math.random() * 1.5)).toFixed(2)}%`;
                 } else {
-                  this.initGroupLoadingText = `正在加载${parseFloat(cout + (Math.random() * 0.4)).toFixed(2)}`;
+                  this.initGroupLoadingText = `正在加载${parseFloat(cout + (Math.random() * 0.4)).toFixed(2)}%`;
                   if (cout >= 99.6) {
                     clearInterval(this.oneKeyTimer);
                   }
@@ -1265,6 +1266,7 @@ export default {
       this.currentAdGroupId = this.resultGoods[index].adGroupId;
       this.currentProductId = this.resultGoods[index].productId;
       this.currentFirstCat = this.resultGoods[index].firstCat;
+      this.groupList = null; // 清空右侧数据展示区数据
       this.getCrowdInfo();
       // 下面显示数据
       // 相当于刷新数据，重新请求groupList
