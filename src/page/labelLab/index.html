@@ -183,7 +183,7 @@
           <el-button type="text" @click="selectAllCheck('table' + index, index)" :class="'select-all-people'+index">全选</el-button>
           <el-button type="text" @click="createCrowd(index)">创建人群</el-button>
           <el-button type="text" @click="updateGroupName(index)">修改群组名称</el-button>
-          <el-button type="text" @click="moveCrowd('table' + index)">人群移动</el-button>
+          <el-button type="text" @click="moveCrowd('table' + index)" :disabled="!crowdMove.includes(index)">人群移动</el-button>
           <el-button type="text" @click="deleteGroup(index)">删除</el-button>
         </div>
         <el-collapse-transition>

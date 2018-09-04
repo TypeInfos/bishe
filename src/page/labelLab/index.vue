@@ -1450,7 +1450,6 @@ export default {
         }
         // length
         const length = this.groupList.length;
-        console.log(length, this.groupList)
         let temp = 0;
         const nodeHeight = (pyramid.offsetHeight / length) - 2;
         for (let i = 0; i < length; i++) {
@@ -1515,6 +1514,17 @@ export default {
     window.removeEventListener('scroll', this.handleScroll);
   },
   computed: {
+    // lhr: 判断群组中人群是否可以移动
+    crowdMove () {
+      let res = []
+      this.groupList.forEach((g, i) => {
+        if (g.list.some(v => this.checkedPeople.includes(v))) {
+          res.push(i)
+        }
+      })
+      console.log(res)
+      return res
+    },
     currentRptkey() {
       switch (this.source) {
         case '全部来源':
