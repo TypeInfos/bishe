@@ -1,7 +1,8 @@
 // const absUrl = window.location.href;
 // let path = 'http://192.168.1.111:8082/edoushu'; // 阿炳
+let path = 'http://bgjccs.natappfree.cc/edoushu';
 // let path = 'https://data.doushudata.com/edoushu';   // 上线版
-let path = 'https://data.yishubox.com/edoushu'; // 测试版
+// let path = 'https://data.yishubox.com/edoushu'; // 测试版
 // if (absUrl.match('edoushu.com')) {
 //   path = 'https://www.edoushu.com/';
 // }
@@ -72,6 +73,7 @@ const api = {
   getOrderStatus: `${path}/getOrderStatus`, // 获取当前订单号的支付状态
 
   checkOrder: `${path}/checkOrder`, // 进入每个功能页面前判断是否订购该功能产品
+  checkUserType: `${path}/checkUserType`, // 判断用户使用的是否是试用版
 };
 
 export default api;

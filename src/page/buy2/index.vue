@@ -95,7 +95,7 @@ export default {
                 this.payLoading = true;
                 this.payingText = '支付中';
               }
-              if (res.data.status == 1) {
+              if (res.data.status === 1) {
                 // nextTick 获取更新后的DOM
                 this.$nextTick(() => {
                   // 只能用传统方法才改得掉icon
@@ -104,7 +104,7 @@ export default {
                   // this.spinner = 'el-icon-circle-check';
                   let dTime = 5;
                   let daojishi = setInterval(() => {
-                    this.payingText = `${'支付成功!' + ' '}${dTime}秒之后跳转...`;
+                    this.payingText = `${'支付成功! '}${dTime}秒之后跳转...`;
                     dTime -= 1;
                     if (dTime < 0) {
                       this.$router.push('/rootRadar');
@@ -148,10 +148,10 @@ export default {
       // 获取到之后，给当前页面的元素赋值
       this.orderInfoTableData[0].buyProject = this.orderBlockInfo.firstLine + this.orderBlockInfo.secondLine;
       this.orderInfoTableData[0].count = '1';
-      this.orderInfoTableData[0].butTime = '12个月';
-      this.orderInfoTableData[0].yuanJia = this.orderBlockInfo.thirdLine;
-      this.orderInfoTableData[0].xianJia = this.orderBlockInfo.fourthLine;
-      this.shouldPay = this.orderBlockInfo.fourthLine;
+      this.orderInfoTableData[0].buyTime = this.orderBlockInfo.buyTime;
+      this.orderInfoTableData[0].yuanJia = this.orderBlockInfo.origPrice;
+      this.orderInfoTableData[0].xianJia = `¥${this.orderBlockInfo.fourthLine.price + this.orderBlockInfo.fourthLine.unit}`;
+      this.shouldPay = `¥${this.orderBlockInfo.fourthLine.price}`;
     },
   },
   created() {
