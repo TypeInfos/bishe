@@ -1440,7 +1440,7 @@ export default {
         });
     },
     trapezoid() {
-      this.$nextTick(() => {
+      this.$nextTick(function () {
         const pyramid = document.querySelector('.pyramid');
         const allChilds = pyramid.childNodes;
         // 删除所有节点，除了两个三角形，反向删除了解下
@@ -1449,6 +1449,7 @@ export default {
         }
         // length
         const length = this.groupList.length;
+        console.log(length, this.groupList)
         let temp = 0;
         const nodeHeight = (pyramid.offsetHeight / length) - 2;
         for (let i = 0; i < length; i++) {
@@ -1538,6 +1539,9 @@ export default {
     },
   },
   watch: {
+    groupList() {
+      this.trapezoid();
+    },
     checkList(val) {
       if (val.length === 0) {
         this.tendencyAnalysShow = false;
