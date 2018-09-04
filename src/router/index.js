@@ -86,5 +86,10 @@ export default new Router({
       name: 'GuidePage',
       component: () => import('@/page/guidePages/temp'),
     },
+    {
+      path: '/download',
+      name: 'Download',
+      component: () => import('@/page/download'),
+    },
   ],
 });

@@ -907,73 +907,72 @@ export default {
         linkUrl: this.linkUrl,
         campaignId: this.currentCampaignId,
       };
-
+      this.initGroupLoading = true;
       this.$axios.post(this.$api.ifFirstTag, cookieValue)
         .then((res) => {
-          if (res) {
-            this.$confirm(`注意：一键创建人群将快捷帮您创建好标准化的金字塔群组及人群，
+          // if (res) {
+          this.$confirm(`注意：一键创建人群将快捷帮您创建好标准化的金字塔群组及人群，
             同时会同步删除商品直通车后台精选人群的人群数据并按照标准化人群进行创建，
             请谨慎操作！`, '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              closeOnClickModal: false,
-              type: 'warning',
-            }).then(() => {
-              this.groupList = null; // 清空grouplist数据
-              let complete = false;
-              this.initGroupLoadingText = '';
-              this.initGroupLoading = true;
-              let cout = 0;
-              this.oneKeyTimer = setInterval(() => {
-                if (cout < 90) {
-                  this.initGroupLoadingText = `正在加载${parseFloat(cout + (Math.random() * 1.5)).toFixed(2)}%`;
-                } else {
-                  this.initGroupLoadingText = `正在加载${parseFloat(cout + (Math.random() * 0.4)).toFixed(2)}%`;
-                  if (cout >= 99.6) {
-                    clearInterval(this.oneKeyTimer);
-                  }
-                  if (complete) {
-                    this.initGroupLoadingText = '加载完成';
-                    this.initGroupLoading = false;
-                  }
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            closeOnClickModal: false,
+            type: 'warning',
+          }).then(() => {
+            this.groupList = null; // 清空grouplist数据
+            let complete = false;
+            this.initGroupLoadingText = '';
+            let count = 0;
+            this.oneKeyTimer = setInterval(() => {
+              if (count < 80) {
+                count += parseFloat(Math.random() * 1.5)
+                this.initGroupLoadingText = `正在加载${count.toFixed(2)}%`;
+              } else {
+                count += parseFloat(Math.random() * 0.4)
+                this.initGroupLoadingText = `正在加载${count.toFixed(2)}%`;
+                if (count >= 99.6) {
+                  clearInterval(this.oneKeyTimer);
                 }
-              }, 500);
-              this.$axios.post(this.$api.initGroup, {
-                adGroupId: this.currentAdGroupId,
-                productId: this.currentProductId,
-                firstCat: this.currentFirstCat,
-              }).then(() => {
-                this.initGroupLoading = false;
-                complete = true;
-                this.$message({
-                  type: 'success',
-                  message: '创建成功!',
-                });
-                this.$axios.post(this.$api.getCrowd, param)
-                  .then((resp) => {
-                    for (let i = 0; i < resp.data.length; i++) {
-                      resp.data[i] = Object.assign({
-                        extend: true,
-                      }, resp.data[i]);
-                    }
-                    this.groupList = resp.data;
-                    // hr: 在这里 为 groupList添加总和数据 添加事件和绑定
-                    this.initTableEvents();
-                    this.trapezoid();
-                    this.getScoreRenderTag();
-                    this.labelTendency();
+                if (complete) {
+                  this.initGroupLoadingText = '加载完成';
+                }
+              }
+            }, 500);
+            this.$axios.post(this.$api.initGroup, {
+              adGroupId: this.currentAdGroupId,
+              productId: this.currentProductId,
+              firstCat: this.currentFirstCat,
+            }).then(() => {
+              this.$axios.post(this.$api.getCrowd, param)
+                .then((resp) => {
+                  this.$message({
+                    type: 'success',
+                    message: '创建成功!',
                   });
-              });
-            }).catch(() => {
-              this.initGroupLoading = false;
+                  for (let i = 0; i < resp.data.length; i++) {
+                    resp.data[i] = Object.assign({
+                      extend: true,
+                    }, resp.data[i]);
+                  }
+                  this.groupList = resp.data;
+                  this.initGroupLoading = false;
+                  // hr: 在这里 为 groupList添加总和数据 添加事件和绑定
+                  this.initTableEvents();
+                  this.trapezoid();
+                  this.getScoreRenderTag();
+                  this.labelTendency();
+                });
             });
-          } else {
+          }).catch(() => {
             this.initGroupLoading = false;
-            this.$message({
-              type: 'warning',
-              message: '该商品已一键创建人群，无需重复点击',
-            });
-          }
+          });
+          // } else {
+          //   this.initGroupLoading = false;
+          //   this.$message({
+          //     type: 'warning',
+          //     message: '该商品已一键创建人群，无需重复点击',
+          //   });
+          // }
         });
     },
     // 获取用户信息
@@ -1442,7 +1441,7 @@ export default {
         });
     },
     trapezoid() {
-      this.$nextTick(() => {
+      this.$nextTick(function () {
         const pyramid = document.querySelector('.pyramid');
         const allChilds = pyramid.childNodes;
         // 删除所有节点，除了两个三角形，反向删除了解下
@@ -1515,6 +1514,17 @@ export default {
     window.removeEventListener('scroll', this.handleScroll);
   },
   computed: {
+    // lhr: 判断群组中人群是否可以移动
+    crowdMove () {
+      let res = []
+      this.groupList.forEach((g, i) => {
+        if (g.list.some(v => this.checkedPeople.includes(v))) {
+          res.push(i)
+        }
+      })
+      console.log(res)
+      return res
+    },
     currentRptkey() {
       switch (this.source) {
         case '全部来源':
@@ -1540,6 +1550,9 @@ export default {
     },
   },
   watch: {
+    groupList() {
+      this.trapezoid();
+    },
     checkList(val) {
       if (val.length === 0) {
         this.tendencyAnalysShow = false;
