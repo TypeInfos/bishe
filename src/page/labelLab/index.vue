@@ -354,7 +354,7 @@ export default {
             message: res.message,
             type: 'warning',
           });
-          this.$router.push('/buy1');
+          this.$router.push({ name: 'GuidePage', query: { type: -1, name: 'labelLab' } })
         }
       });
     },
