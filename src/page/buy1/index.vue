@@ -87,6 +87,7 @@ export default {
     },
     userBuyGoods() {
       this.$axios.get(this.$api.checkUserType).then((res) => {
+        console.log('get time', res)
         // 有试用版记录
         this.loading = false;
         // res.data = null;

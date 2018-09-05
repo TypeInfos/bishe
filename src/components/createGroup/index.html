@@ -17,18 +17,8 @@
         <p class="myDefinedP"><el-input placeholder="请输入群组名称" v-model="groupName"></el-input></p>
         <p class="errorP" v-if="showErrorCreateGroup">群组名称重复</p>
     </div>
-    <!-- <div class="standardGroup" v-if="showStandardGroup">
-        <el-select v-model="createGroups" clearable placeholder="">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
-            </el-option>
-          </el-select>
-    </div> -->
-    <el-button type="primary" plain class="btnCancel">取消</el-button>
     <el-button type="primary" class="btnConfirm">确定</el-button>
+    <el-button type="primary" plain class="btnCancel">取消</el-button>
     </div>
     </el-dialog>
 </div>

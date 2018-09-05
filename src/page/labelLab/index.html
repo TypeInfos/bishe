@@ -104,6 +104,7 @@
     <el-card class="box-card mt20 groupAnalyze" v-loading="groupAnalyzeLoading" shadow="hover">
       <div slot="header" class="clearfix">
         <span class="headerContent">群组详细分析及管理</span>
+        <span class="error-tip">请先选中人群，再进行操作</span>
         <div class="showIndex">
           <el-popover popper-class="mySelectIndex" :value="groupAnalyzePopStatus" @hide="hide" @show="show" :visible-arrow=false placement="bottom"
             width="500" trigger="click">
@@ -138,7 +139,6 @@
             </div>
           </el-popover>
         </div>
-
       </div>
       <div class="dialogButton">
         <el-button type="primary" @click="createGroupBtn">创建群组</el-button>
@@ -311,7 +311,6 @@
     </div>
     <div class="createGroupsContent">
       <p>
-        <!-- <el-radio v-model="radio" label="1" @change="radioChange">标准群组</el-radio> -->
         <el-radio v-model="radio" label="2" @change="radioChange">自定义群组</el-radio>
       </p>
       <div class="myDefinedGroup" >
@@ -320,14 +319,8 @@
         </p>
         <p class="errorP" v-if="showErrorCreateGroup">群组名称重复</p>
       </div>
-      <!-- <div class="standardGroup" v-if="showStandardGroup">
-        <el-select v-model="createGroups" placeholder="">
-          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-          </el-option>
-        </el-select>
-      </div> -->
-      <el-button type="primary" plain class="btnCancel" @click="btnCreateCancel">取消</el-button>
       <el-button type="primary" class="btnConfirm" :disabled="createGroupDisabled" @click="btnCreateConfirm">确定</el-button>
+      <el-button type="primary" plain class="btnCancel" @click="btnCreateCancel">取消</el-button>
     </div>
   </el-dialog>
   <!-- 修改群组名字 -->
@@ -341,8 +334,8 @@
         <el-input placeholder="请输入群组名称" v-model="modifyGroupName"></el-input>
       </p>
       <p class="errorP" v-if="modifyGroupRepeat">群组名称重复</p>
-      <el-button type="primary" plain class="btnCancel" @click="modifyGroupCancel">取消</el-button>
       <el-button type="primary" :disabled="modifyGroupNameDisable" class="btnConfirm" @click="modifyGroupConfirm(modifyGroupName)">确定</el-button>
+      <el-button type="primary" plain class="btnCancel" @click="modifyGroupCancel">取消</el-button>
     </div>
   </el-dialog>
   <!-- 人群评级 -->
@@ -359,8 +352,8 @@
           </el-option>
         </el-select>
       </p>
-      <el-button type="primary" class="peopleRateDialogCancel" @click="peopleRateCancel">取消</el-button>
       <el-button type="primary" class="peopleRateDialogConfirm" :disabled="peopleRateDisable" @click="peopleRateConfirm">确定</el-button>
+      <el-button type="primary" class="peopleRateDialogCancel" @click="peopleRateCancel">取消</el-button>
     </div>
   </el-dialog>
   <!-- 修改溢价 -->
@@ -375,8 +368,8 @@
         <el-input placeholder="5-300整数" v-on:input="betweenRange()" v-model="premium"></el-input>&nbsp; %
       </p>
       <p class="errorP" v-if="premiumError">您所输入的溢价范围有误</p>
-      <el-button type="primary" plain class="btnCancel" @click="premiumCancel">取消</el-button>
       <el-button type="primary" class="btnConfirm" :disabled="premiumDisable" @click="premiumConfirm">确定</el-button>
+      <el-button type="primary" plain class="btnCancel" @click="premiumCancel">取消</el-button>
     </div>
   </el-dialog>
   <!-- peoplemove -->
@@ -393,8 +386,8 @@
           </el-option>
         </el-select>
       </p>
-      <el-button type="primary" plain class="btnCancel" @click="peopleMoveCancel">取消</el-button>
       <el-button type="primary" class="btnConfirm" :disabled="peopleMoveDisabled" @click="peopleMoveConfirm">确定</el-button>
+      <el-button type="primary" plain class="btnCancel" @click="peopleMoveCancel">取消</el-button>
     </div>
   </el-dialog>
   <createPeople :createPeopleDialog="createPeopleDialog" :firstCat="currentFirstCat" :campaignId="currentCampaignId" :adGroupId="currentAdGroupId"
