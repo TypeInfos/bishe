@@ -347,7 +347,7 @@ export default {
         pid: 2, // pid为1是词根雷达
       }).then((res) => {
         this.expiredDays = res.data
-        if (res.data) {
+        if (res.data > 0) {
           this.getShopId();
         } else {
           this.$message({
@@ -646,6 +646,14 @@ export default {
         adGroupId: this.currentAdGroupId,
         productId: this.currentProductId,
       };
+      let prices = this.groupList.reduce((all, g) => {
+        let p = {}
+        let a = g.list.sort((a, b) => a.discount - b.discount)
+        p.max = a[0].discount
+        p.min = a[a.length - 1].discount
+        all.push(p)
+        return all
+      }, [])
       for (let i = 0; i < this.groupList.length; i++) {
         const tableS = `table${i}`;
         const selection = this.$refs[tableS][0].selection;
@@ -1486,7 +1494,7 @@ export default {
     formatterPeopleRate(row) {
       if (row.level) {
         return row.level;
-      } return '-';
+      } return '未评级';
     },
     hoverShowBtn(row, column, cell) {
       cell.parentNode.querySelector('.iconSelector').classList.remove('hidden-btn');
