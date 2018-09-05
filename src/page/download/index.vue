@@ -6,7 +6,7 @@
         img(src="../../assets/download/download_mac.png")
     .info-content
       .info-text
-        span.info-text-title 抖数插件
+        span.info-text-title 抖数精灵
         span.info-text-depict 使用抖数产品前，需要先下载此插件，帮您高效整理数据
         span.info-text-main 大小：{{this.size}}&nbsp;&nbsp;&nbsp版本：{{this.version}}
         span.info-text-main 适用浏览器： {{this.explore}}
@@ -29,9 +29,9 @@
         div.course-text
           span(style="font-weight:bolder;") 第二步：
           span 按照图示4、5步骤进行操作，在扩展程序页面
-          p(style="text-indent:4.2em") 首先打开开发者模式
-          p(style="text-indent:4.2em") 其次将下载好的插件鼠标拖动到扩展程序页面
-          p(style="text-indent:4.2em") 到此，即可完成插件安装操作
+          p(style="text-indent:4.2em;text-align:left;") 首先打开开发者模式
+          p(style="text-indent:4.2em;text-align:left;") 其次将下载好的插件鼠标拖动到扩展程序页面
+          p(style="text-indent:4.2em;text-align:left;") 到此，即可完成插件安装操作
         img(src="../../assets/download/download_step_2.jpg" width="100%" height="60%")
       span.course-footer 其他浏览器的插件将陆续推出，敬请期待~
 </template>
