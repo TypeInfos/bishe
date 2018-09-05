@@ -338,6 +338,10 @@ export default {
       ], // 已选择的checkbox
       tableCellWidth: 150, // 动态去改变表格的宽度
       isSelectGoods: false, // 是否选择了右侧的商品
+      startLoading: null, // 加载Loading的显示
+      startLoadingTimer: null, // 加载的进度 setInterval
+      startLoadingnumber: 0, // 进度百分比
+      startloadingComplete: false, // 加载进度是否完成
     };
   },
   methods: {
@@ -904,7 +908,7 @@ export default {
     // 一键创建人群
     oneKey() {
       const param = this.setParams();
-      this.initGroupLoading = true;
+      // this.initDiv();
       const cookieValue = {
         adGroupId: this.currentAdGroupId,
         productId: this.currentProductId,
@@ -915,7 +919,6 @@ export default {
         linkUrl: this.linkUrl,
         campaignId: this.currentCampaignId,
       };
-      this.initGroupLoading = true;
       this.$axios.post(this.$api.ifFirstTag, cookieValue)
         .then((res) => {
           // if (res) {
@@ -927,25 +930,8 @@ export default {
             closeOnClickModal: false,
             type: 'warning',
           }).then(() => {
+            this.initDiv();
             this.groupList = null; // 清空grouplist数据
-            let complete = false;
-            this.initGroupLoadingText = '';
-            let count = 0;
-            this.oneKeyTimer = setInterval(() => {
-              if (count < 80) {
-                count += parseFloat(Math.random() * 1.5)
-                this.initGroupLoadingText = `正在加载${count.toFixed(2)}%`;
-              } else {
-                count += parseFloat(Math.random() * 0.4)
-                this.initGroupLoadingText = `正在加载${count.toFixed(2)}%`;
-                if (count >= 99.6) {
-                  clearInterval(this.oneKeyTimer);
-                }
-                if (complete) {
-                  this.initGroupLoadingText = '加载完成';
-                }
-              }
-            }, 500);
             this.$axios.post(this.$api.initGroup, {
               adGroupId: this.currentAdGroupId,
               productId: this.currentProductId,
@@ -963,7 +949,8 @@ export default {
                     }, resp.data[i]);
                   }
                   this.groupList = resp.data;
-                  this.initGroupLoading = false;
+                  // this.initGroupLoading = false;
+                  this.startloadingComplete = true;
                   // hr: 在这里 为 groupList添加总和数据 添加事件和绑定
                   this.initTableEvents();
                   this.trapezoid();
@@ -1503,6 +1490,63 @@ export default {
     hoverHideBtn(row, column, cell) {
       cell.parentNode.querySelector('.iconSelector').classList.add('hidden-btn');
       // row.isShow = true;
+    },
+    // 加载框 百分比
+    initDiv() {
+      this.startLoadingnumber = 0;
+      this.startLoading = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)',
+        customClass: 'startLoading',
+      });
+      document.querySelector('.startLoading').innerHTML = `<div class="startLoadingContainer">
+                                                                      <h2>温馨提示</h2>
+                                                                      <div class="anim">
+                                                                             <div class="spinner">
+                                                                    <div class="spinner-container container1">
+                                                                      <div class="circle1"></div>
+                                                                      <div class="circle2"></div>
+                                                                      <div class="circle3"></div>
+                                                                      <div class="circle4"></div>
+                                                                    </div>
+                                                                    <div class="spinner-container container2">
+                                                                      <div class="circle1"></div>
+                                                                      <div class="circle2"></div>
+                                                                      <div class="circle3"></div>
+                                                                      <div class="circle4"></div>
+                                                                    </div>
+                                                                    <!-- container3为了让正方形的四个球效果更好点，相当于延长动画的效果0.1秒 -->
+                                                                    <div class="spinner-container container3">
+                                                                      <div class="circle1"></div>
+                                                                      <div class="circle2"></div>
+                                                                      <div class="circle3"></div>
+                                                                      <div class="circle4"></div>
+                                                                    </div>
+                                                                  </div>
+                                                                  <p>数据正在加载中</p>
+                                                                      </div>
+                                                                  <p class="bottomP">进度<span id="startLoadingNumber"></span>%</p>
+                                                                  <p>请耐心等待~</p>
+                                                                  </div>`
+      let loadingDom = document.getElementById('startLoadingNumber');
+      this.startLoadingTimer = setInterval(() => {
+        loadingDom.innerText = this.startLoadingnumber;
+        if (this.startLoadingnumber < 90) {
+          this.startLoadingnumber = this.startLoadingnumber + (Math.random() * 1.5).toFixed(2)
+        } else {
+          this.startLoadingnumber = this.startLoadingnumber + (Math.random() * 0.4).toFixed(2)
+          if (this.startLoadingnumber >= 99.6) {
+            clearInterval(this.startLoadingTimer)
+          }
+          if (this.startloadingComplete) {
+            this.startLoadingnumber = 100;
+            this.startLoading.close();
+            this.startloadingComplete = false;
+          }
+        }
+      }, 500)
     },
   },
   beforeCreate() {},
