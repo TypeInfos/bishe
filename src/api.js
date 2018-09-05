@@ -1,12 +1,12 @@
 // const absUrl = window.location.href;
-// let path = 'http://192.168.1.105:8082/edoushu'; // 阿炳
-// let path = 'http://bgjccs.natappfree.cc/edoushu';
+// let path = 'http://192.168.1.111:8082/edoushu'; // 阿炳
+// let path = 'http://b3dcgp.natappfree.cc/edoshu';
 // let path = 'https://data.doushudata.com/edoushu';   // 上线版
 let path = 'https://data.yishubox.com/edoushu'; // 测试版
 // if (absUrl.match('edoushu.com')) {
 //   path = 'https://www.edoushu.com/';
 // }
-
+let lelePath = 'https://service.api.doushudata.com/?service=App.Service.GetVer';
 
 const api = {
   login: `${path}/login`, // 易数登录
@@ -74,6 +74,9 @@ const api = {
 
   checkOrder: `${path}/checkOrder`, // 进入每个功能页面前判断是否订购该功能产品
   checkUserType: `${path}/checkUserType`, // 判断用户使用的是否是试用版
+
+  // 插件下载
+  getDownloadInfo: `${lelePath}`, // 获取下载插件的具体信息
 };
 
 export default api;

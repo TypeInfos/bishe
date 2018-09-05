@@ -69,16 +69,20 @@ export default {
           location.reload();
           break;
         case '6':
-          let iframe = document.createElement('iframe');
-          iframe.style.display = 'none';
-          iframe.src = 'http://static.openssl.me/doushu.zip';
-          iframe.onload = function() {
-            document.body.removeChild(iframe);
-          };
-          document.body.appendChild(iframe);
+          // let iframe = document.createElement('iframe');
+          // iframe.style.display = 'none';
+          // iframe.src = 'http://static.openssl.me/doushu.zip';
+          // iframe.onload = function() {
+          //   document.body.removeChild(iframe);
+          // };
+          // document.body.appendChild(iframe);
+          // break;
           // this.$router.push('/tempBqsys');
           //   location.reload();
           // break;
+          this.$router.push('/download');
+          // location.reload();
+          break;
         default:
           break;
       }
