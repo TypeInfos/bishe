@@ -73,6 +73,7 @@ const api = {
   getOrderStatus: `${path}/getOrderStatus`, // 获取当前订单号的支付状态
 
   checkOrder: `${path}/checkOrder`, // 进入每个功能页面前判断是否订购该功能产品
+  checkUserType: `${path}/checkUserType`, // 判断用户使用的是否是试用版
 };
 
 export default api;

@@ -1,6 +1,6 @@
-<div class="buy1-container">
+<div class="buy1-container" v-loading="loading">
     <div class="hole-container">
-        <orderBlock  :orderBlockInfo="orderBlockInfo"></orderBlock>
+        <order-block  :orderBlockInfo="orderBlockInfo" v-for="(orderBlockInfo,index) in orderBlockInfos" :key="index"></order-block>
         <!-- <div class="hole">
             <p style="font-size:18px;"><b>商品加量包</b></p>
             <p style="text-decoration: line-through;color:rgba(155,155,155,1);">原价¥299元/年</p>
