@@ -1,6 +1,6 @@
 // const absUrl = window.location.href;
 // let path = 'http://192.168.1.111:8082/edoushu'; // 阿炳
-// let path = 'http://b3dcgp.natappfree.cc/edoshu';
+// let path = 'http://vcwpg9.natappfree.cc/edoshu';
 // let path = 'https://data.doushudata.com/edoushu';   // 上线版
 let path = 'https://data.yishubox.com/edoushu'; // 测试版
 // let path = 'http://192.168.1.101:8082/edoushu' // 老庄的接口
