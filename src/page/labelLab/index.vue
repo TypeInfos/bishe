@@ -1595,17 +1595,19 @@ export default {
       let loadingDom = document.getElementById('startLoadingNumber');
       this.startLoadingTimer = setInterval(() => {
         loadingDom.innerText = this.startLoadingnumber;
-        if (this.startLoadingnumber < 90) {
-          this.startLoadingnumber = this.startLoadingnumber + (Math.random() * 1.5).toFixed(2)
+        console.log(this.startLoadingnumber);
+        if (this.startloadingComplete) {
+          clearInterval(this.startLoadingTimer)
+          this.startLoadingnumber = 100;
+          this.startLoading.close();
+          this.startloadingComplete = false;
+        }
+        if (parseFloat(this.startLoadingnumber) < 90) {
+          this.startLoadingnumber = parseFloat(parseFloat(this.startLoadingnumber) + (Math.random() * 1.5)).toFixed(2)
         } else {
-          this.startLoadingnumber = this.startLoadingnumber + (Math.random() * 0.4).toFixed(2)
+          this.startLoadingnumber = parseFloat(parseFloat(this.startLoadingnumber) + (Math.random() * 0.4)).toFixed(2)
           if (this.startLoadingnumber >= 99.6) {
             clearInterval(this.startLoadingTimer)
-          }
-          if (this.startloadingComplete) {
-            this.startLoadingnumber = 100;
-            this.startLoading.close();
-            this.startloadingComplete = false;
           }
         }
       }, 500)
