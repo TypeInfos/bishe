@@ -70,7 +70,6 @@ export default {
         this.updateTime = res.data.updatetime;
         this.downloadLink = res.data.downloadLink;
         this.mvLink = res.data.mvLink;
-        console.log(res)
       }).catch((err) => {
         console.log(err);
       })

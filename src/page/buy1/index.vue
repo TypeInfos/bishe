@@ -93,7 +93,7 @@ export default {
         // res.data = null;
         // res.data.type = 0;
         // res.data.endTime = '2017-3-10';
-        console.log(moment(res.data.endTime).format('YYYY-MM-DD'));
+        // console.log(moment(res.data.endTime).format('YYYY-MM-DD'));
         //  啥都没订过
         if (res.data === null) {
           this.orderBlockInfos.forEach((i) => {

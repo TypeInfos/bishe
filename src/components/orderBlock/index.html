@@ -36,6 +36,7 @@
     </div>
     <div style="min-height: 20px;">
         <p v-if="orderBlockInfo.isBuy && !orderBlockInfo.isDisabled">到期时间：{{orderBlockInfo.endTime}}</p>
-        <p v-if="orderBlockInfo.isDisabled" style="color: #D3182F">{{orderBlockInfo.firstLine}}已到期</p>
+        <p v-if="orderBlockInfo.isDisabled && orderBlockInfo.firstLine === '基础版'" style="color: #D3182F">{{orderBlockInfo.firstLine}}已到期</p>
+        <p v-if="orderBlockInfo.isDisabled && orderBlockInfo.firstLine === '试用版' && orderBlockInfo.btnText !== '立即使用'" style="color: #D3182F">{{orderBlockInfo.firstLine}}已到期</p>
     </div>
 </div>

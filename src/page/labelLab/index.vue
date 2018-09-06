@@ -646,6 +646,7 @@ export default {
     premiumConfirm() {
       const changePremium = () => {
         console.log('change premium')
+        this.groupList = null;
         this.$axios.post(this.$api.updateDiscount, param)
           .then(() => {
             this.$message({
@@ -670,7 +671,7 @@ export default {
         adGroupId: this.currentAdGroupId,
         productId: this.currentProductId,
       };
-      let prices = this.groupBorder
+      let prices = this.groupBorder()
       console.log('prices', prices)
       let tips = {
         flag: false,
@@ -750,6 +751,7 @@ export default {
         }
       }
       param.level = this.rate;
+      this.groupList = null;
       this.$axios.post(this.$api.levelCrowd, param)
         .then(() => {
           this.peopleRateDialog = false;
@@ -894,8 +896,8 @@ export default {
         });
     },
     btnCreateConfirm() {
-      this.premiumLoading = true;
-      // this.createGroupLoading = true;
+      this.groupList = null;
+      this.createGroupLoading = true;
       this.$axios.post(this.$api.addGroup, {
         groupName: this.createGroupName,
         adGroupId: this.currentAdGroupId,
@@ -966,10 +968,14 @@ export default {
       };
       this.$axios.post(this.$api.ifFirstTag, cookieValue)
         .then((res) => {
-          // if (res) {
-          this.$confirm(`注意：一键创建人群将快捷帮您创建好标准化的金字塔群组及人群，
+          let str = `注意：一键创建人群将快捷帮您创建好标准化的金字塔群组及人群，
             同时会同步删除商品直通车后台精选人群的人群数据并按照标准化人群进行创建，
-            请谨慎操作！`, '提示', {
+            请谨慎操作！`
+          if (!res) {
+            str = '您的操作将会删除所有已有标签人群，重新根据金字塔标准化模型进行标准建模，是否确定要一键创建？'
+          }
+          // if (res) {
+          this.$confirm(str, '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             closeOnClickModal: false,
@@ -1102,6 +1108,7 @@ export default {
         }
       }
       if (param.crowdIdList.length > 0) {
+        this.groupList = null;
         this.$axios.post(this.$api.updateStatus, param)
           .then(() => {
             this.getCrowdInfo();
@@ -1132,6 +1139,7 @@ export default {
         crowdIdList: [],
       };
       param.crowdIdList.push(crowdId);
+      this.groupList = null;
       this.$axios.post(this.$api.updateStatus, param)
         .then(() => {
           this.getCrowdInfo();
@@ -1173,6 +1181,7 @@ export default {
           cancelButtonText: '取消',
           type: 'warning',
         }).then(() => {
+          this.groupList = null;
           this.initGroupLoadingText = '加载中，请稍等';
           this.initGroupLoading = true;
           this.$axios.post(this.$api.deleteCrowd, param)
@@ -1380,14 +1389,14 @@ export default {
                 g.list.forEach(c => {
                   c.warning = 0
                   if (i > 0) {
-                    let min = this.groupBorder[i - 1].min
+                    let min = this.groupBorder()[i - 1].min
                     console.log('比较上层', min, c.discount)
                     if (min < c.discount) {
                       c.warning = '当前人群溢价比上一层级的最低溢价高，会导致该人群失效，请及时进行调整'
                     }
                   } else if (i < this.groupList.length - 1) {
                     console.log('比较下层', max, c.discount)
-                    let max = this.groupBorder[i + 1].max
+                    let max = this.groupBorder()[i + 1].max
                     if (max > c.discount) {
                       c.warning = '当前人群溢价比下一层级的最高溢价低，会导致该人群失效，请及时进行调整'
                     }
@@ -1560,6 +1569,34 @@ export default {
       cell.parentNode.querySelector('.iconSelector').classList.add('hidden-btn');
       // row.isShow = true;
     },
+    // lhr: 获取各个群组的最大最小值
+    groupBorder () {
+      let prices = this.groupList.reduce((all, g) => {
+        let p = {}
+        let a = g.list.sort((n, b) => n.discount - b.discount)
+        if (a.length > 0) {
+          p.min = a[0].discount
+          p.max = a[a.length - 1].discount
+        } else {
+          p.min = 99999
+          p.max = -1
+        }
+        all.push(p)
+        return all
+      }, [])
+      prices.forEach((p, index) => {
+        if (p.min === 99999) {
+          p.min = prices[index - 1].min
+        }
+      })
+      for (let i = prices.length - 1; i >= 0; i--) {
+        let p = prices[i]
+        if (p.max === -1) {
+          p.max = prices[i + 1].max
+        }
+      }
+      return prices
+    },
     // 加载框 百分比
     initDiv() {
       this.startLoadingnumber = 0;
@@ -1619,6 +1656,60 @@ export default {
         }
       }, 500)
     },
+    moveGroupListEnd(evt) {
+      const resetGroupList = (oldIndex, newIndex) => {
+        let movedG = this.groupList[newIndex]
+        this.groupList.splice(newIndex, 1)
+        this.groupList.splice(oldIndex, 0, movedG)
+      }
+      let gIDs = [1, 2333, 3333, 7777, 8888, 9999]
+      let movedG = this.groupList[evt.newIndex]
+      if (gIDs.includes(movedG.index)) {
+        this.showGroupErr('不允许移动标准群组')
+        resetGroupList(evt.oldIndex, evt.newIndex)
+        return
+      }
+      let top = null
+      let bottom = null
+      for (let i = 0; i < this.groupList.length; i++) {
+        let index = this.groupList[i].index
+        if (gIDs.includes(index) && i < evt.newIndex) {
+          top = index
+        }
+        if (gIDs.includes(index) && i > evt.newIndex) {
+          bottom = index
+          break
+        }
+      }
+      console.log(top, bottom)
+      if (parseInt(top, 10) !== 1 || parseInt(bottom, 10) !== 2333) {
+        this.showGroupErr('只允许在自定义群组之间移动')
+        resetGroupList(evt.oldIndex, evt.newIndex)
+        return
+      }
+      let param = {
+        adGroupId: this.currentAdGroupId
+      }
+      let arrays = this.groupList.reduce((all, g) => {
+        if (!gIDs.includes(g.index)) all.push(g.groupId)
+        return all
+      }, [])
+      let map = ['groupA', 'groupB', 'groupC']
+      arrays.forEach((i, index) => {
+        param[map[index]] = i
+      })
+      this.$axios.post(this.$api.moveGroup, param)
+        .then(res => {
+          this.$message({
+            message: '移动群组成功',
+            type: 'success',
+          });
+        })
+        .catch(err　=> {
+          this.$error('移动群组失败')
+          resetGroupList(evt.oldIndex, evt.newIndex)
+        })
+    },
   },
   beforeCreate() {},
   // 请求axios
@@ -1637,35 +1728,7 @@ export default {
     window.removeEventListener('scroll', this.handleScroll);
   },
   computed: {
-    // lhr: 获取各个群组的最大最小值
-    groupBorder () {
-      let prices = this.groupList.reduce((all, g) => {
-        let p = {}
-        let a = g.list.sort((n, b) => n.discount - b.discount)
-        console.log('a', a)
-        if (a.length > 0) {
-          p.min = a[0].discount
-          p.max = a[a.length - 1].discount
-        } else {
-          p.min = 99999
-          p.max = -1
-        }
-        all.push(p)
-        return all
-      }, [])
-      prices.forEach((p, index) => {
-        if (p.min === 99999) {
-          p.min = prices[index - 1].min
-        }
-      })
-      for (let i = prices.length - 1; i >= 0; i--) {
-        let p = prices[i]
-        if (p.max === -1) {
-          p.max = prices[i + 1].max
-        }
-      }
-      return prices
-    },
+
     // lhr: 判断群组中人群是否可以移动
     crowdMove () {
       let res = []

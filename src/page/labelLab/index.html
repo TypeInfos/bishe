@@ -226,7 +226,7 @@
           </el-table-column>
         </el-table>
       </div>
-      <!-- <draggable v-model="groupList" :options="{group:'groupList'}"> -->
+      <draggable v-model="groupList" :options="{group:'groupList'}" @update="moveGroupListEnd">
       <div v-for="(item,index) in groupList" :key="index" class="groups">
         <div class="groupHeader">
           <i v-if="!item.extend" class="el-icon-plus add" @click="showTable(index)"></i>
@@ -305,7 +305,7 @@
           </div>
         </el-collapse-transition>
       </div>
-      <!-- </draggable> -->
+      </draggable>
     </el-card>
   </div>
   <div class="label-right-empty" v-show="!isSelectGoods">
