@@ -19,10 +19,11 @@ import createPeople from '@/components/createPeople/index';
 import expired from '@/components/expired'
 
 import groupMixins from './mixins/group';
+import errorTipsMixins from './mixins/errorTips'
 
 export default {
   name: 'labelLab',
-  mixins: [groupMixins],
+  mixins: [groupMixins, errorTipsMixins],
   components: {
     datePicker,
     createGroup,
@@ -642,42 +643,79 @@ export default {
       this.premiumDialog = false;
     },
     premiumConfirm() {
+      const changePremium = () => {
+        console.log('change premium')
+        this.$axios.post(this.$api.updateDiscount, param)
+          .then(() => {
+            this.$message({
+              showClose: true,
+              message: '成功修改溢价',
+              type: 'success',
+            });
+            this.premiumLoading = false;
+            this.premiumDialog = false;
+            this.premium = ''
+            this.getCrowdInfo();
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
       this.premiumLoading = true;
       const param = {
         campaignId: this.currentCampaignId,
         crowdIdList: [],
-        discount: this.premium,
+        discount: parseFloat(this.premium),
         adGroupId: this.currentAdGroupId,
         productId: this.currentProductId,
       };
-      let prices = this.groupList.reduce((all, g) => {
-        let p = {}
-        let a = g.list.sort((a, b) => a.discount - b.discount)
-        p.max = a[0].discount
-        p.min = a[a.length - 1].discount
-        all.push(p)
-        return all
-      }, [])
+      let prices = this.groupBorder
+      console.log('prices', prices)
+      let tips = {
+        flag: false,
+        cnt: ''
+      }
       for (let i = 0; i < this.groupList.length; i++) {
         const tableS = `table${i}`;
         const selection = this.$refs[tableS][0].selection;
         if (selection.length !== 0) {
+          if (!tips.flag && i > 0) {
+            let min = prices[i - 1].min
+            if (min < param.discount) {
+              tips.flag = true
+              tips.cnt = '当前标签溢价高于上层人群，将会导致这些标签中的部分人群失效，<a>了解详情</a>，是否确定修改溢价'
+            }
+          } else if (!tips.flag && i < this.groupList.length - 1) {
+            let max = prices[i + 1].max
+            if (max > param.discount) {
+              tips.flag = true
+              tips.cnt = '当前标签溢价低于下层人群，将会导致这些标签中的部分人群失效，<a>了解详情</a>，是否确定修改溢价'
+            }
+          }
           for (const v of selection) {
             param.crowdIdList.push(v.crowdId);
           }
         }
       }
-      this.$axios.post(this.$api.updateDiscount, param)
-        .then(() => {
-          this.$message({
-            showClose: true,
-            message: '成功修改溢价',
-            type: 'success',
-          });
+      if (tips.flag) {
+        this.$confirm(tips.cnt, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          closeOnClickModal: false,
+          type: 'warning',
+          dangerouslyUseHTMLString: true
+        }).then(() => {
+          console.log('click confirm')
+          changePremium()
+        }).catch((err) => {
+          console.log('er', err)
           this.premiumLoading = false;
           this.premiumDialog = false;
-          this.getCrowdInfo();
-        });
+          this.premium = ''
+        })
+      } else {
+        changePremium()
+      }
     },
     betweenRange() {
       if (isNaN(this.premium) || this.premium > 300 || this.premium < 5) {
@@ -1026,7 +1064,11 @@ export default {
       // this.modifyGroupName = this.groupList[index].groupName;
     },
     // 人群移动
-    moveCrowd(refValue) {
+    moveCrowd(refValue, index) {
+      if (!this.crowdMove.includes(index)) {
+        this.showGroupErr('请先选中人群，再进行操作')
+        return
+      }
       this.peopleMoveTableRef = refValue;
       this.peopleMoveDialog = true;
     },
@@ -1325,7 +1367,27 @@ export default {
                 }, res.data[i]);
               }
               this.initGroupLoading = false;
-              this.groupList = res.data;
+              this.groupList = res.data
+              this.groupList = this.groupList.map((g, i) => {
+                console.log(g, i)
+                g.list.forEach(c => {
+                  c.warning = 0
+                  if (i > 0) {
+                    let min = this.groupBorder[i - 1].min
+                    console.log('比较上层', min, c.discount)
+                    if (min < c.discount) {
+                      c.warning = `当前人群溢价比上一层级的最低溢价高，会导致该人群失效，请及时进行调整`
+                    }
+                  } else if (i < this.groupList.length - 1) {
+                    console.log('比较下层', max, c.discount)
+                    let max = this.groupBorder[i + 1].max
+                    if (max > c.discount) {
+                      c.warning = `当前人群溢价比下一层级的最高溢价低，会导致该人群失效，请及时进行调整`
+                    }
+                  }
+                })
+                return g
+              })
               // hr: 绑定事件
               this.initTableScroll();
               this.trapezoid();
@@ -1566,6 +1628,35 @@ export default {
     window.removeEventListener('scroll', this.handleScroll);
   },
   computed: {
+    // lhr: 获取各个群组的最大最小值
+    groupBorder () {
+      let prices = this.groupList.reduce((all, g) => {
+        let p = {}
+        let a = g.list.sort((n, b) => n.discount - b.discount)
+        console.log('a', a)
+        if (a.length > 0) {
+          p.min = a[0].discount
+          p.max = a[a.length - 1].discount
+        } else {
+          p.min = 99999
+          p.max = -1
+        }
+        all.push(p)
+        return all
+      }, [])
+      prices.forEach((p, index) => {
+        if (p.min === 99999) {
+          p.min = prices[index - 1].min
+        }
+      })
+      for (let i = prices.length - 1; i >= 0; i--) {
+        let p = prices[i]
+        if (p.max === -1) {
+          p.max = prices[i + 1].max
+        }
+      }
+      return prices
+    },
     // lhr: 判断群组中人群是否可以移动
     crowdMove () {
       let res = []

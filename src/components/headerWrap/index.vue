@@ -10,7 +10,7 @@ export default {
   name: 'Home',
   data() {
     return {
-      activeIndex: 1,
+      activeIndex: '1',
       name: '',
     };
   },
@@ -39,34 +39,27 @@ export default {
     logoClick() {
       // 开发阶段先定义为刷新当前页面，上线后定位到首页。
       this.$router.push('/rootRadar');
-      // location.reload();
     },
     handleSelect(key) {
       this.activeIndex = key
       switch (key) {
         case '1':
           this.$router.push('/funcView');
-          // location.reload();
           break;
         case '2':
           this.$router.push('/rootRadar');
-          // location.reload();
           break;
         case '3':
           this.$router.push('/labelLab');
-          // location.reload();
           break;
         case '4':
           this.$router.push('/wisdomSearch');
-          // location.reload();
           break;
         case '5':
           this.$router.push('/buy1');
-          // location.reload();
           break;
         case '6':
           this.$router.push('/download');
-          // location.reload();
           break;
         default:
           break;
