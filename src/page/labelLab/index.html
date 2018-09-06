@@ -104,7 +104,7 @@
     <el-card class="box-card mt20 groupAnalyze" v-loading="groupAnalyzeLoading" shadow="hover">
       <div slot="header" class="group-head">
         <span class="headerContent">群组详细分析及管理</span>
-        <span class="error-tip" v-if="groupErr.show">请先选中人群，再进行操作</span>
+        <span class="error-tip" v-if="groupErr.show">{{ groupErr.content }}</span>
         <div class="showIndex">
           <el-popover popper-class="mySelectIndex" :value="groupAnalyzePopStatus" @hide="hide" @show="show" :visible-arrow=false placement="bottom"
             width="500" trigger="click">

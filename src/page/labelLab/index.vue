@@ -866,6 +866,10 @@ export default {
       this.createGroupDialog = false;
     },
     createGroupBtn() {
+      if (this.groupList.length >= 8) {
+        this.showGroupErr('最多只能创建8个群组')
+        return
+      }
       this.createGroupDialog = true;
     },
     btnCreateCancel() {
@@ -1376,13 +1380,13 @@ export default {
                     let min = this.groupBorder[i - 1].min
                     console.log('比较上层', min, c.discount)
                     if (min < c.discount) {
-                      c.warning = `当前人群溢价比上一层级的最低溢价高，会导致该人群失效，请及时进行调整`
+                      c.warning = '当前人群溢价比上一层级的最低溢价高，会导致该人群失效，请及时进行调整'
                     }
                   } else if (i < this.groupList.length - 1) {
                     console.log('比较下层', max, c.discount)
                     let max = this.groupBorder[i + 1].max
                     if (max > c.discount) {
-                      c.warning = `当前人群溢价比下一层级的最高溢价低，会导致该人群失效，请及时进行调整`
+                      c.warning = '当前人群溢价比下一层级的最高溢价低，会导致该人群失效，请及时进行调整'
                     }
                   }
                 })
