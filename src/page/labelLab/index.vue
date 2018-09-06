@@ -868,14 +868,11 @@ export default {
     },
     // 创建群组按钮事件
     createGroupBtn() {
-      if (this.groupList.length < 8) {
-        this.createGroupDialog = true;
-      } else {
-        this.$message({
-          type: 'warning',
-          message: '群组最多创建8个!',
-        });
+      if (this.groupList.length >= 8) {
+        this.showGroupErr('最多只能创建8个群组')
+        return
       }
+      this.createGroupDialog = true;
     },
     btnCreateCancel() {
       this.createGroupDialog = false;
