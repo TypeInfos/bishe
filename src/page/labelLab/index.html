@@ -46,14 +46,14 @@
             </div>
           </div>
           <h3>{{tagScore}}%</h3>
-          <div style="display:flex;">
+          <div style="display:flex;font-size: 13px;">
             <el-popover
               placement="top-start"
               width="200"
               trigger="hover"
               :visible-arrow="false"
               >
-              <div>标签化程度过低，不利于精准人群标签的投放，查看<a href="www.baidu.com">优化教程</a></div>
+              <div>标签化程度过低，不利于精准人群标签的投放，查看<a :href="tagCourseLink" target="_blank" style="color: blue;">优化教程</a></div>
               <img
                 slot="reference"
                 src="../../assets/labelLab/question-circle.png"
@@ -71,13 +71,29 @@
             </div>
           </div>
           <h3>{{tagScore}}%</h3>
-          <p>标签化程度中等，请进行优化
-              <img
-              style="display:inline-blockl;position: absolute;"
-              src="../../assets/labelLab/question-circle.png"
-              width="18px"
-              height="18px;">
-          </p>
+          <!-- <p>标签化程度中等，请进行优化</p> -->
+          <div style="display:flex;font-size: 13px;">
+              <el-popover
+                placement="top-start"
+                width="200"
+                trigger="hover"
+                :visible-arrow="false"
+                >
+                <div>标签化程度过低，不利于精准人群标签的投放，查看
+                  <a
+                    :href="tagCourseLink"
+                    target="_blank"
+                    style="color: blue;">优化教程
+                  </a>
+                </div>
+                <img
+                  slot="reference"
+                  src="../../assets/labelLab/question-circle.png"
+                  width="18px"
+                  height="18px;">
+              </el-popover>
+              标签化程度中等，请进行优化
+          </div>
         </div>
         <div v-else class="labelLevel">
           <p>标签化程度</p>
@@ -87,7 +103,23 @@
             </div>
           </div>
           <h3>{{tagScore}}%</h3>
-          <p>标签化程度不错，请再接再厉哦~</p>
+          <!-- <p>标签化程度不错，请再接再厉哦~</p> -->
+          <div style="display:flex;font-size: 13px;">
+              <el-popover
+                placement="top-start"
+                width="200"
+                trigger="hover"
+                :visible-arrow="false"
+                >
+                <div>标签化程度过低，不利于精准人群标签的投放，查看<a :href="tagCourseLink" target="_blank" style="color: blue;">优化教程</a></div>
+                <img
+                  slot="reference"
+                  src="../../assets/labelLab/question-circle.png"
+                  width="18px"
+                  height="18px;">
+              </el-popover>
+              标签化程度不错，请再接再厉哦~
+          </div>
         </div>
         <div class="pyramid">
           <div class="tri1"></div>

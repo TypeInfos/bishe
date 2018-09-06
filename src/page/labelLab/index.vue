@@ -343,6 +343,7 @@ export default {
       startLoadingTimer: null, // 加载的进度 setInterval
       startLoadingnumber: 0, // 进度百分比
       startloadingComplete: false, // 加载进度是否完成
+      tagCourseLink: 'http://www.baidu.com', // 标签化程度较低优化教程地址
     };
   },
   methods: {
@@ -865,8 +866,16 @@ export default {
     closeCreateModal() {
       this.createGroupDialog = false;
     },
+    // 创建群组按钮事件
     createGroupBtn() {
-      this.createGroupDialog = true;
+      if (this.groupList.length < 8) {
+        this.createGroupDialog = true;
+      } else {
+        this.$message({
+          type: 'warning',
+          message: '群组最多创建8个!',
+        });
+      }
     },
     btnCreateCancel() {
       this.createGroupDialog = false;
@@ -888,7 +897,8 @@ export default {
         });
     },
     btnCreateConfirm() {
-      this.createGroupLoading = true;
+      this.premiumLoading = true;
+      // this.createGroupLoading = true;
       this.$axios.post(this.$api.addGroup, {
         groupName: this.createGroupName,
         adGroupId: this.currentAdGroupId,
@@ -1376,13 +1386,13 @@ export default {
                     let min = this.groupBorder[i - 1].min
                     console.log('比较上层', min, c.discount)
                     if (min < c.discount) {
-                      c.warning = `当前人群溢价比上一层级的最低溢价高，会导致该人群失效，请及时进行调整`
+                      c.warning = '当前人群溢价比上一层级的最低溢价高，会导致该人群失效，请及时进行调整'
                     }
                   } else if (i < this.groupList.length - 1) {
                     console.log('比较下层', max, c.discount)
                     let max = this.groupBorder[i + 1].max
                     if (max > c.discount) {
-                      c.warning = `当前人群溢价比下一层级的最高溢价低，会导致该人群失效，请及时进行调整`
+                      c.warning = '当前人群溢价比下一层级的最高溢价低，会导致该人群失效，请及时进行调整'
                     }
                   }
                 })
