@@ -46,7 +46,22 @@
             </div>
           </div>
           <h3>{{tagScore}}%</h3>
-          <p>标签化程度较低，将会影响您的推广质量</p>
+          <div style="display:flex;">
+            <el-popover
+              placement="top-start"
+              width="200"
+              trigger="hover"
+              :visible-arrow="false"
+              >
+              <div>标签化程度过低，不利于精准人群标签的投放，查看<a href="www.baidu.com">优化教程</a></div>
+              <img
+                slot="reference"
+                src="../../assets/labelLab/question-circle.png"
+                width="18px"
+                height="18px;">
+            </el-popover>
+            标签化程度较低，将会影响您的推广质量
+          </div>
         </div>
         <div v-else-if="tagScore > 30 && tagScore <= 70" class="labelLevel">
           <p>标签化程度</p>
@@ -56,7 +71,13 @@
             </div>
           </div>
           <h3>{{tagScore}}%</h3>
-          <p>标签化程度中等，请进行优化</p>
+          <p>标签化程度中等，请进行优化
+              <img
+              style="display:inline-blockl;position: absolute;"
+              src="../../assets/labelLab/question-circle.png"
+              width="18px"
+              height="18px;">
+          </p>
         </div>
         <div v-else class="labelLevel">
           <p>标签化程度</p>

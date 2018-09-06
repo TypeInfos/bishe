@@ -40,12 +40,12 @@
 export default {
   data() {
     return {
-      size: '',
-      version: '',
-      explore: '',
-      updateTime: '',
-      downloadLink: '',
-      mvLink: '',
+      size: '11.75MB',
+      version: '0.2.2',
+      explore: 'Chrome 65及以上',
+      updateTime: '2018-09-05',
+      downloadLink: 'https://static.doushudata.com/doushu.zip',
+      mvLink: 'https://v.doushudata.com/video.html',
     };
   },
   methods: {
@@ -74,17 +74,29 @@ export default {
       }).catch((err) => {
         console.log(err);
       })
+    },
+    // 动态修改全局el-main的padding
+    // 销毁之前进行还原
+    changeElMainClass() {
+      document.querySelector('.el-main').style.padding = '0px';
+    },
+    restoreElMainClass() {
+      document.querySelector('.el-main').style.padding = '10px 100px';
     }
   },
   mounted() {
     this.getInfo();
+    this.changeElMainClass();
+  },
+  beforeDestroy() {
+    this.restoreElMainClass();
   }
 }
 </script>
 <style lang="less">
-.el-main{
-  padding: 0px;
-}
+// .el-main{
+//   padding: 0px;
+// }
 .g-download{
   display: flex;
   flex-wrap: wrap;
