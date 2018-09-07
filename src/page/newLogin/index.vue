@@ -45,57 +45,67 @@ export default {
     // 易数账号登录
     ysLogin() {
       let data = '';
-      this.loginLoading = true;
-      //   this.$axios.post(this.$api.checkProduct, {
-      //       phone: this.vipName
-      //     })
-      //     .then(res => {
-      // if (res.data) {
-      this.$axios.post(this.$api.login, {
-        loginName: this.vipName,
-        password: this.vipPwd,
-      }).then((res) => {
-        this.$message({
-          showClose: true,
-          message: '抖数账号登录成功',
-          type: 'success',
-        });
-        this.token = res.data;
-        console.log(`token${this.token}`)
-        this.$axios.get(this.$api.info).then((resp) => {
-          this.loginLoading = false;
-          this.bindTaobaoName = resp.data.name;
-          try {
-            chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
-              type: 'getShopInfo',
-            },
-            (response) => {
-              console.log(response);
-              if (response.code !== 400) {
-                data = response.shopInfo;
+      try {
+        chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
+          type: 'version'
+        }, response => {
+          console.log(response)
+          if (!response) {
+            this.$emit('versionErr')
+            return
+          }
+          this.loginLoading = true;
+          this.$axios.post(this.$api.login, {
+            loginName: this.vipName,
+            password: this.vipPwd,
+          }).then((res) => {
+            this.$message({
+              showClose: true,
+              message: '抖数账号登录成功',
+              type: 'success',
+            });
+            this.token = res.data;
+            console.log(`token${this.token}`)
+            this.$axios.get(this.$api.info).then((resp) => {
+              this.loginLoading = false;
+              this.bindTaobaoName = resp.data.name;
+              try {
+                chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
+                  type: 'getShopInfo',
+                },
+                (response) => {
+                  console.log(response);
+                  if (response.code !== 400) {
+                    data = response.shopInfo;
+                  }
+                })
+              } catch (error) {
+                this.$alert('请安装插件', '提示');
               }
+              if (data === '{}' || data === '') {
+                this.isLoginTaobao = false;
+                this.active = 1;
+              } else {
+                this.isLoginTaobao = true;
+                this.taobaoName = data.runAsShopTitle;
+                if (this.taobaoName !== this.bindTaobaoName) {
+                  this.active = 3;
+                } else {
+                  this.active = 2;
+                }
+              }
+            }).catch(error => {
+              console.log('get Info err', error)
             })
-          } catch (error) {
-            this.$alert('请安装插件', '提示');
-          }
-          if (data === '{}' || data === '') {
-            this.isLoginTaobao = false;
-            this.active = 1;
-          } else {
-            this.isLoginTaobao = true;
-            this.taobaoName = data.runAsShopTitle;
-            if (this.taobaoName !== this.bindTaobaoName) {
-              this.active = 3;
-            } else {
-              this.active = 2;
-            }
-          }
-        }).catch(error => {
-          console.log('get Info err', error)
+          }).catch(err => {
+            this.loginLoading = false;
+          });
         })
-      }).catch(err => {
-        this.loginLoading = false;
-      });
+      } catch (err) {
+        console.log('获取版本失败', err)
+      }
+
+
       // gjfAdd
       if (this.rememberPwd == true) {
         this.$cookies.set('vipName', this.vipName, 60 * 60 * 24 * 30);
