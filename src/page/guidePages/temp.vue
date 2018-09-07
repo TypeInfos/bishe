@@ -12,10 +12,10 @@ export default {
       let type = parseInt(this.$route.query.type, 10)
       switch (type) {
         case -1:
-          str = '您订购的产品已过期！请重新'
+          str = '您尚未订购该产品或订购的产品已到期，请先前往'
           break
         case -2:
-          str = '您未订购该产品！请重新'
+          str = '您尚未订购该产品或订购的产品已到期，请先前往'
           break
         default:
           str = ''

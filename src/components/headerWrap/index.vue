@@ -61,6 +61,9 @@ export default {
         case '6':
           this.$router.push('/download');
           break;
+        case '7':
+          this.$router.push('/help');
+          break;
         default:
           break;
       }
