@@ -22,6 +22,8 @@
       span.course-center Chrome浏览器插件-安装教程
       .course-block
         div.course-text
+          span(style="font-size:14px;color:red;padding-bottom:5px;line-height:19px;") (如果您是升级插件，请先将旧版本的插件先删除，再按照如下步骤进行重新安装，即可完成升级)
+          br
           span(style="font-weight:bolder;") 第一步
           span ：按照图示1、2、3的步骤进行操作，打开chrome浏览器扩展程序
         img(src="../../assets/download/download_step_1.jpg" width="100%" height="60%")

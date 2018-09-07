@@ -1,10 +1,10 @@
 // 由于用的modules模式，所以不同modules state命名可以一样，但是getters中的名称不能一样
 const id = {
   lhr: 'lemdejnloabdfhcinbhpedggonhdafhm',
-  kzp: 'kagajpfmnpdpboplehmphbppflfmihnp',
+  kzp: 'hnchopnjjannphjdengkbapneapdoadh',
   test: 'cpnmealmpgcapggbgjgfahpiifbbooef',
   online: 'lnbdcilfaojoldgckojoidnafpagkjbn',
-  testVersion: 'lajbffnlgcnmlkkbbogpkpgjkfmpmjbf'
+  testVersion: 'hnchopnjjannphjdengkbapneapdoadh'
 };
 const state = {
   isLogin: false,
