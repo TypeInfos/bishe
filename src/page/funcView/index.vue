@@ -42,22 +42,11 @@ export default {
       this.$axios.post(this.$api.checkOrder, {
         pid: this.pid,
       }).then((res) => {
-        console.log(res);
         this.day = res.data;
-        if (res.data <= 7 && res.data >= 0) {
-          // this.showCheckProduct = true;
-        } else if (res.data === -1) {
+        if (res.data === -1) {
           this.$router.push({ name: 'GuidePage', query: { type: -1, name: item } })
-          // this.$message({
-          //   message: '您订购的产品已过期！',
-          //   type: 'warning',
-          // });
         } else if (res.data === -2) {
           this.$router.push({ name: 'GuidePage', query: { type: -2, name: item } })
-          // this.$message({
-          //   message: '您未订购该产品！',
-          //   type: 'warning',
-          // });
         } else {
           switch (item) {
             case 'rootRadar':
