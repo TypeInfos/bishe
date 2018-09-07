@@ -5,14 +5,15 @@
         <headerWrap></headerWrap>
       </el-header>
       <el-main>
-        <router-view/>
+        <router-view @versionErr="versionErr"/>
       </el-main>
       <el-footer height="80" style="padding:0;">
         <newFooter></newFooter>
       </el-footer>
     </el-container>
-  <customerService></customerService>
-  <backToTop></backToTop>
+    <customerService></customerService>
+    <backToTop></backToTop>
+    <user-tip :userTipShow="userTipShow" @close="userTipShow = false"></user-tip>
   </div>
 </template>
 
@@ -21,6 +22,7 @@ import headerWrap from './components/headerWrap';
 import newFooter from './components/finalFooter';
 import customerService from './components/customerService';
 import backToTop from './components/backToTop';
+import userTip from './components/userTips'
 
 export default {
   name: 'App',
@@ -29,7 +31,22 @@ export default {
     headerWrap,
     customerService,
     backToTop,
+    userTip
   },
+  mounted () {
+    console.log(navigator.plugins)
+  },
+  data () {
+    return {
+      userTipShow: false
+    }
+  },
+  methods: {
+    versionErr () {
+      console.log('versionErr')
+      this.userTipShow = true;
+    }
+  }
 };
 </script>
 
