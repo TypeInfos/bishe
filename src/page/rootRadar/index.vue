@@ -323,7 +323,8 @@ export default {
         pid: 1, // pid为1是词根雷达
       }).then((res) => {
         this.expiredDays = res.data
-        if (res.data >= 0) {
+        console.log(res.data)
+        if (res.data > 0) {
           this.getShopId();
         } else {
           this.$message({

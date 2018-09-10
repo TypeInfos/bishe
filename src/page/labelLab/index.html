@@ -265,7 +265,7 @@
                 <template slot-scope="scope">
                   <div class="crowdName">
                     <div class="tooltip-box">
-                      <el-tooltip :content="scope.row.warning" :visible-arrow=false placement="bottom" effect="light">
+                      <el-tooltip :content="scope.row.warning | crowdTip" :visible-arrow=false placement="bottom" effect="light">
                         <i v-if="scope.row.warning" class="iconfont warmFlag">&#xe655;</i>
                       </el-tooltip>
                       <el-tooltip content="暂停推广" :visible-arrow=false placement="bottom" effect="light">
@@ -445,4 +445,5 @@
   </el-dialog>
   <createPeople :createPeopleDialog="createPeopleDialog" :firstCat="currentFirstCat" :campaignId="currentCampaignId" :adGroupId="currentAdGroupId"
     :groupId="currentCreateGroupId" @closeDialog="closeCreatePeopleDialog" @refreshData="refreshData"></createPeople>
+  <loading :startLoadingComplete="isGlobalLoading" ref="loading"></loading>
 </div>

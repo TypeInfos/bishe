@@ -53,7 +53,7 @@ export default {
               this.$router.push('/rootRadar');
               break;
             case 'labelLab':
-              this.$router.push('/labelLab');
+              this.$router.push('/wisdomSearch');
               break;
             default:
               break;

@@ -17,7 +17,7 @@ import peopleMove from '@/components/peopleMove/index';
 import lineChart from '@/components/newLineChart/index';
 import createPeople from '@/components/createPeople/index';
 import expired from '@/components/expired'
-
+import Loading from '@/components/Loading'
 import groupMixins from './mixins/group';
 import errorTipsMixins from './mixins/errorTips'
 
@@ -35,6 +35,7 @@ export default {
     createPeople,
     draggable,
     expired,
+    Loading
   },
   data() {
     return {
@@ -614,6 +615,7 @@ export default {
       this.peopleMoveDialog = false;
     },
     peopleMoveConfirm() {
+      // this.initDiv();
       const param = {
         crowdIdList: [],
         groupId: this.targetGroup,
@@ -623,9 +625,11 @@ export default {
       }
       if (param.crowdIdList.length > 0) {
         this.peopleMoveLoading = false;
+        // this.startloadingComplete = true;
         this.$axios.post(this.$api.moveCrowd, param)
           .then(() => {
             this.peopleMoveLoading = false;
+            // this.startloadingComplete = true;
             this.peopleMoveDialog = false;
             this.$message({
               showClose: true,
@@ -655,6 +659,7 @@ export default {
               type: 'success',
             });
             this.premiumLoading = false;
+            // this.startloadingComplete = true;
             this.premiumDialog = false;
             this.premium = ''
             this.getCrowdInfo();
@@ -664,6 +669,7 @@ export default {
           })
       }
       this.premiumLoading = true;
+      // this.initDiv('溢价');
       const param = {
         campaignId: this.currentCampaignId,
         crowdIdList: [],
@@ -712,6 +718,7 @@ export default {
         }).catch((err) => {
           console.log('er', err)
           this.premiumLoading = false;
+          // this.startloadingComplete = true;
           this.premiumDialog = false;
           this.premium = ''
         })
@@ -737,6 +744,7 @@ export default {
     },
     peopleRateConfirm() {
       this.peopleRateLoading = true;
+      // this.initDiv('人群评级');
       let param = {
         crowdIdList: [],
         level: 0,
@@ -756,6 +764,7 @@ export default {
         .then(() => {
           this.peopleRateDialog = false;
           this.peopleRateLoading = false;
+          // this.startloadingComplete = true;
           this.$message({
             showClose: true,
             message: '修改人群评级成功',
@@ -835,13 +844,15 @@ export default {
     // 修改群组名字 确定按钮
     modifyGroupConfirm() {
       this.modifyGroupLoading = true;
+      // this.initDiv('修改群组名字');
       this.$axios.post(this.$api.updateGroup, {
         groupName: this.modifyGroupName,
         adGroupId: this.currentAdGroupId,
         groupId: this.currentUpdateGroupId,
       }).then(() => {
         this.groupList[this.operatIngIndex].groupName = this.modifyGroupName;
-        this.modifyGroupLoading = false;
+        // this.modifyGroupLoading = false;
+        this.startLoadingTimer = true;
         this.modifyGroupsDialog = false;
       });
     },
@@ -898,6 +909,7 @@ export default {
     btnCreateConfirm() {
       this.groupList = null;
       this.createGroupLoading = true;
+      // this.initDiv('创建群组');
       this.$axios.post(this.$api.addGroup, {
         groupName: this.createGroupName,
         adGroupId: this.currentAdGroupId,
@@ -909,6 +921,7 @@ export default {
         });
         this.createGroupName = '';
         this.createGroupLoading = false;
+        // this.startloadingComplete = true;
         this.createGroupDialog = false;
         // 重新请求数据，重新渲染金字塔
         this.getCrowdInfo();
@@ -955,7 +968,6 @@ export default {
     // 一键创建人群
     oneKey() {
       const param = this.setParams();
-      // this.initDiv();
       const cookieValue = {
         adGroupId: this.currentAdGroupId,
         productId: this.currentProductId,
@@ -981,7 +993,7 @@ export default {
             closeOnClickModal: false,
             type: 'warning',
           }).then(() => {
-            this.initDiv();
+            // this.initDiv('意见创建人群');
             this.groupList = null; // 清空grouplist数据
             this.$axios.post(this.$api.initGroup, {
               adGroupId: this.currentAdGroupId,
@@ -1000,8 +1012,8 @@ export default {
                     }, resp.data[i]);
                   }
                   this.groupList = resp.data;
-                  // this.initGroupLoading = false;
-                  this.startloadingComplete = true;
+                  this.initGroupLoading = false;
+                  // this.startloadingComplete = true;
                   // hr: 在这里 为 groupList添加总和数据 添加事件和绑定
                   this.initTableEvents();
                   this.trapezoid();
@@ -1298,6 +1310,7 @@ export default {
     selectPlan(index) {
       this.currentCampaignId = this.resultPlans[index].campaignId;
       this.loadingPlans = true;
+      // this.initDiv('选择计划');
       this.$axios.post(this.$api.getCampItems, {
         campaignId: this.currentCampaignId,
       }).then((res) => {
@@ -1306,6 +1319,7 @@ export default {
         this.planOfGoodsList = res.data;
         this.resultGoods = res.data;
         this.loadingPlans = false;
+        // this.startloadingComplete = true;
       })
     },
     // 左侧商品 选择
@@ -1358,8 +1372,9 @@ export default {
     // 获取群组list
     getCrowdInfo() {
       const param = this.setParams();
-      this.initGroupLoadingText = '加载中，请稍后';
+      // this.initGroupLoadingText = '加载中，请稍后';
       this.initGroupLoading = true;
+      // this.initDiv('');
       this.isSelectGoods = true;
       const cookieValue = {
         adGroupId: this.currentAdGroupId,
@@ -1383,6 +1398,7 @@ export default {
                 }, res.data[i]);
               }
               this.initGroupLoading = false;
+              // this.startloadingComplete = true;
               this.groupList = res.data
               this.groupList = this.groupList.map((g, i) => {
                 console.log(g, i)
@@ -1424,11 +1440,11 @@ export default {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
       const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft;
       const offsetTop = leftEle.offsetTop;
-      let expired = document.querySelector('.expired-wrapper');
-      if (scrollTop > 50) {
-        expired.style.top = '0px'
-      } else {
-        expired.style.top = `${50 - scrollTop}px`
+      let expiredEl = document.querySelector('.expired-wrapper');
+      if (expiredEl && scrollTop > 50) {
+        expiredEl.style.top = '0px'
+      } else if (expiredEl && scrollTop <= 50) {
+        expiredEl.style.top = `${50 - scrollTop}px`
       }
       if (this.asideFixed === false) {
         if (scrollTop > offsetTop) {
@@ -1505,12 +1521,14 @@ export default {
        */
     getPlans() {
       this.loadingPlans = true;
+      // this.initDiv();
       this.$axios.post(this.$api.getCampaign)
         .then((res) => {
           this.allPlans = res.data;
           this.resultPlans = res.data;
           this.filterInputPlans = res.data;
           this.loadingPlans = false;
+          // this.startloadingComplete = true;
         });
     },
     trapezoid() {
@@ -1597,64 +1615,9 @@ export default {
       }
       return prices
     },
-    // 加载框 百分比
+    // 加载框 出现！
     initDiv() {
-      this.startLoadingnumber = 0;
-      this.startLoading = this.$loading({
-        lock: true,
-        text: 'Loading',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)',
-        customClass: 'startLoading',
-      });
-      document.querySelector('.startLoading').innerHTML = `<div class="startLoadingContainer">
-                                                                      <h2>温馨提示</h2>
-                                                                      <div class="anim">
-                                                                             <div class="spinner">
-                                                                    <div class="spinner-container container1">
-                                                                      <div class="circle1"></div>
-                                                                      <div class="circle2"></div>
-                                                                      <div class="circle3"></div>
-                                                                      <div class="circle4"></div>
-                                                                    </div>
-                                                                    <div class="spinner-container container2">
-                                                                      <div class="circle1"></div>
-                                                                      <div class="circle2"></div>
-                                                                      <div class="circle3"></div>
-                                                                      <div class="circle4"></div>
-                                                                    </div>
-                                                                    <!-- container3为了让正方形的四个球效果更好点，相当于延长动画的效果0.1秒 -->
-                                                                    <div class="spinner-container container3">
-                                                                      <div class="circle1"></div>
-                                                                      <div class="circle2"></div>
-                                                                      <div class="circle3"></div>
-                                                                      <div class="circle4"></div>
-                                                                    </div>
-                                                                  </div>
-                                                                  <p>数据正在加载中</p>
-                                                                      </div>
-                                                                  <p class="bottomP">进度<span id="startLoadingNumber"></span>%</p>
-                                                                  <p>请耐心等待~</p>
-                                                                  </div>`
-      let loadingDom = document.getElementById('startLoadingNumber');
-      this.startLoadingTimer = setInterval(() => {
-        loadingDom.innerText = this.startLoadingnumber;
-        console.log(this.startLoadingnumber);
-        if (this.startloadingComplete) {
-          clearInterval(this.startLoadingTimer)
-          this.startLoadingnumber = 100;
-          this.startLoading.close();
-          this.startloadingComplete = false;
-        }
-        if (parseFloat(this.startLoadingnumber) < 90) {
-          this.startLoadingnumber = parseFloat(parseFloat(this.startLoadingnumber) + (Math.random() * 1.5)).toFixed(2)
-        } else {
-          this.startLoadingnumber = parseFloat(parseFloat(this.startLoadingnumber) + (Math.random() * 0.4)).toFixed(2)
-          if (this.startLoadingnumber >= 99.6) {
-            clearInterval(this.startLoadingTimer)
-          }
-        }
-      }, 500)
+      this.$refs.loading.showLoading();
     },
     moveGroupListEnd(evt) {
       const resetGroupList = (oldIndex, newIndex) => {
@@ -1710,6 +1673,10 @@ export default {
           resetGroupList(evt.oldIndex, evt.newIndex)
         })
     },
+    // 加载框 加载完成时 隐形！
+    completeLoading(res) {
+      this.startloadingComplete = res;
+    }
   },
   beforeCreate() {},
   // 请求axios
@@ -1739,6 +1706,13 @@ export default {
       })
       console.log(res)
       return res
+    },
+    // kzp: 是否需要loading
+    isGlobalLoading () {
+      // console.log("--------isGlobalLoading-------",!(this.initGroupLoading || this.peopleMoveLoading || this.premiumLoading ||
+      // this.peopleRateLoading || this.createGroupLoading || this.loadingPlans));
+      return !(this.initGroupLoading || this.peopleMoveLoading || this.premiumLoading ||
+      this.peopleRateLoading || this.createGroupLoading || this.loadingPlans)
     },
     currentRptkey() {
       switch (this.source) {
@@ -1862,5 +1836,10 @@ export default {
     //   this.tableCellWidth = cellWidth > 150 ? cellWidth : 150;
     // },
   },
+  filters: {
+    crowdTip (warning) {
+      return warning || ''
+    }
+  }
 };
 </script>
