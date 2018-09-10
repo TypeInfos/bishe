@@ -39,7 +39,7 @@
             </div>
           </div>
         </el-dialog>
-      
+
         <div class="refresh">
           <!-- <i class="iconfontFuncView refreshButton" ref="myRefresh" @click="refreshGoodsData">&#xe60a;</i> -->
           <img src="../../assets/rooterRadar/reload.png" width="15px" height="15px" ref="myRefresh" @click="refreshGoodsData">
@@ -63,7 +63,7 @@
           </div>
           <div class="limit">
             <span class="lastNum">您还剩余
-              <em> 20个 </em>额度～</span>
+              <em> {{ 20 - filterFocusOn.length }}个 </em>额度～</span>
           </div>
         </div>
   </div>

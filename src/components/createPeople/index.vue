@@ -164,6 +164,7 @@ export default {
         (response) => {
         // console.log(response);
           if (response.code === 200) {
+            this.crowdId = []
             this.crowdId.push(response.crowdId);
             this.loading = true;
             this.$axios.post(this.$api.createCrowd, {

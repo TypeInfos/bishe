@@ -1,0 +1,29 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<!--
+2013-9-30: Created.
+-->
+<svg>
+<metadata>
+Created by iconfont
+</metadata>
+<defs>
+
+<font id="iconfont" horiz-adv-x="1024" >
+  <font-face
+    font-family="iconfont"
+    font-weight="500"
+    font-stretch="normal"
+    units-per-em="1024"
+    ascent="896"
+    descent="-128"
+  />
+    <missing-glyph />
+    
+    <glyph glyph-name="guanbi" unicode="&#58911;" d="M512-128a512 512 0 1 0 512 512 512.585143 512.585143 0 0 0-512-512z m0 984.649143A472.649143 472.649143 0 1 1 984.502857 384 472.978286 472.978286 0 0 1 512 856.649143zM347.062857 186.038857l-32.914286 32.914286 362.788572 362.898286 32.914286-32.914286z m362.788572 32.914286l-32.914286-32.914286-362.788572 362.934857 32.914286 32.914286z"  horiz-adv-x="1024" />
+
+    
+
+
+  </font>
+</defs></svg>

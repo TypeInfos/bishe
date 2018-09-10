@@ -67,18 +67,16 @@
   }
   width: 100%;
   .containerContent{
+    width: calc(100% - 255px);
+    float: right;
+    margin-left: 25px;
+    min-height: 1000px;
+    min-width: 545px;
     .maxH3{
       text-align: center;
       color: rgb(194, 194, 194);
       font-weight: 400;
     }
-
-    width: calc(100% - 255px);
-    float: right;
-    //border-radius: 5px;
-    margin-left: 25px;
-    min-height: 1000px;
-    min-width: 545px;
     .card{
       border-radius: 4px;
       border: 1px solid #ebeef5;
@@ -432,6 +430,18 @@
 
       }
     }
+    .loading-alert {
+      background: #ff8343;
+      // transform: translateY(-10px);
+      color: #fff;
+      padding: 4px 20px;
+      font-size: 12px;
+      text-align: center;
+      border-radius: 4px;
+      .icon-guanbi {
+        margin-right: 10px;
+      }
+    }
   }
   .aside{
     float: right;
@@ -452,10 +462,10 @@
    padding-left: 30px;
  }
  .deleteWordButton{
-   position: absolute;
-   right: 20px;
-   bottom: 20px;
- }
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+  }
 }
 
 
