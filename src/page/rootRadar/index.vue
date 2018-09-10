@@ -385,6 +385,7 @@ export default {
         },
         response => {
           try {
+            console.log(response)
             if (response.code === 200) {
               this.currentShopid = response.currentShopid
               this.$axios.post(this.$api.checkBind, {
@@ -405,6 +406,7 @@ export default {
               window.location.reload();
             }
           } catch (error) {
+            console.log(error)
             alert('插件ID与前端不匹配')
             this.$router.push('/login');
             window.location.reload();

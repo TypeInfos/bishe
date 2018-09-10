@@ -1,6 +1,6 @@
 // 由于用的modules模式，所以不同modules state命名可以一样，但是getters中的名称不能一样
 const id = {
-  lhr: 'lemdejnloabdfhcinbhpedggonhdafhm',
+  lhr: 'lajbffnlgcnmlkkbbogpkpgjkfmpmjbf',
   kzp: 'kagajpfmnpdpboplehmphbppflfmihnp',
   test: 'cpnmealmpgcapggbgjgfahpiifbbooef',
   online: 'lnbdcilfaojoldgckojoidnafpagkjbn',
@@ -9,7 +9,7 @@ const id = {
 const state = {
   isLogin: false,
   bindTaobaoName: '',
-  editorExtensionId: id.testVersion, // 插件ID
+  editorExtensionId: id.lhr, // 插件ID
 };
 // mutations
 const mutations = {

@@ -63,7 +63,7 @@
         <i v-if="item.selectFlag" class="el-icon-success img-select"></i>
       </div>
     </div>
-    <p>可选{{selectSurplus}}/20</p>
+    <p>可选{{selectSurplus}}/ {{ 20 - focusOn.length }}</p>
     <div class="block">
       <el-pagination background  :page-size=16 :current-page.sync="firstFocusGoodsCurrentPage" layout="prev, pager, next" :total="firstFocusGoodsTotalPage">
       </el-pagination>
