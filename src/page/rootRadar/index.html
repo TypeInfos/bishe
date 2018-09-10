@@ -74,12 +74,17 @@
   </el-dialog>
   <div class="containerContent">
     <div class="content">
-      <el-alert
-        v-if="!allStatusComplete"
+      <!-- <el-alert
+        v-if="!checkGoodsInfoDataLoading"
         title="您的数据正在准备中，请勿关闭浏览器或者退出登录，否则可能导致数据异常~"
         type="warning"
         :closable=false
-        center>
+        show-icon
+        center> -->
+        <div class="loading-alert" v-if="checkGoodsInfoDataLoading">
+          <i class="ds-iconfont icon-guanbi"></i>
+          <span class="title">您的数据正在准备中，请勿关闭浏览器或者退出登录，否则可能导致数据异常~</span>
+        </div>
       </el-alert>
     <div class="card">
         <div class="wrap-title">
