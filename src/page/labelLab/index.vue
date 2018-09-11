@@ -552,6 +552,7 @@ export default {
           axisTick: {
             show: false,
           },
+          show: xAxisData.length > 1
         });
       });
       // series
@@ -567,9 +568,7 @@ export default {
           type: 'line',
           yAxisIndex,
           data: item.box,
-          // label:{
-          //   show:true,
-          // }
+          showSymbol: xAxisData.length > 1
         });
       });
       const wrap = {
