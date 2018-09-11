@@ -95,8 +95,8 @@ export default new Router({
     {
       path: '/help',
       name: 'Help',
-      component: wisdomSearch,
-      // component: () => import('@/page/help'),
+      // component: wisdomSearch,
+      component: () => import('@/page/help'),
     }
   ],
 });

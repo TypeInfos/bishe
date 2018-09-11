@@ -110,6 +110,7 @@ export default {
 ::-webkit-scrollbar-thumb {
     border-radius: 2px;
     background: #b4c8d8;
+    width: 600px;
 }
 
 .help-g{
@@ -212,7 +213,7 @@ export default {
     width:100%;
     height:245px;
     min-width:272px;
-    display:inline-block;
+    // display:block;
     img{
       width: 100%;
       min-height: 95px;
@@ -238,6 +239,14 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+  .el-button.el-button--default{
+    color: rgba(28, 202, 218, 1);
+    background: #ffffff;
+    &:hover{
+      color: #ffffff;
+      background: rgba(28, 202, 218, 1);
+    }
   }
 }
 </style>

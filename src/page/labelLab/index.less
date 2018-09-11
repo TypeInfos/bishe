@@ -1,4 +1,13 @@
 @import url("variable.less");
+::-webkit-scrollbar {
+  width: 10px;
+  height: 20px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background: #b4c8d8;
+  width: 600px;
+}
 .isFixed{
   position:fixed !important;
   top:0 !important;
@@ -144,6 +153,11 @@
     margin-left: 25px;
     min-height: 1000px;
     min-width: 920px;
+    ::-webkit-scrollbar-thumb {
+      border-radius: 2px;
+      background:linear-gradient(to right,transparent 50%,#b4c8d8 50%) ;
+      width: 720px;
+    }
     .wrap-title{
       .el-card__body{
         position: relative;
