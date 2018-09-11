@@ -1538,6 +1538,7 @@ export default {
           this.resultPlans = res.data;
           this.filterInputPlans = res.data;
           this.loadingPlans = false;
+          this.initGroupLoading = false;
           // this.startloadingComplete = true;
         });
     },
