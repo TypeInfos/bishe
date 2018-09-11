@@ -52,3 +52,4 @@ export default {
 
 <style lang="less" src="./assets/common.less"></style>
 <style lang="less" src="./assets/fontcss/iconfont.less"></style>
+<style lang="less" src="./assets/less/dsStyle.less"></style>

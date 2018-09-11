@@ -14,6 +14,7 @@ import showGoodsAside from '@/components/showGoodsList'
 import expired from '@/components/expired'
 import backTop from '../../components/backToTop';
 import tableData from './tableData'
+import keyWord from './components/keyWord'
 
 export default {
   name: 'rootRadar',
@@ -24,6 +25,7 @@ export default {
     tableData,
     guidance,
     expired,
+    keyWord
   },
   computed: {
   },
