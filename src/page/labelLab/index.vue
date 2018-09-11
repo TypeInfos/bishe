@@ -931,10 +931,13 @@ export default {
       this.checkedPeople = [];
       for (let i = 0; i < this.groupList.length; i++) {
         const tableS = `table${i}`;
-        const selection = this.$refs[tableS][0].selection;
-        if (selection.length > 0) {
-          for (const v of selection) {
-            this.checkedPeople.push(v);
+        let table = this.$refs[tableS]
+        if (table && table[0] && table[0].selection) {
+          const selection = table[0].selection
+          if (selection && selection.length > 0) {
+            for (const v of selection) {
+              this.checkedPeople.push(v);
+            }
           }
         }
       }
