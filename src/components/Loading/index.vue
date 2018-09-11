@@ -60,13 +60,13 @@ export default {
       let loadingDom = document.getElementById('startLoadingNumber');
       // this.startLoading.show();
       this.startLoadingTimer = setInterval(() => {
-        console.log("111111");
+        // console.log('111111');
         loadingDom.innerText = this.startLoadingnumber;
-        console.log(this.startLoadingComplete);
+        // console.log(this.startLoadingComplete);
         // console.log(this.startLoadingnumber);
         if (this.startLoadingComplete) {
           clearInterval(this.startLoadingTimer)
-          console.log("清除定时器");
+          // console.log('清除定时器');
           this.startLoadingnumber = 100;
           this.startLoading.close();
           // this.startLoading = null;
@@ -91,12 +91,12 @@ export default {
   },
   watch: {
     startLoadingComplete (value) {
-      console.log("------value-------",value)
+      // console.log("------value-------",value)
       if (!value) {
         this.showLoading()
       }
       return
-    }    
+    }
   }
 }
 </script>

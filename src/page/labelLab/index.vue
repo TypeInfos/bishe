@@ -345,6 +345,7 @@ export default {
       startLoadingnumber: 0, // 进度百分比
       startloadingComplete: false, // 加载进度是否完成
       tagCourseLink: 'http://www.baidu.com', // 标签化程度较低优化教程地址
+      promotionLoading: false,
     };
   },
   methods: {
@@ -852,7 +853,7 @@ export default {
         groupId: this.currentUpdateGroupId,
       }).then(() => {
         this.groupList[this.operatIngIndex].groupName = this.modifyGroupName;
-        // this.modifyGroupLoading = false;
+        this.modifyGroupLoading = false;
         this.startLoadingTimer = true;
         this.modifyGroupsDialog = false;
       });
@@ -995,6 +996,7 @@ export default {
             type: 'warning',
           }).then(() => {
             // this.initDiv('意见创建人群');
+            this.initGroupLoading = true;
             this.groupList = null; // 清空grouplist数据
             this.$axios.post(this.$api.initGroup, {
               adGroupId: this.currentAdGroupId,
@@ -1084,6 +1086,7 @@ export default {
     },
     // 更改群组名称
     updateGroupName(index) {
+      this.modifyGroupName = '';
       this.operatIngIndex = index;
       this.modifyGroupsDialog = true;
       this.currentUpdateGroupId = this.groupList[index].groupId;
@@ -1104,6 +1107,7 @@ export default {
     },
     // 1=> 参与推广 2=> 暂停推广
     promotion(onlineStatus) {
+      this.promotionLoading = true;
       const param = {
         adGroupId: this.currentAdGroupId,
         campaignId: this.currentCampaignId,
@@ -1124,6 +1128,7 @@ export default {
         this.groupList = null;
         this.$axios.post(this.$api.updateStatus, param)
           .then(() => {
+            this.promotionLoading = false;
             this.getCrowdInfo();
             if (onlineStatus === 1) {
               this.$message({
@@ -1144,6 +1149,7 @@ export default {
     // 1=> 参与推广 2=> 暂停推广
     // 这是hover暂停开始按钮的点击事件
     promotionIcon(onlineStatus, crowdId) {
+      this.promotionLoading = true;
       const param = {
         adGroupId: this.currentAdGroupId,
         campaignId: this.currentCampaignId,
@@ -1155,6 +1161,7 @@ export default {
       this.groupList = null;
       this.$axios.post(this.$api.updateStatus, param)
         .then(() => {
+          this.promotionLoading = false;
           this.getCrowdInfo();
           if (onlineStatus === 1) {
             this.$message({
@@ -1713,7 +1720,7 @@ export default {
       // console.log("--------isGlobalLoading-------",!(this.initGroupLoading || this.peopleMoveLoading || this.premiumLoading ||
       // this.peopleRateLoading || this.createGroupLoading || this.loadingPlans));
       return !(this.initGroupLoading || this.peopleMoveLoading || this.premiumLoading ||
-      this.peopleRateLoading || this.createGroupLoading || this.loadingPlans)
+      this.peopleRateLoading || this.createGroupLoading || this.loadingPlans || this.promotionLoading)
     },
     currentRptkey() {
       switch (this.source) {
