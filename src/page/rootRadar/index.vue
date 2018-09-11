@@ -15,6 +15,7 @@ import expired from '@/components/expired'
 import backTop from '../../components/backToTop';
 import tableData from './tableData'
 import keyWord from './components/keyWord'
+import matrix from './components/matrix'
 
 export default {
   name: 'rootRadar',
@@ -25,7 +26,8 @@ export default {
     tableData,
     guidance,
     expired,
-    keyWord
+    keyWord,
+    matrix
   },
   computed: {
   },
