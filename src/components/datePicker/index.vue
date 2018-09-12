@@ -76,10 +76,11 @@ export default {
         case '过去30天':
           this.startTime = moment().subtract(30, 'days').format('YYYY-MM-DD');
           this.endTime = moment().subtract(1, 'days').format('YYYY-MM-DD');
-          console.log(this.startTime);
           this.finalContent = '过去30天';
           this.myDateTime = [this.startTime, this.endTime];
           this.$emit('refreshDate', this.startTime, this.endTime);
+          break;
+        default:
           break;
       }
       this.myDatePopStatus = false;

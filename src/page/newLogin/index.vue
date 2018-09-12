@@ -49,7 +49,6 @@ export default {
         chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
           type: 'version'
         }, response => {
-          console.log(response)
           if (!response) {
             this.$emit('versionErr')
             return
@@ -65,7 +64,6 @@ export default {
               type: 'success',
             });
             this.token = res.data;
-            console.log(`token${this.token}`)
             this.$axios.get(this.$api.info).then((resp) => {
               this.loginLoading = false;
               this.bindTaobaoName = resp.data.name;
@@ -74,7 +72,6 @@ export default {
                   type: 'getShopInfo',
                 },
                 (response) => {
-                  console.log(response);
                   if (response.code !== 400) {
                     data = response.shopInfo;
                   }

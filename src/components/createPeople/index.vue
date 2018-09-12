@@ -56,7 +56,6 @@ export default {
         adGroupId: this.adGroupId,
       },
       response => {
-        console.log(response);
         this.peoplePropertyObj = response.layout[1].dimDTOs; // 将返回来的人口属性人群的信息都保存下来
         this.weatherPropertyObj = response.layout[0].dimDTOs; // 将返回来的天气属性人群的信息都保存下来
         this.wordList = response.wordList; // 保存插件需要的一大串文字
@@ -118,18 +117,15 @@ export default {
       // 我们希望与之通信的扩展程序标识符。
       // 发送一个简单的请求：lhr：此处应该添加防抖动
       if (this.timer) {
-        console.log('clear time out');
         clearTimeout(this.timer);
       }
       const sendMessage = () => {
-        console.log('send message');
         let param = {
           type: 'getCrowdCount',
           selectTagOptions: this.para,
           wordList: this.wordList,
         };
         let cb = response => {
-          console.log(response);
           this.overPeopleNumber = response.result;
         };
         chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, param, cb);
@@ -191,7 +187,6 @@ export default {
       // }
     },
     radioChange(radio) {
-      console.log(radio);
       this.peopleCheckList = []; // 每次切换单选都清空多选框群组的数组
       this.para = []; // 清空传给插件的数组
       this.overPeopleNumber = '-'; // 每次切换单选 初始化覆盖人群的数量

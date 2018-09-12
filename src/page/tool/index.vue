@@ -745,7 +745,6 @@
       handleCurrentChange(data) {
         this.wrapData[data.index].tablePage.currentPage = data.currentPage;
         this.getTableData(this.wrapData[data.index].root, data.index);
-        console.log(data);
       },
       // 同词根宝贝对比
       getComparedBaby(root, index) {
@@ -846,7 +845,6 @@
             }
           });
           if (!flag) {
-            console.log('最多选择两项');
             this.checkboxListFlag = true;
           } else {
             this.checkboxListFlag = false;
@@ -864,7 +862,6 @@
             }
           });
           if (!flag) {
-            console.log('最多选择两项');
             this.checkboxList2Flag = true;
           } else {
             this.checkboxList2Flag = false;
@@ -877,9 +874,7 @@
           const data = document.getElementById('taobao-extension-data').value;
           if (data === '{}' || data === '') {
             this.isLoginTaobao = false;
-            // console.log('data=', data);
           } else {
-            // console.log('data=', data);
             const taobaoData = JSON.parse(data);
             this.isLoginTaobao = true;
             this.shopName = taobaoData.nickName;
@@ -912,7 +907,6 @@
           this.turnNealDay = `最近30天（${this.thirtyDay}）`;
         }
         if (val.includes('自定义')) {
-          console.log('自定义', this.customTime);
         } else {
           if (this.isShow) {
             // 清空数据

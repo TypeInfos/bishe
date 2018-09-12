@@ -1,8 +1,8 @@
 // const absUrl = window.location.href;
-// let path = 'http://192.168.1.102:8082/edoushu'; // 阿炳
+let path = 'http://192.168.1.102:8082/edoushu'; // 阿炳
 // let path = 'http://v99hmx.natappfree.cc/edoushu';
 // let path = 'https://data.doushudata.com/edoushu'; // 上线版
-let path = 'https://data.yishubox.com/edoushu'; // 测试版
+// let path = 'https://data.yishubox.com/edoushu'; // 测试版
 // let path = 'http://192.168.1.101:8082/edoushu' // 老庄的接口
 // if (absUrl.match('edoushu.com')) {
 //   path = 'https://www.edoushu.com/';
@@ -45,6 +45,7 @@ const api = {
   register: `${path}/register`, // 注册
   bind: `${path}/bind`, // 绑定淘宝店铺名
   forget: `${path}/forget`, // 忘记密码
+  matrix: `${path}/bostonMatrix`, // 波士顿矩阵数据
 
 
   // 标签实验室

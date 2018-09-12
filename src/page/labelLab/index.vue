@@ -346,6 +346,7 @@ export default {
       startloadingComplete: false, // 加载进度是否完成
       tagCourseLink: 'http://www.baidu.com', // 标签化程度较低优化教程地址
       promotionLoading: false,
+      chartLoading: false
     };
   },
   methods: {
@@ -583,6 +584,7 @@ export default {
     },
     labelTendency() {
       const param = this.setParams();
+      this.chartLoading = true
       this.$axios.post(this.$api.tagChart, param)
         .then((res) => {
           this.tendencyAnalysShow = true;
@@ -596,6 +598,10 @@ export default {
           this.labelTendencyData.series.forEach(i => {
             i.showSymbol = this.labelTendencyData.xAxisData.length > 1
           })
+          this.chartLoading = false
+        }).catch(err => {
+          console.log('get line chart err', err)
+          this.chartLoading = false
         });
     },
     // 保留2位小数
@@ -649,7 +655,6 @@ export default {
     },
     premiumConfirm() {
       const changePremium = () => {
-        console.log('change premium')
         this.groupList = null;
         this.$axios.post(this.$api.updateDiscount, param)
           .then(() => {
@@ -665,7 +670,6 @@ export default {
             this.getCrowdInfo();
           })
           .catch(err => {
-            console.log(err)
             this.premiumLoading = false;
           })
       }
@@ -679,7 +683,6 @@ export default {
         productId: this.currentProductId,
       };
       let prices = this.groupBorder()
-      console.log('prices', prices)
       let tips = {
         flag: false,
         cnt: ''
@@ -714,10 +717,8 @@ export default {
           type: 'warning',
           dangerouslyUseHTMLString: true
         }).then(() => {
-          console.log('click confirm')
           changePremium()
         }).catch((err) => {
-          console.log('er', err)
           this.premiumLoading = false;
           // this.startloadingComplete = true;
           this.premiumDialog = false;
@@ -948,7 +949,6 @@ export default {
     },
     // 全选 =》 每个群组可以全选各自群组下的 人群
     selectAllCheck(refValue, index) {
-      console.log('selectAllCheck')
       this.$refs[refValue][0].toggleAllSelection();
       if (this.$refs[refValue][0].selection.length < this.groupList[index].list.length) {
         this.groupList[index].list.forEach(i => {
@@ -1411,17 +1411,14 @@ export default {
               // this.startloadingComplete = true;
               this.groupList = res.data
               this.groupList = this.groupList.map((g, i) => {
-                console.log(g, i)
                 g.list.forEach(c => {
                   c.warning = 0
                   if (i > 0) {
                     let min = this.groupBorder()[i - 1].min
-                    console.log('比较上层', min, c.discount)
                     if (min < c.discount) {
                       c.warning = '当前人群溢价比上一层级的最低溢价高，会导致该人群失效，请及时进行调整'
                     }
                   } else if (i < this.groupList.length - 1) {
-                    console.log('比较下层', max, c.discount)
                     let max = this.groupBorder()[i + 1].max
                     if (max > c.discount) {
                       c.warning = '当前人群溢价比下一层级的最高溢价低，会导致该人群失效，请及时进行调整'
@@ -1512,12 +1509,10 @@ export default {
     sortTest(props) {
       const order = props.order;
       const prop = props.prop;
-      console.log(`this is 子表 排序${order} 属性${prop}`);
     },
     tempTable(props) {
       const order = props.order;
       const prop = props.prop;
-      console.log(`this is 临时表 排序${order} 属性${prop}`);
     },
     /**
        * 重置 标签群组分层的checkBox
@@ -1655,7 +1650,6 @@ export default {
           break
         }
       }
-      console.log(top, bottom)
       if (parseInt(top, 10) !== 1 || parseInt(bottom, 10) !== 2333) {
         this.showGroupErr('只允许在自定义群组之间移动')
         resetGroupList(evt.oldIndex, evt.newIndex)
@@ -1715,15 +1709,17 @@ export default {
           res.push(i)
         }
       })
-      console.log(res)
       return res
     },
     // kzp: 是否需要loading
     isGlobalLoading () {
-      // console.log("--------isGlobalLoading-------",!(this.initGroupLoading || this.peopleMoveLoading || this.premiumLoading ||
-      // this.peopleRateLoading || this.createGroupLoading || this.loadingPlans));
-      return !(this.initGroupLoading || this.peopleMoveLoading || this.premiumLoading ||
-      this.peopleRateLoading || this.createGroupLoading || this.loadingPlans || this.promotionLoading)
+      return !(this.initGroupLoading ||
+               this.peopleMoveLoading ||
+               this.premiumLoading ||
+               this.peopleRateLoading ||
+               this.createGroupLoading ||
+               this.loadingPlans ||
+               this.promotionLoading)
     },
     currentRptkey() {
       switch (this.source) {

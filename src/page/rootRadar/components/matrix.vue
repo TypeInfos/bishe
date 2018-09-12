@@ -1,5 +1,5 @@
 <template lang="pug">
-el-card.matrix
+el-card.matrix(element-loading-text="正在加载数据" v-loading="isLoading")
   .matrix-title(slot="header") 单品词根波士顿矩阵
   .matrix-body
     .chart
@@ -11,35 +11,74 @@ el-card.matrix
         span.tag 瘦狗词根
       .rb-area
         span.tag 金牛词根
-      .root-data(
-        v-for="item in renderData.matrix"
-        :key="item.name"
-        :style=`{ width: renderData.radius + 'px',
-                  height: renderData.radius + 'px',
-                  top: item.yValue + 'px',
-                  left: item.xValue + 'px'}`) {{ item.name }}
-        .label(:style=`{top: renderData.radius + 'px', left: renderData.radius + 'px'}`)
-          .label-title 词根：{{ item.name }}
+      el-popover(
+          v-for="item in renderData.matrix"
+          :key="item.name"
+          trigger="hover")
+        .label
+          .label-title 词根：{{ item.labelName }}
           .info 最近30天词根成交量：{{ item.dealNumber }}
           .info 最近30天词根转化率：{{ item.convertRatio }}%
+        .root-data(
+          slot="reference"
+          :style=`{ width: renderData.radius + 'px',
+                    height: renderData.radius + 'px',
+                    bottom: item.yValue + renderData.radius / 2 + 30 + 'px',
+                    left: item.xValue + 15 + 'px'}`) {{ item.name }}
 </template>
 
 <script>
+import { getMatrixDataAPI } from '@/assets/api/rootRadar'
+
 export default {
+  props: {
+    itemId: {
+      type: [Number, String],
+      default: ''
+    }
+  },
   data () {
     return {
-      renderData: {
-        radius: 50,
-        matrix: [
-          {
-            name: '女',
-            dealNumber: 123,
-            convertRatio: 2.3,
-            xValue: 102,
-            yValue: 91
-          }
-        ]
+      data: {},
+      isLoading: false
+    }
+  },
+  mounted () {
+    this.getMatrixData()
+  },
+  methods: {
+    async getMatrixData () {
+      if (!this.itemId) return
+      this.isLoading = true
+      let res = await getMatrixDataAPI({ itemId: this.itemId })
+      if (res && res.code === 'ACK') {
+        this.data = res.data
       }
+      this.isLoading = false
+    }
+  },
+  computed: {
+    renderData () {
+      if (!this.data) return {}
+      let data = this.data.matrix.reduce((all, item) => {
+        let i = item.shift()
+        i.labelName = i.name
+        i.labelName += item.reduce((plus, name) => {
+          plus += `、${name.name}`
+          return plus
+        }, '')
+        all.push(i)
+        return all
+      }, [])
+      return {
+        radius: this.data.radius,
+        matrix: data
+      }
+    }
+  },
+  watch: {
+    itemId (v) {
+      this.getMatrixData()
     }
   }
 }
@@ -48,6 +87,7 @@ export default {
 <style lang="less">
 .matrix {
   margin-top: 20px;
+  overflow: visible;
   &-title {
     font-size: 16px;
     color: #333;

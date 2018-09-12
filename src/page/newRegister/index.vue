@@ -156,7 +156,6 @@ export default {
           );
         } catch (error) {
           clearInterval(this.timer);
-          console.log('请安装插件');
         }
       }, 500);
     },

@@ -128,7 +128,7 @@
       </div>
     </el-card>
     <!-- 标签整体数据趋势 -->
-    <el-card class="box-card mt20 tendency" shadow="hover">
+    <el-card class="box-card mt20 tendency" shadow="hover"  element-loading-text="正在加载趋势图" v-loading="chartLoading">
       <div slot="header" class="clearfix">
         <span class="headerContent">标签整体数据趋势</span>
         <!-- 先不加等8月份后再进行优化 -->
