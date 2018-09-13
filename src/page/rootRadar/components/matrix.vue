@@ -4,15 +4,15 @@ el-card.matrix(element-loading-text="正在加载数据" v-loading="isLoading")
   .matrix-body
     .chart
       .lt-area
-        span.tag 问题词根
+        span.tag ?
       .rt-area
-        span.tag 明星词根
+        span.tag ?
       .lb-area
-        span.tag 瘦狗词根
+        span.tag ?
       .rb-area
-        span.tag 金牛词根
+        span.tag ?
       el-popover(
-          v-for="item in renderData.matrix"
+          v-for="(item, index) in renderData.matrix"
           :key="item.name"
           trigger="hover")
         .label
@@ -24,7 +24,8 @@ el-card.matrix(element-loading-text="正在加载数据" v-loading="isLoading")
           :style=`{ width: renderData.radius + 'px',
                     height: renderData.radius + 'px',
                     bottom: item.yValue + renderData.radius / 2 + 30 + 'px',
-                    left: item.xValue + 15 + 'px'}`) {{ item.name }}
+                    left: item.xValue + 15 + 'px',
+                    background: bgColors[index % 14]}`) {{ item.name }}
 </template>
 
 <script>
@@ -40,7 +41,9 @@ export default {
   data () {
     return {
       data: {},
-      isLoading: false
+      isLoading: false,
+      // bgColors: ['#0088FE', '#00C49F', '#33A0FE', '#FFBB28', '#0081F1', '#FF8441', '#DADADA', '#EE3B61', '#3A5CD3', '#FF6590', '#0075D2', '#9575DE', '#0052A3', '#889BBE']
+      bgColors: ['#0088FE', '#00C49F', '#33A0FE', '#FFBB28', '#0081F1', '#FF8441', '#DADADA', '#EE3B61', '#FF6590', '#9575DE', '#889BBE']
     }
   },
   mounted () {
@@ -152,8 +155,13 @@ export default {
     .tag {
       color: #69676A;
       background: #F1EBF9;
-      padding: 5px 10px;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      line-height: 20px;
       position: absolute;
+      border-radius: 50%;
+      cursor: pointer;
     }
     .rt-area .tag,
     .rb-area .tag {
