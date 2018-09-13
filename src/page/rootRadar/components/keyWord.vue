@@ -3,7 +3,8 @@ el-dialog(
   width="1080px"
   custom-class="root-radar__key-word"
   :show-close="false"
-  :visible.sync="dialogVisible"
+  :visible.sync="outDialogVisible"
+  :close-on-click-modal="false"
 )
   template(slot="title")
     .title
@@ -65,35 +66,32 @@ el-dialog(
           :visible-arrow="false"
           width='540'
           popper-class="root-radar__key-word__select"
+          v-model="checkTargetVisible"
+          @hide='cancelCheckTarget'
         )
           .select-container
             span.container-title 选择指标
             el-checkbox-group.select-check-group(
               v-model="allCheckTarget"
             )
-              el-checkbox.check-box-cell(v-for="(target,index) in allTargets" :key="index" :label="target") {{target}}
+              el-checkbox.check-box-cell(v-for="target in allTargets" :key="target.label" :label="target.label") {{target.label}}
             .show-check-group
               span.show-check-title 指标展现顺序
               draggable(v-model="allCheckTarget" :options="{group:'allCheckTargetList'}")
                 span.show-check-cell(v-for="target in allCheckTarget" :key="target") {{target}}
             .btn-bottom
-              el-button(type='primary' class='cancel' @click="") 取消
-              el-button(type='primary' class='confirm' @click="") 确认
+              el-button(type='primary' class='cancel' @click="cancelCheckTarget") 取消
+              el-button(type='primary' class='confirm' @click="confirmCheckTarget") 确认
           span(style="cursor:pointer" slot="reference") 展示指标
               i(class="el-icon-arrow-down el-icon--right")
     .table
       el-table
-        el-table-column(prop='' label='关键词')
-        el-table-column(prop='' label='质量分')
-          el-table-column(label='PC端')
-          el-table-column(label='无线端')
-        el-table-column(prop='' label='点击率')
-        el-table-column(prop='' label='花费')
-        el-table-column(prop='' label='投入产出比')
-        el-table-column(prop='' label='平均点击花费')
-        el-table-column(prop='' label='点击转化率')
-        el-table-column(prop='' label='总成交笔数')
-        el-table-column(prop='' label='总成交金额')
+        el-table-column(type='selection' align="center" width='60')
+        el-table-column(prop='' label='关键词' min-width='150')
+        el-table-column(prop='' label='质量分' align="center")
+          el-table-column(label='PC端' sortable align="center" min-width='80')
+          el-table-column(label='无线端' align="center" sortable min-width='80')
+        el-table-column(prop='' label='点击率' min-width='150')
   el-dialog(
     width='640px'
     :show-close="false"
@@ -136,7 +134,7 @@ el-dialog(
               input(type="text" class='line-input')
               span %
     .btn-bottom
-      el-button(type='primary' class='cancel' @click="") 取消
+      el-button(type='primary' class='cancel' @click="addKeyWordVisible = false") 取消
       el-button(type='primary' class='confirm' @click="") 确认
   el-dialog(
     width='640px'
@@ -173,7 +171,7 @@ el-dialog(
         input(type="text" class='line-input' v-model="editPricePointerInput")
         span %
     .btn-bottom
-      el-button(type='primary' class='cancel' @click="") 取消
+      el-button(type='primary' class='cancel' @click="editPriceVisible = false") 取消
       el-button(type='primary' class='confirm' @click="") 确认
   el-dialog(
     width='640px'
@@ -214,7 +212,93 @@ el-dialog(
 
 <script>
 import draggable from 'vuedraggable';
+import moment from 'moment';
 
+moment.locale('zh-cn');
+let oneHourAgo = `今天${moment().add(-1, 'hour').format('H')}:00-${moment().format('H')}:00平均排名`;
+let allTags = [
+  {
+    label: '质量分',
+    prop: 'zhiliang',
+  },
+  {
+    label: oneHourAgo,
+  },
+  {
+    label: '出价',
+  },
+  {
+    label: '展现量',
+  },
+  {
+    label: '点击量',
+  },
+  {
+    label: '花费'
+  },
+  {
+    label: '点击率'
+  },
+  {
+    label: '平均点击花费'
+  },
+  {
+    label: '千次展现花费'
+  },
+  {
+    label: '直接成交金额'
+  },
+  {
+    label: '直接成交笔数'
+  },
+  {
+    label: '间接成交金额'
+  },
+  {
+    label: '间接成交笔数'
+  },
+  {
+    label: '收藏宝贝数'
+  },
+  {
+    label: '收藏店铺数'
+  },
+  {
+    label: '投入产出比'
+  },
+  {
+    label: '总成交金额'
+  },
+  {
+    label: '总成交笔数'
+  },
+  {
+    label: '总收藏数'
+  },
+  {
+    label: '点击转化率'
+  },
+  {
+    label: '直接购物车数'
+  },
+  {
+    label: '间接购物车数'
+  },
+  {
+    label: '总购物车数'
+  },
+  {
+    label: '平均展现排名'
+  },
+];
+let defaultTags = [
+  '质量分',
+  oneHourAgo,
+  '出价',
+  '展现量',
+  '点击量',
+  '花费'
+];
 export default {
   components: {
     draggable
@@ -224,10 +308,12 @@ export default {
       endChoose: '全部终端',
       fromChoose: '全部来源',
       positionChoose: '全部位置',
+      outDialogVisible: false, // 最外层dialog
       addKeyWordVisible: false, // 是否显示添加关键词dialog
       editPriceVisible: false, // 是否显示修改PC端或无线端出价dialog
       editMetaMethodsVisible: false, // 是否显示修改匹配方式dialog
       deleteKeyWordVisible: false, // 是否显示删除关键词dialog
+      checkTargetVisible: false, // 是否显示展示指标
       isPc: 1, // 1为PC端,0为无线端
       // 以下是添加关键词dialog里的数据
       addKeyWordTextarea: '', // 添加关键词的文本域的值
@@ -245,46 +331,12 @@ export default {
       editPricePointerInput: '', // 修改PC端或无线端出价的出价幅度
       // 以下是修改匹配方式dialog里的数据
       editMetaMethodsRadio: '1', // 修改匹配方式的radio
-
-      allCheckTarget: [],
-      allTargets: [
-        '质量分',
-        '今天平均排名',
-        '出价',
-        '展现量',
-        '点击量',
-        '花费',
-        '点击率',
-        '平均点击花费',
-        '千次展现花费',
-        '直接成交金额',
-        '直接成交笔数',
-        '间接成交笔数',
-        '质量分',
-        '今天平均排名',
-        '出价',
-        '展现量',
-        '点击量',
-        '花费',
-        '点击率',
-        '平均点击花费',
-        '千次展现花费',
-        '直接成交金额',
-        '直接成交笔数',
-        '间接成交笔数',
-        '质量分',
-        '今天平均排名',
-        '出价',
-        '展现量',
-        '点击量',
-        '花费',
-        '点击率',
-        '平均点击花费',
-        '千次展现花费',
-        '直接成交金额',
-        '直接成交笔数',
-        '间接成交笔数'
-      ]
+      // 以下是选择指标里的数据
+      oneHourAgo: 11111,
+      allCheckTarget: [...defaultTags], // 所有被选中的指标
+      lastTimeCheckTarget: [...defaultTags], // 上次被选中的指标,初始化为默认指标
+      allTargets: [...allTags], // 所有的指标
+      tableHeaderTargets: [], // 用于循环出表头
     }
   },
   props: {
@@ -295,9 +347,11 @@ export default {
   },
   methods: {
     closeDialog() {
-      // this.$emit('update:dialogVisible', false);
-      this.dialogVis.ible = false
-      // console.log(this.dialogVisible);
+      this.outDialogVisible = false
+    },
+    showDialog() {
+      this.initTime();
+      this.outDialogVisible = true;
     },
     chooseEnd(val) {
       this.endChoose = val
@@ -325,10 +379,138 @@ export default {
       this.addKeyWordMobileEndRadio = '1'
       this.addKeyWordPCEndCustomInput = ''
       this.addKeyWordPCEndMeanInput = ''
+    },
+    resetEditPrice() {
+      this.rangeChoose = '提高'
+      this.pointerChoose = '提高'
+      this.editPriceRadio = '1'
+      this.editPriceCustomInput = ''
+      this.editPriceRangeInput = ''
+      this.editPricePointerInput = ''
+    },
+    resetEditMetaMethods() {
+      this.editMetaMethodsRadio = '1'
+    },
+    cancelCheckTarget() {
+      this.allCheckTarget = this.lastTimeCheckTarget;
+      this.checkTargetVisible = false;
+    },
+    confirmCheckTarget() {
+      this.lastTimeCheckTarget = this.allCheckTarget;
+      this.tableHeaderTargets = [];
+      for (let i = 0; i < this.lastTimeCheckTarget.length; i++) {
+        for (let j = 0; j < this.allTargets.length; j++) {
+          if (this.allTargets[j].label === this.lastTimeCheckTarget[i]) { this.tableHeaderTargets.push(this.allTargets[j]); }
+        }
+      }
+      console.log(this.tableHeaderTargets)
+      this.checkTargetVisible = false;
+    },
+    initTime() {
+      oneHourAgo = `今天${moment().add(-1, 'hour').format('H')}:00-${moment().format('H')}:00平均排名`
+      allTags = [
+        {
+          label: '质量分',
+          prop: 'zhiliang',
+        },
+        {
+          label: oneHourAgo,
+        },
+        {
+          label: '出价',
+        },
+        {
+          label: '展现量',
+        },
+        {
+          label: '点击量',
+        },
+        {
+          label: '花费'
+        },
+        {
+          label: '点击率'
+        },
+        {
+          label: '平均点击花费'
+        },
+        {
+          label: '千次展现花费'
+        },
+        {
+          label: '直接成交金额'
+        },
+        {
+          label: '直接成交笔数'
+        },
+        {
+          label: '间接成交金额'
+        },
+        {
+          label: '间接成交笔数'
+        },
+        {
+          label: '收藏宝贝数'
+        },
+        {
+          label: '收藏店铺数'
+        },
+        {
+          label: '投入产出比'
+        },
+        {
+          label: '总成交金额'
+        },
+        {
+          label: '总成交笔数'
+        },
+        {
+          label: '总收藏数'
+        },
+        {
+          label: '点击转化率'
+        },
+        {
+          label: '直接购物车数'
+        },
+        {
+          label: '间接购物车数'
+        },
+        {
+          label: '总购物车数'
+        },
+        {
+          label: '平均展现排名'
+        },
+      ];
+      defaultTags = [
+        '质量分',
+        oneHourAgo,
+        '出价',
+        '展现量',
+        '点击量',
+        '花费'
+      ];
+      // this.$emit('update:dialogVisible', false);
+      this.allTargets = allTags
+      this.allCheckTarget = defaultTags
+      this.lastTimeCheckTarget = defaultTags
     }
   },
   watch: {
-
+    addKeyWordVisible() {
+      this.resetAddKeyWord()
+    },
+    editPriceVisible() {
+      this.resetEditPrice()
+    },
+    editMetaMethodsVisible() {
+      this.resetEditMetaMethods()
+    },
+  },
+  mounted() {
+  },
+  computed: {
   }
 }
 </script>
@@ -397,6 +579,23 @@ export default {
       }
       .table {
         padding-top: 10px;
+        .el-table thead.is-group th{
+          background: #ffffff;
+          color: #333333;
+          font-size: 12px;
+        }
+        .el-table--border, .el-table--group{
+          border: 0px;
+        }
+        .el-table--border td, .el-table--border th, .el-table__body-wrapper .el-table--border.is-scrolling-left~.el-table__fixed{
+          border-right: 0px;
+        }
+        .el-table--border::after, .el-table--group::after{
+          width: 0px;
+        }
+        .el-table__body-wrapper{
+          font-size: 12px;
+        }
       }
     }
   }
@@ -600,16 +799,15 @@ export default {
       &::-webkit-scrollbar-thumb {
         border-radius: 2px;
         background: #b4c8d8;
-        width: 600px;
       }
       font-size: 12px;
-      width: 50%;
+      width: 60%;
       display: flex;
       flex-wrap: wrap;
       padding-left: 10px;
       overflow-y: auto;
-      height: 350px;
-      justify-content: space-between;
+      max-height: 300px;
+      // justify-content: space-between;
       .el-checkbox + .el-checkbox {
           margin-left: 0px !important;
       }
@@ -630,19 +828,20 @@ export default {
         background: #b4c8d8;
       }
       padding-right:10px;
-      padding-left: 20px;
+      // padding-left: 20px;
       display: flex;
       flex-direction: column;
       overflow-y: auto;
-      width: 30%;
-      height: 350px;
+      overflow-x:hidden;
+      width: 35%;
+      max-height: 300px;
       .show-check-title{
         font-size:14px;
         padding-bottom:10px;
       }
       .show-check-cell{
         cursor: move;
-        width: 110px;
+        width: 140px;
         border: 1px dotted #979797;
         margin-bottom: 5px;
         padding: 0 15px;
