@@ -70,7 +70,6 @@ export default {
     getInfo() {
       this.$axios.get(this.$api.getHelp)
         .then(res => {
-          console.log(res.data.notices);
           this.notices = res.data.notices;
           this.courses = res.data.courses;
         }).catch(err => {
@@ -80,7 +79,6 @@ export default {
     showDialog(info) {
       this.isShowDialog = true;
       const jsonInfo = JSON.parse(info);
-      console.log(jsonInfo);
       this.title = jsonInfo.title;
       this.content = jsonInfo.content;
       this.img = jsonInfo.img_url;

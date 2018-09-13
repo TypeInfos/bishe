@@ -59,7 +59,6 @@ export default {
       });
     },
     goBuy(index, rows) {
-      console.log(index + rows);
       this.$router.push('/buy1');
     },
     changeStatus(row, column, cellValue, index) {

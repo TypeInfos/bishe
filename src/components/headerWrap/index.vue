@@ -93,7 +93,6 @@ export default {
     // 接收插件数据
     getTaobaoData() {
       const data = document.getElementById('taobao-extension-data').value;
-      console.log('taobao-extension-data', data);
     },
   },
 };

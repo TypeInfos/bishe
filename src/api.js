@@ -45,6 +45,7 @@ const api = {
   register: `${path}/register`, // 注册
   bind: `${path}/bind`, // 绑定淘宝店铺名
   forget: `${path}/forget`, // 忘记密码
+  matrix: `${path}/bostonMatrix`, // 波士顿矩阵数据
 
 
   // 标签实验室

@@ -157,7 +157,7 @@
           </lineChart>
         </div>
       </el-card>
-      <matrix></matrix>
+      <matrix :itemId="currentItemId"></matrix>
       <el-card v-if="isShow"  element-loading-text="为您加载商品详细数据，请稍后" v-loading="checkGoodsInfoDataLoading" class="box-card mt20" shadow="hover">
         <div slot="header" class="clearfix">
           <span class="headerContent">单品词根分析</span>

@@ -52,10 +52,8 @@ export default {
     selectPayWay() {
       this.showTick = !this.showTick;
       this.payWay = '支付宝';
-      console.log('支付宝支付');
     },
     addPromotionCode() {
-      console.log(this.showPromotionCode)
       this.showPromotionCode = !this.showPromotionCode;
     },
     returnBuy1() {
@@ -77,7 +75,6 @@ export default {
         this.$axios.post(this.$api.getPay, {
           pid: this.orderBlockInfo.pid,
         }).then((res) => {
-          console.log(res.data)
           this.orderId = res.data.orderId // 订单号用来检测支付是否成功
           this.p = res.data.payUrl; // 保存后端返回的form表单html代码
           // 此行本应有 let w = window.open('about:blank'); 先打开一个空白页，但是由于window.open和ajax异步请求的冲突，导致浏览器会拦截新窗口，所以该行代码放在该请求外。
@@ -90,7 +87,6 @@ export default {
             this.$axios.post(this.$api.getOrderStatus, {
               orderId: this.orderId,
             }).then((res) => {
-              console.log(`status:${res.data.status}`);
               if (res.data.status === 0) {
                 this.payLoading = true;
                 this.payingText = '支付中';
@@ -144,7 +140,6 @@ export default {
     routeName() {
       // 接收这一条路由传过来得参数 orderBlockInfo 订购方块内的内容
       this.orderBlockInfo = this.$route.params.orderBlockInfo;
-      console.log(this.orderBlockInfo);
       // 获取到之后，给当前页面的元素赋值
       this.orderInfoTableData[0].buyProject = this.orderBlockInfo.firstLine + this.orderBlockInfo.secondLine;
       this.orderInfoTableData[0].count = '1';

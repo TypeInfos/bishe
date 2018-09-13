@@ -333,7 +333,6 @@ export default {
         pid: 1, // pid为1是词根雷达
       }).then((res) => {
         this.expiredDays = res.data
-        console.log(res.data)
         if (res.data > 0) {
           this.getShopId();
         } else {
@@ -349,9 +348,9 @@ export default {
       let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
       let ele = document.querySelector('.card');
       let expired = document.querySelector('.expired-wrapper');
-      if (scrollTop > 50) {
+      if (expired && scrollTop > 50) {
         expired.style.top = '0px'
-      } else {
+      } else if (expired && scrollTop <= 50) {
         expired.style.top = `${50 - scrollTop}px`
       }
       let originalStyle = window.getComputedStyle(ele);
@@ -396,7 +395,6 @@ export default {
         },
         response => {
           try {
-            console.log(response)
             if (response.code === 200) {
               this.currentShopid = response.currentShopid
               this.$axios.post(this.$api.checkBind, {
@@ -417,7 +415,6 @@ export default {
               window.location.reload();
             }
           } catch (error) {
-            console.log(error)
             alert('插件ID与前端不匹配')
             this.$router.push('/login');
             window.location.reload();
@@ -1462,7 +1459,6 @@ export default {
         }
       }
       if (val.includes('自定义')) {
-        console.log('自定义时间');
       }
     },
     // 监听自定义时间设置

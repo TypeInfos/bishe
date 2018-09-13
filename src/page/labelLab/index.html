@@ -128,7 +128,7 @@
       </div>
     </el-card>
     <!-- 标签整体数据趋势 -->
-    <el-card class="box-card mt20 tendency" shadow="hover">
+    <el-card class="box-card mt20 tendency" shadow="hover"  element-loading-text="正在加载趋势图" v-loading="chartLoading">
       <div slot="header" class="clearfix">
         <span class="headerContent">标签整体数据趋势</span>
         <!-- 先不加等8月份后再进行优化 -->
@@ -220,7 +220,7 @@
           <el-table-column
             :min-width="tableCellWidth"
             v-for="item in finalCheckIndexList"
-            sortable :key="item.label"
+            sortable
             :prop="item.name"
             :label="item.label">
           </el-table-column>
@@ -295,7 +295,6 @@
               <el-table-column
                 :min-width="tableCellWidth"
                 v-for="itemData in finalCheckIndexList"
-                :key="itemData.label"
                 sortable
                 :prop="itemData.name"
                 :label="itemData.label"

@@ -210,7 +210,6 @@ export default {
           }
         });
         if (!flag) {
-          console.log('最多选择两项');
           this.checkboxListFlag = true;
         } else {
           this.checkboxListFlag = false;

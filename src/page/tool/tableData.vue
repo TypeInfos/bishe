@@ -101,8 +101,6 @@ export default {
   methods: {
     getSummaries(param) {
       const { columns, data } = param;
-      console.log(columns);
-      console.log(data);
       const sums = [];
       columns.forEach((column, index) => {
         if (index === 0) {
