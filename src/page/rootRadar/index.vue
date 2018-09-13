@@ -30,6 +30,9 @@ export default {
     matrix
   },
   computed: {
+    keyWordVisible() {
+      return !!this.isShowKeyWord;
+    }
   },
   data() {
     return {
@@ -303,6 +306,7 @@ export default {
           return time.getTime() > (Date.now() - 24 * 3600 * 1000) || time.getTime() < oneMonths;
         },
       },
+      isShowKeyWord: false,
     }
   },
   // 在这里请求axios
@@ -1413,6 +1417,9 @@ export default {
         this.itemLoading = false;
       }
     },
+    showKeyWord() {
+      this.isShowKeyWord = true;
+    }
   },
   watch: {
     // 初始化 界面的商品过滤输入框

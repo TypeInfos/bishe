@@ -223,7 +223,7 @@
               <p>{{item.efficiency}}</p>
             </div>
             <div class="handleButton">
-              <el-button @click="" disabled type="text">关键词操作</el-button>
+              <el-button @click="showKeyWord" type="text">关键词操作</el-button>
               <el-button @click="" disabled type="text">同词根宝贝对比</el-button>
               <el-button @click="" disabled type="text">相关搜索词分析</el-button>
             </div>
@@ -291,5 +291,5 @@
     <guidance v-if="showGuidance"></guidance>
   </el-collapse-transition>
   <!-- 关键词操作 -->
-  <key-word></key-word>
+  <key-word :dialogVisible.sync="keyWordVisible"></key-word>
 </div>
