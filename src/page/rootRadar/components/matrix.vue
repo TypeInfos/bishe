@@ -48,7 +48,7 @@ export default {
     }
   },
   mounted () {
-    this.getMatrixData()
+    // this.getMatrixData()
   },
   methods: {
     async getMatrixData () {

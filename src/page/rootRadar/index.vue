@@ -973,6 +973,7 @@ export default {
       this.itemLoading = true
       this.$axios.post(this.$api.rootAnalysis, param)
         .then(res => {
+          this.$refs.matrix.getMatrixData()
           if (res.data.length <= 3) {
             res.data.foreach(v => {
               this.checkListRoot.push(v)
