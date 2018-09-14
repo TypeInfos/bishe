@@ -7,7 +7,7 @@ el-dialog(
   :close-on-click-modal="false"
 )
   template(slot="title")
-    .title
+    .title.key-wrod-oprate
       span.cnt 关键词操作
       .close-btn(@click="closeDialog")
         i.el-icon-close
@@ -88,10 +88,11 @@ el-dialog(
       el-table
         el-table-column(type='selection' align="center" width='60')
         el-table-column(prop='' label='关键词' min-width='150')
-        el-table-column(prop='' label='质量分' align="center")
-          el-table-column(label='PC端' sortable align="center" min-width='80')
-          el-table-column(label='无线端' align="center" sortable min-width='80')
-        el-table-column(prop='' label='点击率' min-width='150')
+        el-table-column(:prop='111' :label='target.label' v-for="target in tableHeaderTargets")
+        //- el-table-column(prop='' label='质量分' align="center")
+        //-   el-table-column(label='PC端' sortable align="center" min-width='80')
+        //-   el-table-column(label='无线端' align="center" sortable min-width='80')
+        //- el-table-column(prop='' label='点击率' min-width='150')
   el-dialog(
     width='640px'
     :show-close="false"
@@ -297,6 +298,7 @@ let defaultTags = [
   '出价',
   '展现量',
   '点击量',
+  '点击率',
   '花费'
 ];
 export default {
@@ -336,7 +338,7 @@ export default {
       allCheckTarget: [...defaultTags], // 所有被选中的指标
       lastTimeCheckTarget: [...defaultTags], // 上次被选中的指标,初始化为默认指标
       allTargets: [...allTags], // 所有的指标
-      tableHeaderTargets: [], // 用于循环出表头
+      tableHeaderTargets: [...defaultTags], // 用于循环出表头
     }
   },
   props: {
@@ -489,6 +491,7 @@ export default {
         '出价',
         '展现量',
         '点击量',
+        '点击率',
         '花费'
       ];
       // this.$emit('update:dialogVisible', false);
@@ -509,6 +512,10 @@ export default {
     },
   },
   mounted() {
+    const title = document.querySelector('.root-radar__key-word .el-dialog__header');
+    title.style.height = '50px';
+    title.style.padding = '0 0 0 30px';
+    this.confirmCheckTarget()
   },
   computed: {
   }
@@ -606,7 +613,7 @@ export default {
 
 .root-rader__innerDialog {
   .el-dialog__header {
-    height: 50px;
+    min-height: 50px;
     padding-left: 30px;
     .title {
       height: 100%;
