@@ -23,8 +23,8 @@ el-card.matrix(element-loading-text="正在加载数据" v-loading="isLoading")
           slot="reference"
           :style=`{ width: renderData.radius + 'px',
                     height: renderData.radius + 'px',
-                    bottom: item.yValue + renderData.radius / 2 + 30 + 'px',
-                    left: item.xValue + 15 + 'px',
+                    bottom: item.bottom,
+                    left: item.left,
                     background: bgColors[index % 14]}`) {{ item.name }}
 </template>
 
@@ -52,6 +52,7 @@ export default {
   },
   methods: {
     async getMatrixData () {
+      this.data = {}
       if (!this.itemId) return
       this.isLoading = true
       let res = await getMatrixDataAPI({ itemId: this.itemId })
@@ -59,6 +60,16 @@ export default {
         this.data = res.data
       }
       this.isLoading = false
+    },
+    getWidth () {
+      return parseInt(document.querySelector('.matrix-body .chart').getBoundingClientRect().width, 10) - 2
+    },
+    getLeft (xValue, radius) {
+      const width = this.getWidth()
+      return `${(width - radius - 30) * xValue + 15}px`
+    },
+    getBottom (yValue, radius) {
+      return `${(400 - radius - 30) * yValue + 15}px`
     }
   },
   computed: {
@@ -67,6 +78,8 @@ export default {
       let data = this.data.matrix.reduce((all, item) => {
         let i = item.shift()
         i.labelName = i.name
+        i.bottom = this.getBottom(parseFloat(i.yValue), parseFloat(this.data.radius))
+        i.left = this.getLeft(parseFloat(i.xValue), parseFloat(this.data.radius))
         i.labelName += item.reduce((plus, name) => {
           plus += `、${name.name}`
           return plus
