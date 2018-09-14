@@ -102,13 +102,12 @@ export default {
 
 <style lang="less">
 ::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
+  width: 10px;
+  height: 20px;
 }
 ::-webkit-scrollbar-thumb {
-    border-radius: 2px;
-    background: #b4c8d8;
-    width: 600px;
+  border-radius: 2px;
+  background: #b4c8d8;
 }
 
 .help-g{
