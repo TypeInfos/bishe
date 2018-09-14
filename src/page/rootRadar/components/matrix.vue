@@ -30,6 +30,7 @@ el-card.matrix(element-loading-text="正在加载数据" v-loading="isLoading")
 
 <script>
 import { getMatrixDataAPI } from '@/assets/api/rootRadar'
+import { isEmpty } from '@/utils/helper'
 
 export default {
   props: {
@@ -62,7 +63,7 @@ export default {
   },
   computed: {
     renderData () {
-      if (!this.data) return {}
+      if (!isEmpty(this.data)) return {}
       let data = this.data.matrix.reduce((all, item) => {
         let i = item.shift()
         i.labelName = i.name
@@ -80,7 +81,7 @@ export default {
     }
   },
   watch: {
-    itemId (v) {
+    itemId () {
       this.getMatrixData()
     }
   }
