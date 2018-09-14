@@ -1681,6 +1681,18 @@ export default {
     // 加载框 加载完成时 隐形！
     completeLoading(res) {
       this.startloadingComplete = res;
+    },
+    // 取消进度弹框
+    cancelLoading () {
+      console.log('cancelLoading')
+      this.initGroupLoading = false
+      this.peopleMoveLoading = false
+      this.premiumLoading = false
+      this.peopleRateLoading = false
+      this.createGroupLoading = false
+      this.loadingPlans = false
+      this.promotionLoading = false
+      this.$refs.loading.cancelLoading()
     }
   },
   beforeCreate() {},
@@ -1697,6 +1709,8 @@ export default {
     document.getElementsByClassName('el-main')[0].style.height = 'auto';
   },
   beforeDestroy() {
+    console.log('before destroy')
+    this.cancelLoading()
     window.removeEventListener('scroll', this.handleScroll);
   },
   computed: {
@@ -1711,7 +1725,7 @@ export default {
       })
       return res
     },
-    // kzp: 是否需要loading
+    // kzp: 是否不需要loading true: 无loading false: 有loading
     isGlobalLoading () {
       return !(this.initGroupLoading ||
                this.peopleMoveLoading ||
@@ -1836,12 +1850,7 @@ export default {
     },
     groupAnalyzePopStatus() {
       this.checkIndexList = this.tempCheckIndexList;
-    },
-    // finalCheckIndexList(val) {
-    //   const sumWidth = document.querySelector('.allTableHeaderContainer').clientWidth;
-    //   let cellWidth = (sumWidth - 300 - 150 - 60) / val.length;
-    //   this.tableCellWidth = cellWidth > 150 ? cellWidth : 150;
-    // },
+    }
   },
   filters: {
     crowdTip (warning) {
