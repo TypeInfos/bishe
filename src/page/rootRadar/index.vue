@@ -781,6 +781,7 @@ export default {
       this.searchLoading = true
       this.rootAnalysisCompleteLoading = false
       this.wrapData = []
+      this.concealData = []
       // 获取单品整体数据
       this.getSingleItem()
       // 获取所有词根的名字，依次渲染出来
@@ -985,6 +986,7 @@ export default {
       this.itemLoading = true
       this.$axios.post(this.$api.rootAnalysis, param)
         .then(res => {
+          this.$refs.matrix.getMatrixData()
           if (res.data.length <= 3) {
             res.data.foreach(v => {
               this.checkListRoot.push(v)
@@ -1493,6 +1495,7 @@ export default {
     },
     // 词根显示的个数的监听
     checkListRoot (val) {
+      console.log(this.concealData)
       if (val.length >= 4) {
         this.maxEcharts = true
       } else {

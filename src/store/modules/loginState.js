@@ -4,12 +4,13 @@ const id = {
   kzp: 'hnchopnjjannphjdengkbapneapdoadh',
   test: 'cpnmealmpgcapggbgjgfahpiifbbooef',
   online: 'lnbdcilfaojoldgckojoidnafpagkjbn',
-  testVersion: 'cpnmealmpgcapggbgjgfahpiifbbooef'
+  testVersion: 'cpnmealmpgcapggbgjgfahpiifbbooef',
+  locality: ''
 };
 const state = {
   isLogin: false,
   bindTaobaoName: '',
-  editorExtensionId: id.kzp, // 插件ID
+  editorExtensionId: id.test, // 插件ID
 };
 // mutations
 const mutations = {
