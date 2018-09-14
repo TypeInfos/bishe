@@ -3,7 +3,11 @@ let path = 'http://192.168.1.102:8082/edoushu'; // 阿炳
 // let path = 'http://v99hmx.natappfree.cc/edoushu';
 // let path = 'https://data.doushudata.com/edoushu'; // 上线版
 // let path = 'https://data.yishubox.com/edoushu'; // 测试版
+<<<<<<< HEAD
 // let path = 'http://192.168.1.101:8082/edoushu' // 老庄的接口
+=======
+let path = 'http://192.168.1.102:8082/edoushu' // 老庄的接口
+>>>>>>> 738eb42597d5faec369e77bf3d811a701ff6f66f
 // if (absUrl.match('edoushu.com')) {
 //   path = 'https://www.edoushu.com/';
 // }

@@ -3,9 +3,14 @@
   <div class="expired-wrapper" v-if="expiredDays >= 0 && expiredDays <= 7">
     <expired :day="expiredDays"></expired>
   </div>
-  <el-dialog v-loading="initGoodsFocusLoading"
-  element-loading-text="正在为您添加商品监控"
-    class="initGoodsInfo" :visible.sync="firstFocusGoods" :close-on-click-modal=false :lock-scroll=true :show-close=false
+  <el-dialog
+    v-loading="initGoodsFocusLoading"
+    element-loading-text="正在为您添加商品监控"
+    class="initGoodsInfo"
+    :visible.sync="firstFocusGoods"
+    :close-on-click-modal=false
+    :lock-scroll=true
+    :show-close=false
     :modal=true>
     <div slot="title" class="header addWordDialog">
       <h2>添加初始化商品</h2>
@@ -14,14 +19,31 @@
         添加成功
       </div>
     </div>
-    <el-input placeholder="请输入内容" v-model="initGoodsName" prefix-icon="el-icon-search" clearable>
+    <el-input
+      placeholder="请输入内容"
+      v-model="initGoodsName"
+      prefix-icon="el-icon-search"
+      clearable>
     </el-input>
     <!--  -->
     <div v-loading="unFocusListLoading">
       <div class="imgList">
-        <div class="imgShow" v-for="(item, index) in result" :key="index">
-          <el-popover placement="bottom" width="150" :open-delay=100 visible-arrow="false" trigger="hover" value-key="title" :content="item.title">
-            <span class="u-pic" slot="reference" @click="selectItem(index)">
+        <div
+          class="imgShow"
+          v-for="(item, index) in result"
+          :key="index">
+          <el-popover
+            placement="bottom"
+            width="150"
+            :open-delay=100
+            visible-arrow="false"
+            trigger="hover"
+            value-key="title"
+            :content="item.title">
+            <span
+              class="u-pic"
+              slot="reference"
+              @click="selectItem(index)">
               <img :src="item.imgUrl" />
             </span>
           </el-popover>
@@ -30,18 +52,30 @@
       </div>
     </div>
 
-    <p>可选{{selectSurplus}}/20</p>
+    <p>可选{{ selectSurplus }} / 20</p>
     <div class="block">
-      <el-pagination background  :page-size=16 :current-page.sync="firstFocusGoodsCurrentPage" layout="prev, pager, next" :total="firstFocusGoodsTotalPage">
+      <el-pagination
+        background
+        :page-size=16
+        :current-page.sync="firstFocusGoodsCurrentPage"
+        layout="prev, pager, next"
+        :total="firstFocusGoodsTotalPage">
       </el-pagination>
     </div>
     <div class="edu">
-      <el-button @click="initFocusGoodsList" :disabled="selectSurplus < 1 ? true : false" type="primary">确定</el-button>
+      <el-button
+        @click="initFocusGoodsList"
+        :disabled="selectSurplus < 1 ? true : false"
+        type="primary">确定</el-button>
     </div>
   </el-dialog>
-  <el-dialog v-loading="addGoodsFocusloading"
-  element-loading-text="正在为您添加商品监控"
-    class="initGoodsInfo in" :visible.sync="addGoodsFocusDialog" :close-on-click-modal=false :lock-scroll=true
+  <el-dialog
+    v-loading="addGoodsFocusloading"
+    element-loading-text="正在为您添加商品监控"
+    class="initGoodsInfo in"
+    :visible.sync="addGoodsFocusDialog"
+    :close-on-click-modal=false
+    :lock-scroll=true
     :modal=true>
     <div slot="title" class="header addWordDialog">
       <h2>添加关注商品</h2>
@@ -50,26 +84,51 @@
         添加成功
       </div>
     </div>
-    <el-input placeholder="请输入内容" v-model="initGoodsName" prefix-icon="el-icon-search" clearable>
+    <el-input
+      placeholder="请输入内容"
+      v-model="initGoodsName"
+      prefix-icon="el-icon-search"
+      clearable>
     </el-input>
     <!--  -->
     <div class="imgList" v-loading="unFocusListLoading">
-      <div class="imgShow" v-for="(item, index) in result" :key="index">
-        <el-popover placement="bottom" width="150" :open-delay=100 visible-arrow="false" trigger="hover" value-key="title" :content="item.title">
-          <span class="u-pic" slot="reference" @click="selectItem(index)">
+      <div
+        class="imgShow"
+        v-for="(item, index) in result"
+        :key="index">
+        <el-popover
+          placement="bottom"
+          width="150"
+          :open-delay=100
+          visible-arrow="false"
+          trigger="hover"
+          value-key="title"
+          :content="item.title">
+          <span
+            class="u-pic"
+            slot="reference"
+            @click="selectItem(index)">
             <img :src="item.imgUrl" />
           </span>
         </el-popover>
         <i v-if="item.selectFlag" class="el-icon-success img-select"></i>
       </div>
     </div>
-    <p>可选{{selectSurplus}}/ {{ 20 - focusOn.length }}</p>
+    <p>可选{{selectSurplus}} / {{ 20 - focusOn.length }}</p>
     <div class="block">
-      <el-pagination background  :page-size=16 :current-page.sync="firstFocusGoodsCurrentPage" layout="prev, pager, next" :total="firstFocusGoodsTotalPage">
+      <el-pagination
+        background
+        :page-size=16
+        :current-page.sync="firstFocusGoodsCurrentPage"
+        layout="prev, pager, next"
+        :total="firstFocusGoodsTotalPage">
       </el-pagination>
     </div>
     <div class="edu">
-      <el-button @click="addFocusBtn" :disabled="selectSurplus < 1 ? true : false" type="primary">确定</el-button>
+      <el-button
+        @click="addFocusBtn"
+        :disabled="selectSurplus < 1 ? true : false"
+        type="primary">确定</el-button>
     </div>
   </el-dialog>
   <div class="containerContent">
@@ -291,5 +350,5 @@
     <guidance v-if="showGuidance"></guidance>
   </el-collapse-transition>
   <!-- 关键词操作 -->
-  <key-word :dialogVisible.sync="keyWordVisible"></key-word>
+  <key-word :dialogVisible="isShowKeyWord" ref="keyWordDialog"></key-word>
 </div>

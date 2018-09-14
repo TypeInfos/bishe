@@ -30,9 +30,6 @@ export default {
     matrix
   },
   computed: {
-    keyWordVisible() {
-      return !!this.isShowKeyWord;
-    }
   },
   data() {
     return {
@@ -329,6 +326,7 @@ export default {
   methods: {
     // gjfAdd 进入页面先判断是否订购产品
     checkOrder() {
+      console.log('checkorder')
       this.$axios.post(this.$api.checkOrder, {
         pid: 1, // pid为1是词根雷达
       }).then((res) => {
@@ -390,12 +388,14 @@ export default {
     },
     getShopId() {
       try {
+        console.log('getShopId')
         chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
           type: 'getShopId',
         },
         response => {
           try {
             if (response.code === 200) {
+              console.log('checkbind')
               this.currentShopid = response.currentShopid
               this.$axios.post(this.$api.checkBind, {
                 id: this.currentShopid,
@@ -426,12 +426,15 @@ export default {
         window.location.reload();
       }
     },
-    isFirstLogin() {
+    isFirstLogin () {
+      console.log('isFirstLogin')
       this.$axios.post(this.$api.isFirst).then(res => {
         if (res) {
+          console.log('first login')
           this.firstFocusGoods = true;
           this.unFocusList();
         } else {
+          console.log('not first login')
           this.initDiv();
           this.firstInit();
         }
@@ -439,6 +442,7 @@ export default {
     },
     initFocusGoodsList() {
       this.initGoodsFocusLoading = true;
+      console.log('initFocusGoodsList')
       this.$axios.post(this.$api.firstFocus, this.userSelectedItem)
         .then(() => {
           this.userSelectedItem = [];
@@ -508,22 +512,35 @@ export default {
     },
     // 第一次初始化 请求后端是否把数据准备好，没有的话 一只 4秒轮询 直到 返回true
     firstInit() {
+      console.log('firstinit')
       this.$axios.get(this.$api.initialComplete)
         .then(res => {
           if (res) {
+            console.log('firstComplete is true')
             this.firstComplete = true;
           } else {
+            console.log('firstComplete is false')
             this.firstInitComplete = setInterval(() => {
+              console.log('开始轮训')
               this.$axios.get(this.$api.initialComplete)
                 .then(res => {
                   this.firstComplete = res;
                 })
+                .catch(err => {
+                  console.log('lun xun shibai', err)
+                  this.firstComplete = false
+                })
             }, 4000)
           }
+        })
+        .catch(err => {
+          console.log('first complete err', err)
+          this.firstComplete = true
         })
     },
     // 加载框 百分比
     initDiv() {
+      console.log('initDiv')
       this.startLoading = this.$loading({
         lock: true,
         text: 'Loading',
@@ -856,18 +873,20 @@ export default {
     },
     // 未关注列表
     unFocusList() {
+      console.log('unFocusList')
       let param = {
         currentPage: this.firstFocusGoodsCurrentPage,
         title: this.initGoodsName.trim().replace(/\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]/g, ''),
         pageSize: 16,
       }
       this.unFocusListLoading = true;
+      console.log('searchList')
       this.$axios.post(this.$api.searchList, param).then((res) => {
         this.unFocusListLoading = false;
         this.unFocus = res.data.list;
         this.firstFocusGoodsTotalPage = res.data.totalPage * 16;
         for (let i = 0; i < this.unFocus.length; i++) {
-          if (this.userSelectedItem.indexOf(this.unFocus[i].itemId) != -1) {
+          if (this.userSelectedItem.indexOf(this.unFocus[i].itemId) !== -1) {
             Object.assign(this.unFocus[i], {
               selectFlag: true,
             });
@@ -878,7 +897,10 @@ export default {
           }
         }
         this.result = this.unFocus;
-      });
+      }).catch(err => {
+        console.log('unfocuslist err', err)
+        this.unFocusListLoading = false
+      })
     },
     getFilterUnFocusList() {
       this.firstFocusGoodsCurrentPage = 1;
@@ -1416,6 +1438,7 @@ export default {
     },
     showKeyWord() {
       this.isShowKeyWord = true;
+      this.$refs.keyWordDialog.showDialog();
     }
   },
   watch: {
