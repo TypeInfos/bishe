@@ -6,6 +6,7 @@
 
 <script>
 import moment from 'moment'
+import loading from '@/components/Loading'
 import guidance from '@/components/guidance/index'
 import lineChart from '@/components/newLineChart'
 import showGoodsAside from '@/components/showGoodsList'
@@ -25,12 +26,17 @@ export default {
     guidance,
     expired,
     keyWord,
-    matrix
+    matrix,
+    loading
   },
   computed: {
+    isGlobalLoading() {
+      return this.isLoading;
+    }
   },
   data() {
     return {
+      isLoading: false, // 初始6个圈圈加载框是否显示
       expiredDays: -1,
       expiredTop: 0,
       showGuidance: false,
@@ -422,7 +428,8 @@ export default {
           this.firstFocusGoods = true
           this.unFocusList()
         } else {
-          this.initDiv()
+          // this.initDiv()
+          this.isLoading = false;
           this.firstInit()
         }
       })
@@ -435,7 +442,8 @@ export default {
           this.initFocusGoodsList = false
           this.initGoodsFocusLoading = false
           this.firstFocusGoods = false
-          this.initDiv()
+          this.firstComplete = false;
+          this.isLoading = false;
           this.firstInit()
         })
     },
@@ -502,74 +510,78 @@ export default {
         .then(res => {
           if (res) {
             this.firstComplete = true;
+            this.isLoading = true;
           } else {
             this.firstInitComplete = setInterval(() => {
               this.$axios.get(this.$api.initialComplete)
                 .then(isCompleted => {
                   this.firstComplete = isCompleted
+                  this.isLoading = isCompleted
                 })
                 .catch(() => {
                   this.firstComplete = false
+                  this.isLoading = false
                 })
             }, 4000)
           }
         })
         .catch(() => {
           this.firstComplete = true
+          this.isLoading = true
         })
     },
     // 加载框 百分比
     initDiv () {
-      this.startLoading = this.$loading({
-        lock: true,
-        text: 'Loading',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)',
-        customClass: 'startLoading'
-      })
-      document.querySelector('.startLoading').innerHTML = `<div class="startLoadingContainer">
-                                                            <h2>温馨提示</h2>
-                                                            <div class="anim">
-                                                              <div class="spinner">
-                                                                <div class="spinner-container container1">
-                                                                  <div class="circle1"></div>
-                                                                  <div class="circle2"></div>
-                                                                  <div class="circle3"></div>
-                                                                  <div class="circle4"></div>
-                                                                </div>
-                                                                <div class="spinner-container container2">
-                                                                  <div class="circle1"></div>
-                                                                  <div class="circle2"></div>
-                                                                  <div class="circle3"></div>
-                                                                  <div class="circle4"></div>
-                                                                </div>
-                                                                <!-- container3为了让正方形的四个球效果更好点，相当于延长动画的效果0.1秒 -->
-                                                                <div class="spinner-container container3">
-                                                                  <div class="circle1"></div>
-                                                                  <div class="circle2"></div>
-                                                                  <div class="circle3"></div>
-                                                                  <div class="circle4"></div>
-                                                                </div>
-                                                              </div>
-                                                              <p>数据正在加载中</p>
-                                                            </div>
-                                                          <p class="bottomP">进度<span id="startLoadingNumber"></span>%</p>
-                                                          <p>请耐心等待~</p>
-                                                        </div>`
-      this.startLoadingElement = document.getElementById('startLoadingNumber')
-      this.startLoadingTimer = setInterval(() => {
-        if (this.startLoadingnumber < 90) {
-          this.startLoadingnumber = this.startLoadingnumber + (Math.random() * 1.5)
-        } else {
-          this.startLoadingnumber = this.startLoadingnumber + (Math.random() * 0.4)
-          if (this.startLoadingnumber >= 99.6) {
-            clearInterval(this.startLoadingTimer)
-          }
-          if (this.firstComplete) {
-            this.startLoadingnumber = 100
-          }
-        }
-      }, 500)
+      // this.startLoading = this.$loading({
+      //   lock: true,
+      //   text: 'Loading',
+      //   spinner: 'el-icon-loading',
+      //   background: 'rgba(0, 0, 0, 0.7)',
+      //   customClass: 'startLoading'
+      // })
+      // document.querySelector('.startLoading').innerHTML = `<div class="startLoadingContainer">
+      //                                                       <h2>温馨提示</h2>
+      //                                                       <div class="anim">
+      //                                                         <div class="spinner">
+      //                                                           <div class="spinner-container container1">
+      //                                                             <div class="circle1"></div>
+      //                                                             <div class="circle2"></div>
+      //                                                             <div class="circle3"></div>
+      //                                                             <div class="circle4"></div>
+      //                                                           </div>
+      //                                                           <div class="spinner-container container2">
+      //                                                             <div class="circle1"></div>
+      //                                                             <div class="circle2"></div>
+      //                                                             <div class="circle3"></div>
+      //                                                             <div class="circle4"></div>
+      //                                                           </div>
+      //                                                           <!-- container3为了让正方形的四个球效果更好点，相当于延长动画的效果0.1秒 -->
+      //                                                           <div class="spinner-container container3">
+      //                                                             <div class="circle1"></div>
+      //                                                             <div class="circle2"></div>
+      //                                                             <div class="circle3"></div>
+      //                                                             <div class="circle4"></div>
+      //                                                           </div>
+      //                                                         </div>
+      //                                                         <p>数据正在加载中</p>
+      //                                                       </div>
+      //                                                     <p class="bottomP">进度<span id="startLoadingNumber"></span>%</p>
+      //                                                     <p>请耐心等待~</p>
+      //                                                   </div>`
+      // this.startLoadingElement = document.getElementById('startLoadingNumber')
+      // this.startLoadingTimer = setInterval(() => {
+      //   if (this.startLoadingnumber < 90) {
+      //     this.startLoadingnumber = this.startLoadingnumber + (Math.random() * 1.5)
+      //   } else {
+      //     this.startLoadingnumber = this.startLoadingnumber + (Math.random() * 0.4)
+      //     if (this.startLoadingnumber >= 99.6) {
+      //       clearInterval(this.startLoadingTimer)
+      //     }
+      //     if (this.firstComplete) {
+      //       this.startLoadingnumber = 100
+      //     }
+      //   }
+      // }, 500)
     },
     // 日期
     initData () {
@@ -1388,6 +1400,10 @@ export default {
     showKeyWord () {
       this.isShowKeyWord = true
       this.$refs.keyWordDialog.showDialog()
+    },
+    cancelLoading () {
+      this.isLoading = false
+      this.$refs.loading.cancelLoading()
     }
   },
   watch: {
@@ -1398,10 +1414,10 @@ export default {
     // 首次登录判断
     firstComplete (val) {
       if (val) {
-        clearInterval(this.firstInitComplete)
-        setTimeout(() => {
-          this.startLoadingnumber = 100
-        }, 500)
+        // clearInterval(this.firstInitComplete)
+        // setTimeout(() => {
+        //   this.startLoadingnumber = 100
+        // }, 500)
         this.initData()
         this.focusList()
         this.unFocusList()
@@ -1411,11 +1427,11 @@ export default {
     },
     // 首次登录 过渡效果
     startLoadingnumber (val) {
-      document.getElementById('startLoadingNumber').innerText = `${this.toFix(val)}`
-      if (val >= 100) {
-        clearInterval(this.startLoadingTimer)
-        this.startLoading.close()
-      }
+      // document.getElementById('startLoadingNumber').innerText = `${this.toFix(val)}`
+      // if (val >= 100) {
+      //   clearInterval(this.startLoadingTimer)
+      //   this.startLoading.close()
+      // }
     },
     // 时间改变请求数据
     nealDay (val) {
@@ -1517,6 +1533,9 @@ export default {
         this.unFocusList()
       }
     }
-  }
+  },
+  beforeDestroy() {
+    this.cancelLoading()
+  },
 }
 </script>
