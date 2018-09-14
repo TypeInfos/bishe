@@ -342,7 +342,8 @@ export default {
         } else {
           this.$message({
             message: res.message,
-            type: 'warning'
+            type: 'warning',
+            customClass: 'message-g-zindex'
           })
           this.$router.push({ name: 'GuidePage', query: { type: -1, name: 'rootRadar' } })
         }
@@ -454,7 +455,8 @@ export default {
           this.$message({
             showClose: true,
             message: '成功添加监控商品',
-            type: 'success'
+            type: 'success',
+            customClass: 'message-g-zindex'
           })
           this.userSelectedItem = []
           this.addGoodsFocusloading = false
@@ -478,7 +480,8 @@ export default {
           this.$message({
             showClose: true,
             message: '删除成功',
-            type: 'success'
+            type: 'success',
+            customClass: 'message-g-zindex'
           })
           for (let i = 0; i < this.root.length; i++) {
             if (this.wrapData[index].rootName === this.root[i]) {
@@ -501,6 +504,7 @@ export default {
           showClose: true,
           message: '取消删除',
           type: 'warning',
+          customClass: 'message-g-zindex'
         })
       })
     },
@@ -610,7 +614,8 @@ export default {
           this.$message({
             showClose: true,
             message: '添加成功',
-            type: 'success'
+            type: 'success',
+            customClass: 'message-g-zindex'
           })
           this.customerRootQueue.push(this.wordInput)
           this.root.splice(0, 0, this.wordInput)
@@ -623,7 +628,8 @@ export default {
         this.$message({
           showClose: true,
           message: '请输入自定义词根',
-          type: 'warning'
+          type: 'warning',
+          customClass: 'message-g-zindex'
         })
       }
     },
@@ -687,6 +693,7 @@ export default {
             showClose: true,
             message: '后台正在进行为您修复数据',
             type: 'info',
+            customClass: 'message-g-zindex'
           })
           this.repairDataStatus = false
         }).catch(() => {

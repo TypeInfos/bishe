@@ -46,12 +46,14 @@ service.interceptors.response.use(
         }
       });
       if (!flag) {
+        // if (response.data.message === '词根为空' || response.data.message === '关键词为空') return
         Message({
           message: response.data.message,
           title: 'warning',
           showClose: true,
           type: 'warning',
           duration: 4000, // 显示时长  单位s
+          customClass: 'message-g-zindex'
         });
       }
       return Promise.reject(response.data.message);
@@ -69,6 +71,7 @@ service.interceptors.response.use(
         type: 'error',
         showClose: true,
         duration: 4000, // 显示时长  单位s
+        customClass: 'message-g-zindex'
       });
     }
     return Promise.reject(error);

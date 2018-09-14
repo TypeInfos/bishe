@@ -95,7 +95,8 @@ export default {
   },
   watch: {
     itemId () {
-      this.getMatrixData()
+      this.data = {}
+      this.isLoading = true
     }
   }
 }
@@ -111,7 +112,6 @@ export default {
     font-weight: 500;
   }
   .chart {
-    width: 1400px;
     height: 440px;
     margin: 0 auto;
     border: 1px solid #ADADAD;
@@ -140,10 +140,12 @@ export default {
     }
     &::after {
       content: "近30天词根转化率";
+      position: absolute;
       height: 20px;
       width: 200px;
       bottom: -10px;
-      left: 600px;
+      left: 50%;
+      transform: translateX(-50%);
     }
     .lt-area,
     .lb-area,
