@@ -141,7 +141,6 @@
         show-icon
         center> -->
         <div class="loading-alert" v-if="checkGoodsInfoDataLoading">
-          <i class="ds-iconfont icon-guanbi"></i>
           <span class="title">您的数据正在准备中，请勿关闭浏览器或者退出登录，否则可能导致数据异常~</span>
         </div>
       </el-alert>
@@ -150,7 +149,7 @@
           <div class="m-select">
             <el-dropdown size="small" @command="chooseZd">
               <span class="el-dropdown-link">
-                {{czd}}
+                {{ czd }}
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
@@ -161,21 +160,29 @@
             </el-dropdown>
             <el-dropdown size="small" class="ml20" trigger="hover" :hide-on-click="true" @command="chooseDate">
               <span class="el-dropdown-link">
-                {{turnNealDay}}
+                {{ turnNealDay }}
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item :command="`最近30天${thirtyDay}`">
                   <span class="m-time-dropDown">最近30天
-                    <span class="time">{{thirtyDay}}</span>
+                    <span class="time">{{ thirtyDay }}</span>
                   </span>
                 </el-dropdown-item>
                 <el-dropdown-item command="自定义" divided>
                   <span class="m-time-dropDown">自定义
                     <span class="time">
                       <div class="block">
-                        <el-date-picker v-model="customTime" type="datetimerange" :picker-options="pickerOptions" range-separator="至" start-placeholder="开始日期"
-                          end-placeholder="结束日期" align="right" popper-class="gjfComponent" format="yyyy-MM-dd">
+                        <el-date-picker
+                          v-model="customTime"
+                          type="datetimerange"
+                          :picker-options="pickerOptions"
+                          range-separator="至"
+                          start-placeholder="开始日期"
+                          end-placeholder="结束日期"
+                          align="right"
+                          popper-class="gjfComponent"
+                          format="yyyy-MM-dd">
                         </el-date-picker>
                       </div>
                     </span>
@@ -185,12 +192,25 @@
             </el-dropdown>
           </div>
         </div>
-        <el-button class="repairBtn" type="primary" :loading="repairDataStatus" @click="repairData" plain>修复数据</el-button>
-        <el-button class="importBtn" disabled type="primary" plain>导入数据</el-button>
+        <el-button
+          class="repairBtn"
+          type="primary"
+          :loading="repairDataStatus"
+          @click="repairData"
+          plain>修复数据</el-button>
+        <el-button
+          class="importBtn"
+          disabled type="primary"
+          plain>导入数据</el-button>
       </div>
       <!-- </el-card> -->
       <!-- v-loading="singleItemLoading" -->
-      <el-card v-if="isShow" class="box-card mt20"  element-loading-text="为您加载商品详细数据，请稍后" v-loading="checkGoodsInfoDataLoading" shadow="hover">
+      <el-card
+        v-if="isShow"
+        class="box-card mt20"
+        element-loading-text="为您加载商品详细数据，请稍后"
+        v-loading="checkGoodsInfoDataLoading"
+        shadow="hover">
         <div slot="header" class="clearfix">
           <span class="headerContent">单品整体分析</span>
           <!-- 先不加等8月份后再进行优化 -->
@@ -201,8 +221,15 @@
           </div>
         </div>
         <div class="checkListContainer">
-          <el-checkbox-group class="checkListDiv" v-model="checkList" :max="2">
-            <el-checkbox v-for="(item, index) in checkListGroup" :key="index" :label="item.label" @click.native="checkCheckbox">
+          <el-checkbox-group
+            class="checkListDiv"
+            v-model="checkList"
+            :max="2">
+            <el-checkbox
+              v-for="(item, index) in checkListGroup"
+              :key="index"
+              :label="item.label"
+              @click.native="checkCheckbox">
             </el-checkbox>
           </el-checkbox-group>
           <div class="selectSurplus">
@@ -210,14 +237,26 @@
             <el-button @click="resetCheckBoxList1" type="text">清空</el-button>
           </div>
         </div>
-        <div v-if="globalAnalysisShow" class="globalAnalysis" v-loading="singleItemLoading" element-loading-text="拼命加载中">
-          <el-button class="globalAnalysisTabelData" @click="globalAnalysisDetailData" type="text">查看详情</el-button>
+        <div
+          v-if="globalAnalysisShow"
+          class="globalAnalysis"
+          v-loading="singleItemLoading"
+          element-loading-text="拼命加载中">
+          <el-button
+            class="globalAnalysisTabelData"
+            @click="globalAnalysisDetailData"
+            type="text">查看详情</el-button>
           <lineChart  chart-id="lineChart" :chart-data="singleChartsData">
           </lineChart>
         </div>
       </el-card>
       <matrix :itemId="currentItemId"></matrix>
-      <el-card v-if="isShow"  element-loading-text="为您加载商品详细数据，请稍后" v-loading="checkGoodsInfoDataLoading" class="box-card mt20" shadow="hover">
+      <el-card
+        v-if="isShow"
+        element-loading-text="为您加载商品详细数据，请稍后"
+        v-loading="checkGoodsInfoDataLoading"
+        class="box-card mt20"
+        shadow="hover">
         <div slot="header" class="clearfix">
           <span class="headerContent">单品词根分析</span>
           <!-- 先不加等8月份后再进行优化 -->
@@ -232,7 +271,13 @@
           </div>
         </div>
         <div class="roots">
-          <el-checkbox-group class="rootContent" v-model="checkListRoot" :max="4" @click.native="checkCheckbox3" size="medium" v-loading="itemLoading">
+          <el-checkbox-group
+            class="rootContent"
+            v-model="checkListRoot"
+            :max="4"
+            @click.native="checkCheckbox3"
+            size="medium"
+            v-loading="itemLoading">
             <el-checkbox-button v-for="(item, index) in root" :label="item" :key="index">{{item}}</el-checkbox-button>
           </el-checkbox-group>
         </div>
@@ -261,9 +306,20 @@
           </div>
         </div>
         <!--ID 为喵点-->
-        <div v-for="(item, index) in wrapData" :key="index" class="rootEcharts" :id="item.root" @mouseenter="enter(index)" @mouseleave="leave(index)">
-          <el-button class="deleteAnaysis" @click="deleteAnaysis(index)" type="text">删除词根</el-button>
-          <el-button class="rootAnalysisTabelData" @click="rootAnalysisDetailData(index)" type="text">查看详情</el-button>
+        <div
+          v-for="(item, index) in wrapData"
+          :key="index" class="rootEcharts"
+          :id="item.root"
+          @mouseenter="enter(index)"
+          @mouseleave="leave(index)">
+          <el-button
+            class="deleteAnaysis"
+            @click="deleteAnaysis(index)"
+            type="text">删除词根</el-button>
+          <el-button
+            class="rootAnalysisTabelData"
+            @click="rootAnalysisDetailData(index)"
+            type="text">查看详情</el-button>
           <div class="rootEchartLeft">
             <h1>{{item.rootName}}</h1>
             <p>最近7天效率分
@@ -293,7 +349,10 @@
             </lineChart>
           </div>
         </div>
-        <div v-loading="!rootAnalysisCompleteLoading" element-loading-text="为您加载词根数据" style="height:100px;"></div>
+        <div
+          v-loading="!rootAnalysisCompleteLoading"
+          element-loading-text="为您加载词根数据"
+          style="height:100px;"></div>
         <h3 v-if="maxEcharts" class="maxH3">最多只能显示四个词根的数据哦～</h3>
         <h3 v-else="maxEcharts" class="maxH3">最多可以显示四个词根的数据哦～</h3>
         <div class="add-world mb20">
@@ -322,7 +381,10 @@
           <el-button icon="el-icon-close" @click="addWorldVisible = false"></el-button>
         </div>
         <div class="addWordContent">
-          <el-input placeholder="请输入内容" v-model="wordInput" clearable>
+          <el-input
+            placeholder="请输入内容"
+            v-model="wordInput"
+            clearable>
           </el-input>
           <div class="addCustomWordButton">
             <el-button type="primary" @click="saveAddWord">确定</el-button>
@@ -332,7 +394,10 @@
       </el-dialog>
     </div>
   </div>
-  <el-dialog class="rootRadartableDataSort" :title="tableDataTitle" :visible.sync="showTableDataDialog">
+  <el-dialog
+    class="rootRadartableDataSort"
+    :title="tableDataTitle"
+    :visible.sync="showTableDataDialog">
       <tableData :table-data="tableData" :total-data="totalData"></tableData>
   </el-dialog>
   <showGoodsAside

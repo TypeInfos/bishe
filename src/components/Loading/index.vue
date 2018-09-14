@@ -84,6 +84,9 @@ export default {
     },
     init() {
       this.startLoadingnumber = 0;
+    },
+    cancelLoading () {
+      this.startLoading.close();
     }
   },
   mounted() {
@@ -96,6 +99,10 @@ export default {
         this.showLoading()
       }
       return
+    },
+    $route (to, from) {
+      console.log('router changed')
+      this.startLoading.close();
     }
   }
 }
