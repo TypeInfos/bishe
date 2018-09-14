@@ -4,7 +4,8 @@ const id = {
   kzp: 'hnchopnjjannphjdengkbapneapdoadh',
   test: 'cpnmealmpgcapggbgjgfahpiifbbooef',
   online: 'lnbdcilfaojoldgckojoidnafpagkjbn',
-  testVersion: 'cpnmealmpgcapggbgjgfahpiifbbooef'
+  testVersion: 'cpnmealmpgcapggbgjgfahpiifbbooef',
+  locality: ''
 };
 const state = {
   isLogin: false,
