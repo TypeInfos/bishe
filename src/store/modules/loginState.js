@@ -2,6 +2,7 @@
 const id = {
   lhr: 'lajbffnlgcnmlkkbbogpkpgjkfmpmjbf',
   kzp: 'hnchopnjjannphjdengkbapneapdoadh',
+  gjf: 'kgjgpmnjjnooebjcjnoacofabhpejgck',
   test: 'cpnmealmpgcapggbgjgfahpiifbbooef',
   online: 'lnbdcilfaojoldgckojoidnafpagkjbn',
   testVersion: 'cpnmealmpgcapggbgjgfahpiifbbooef'
@@ -9,7 +10,7 @@ const id = {
 const state = {
   isLogin: false,
   bindTaobaoName: '',
-  editorExtensionId: id.lhr, // 插件ID
+  editorExtensionId: id.gjf, // 插件ID
 };
 // mutations
 const mutations = {

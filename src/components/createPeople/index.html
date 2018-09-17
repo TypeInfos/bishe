@@ -20,21 +20,20 @@
             </div>
             <div class="name">
                 <span class="star">*</span>
-                <span>名称：</span>
+                <span class="nameSpan">名称:</span>
                 <el-input placeholder="男+18-24岁" v-model="name"></el-input>
                 <span class="mustWrite" v-if="showMustWrite">必填</span>
             </div>
             <!-- 人口属性人群 -->
-            <div class="peopleProperty" v-if="showPeopleProperty">
+            <div class="twoProperty" v-if="showPeopleProperty">
                 <div
-                    :class="setClass(prefixIndex)"
+                    class="control-group"
                     :v-model="prefixIndex"
                     v-for="(prefix,prefixIndex) in peoplePropertyObj"
                     :key="prefixIndex">
-                    <span :class="setClass('span')">{{ prefix.name }}:</span>
+                    <span class="control-span">{{ prefix.name }}:</span>
                     <el-checkbox-group v-model="peopleCheckList">
                         <el-checkbox
-                            :class="setClass(postfixIndex)"
                             v-for="(postfix,postfixIndex) in prefix.tagOptions"
                             :key="postfixIndex"
                             :label="postfix.tagName"
@@ -43,16 +42,15 @@
                 </div>
             </div>
             <!-- 天气属性人群 -->
-            <div class="weatherProperty" v-if="showWeatherProperty">
+            <div class="twoProperty" v-if="showWeatherProperty">
                 <div
-                    :class="setClass(prefixIndex)"
+                    class="control-group"
                     :v-model="prefixIndex"
                     v-for="(prefix,prefixIndex) in weatherPropertyObj"
                     :key="prefixIndex">
-                    <span :class="setClass('span')">{{ prefix.name }}:</span>
+                    <span class="control-span">{{ prefix.name }}:</span>
                     <el-checkbox-group v-model="peopleCheckList">
                         <el-checkbox
-                            :class="setClass(postfixIndex)"
                             v-for="(postfix,postfixIndex) in prefix.tagOptions"
                             :key="postfixIndex"
                             :label="postfix.tagName"

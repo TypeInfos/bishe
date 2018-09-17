@@ -200,9 +200,6 @@ export default {
         this.showWeatherProperty = false;
       }
     },
-    setClass(prefixIndex) {
-      return (`prefix${prefixIndex}`);
-    },
   },
   filters: {
     NumFormat(value) {
