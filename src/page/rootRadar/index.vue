@@ -11,6 +11,7 @@ import guidance from '@/components/guidance/index'
 import lineChart from '@/components/newLineChart'
 import showGoodsAside from '@/components/showGoodsList'
 import expired from '@/components/expired'
+import { setStore, getStore } from '@/utils/localStorage';
 import backTop from '../../components/backToTop'
 import tableData from './tableData'
 import keyWord from './components/keyWord'
@@ -320,6 +321,7 @@ export default {
     } else {
       this.showGuidance = false
     }
+    this.czd = getStore('rootRadarEnd') ? getStore('rootRadarEnd') : '全部终端'
     // 进入页面先判断是否订购产品
     this.checkOrder()
   },
@@ -589,19 +591,26 @@ export default {
     },
     // 日期
     initData () {
-      const myDate = new Date()
-      const hours = myDate.getHours()
-      if (hours >= 8) {
-        this.currentDate = moment().subtract(1, 'days').format('YYYY-MM-DD')
-        this.nealThirtyDay = moment().subtract(30, 'days').format('YYYY-MM-DD')
+      if (getStore('rootRadarDate').includes('自定义')) {
+        // 正则匹配出开始时间和结束时间
+        let reg = /\d{4}(\-|\/|.)\d{1,2}\1\d{1,2}/g;
+        let str = getStore('rootRadarDate')
+        this.customTime = str.match(reg)
       } else {
-        this.nealThirtyDay = moment().subtract(31, 'days').format('YYYY-MM-DD')
-        this.currentDate = moment().subtract(2, 'days').format('YYYY-MM-DD')
+        const myDate = new Date()
+        const hours = myDate.getHours()
+        if (hours >= 8) {
+          this.currentDate = moment().subtract(1, 'days').format('YYYY-MM-DD')
+          this.nealThirtyDay = moment().subtract(30, 'days').format('YYYY-MM-DD')
+        } else {
+          this.nealThirtyDay = moment().subtract(31, 'days').format('YYYY-MM-DD')
+          this.currentDate = moment().subtract(2, 'days').format('YYYY-MM-DD')
+        }
+        this.curBegin = this.nealThirtyDay
+        this.curEnd = this.currentDate
+        this.thirtyDay = `${this.nealThirtyDay} 至 ${this.currentDate}`
+        this.nealDay = `最近30天${this.thirtyDay}`
       }
-      this.curBegin = this.nealThirtyDay
-      this.curEnd = this.currentDate
-      this.thirtyDay = `${this.nealThirtyDay} 至 ${this.currentDate}`
-      this.nealDay = `最近30天${this.thirtyDay}`
     },
     // 添加自定义词根
     saveAddWord () {
@@ -1183,6 +1192,7 @@ export default {
     // 终端选择
     chooseZd (val) {
       this.czd = val
+      setStore('rootRadarEnd', this.czd)
     },
     // 天数选择
     chooseDate (val) {
@@ -1430,6 +1440,7 @@ export default {
         this.initData()
         this.focusList()
         this.unFocusList()
+        // console.log('fffffffffffffffffffffffffirt')
         // this.watchLogin();
         //      关注列表
       }
@@ -1466,6 +1477,9 @@ export default {
       this.wrapData = []
       this.getSingleItem()
       this.getRootData(this.root)
+    },
+    turnNealDay(val) {
+      setStore('rootRadarDate', val)
     },
     // 改变终端请求
     czd () {
