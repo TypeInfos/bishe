@@ -2,10 +2,11 @@
 const id = {
   lhr: 'lajbffnlgcnmlkkbbogpkpgjkfmpmjbf',
   kzp: 'hnchopnjjannphjdengkbapneapdoadh',
+  gjf: 'kgjgpmnjjnooebjcjnoacofabhpejgck',
   test: 'cpnmealmpgcapggbgjgfahpiifbbooef',
   online: 'lnbdcilfaojoldgckojoidnafpagkjbn',
   testVersion: 'cpnmealmpgcapggbgjgfahpiifbbooef',
-  locality: ''
+  locality: 'cliiiblppljchgdlekfijlejmbfmglme'
 };
 const state = {
   isLogin: false,

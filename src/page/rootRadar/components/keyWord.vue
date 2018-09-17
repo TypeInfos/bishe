@@ -88,7 +88,7 @@ el-dialog(
       el-table
         el-table-column(type='selection' align="center" width='60')
         el-table-column(prop='' label='关键词' min-width='150')
-        el-table-column(:prop='111' :label='target.label' v-for="target in tableHeaderTargets")
+        el-table-column(:prop='111' :label='target.label' v-for="(target,index) in tableHeaderTargets" :key="index")
         //- el-table-column(prop='' label='质量分' align="center")
         //-   el-table-column(label='PC端' sortable align="center" min-width='80')
         //-   el-table-column(label='无线端' align="center" sortable min-width='80')

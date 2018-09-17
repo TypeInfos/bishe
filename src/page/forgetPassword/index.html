@@ -19,7 +19,7 @@
           </span>
           <el-input class="captcha" placeholder="验证码" v-model="code">
           </el-input>
-          <el-button v-if="!timeFlag" type="primary" @click="getCode">{{ codeName }}</el-button>
+          <el-button v-if="!timeFlag" :loading="codeLoading" type="primary" @click="getCode">{{ codeName }}</el-button>
           <el-button v-else size="mini" type="primary">{{time}} 秒</el-button>
         </div>
         <div class="box">

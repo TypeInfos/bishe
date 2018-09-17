@@ -47,28 +47,38 @@ export default {
     // 绑定群组滑动事件
     initTableScroll() {
       this.$nextTick(() => {
+        console.log('触发了 initTableScroll');
         window.removeEventListener('scroll', windowScrollEve);
         window.addEventListener('scroll', windowScrollEve);
         const groups = document.querySelectorAll('.scroll-groups');
         groups.forEach(i => {
           let currentGroup = i.querySelector('.el-table__body-wrapper');
+          console.log(currentGroup)
           currentGroup.removeEventListener('scroll', groupScrollEve);
           currentGroup.addEventListener('scroll', groupScrollEve);
         });
       });
     },
     getGroupSummary(param) {
-      const { columns } = param;
+      const { columns, data } = param;
       const sums = [];
-      columns.forEach((c, i) => {
-        if (i === 0) {
-          sums.push('');
-        } else if (i === 1) {
-          sums.push('整体');
-        } else {
-          sums.push('-');
-        }
-      });
+      let group = this.groupList.find(g => g.list.some(l => data[0] && l.crowdId === data[0].crowdId))
+      if (group) {
+        columns.forEach((c, i) => {
+          if (i === 0) {
+            sums.push('');
+          } else if (i === 1) {
+            sums.push('整体');
+          } else {
+            let p = group.total[0][c.property]
+            p = p || p === 0 ? p : '-'
+            if (c.property === 'discount') {
+              p = '-'
+            }
+            sums.push(p)
+          }
+        });
+      }
       return sums;
     },
   },
