@@ -59,16 +59,18 @@ export default {
                                                                   </div>`
       let loadingDom = document.getElementById('startLoadingNumber');
       // this.startLoading.show();
+      // console.log(loadingDom);
+      loadingDom.innerText = 0;
       this.startLoadingTimer = setInterval(() => {
         // console.log('111111');
         loadingDom.innerText = this.startLoadingnumber;
         // console.log(this.startLoadingComplete);
         // console.log(this.startLoadingnumber);
         if (this.startLoadingComplete) {
+          loadingDom.innerText = 100;
           clearInterval(this.startLoadingTimer)
           // console.log('清除定时器');
-          this.startLoadingnumber = 100;
-          this.startLoading.close();
+          this.cancelLoading();
           // this.startLoading = null;
         }
         if (parseFloat(this.startLoadingnumber) < 90) {
@@ -84,6 +86,9 @@ export default {
     },
     init() {
       this.startLoadingnumber = 0;
+    },
+    cancelLoading () {
+      this.startLoading.close();
     }
   },
   mounted() {
@@ -96,7 +101,11 @@ export default {
         this.showLoading()
       }
       return
-    }
+    },
+    // $route (to, from) {
+    //   console.log('router changed')
+    //   this.startLoading.close();
+    // }
   }
 }
 </script>

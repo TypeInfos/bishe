@@ -137,16 +137,19 @@ export default {
         this.$message({
           message: '名称不能为空',
           type: 'warning',
+          customClass: 'message-g-zindex'
         });
       } else if (this.overPeopleNumber === '-' || this.overPeopleNumber === 0) {
         this.$message({
           message: '覆盖人群数量无意义',
           type: 'warning',
+          customClass: 'message-g-zindex'
         });
       } else if (this.price > 300 || this.price < 5) {
         this.$message({
           message: '溢价范围有误',
           type: 'warning',
+          customClass: 'message-g-zindex'
         });
       } else {
         chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
@@ -172,7 +175,11 @@ export default {
               this.$emit('refreshData');
             });
           } else {
-            this.$message.error('人群创建重复！');
+            this.$message({
+              message: '人群创建重复',
+              type: 'error',
+              customClass: 'message-g-zindex'
+            });
           }
         });
       }

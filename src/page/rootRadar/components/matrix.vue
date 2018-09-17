@@ -23,14 +23,15 @@ el-card.matrix(element-loading-text="正在加载数据" v-loading="isLoading")
           slot="reference"
           :style=`{ width: renderData.radius + 'px',
                     height: renderData.radius + 'px',
-                    bottom: item.yValue + renderData.radius / 2 + 30 + 'px',
-                    left: item.xValue + 15 + 'px',
+                    bottom: item.bottom,
+                    left: item.left,
                     background: bgColors[index % 14]}`) {{ item.name }}
 </template>
 
 <script>
 import { getMatrixDataAPI } from '@/assets/api/rootRadar'
 import { isEmpty } from '@/utils/helper'
+
 
 export default {
   props: {
@@ -44,14 +45,35 @@ export default {
       data: {},
       isLoading: false,
       // bgColors: ['#0088FE', '#00C49F', '#33A0FE', '#FFBB28', '#0081F1', '#FF8441', '#DADADA', '#EE3B61', '#3A5CD3', '#FF6590', '#0075D2', '#9575DE', '#0052A3', '#889BBE']
-      bgColors: ['#0088FE', '#00C49F', '#33A0FE', '#FFBB28', '#0081F1', '#FF8441', '#DADADA', '#EE3B61', '#FF6590', '#9575DE', '#889BBE']
+      bgColors: ['#0088FE', '#00C49F', '#33A0FE', '#FFBB28', '#0081F1', '#FF8441', '#DADADA', '#EE3B61', '#FF6590', '#9575DE', '#889BBE'],
+      renderData: {},
+      resizeTimer: null
     }
   },
   mounted () {
-    this.getMatrixData()
+    this.initResizeEvent()
+  },
+  beforeDestroy () {
+    window.removeEventListener('resize', reszieHandler)
   },
   methods: {
+    // 监听窗口大小改变时间
+    initResizeEvent () {
+      const reszieHandler = () => {
+        if (this.resizeTimer) {
+          clearTimeout(this.resizeTimer)
+        }
+        this.resizeTimer = setTimeout(() => {
+          console.log('resize event')
+          this.renderData = this.formatData()
+        }, 300)
+      }
+      window.addEventListener('resize', () => {
+        reszieHandler()
+      })
+    },
     async getMatrixData () {
+      this.data = {}
       if (!this.itemId) return
       this.isLoading = true
       let res = await getMatrixDataAPI({ itemId: this.itemId })
@@ -59,14 +81,25 @@ export default {
         this.data = res.data
       }
       this.isLoading = false
-    }
-  },
-  computed: {
-    renderData () {
-      if (!isEmpty(this.data)) return {}
+      this.renderData = this.formatData()
+    },
+    getWidth () {
+      return parseInt(document.querySelector('.matrix-body .chart').getBoundingClientRect().width, 10) - 2
+    },
+    getLeft (xValue, radius) {
+      const width = this.getWidth()
+      return `${(width - radius - 30) * xValue + 15}px`
+    },
+    getBottom (yValue, radius) {
+      return `${(440 - radius - 30) * yValue + 15}px`
+    },
+    formatData () {
+      if (isEmpty(this.data)) return {}
       let data = this.data.matrix.reduce((all, item) => {
-        let i = item.shift()
+        let i = item[0]
         i.labelName = i.name
+        i.bottom = this.getBottom(parseFloat(i.yValue), parseFloat(this.data.radius))
+        i.left = this.getLeft(parseFloat(i.xValue), parseFloat(this.data.radius))
         i.labelName += item.reduce((plus, name) => {
           plus += `、${name.name}`
           return plus
@@ -82,7 +115,8 @@ export default {
   },
   watch: {
     itemId () {
-      this.getMatrixData()
+      this.data = {}
+      this.isLoading = true
     }
   }
 }
@@ -98,7 +132,6 @@ export default {
     font-weight: 500;
   }
   .chart {
-    width: 1400px;
     height: 440px;
     margin: 0 auto;
     border: 1px solid #ADADAD;
@@ -127,10 +160,12 @@ export default {
     }
     &::after {
       content: "近30天词根转化率";
+      position: absolute;
       height: 20px;
       width: 200px;
       bottom: -10px;
-      left: 600px;
+      left: 50%;
+      transform: translateX(-50%);
     }
     .lt-area,
     .lb-area,

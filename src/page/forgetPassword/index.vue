@@ -18,6 +18,7 @@ export default {
       time: 60, // 倒计时
       timeFlag: false, // 是否显示倒计时
       codeName: '获取验证码',
+      codeLoading:false, // 验证码loading
       // timer: null, // 定时器
       // gjfAdd起始
       showSecretError1: false,
@@ -66,24 +67,28 @@ export default {
       if (this.phoneNum) {
         const myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
         if (myreg.test(this.phoneNum)) {
+          this.codeLoading = true;
           this.$axios.post(this.$api.code, {
             phone: this.phoneNum,
             type: 2,
           }).then(() => {
+            this.codeLoading = false;
             this.countDown();
           });
         } else {
           this.$message({
             showClose: true,
             message: '手机号格式错误',
-            type: 'warning'
+            type: 'warning',
+            customClass: 'message-g-zindex'
           });
         }
       } else {
         this.$message({
           showClose: true,
           message: '请先填写手机号',
-          type: 'warning'
+          type: 'warning',
+          customClass: 'message-g-zindex'
         });
       }
     },
@@ -109,25 +114,29 @@ export default {
         this.$message({
           showClose: true,
           message: '手机号不能为空',
-          type: 'warning'
+          type: 'warning',
+          customClass: 'message-g-zindex'
         });
       } else if (!this.code) {
         this.$message({
           showClose: true,
           message: '验证码不能为空',
-          type: 'warning'
+          type: 'warning',
+          customClass: 'message-g-zindex'
         });
       } else if (!this.pwd) {
         this.$message({
           showClose: true,
           message: '密码不能为空',
-          type: 'warning'
+          type: 'warning',
+          customClass: 'message-g-zindex'
         });
       } else if (this.pwd !== this.rePwd) {
         this.$message({
           showClose: true,
           message: '两次密码不相同',
-          type: 'warning'
+          type: 'warning',
+          customClass: 'message-g-zindex'
         });
       } else {
         this.$axios.post(this.$api.forget, {
@@ -139,9 +148,10 @@ export default {
           this.$message({
             showClose: true,
             message: '密码修改成功',
-            type: 'warning'
+            type: 'success',
+            customClass: 'message-g-zindex'
           });
-          this.resetData();
+          this.$router.push('/login');
         });
       }
     },

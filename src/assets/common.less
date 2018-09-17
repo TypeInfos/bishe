@@ -104,6 +104,7 @@ b {
 // 饿了么样式重置
 .el-header {
   min-width: 1375px;
+  z-index: 9999;
   padding:0;
 }
 .el-footer {
@@ -131,4 +132,12 @@ b {
 }
 .el-dropdown-menu--small .el-dropdown-menu__item {
   font-size: 12px;
+}
+
+.message-g-zindex {
+  z-index: 10000 !important;
+}
+
+.el-dropdown-menu.el-popper{
+  z-index: 10001 !important;
 }

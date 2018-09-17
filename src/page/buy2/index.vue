@@ -64,11 +64,13 @@ export default {
         this.$message({
           message: '您未同意《付款协议》',
           type: 'warning',
+          customClass: 'message-g-zindex'
         });
       } else if (!this.showTick) {
         this.$message({
           message: '您未选择支付方式',
           type: 'warning',
+          customClass: 'message-g-zindex'
         });
       } else {
         // 提交订单 去支付

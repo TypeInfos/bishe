@@ -18,8 +18,8 @@ export function deepClone(val) {
 export const isEmpty = val => {
   for (let k in val) {
     if (k || k === 0) {
-      return true
+      return false
     }
   }
-  return false
+  return true
 }

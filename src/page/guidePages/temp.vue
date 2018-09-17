@@ -22,6 +22,7 @@ export default {
       }
       return str
     },
+
     buyName () {
       const mapName = {
         rootRadar: 'buy1',
@@ -34,6 +35,20 @@ export default {
     goBuy () {
       this.$router.push({ name: this.buyName })
     },
+        // 获取用户信息
+    getUserInfo () {
+      this.$axios.get(this.$api.info).then(res => {
+        this.$store.dispatch('login')
+        this.$store.dispatch('setTaobaoName', {
+          name: res.data.name
+        })
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+  },
+  created(){
+    this.getUserInfo();
   },
 }
 </script>

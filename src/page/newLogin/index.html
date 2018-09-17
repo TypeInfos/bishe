@@ -8,7 +8,7 @@
           <h1 v-if="active === 0">登录抖数账号</h1>
           <h1 v-else-if="active === 1">登录淘宝账号</h1>
           <h1 v-else-if="active === 2">店铺名称</h1>
-          <h1 v-else-if="active === 3">使用淘宝账号登陆</h1>
+          <h1 v-else-if="active === 3">使用淘宝账号登陆</h1>
         </div>
         <div class="r-content" v-loading="loginLoading">
           <el-form>
@@ -20,7 +20,7 @@
               </div>
               <div class="box">
                   <span class="same"><i class="iconfont iconDec">&#xe62d;</i></span>
-                  <el-input type="password" placeholder="密码" v-model="vipPwd">
+                  <el-input type="password"  placeholder="密码" v-model="vipPwd">
                   </el-input>
               </div>
               <div class="boxS">
