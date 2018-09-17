@@ -18,6 +18,7 @@ import lineChart from '@/components/newLineChart/index';
 import createPeople from '@/components/createPeople/index';
 import expired from '@/components/expired'
 import Loading from '@/components/Loading'
+import { setStore, getStore } from '@/utils/localStorage';
 import groupMixins from './mixins/group';
 import errorTipsMixins from './mixins/errorTips'
 
@@ -357,6 +358,7 @@ export default {
       }).then((res) => {
         this.expiredDays = res.data
         if (res.data > 0) {
+          // 从localStorage读入数据
           this.getShopId();
         } else {
           this.$message({
@@ -1029,6 +1031,11 @@ export default {
                     }, resp.data[i]);
                   }
                   this.groupList = resp.data;
+                  this.groupList.forEach(g => {
+                    if (g.groupName === '未标签化群组') {
+                      g.list.push({})
+                    }
+                  })
                   this.initGroupLoading = false;
                   // this.startloadingComplete = true;
                   // hr: 在这里 为 groupList添加总和数据 添加事件和绑定
@@ -1059,6 +1066,8 @@ export default {
         });
         this.loginName = res.data.loginName;
         this.currentToken = res.data.token;
+        // 读入本地数据，用于储存
+        this.readLocalStorge();
         // this.giveTokenToExtension();
         const checkCookie = this.$cookies.isKey(`${this.loginName}Item`);
         if (checkCookie) {
@@ -1319,6 +1328,8 @@ export default {
         }
       }
       this.tempCheckIndexList = this.checkIndexList;
+      const localKey = `${this.$store.getters.taobaoName}TargetList`
+      setStore(localKey, this.checkIndexList)
     },
     // kzp: 全选
     handleCheckAllChange(v) {
@@ -1444,7 +1455,13 @@ export default {
                       c.warning = '当前人群溢价比下一层级的最高溢价低，会导致该人群失效，请及时进行调整'
                     }
                   }
+                  if (g.groupName === '未分组人群') {
+                    c.warning = 0
+                  }
                 })
+                if (g.groupName === '未标签化群组') {
+                  g.list.push({})
+                }
                 return g
               })
               // hr: 绑定事件
@@ -1491,6 +1508,7 @@ export default {
       // 改变终端时重新请求当前数据
       this.czd = val;
       if (this.currentAdGroupId !== '') {
+        setStore('labelLabEnd', this.czd);
         this.getCrowdInfo();
       }
     },
@@ -1500,6 +1518,7 @@ export default {
     chooseLy(val) {
       this.source = val;
       if (this.currentAdGroupId !== '') {
+        setStore('labelLabSource', this.source);
         this.getCrowdInfo();
       }
     },
@@ -1652,6 +1671,8 @@ export default {
         this.groupList.splice(newIndex, 1)
         this.groupList.splice(oldIndex, 0, movedG)
       }
+      const isMoveable = this.groupList.filter(g => g.oneKey).length !== 6
+      console.log(isMoveable)
       let gIDs = [1, 2333, 3333, 7777, 8888, 9999]
       let movedG = this.groupList[evt.newIndex]
       if (gIDs.includes(movedG.index)) {
@@ -1715,6 +1736,16 @@ export default {
       this.loadingPlans = false
       this.promotionLoading = false
       this.$refs.loading.cancelLoading()
+    },
+    readLocalStorge() {
+      this.czd = getStore('labelLabEnd') ? getStore('labelLabEnd') : '全部终端'
+      this.source = getStore('labelLabSource') ? getStore('labelLabSource') : '全部来源'
+      // console.log(this.$store.getters.taobaoName)
+      if (getStore(`${this.$store.getters.taobaoName}TargetList`)) {
+        this.checkIndexList = JSON.parse(getStore(`${this.$store.getters.taobaoName}TargetList`));
+        this.showIndexConfirm();
+        console.log(this.checkIndexList);
+      }
     }
   },
   beforeCreate() {},

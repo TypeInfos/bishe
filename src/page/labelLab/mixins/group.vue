@@ -60,17 +60,25 @@ export default {
       });
     },
     getGroupSummary(param) {
-      const { columns } = param;
+      const { columns, data } = param;
       const sums = [];
-      columns.forEach((c, i) => {
-        if (i === 0) {
-          sums.push('');
-        } else if (i === 1) {
-          sums.push('整体');
-        } else {
-          sums.push('-');
-        }
-      });
+      let group = this.groupList.find(g => g.list.some(l => data[0] && l.crowdId === data[0].crowdId))
+      if (group) {
+        columns.forEach((c, i) => {
+          if (i === 0) {
+            sums.push('');
+          } else if (i === 1) {
+            sums.push('整体');
+          } else {
+            let p = group.total[0][c.property]
+            p = p || p === 0 ? p : '-'
+            if (c.property === 'discount') {
+              p = '-'
+            }
+            sums.push(p)
+          }
+        });
+      }
       return sums;
     },
   },

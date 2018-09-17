@@ -8,6 +8,7 @@
 
 <script>
 import moment from 'moment';
+import { setStore, getStore } from '@/utils/localStorage';
 
 export default {
   name: 'myDatePicker',
@@ -40,47 +41,31 @@ export default {
     };
   },
   mounted() {
-    this.changeDate('今天');
+    this.finalContent = getStore('labelLabTime') ? getStore('labelLabTime') : '今天'
+    this.changeDate(this.finalContent);
   },
   methods: {
     changeDate(val) {
       switch (val) {
         case '今天':
-          this.startTime = moment().subtract(0, 'days').format('YYYY-MM-DD');
-          this.endTime = moment().subtract(0, 'days').format('YYYY-MM-DD');
-          this.myDateTime = [this.startTime, this.endTime];
           this.finalContent = '今天';
-          this.$emit('refreshDate', this.startTime, this.endTime);
           break;
         case '昨天':
-          this.startTime = moment().subtract(1, 'days').format('YYYY-MM-DD');
-          this.endTime = moment().subtract(1, 'days').format('YYYY-MM-DD');
           this.finalContent = '昨天';
-          this.myDateTime = [this.startTime, this.endTime];
-          this.$emit('refreshDate', this.startTime, this.endTime);
           break;
         case '过去7天':
-          this.startTime = moment().subtract(7, 'days').format('YYYY-MM-DD');
-          this.endTime = moment().subtract(1, 'days').format('YYYY-MM-DD');
-          this.myDateTime = [this.startTime, this.endTime];
           this.finalContent = '过去7天';
-          this.$emit('refreshDate', this.startTime, this.endTime);
           break;
         case '过去14天':
-          this.startTime = moment().subtract(14, 'days').format('YYYY-MM-DD');
-          this.endTime = moment().subtract(1, 'days').format('YYYY-MM-DD');
-          this.myDateTime = [this.startTime, this.endTime];
           this.finalContent = '过去14天';
-          this.$emit('refreshDate', this.startTime, this.endTime);
           break;
         case '过去30天':
-          this.startTime = moment().subtract(30, 'days').format('YYYY-MM-DD');
-          this.endTime = moment().subtract(1, 'days').format('YYYY-MM-DD');
           this.finalContent = '过去30天';
-          this.myDateTime = [this.startTime, this.endTime];
-          this.$emit('refreshDate', this.startTime, this.endTime);
           break;
         default:
+          console.log(this.finalContent)
+          this.myDateTime = this.finalContent.split('至')
+          console.log(this.myDateTime)
           break;
       }
       this.myDatePopStatus = false;
@@ -99,19 +84,40 @@ export default {
     confirmDate() {
       this.finalContent = `${this.myDateTime[0]}至${this.myDateTime[1]}`;
       // 标签实验室刷新数据
-      this.startTime = this.myDateTime[0];
-      this.endTime = this.myDateTime[1];
-      if (this.startTime > this.endTime) {
-        alert('开始日期大于结束日期，请重新选择!');
-      } else {
-        this.$emit('refreshDate', this.startTime, this.endTime);
-      }
       this.myDatePopStatus = false;
     },
   },
   watch: {
     myDatePopStatus(val) {
       this.myDateTime = [this.startTime, this.endTime];
+    },
+    finalContent(val) {
+      if (val === '今天') {
+        this.startTime = moment().subtract(0, 'days').format('YYYY-MM-DD')
+        this.endTime = moment().subtract(0, 'days').format('YYYY-MM-DD')
+      } else if (val === '昨天') {
+        this.startTime = moment().subtract(1, 'days').format('YYYY-MM-DD')
+        this.endTime = moment().subtract(1, 'days').format('YYYY-MM-DD')
+      } else if (val === '过去7天') {
+        this.startTime = moment().subtract(7, 'days').format('YYYY-MM-DD')
+        this.endTime = moment().subtract(1, 'days').format('YYYY-MM-DD')
+      } else if (val === '过去14天') {
+        this.startTime = moment().subtract(14, 'days').format('YYYY-MM-DD')
+        this.endTime = moment().subtract(1, 'days').format('YYYY-MM-DD')
+      } else if (val === '过去30天') {
+        this.startTime = moment().subtract(30, 'days').format('YYYY-MM-DD')
+        this.endTime = moment().subtract(1, 'days').format('YYYY-MM-DD')
+      } else {
+        this.startTime = this.myDateTime[0];
+        this.endTime = this.myDateTime[1];
+      }
+      this.myDateTime = [this.startTime, this.endTime]
+      if (this.startTime > this.endTime) {
+        alert('开始日期大于结束日期，请重新选择!')
+      } else {
+        this.$emit('refreshDate', this.startTime, this.endTime)
+        setStore('labelLabTime', val)
+      }
     },
   },
 };

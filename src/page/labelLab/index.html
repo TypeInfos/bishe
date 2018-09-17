@@ -227,83 +227,86 @@
         </el-table>
       </div>
       <draggable v-model="groupList" :options="{group:'groupList'}" @update="moveGroupListEnd">
-      <div v-for="(item,index) in groupList" :key="index" class="groups">
-        <div class="groupHeader">
-          <i v-if="!item.extend" class="el-icon-plus add" @click="showTable(index)"></i>
-          <i v-else class="el-icon-minus add" @click="showTable(index)"></i>
-          <span class="groupName">{{item.groupName}}</span>
-          <!-- 传入ref -->
-          <el-button type="text" @click="selectAllCheck('table' + index, index)" :class="'select-all-people'+index">全选</el-button>
-          <el-button type="text" @click="createCrowd(index)">创建人群</el-button>
-          <el-button type="text" @click="updateGroupName(index)">修改群组名称</el-button>
-          <el-button type="text" @click="moveCrowd('table' + index, index)">人群移动</el-button>
-          <el-button type="text" @click="deleteGroup(index)">删除</el-button>
-        </div>
-        <el-collapse-transition>
-          <div class="groupNameDiv" v-if="item.extend">
-            <el-table
-              :show-summary="true"
-              :summary-method="getGroupSummary"
-              :ref="'table' + index"
-              :data="item.list"
-              :show-header=false
-              :key="index"
-              :class="'scroll-group' + index"
-              class="groupBody scroll-groups"
-              @select="handleSelectPeople"
-              @cell-mouse-enter="hoverShowBtn"
-              @cell-mouse-leave="hoverHideBtn">
-              <el-table-column
-                fixed
-                type="selection"
-                width="60">
-              </el-table-column>
-              <el-table-column
-                fixed
-                prop="name"
-                :width="250">
-                <template slot-scope="scope">
-                  <div class="crowdName">
-                    <div class="tooltip-box">
-                      <el-tooltip :content="scope.row.warning | crowdTip" :visible-arrow=false placement="bottom" effect="light">
-                        <i v-if="scope.row.warning" class="iconfont warmFlag">&#xe655;</i>
-                      </el-tooltip>
-                      <el-tooltip content="暂停推广" :visible-arrow=false placement="bottom" effect="light">
-                        <i
-                          v-if="scope.row.onlineStatus"
-                          class="iconfont icon-zanting
-                          iconSelector hidden-btn"
-                          @click="promotionIcon(0,scope.row.crowdId)"></i>
-                      </el-tooltip>
-                      <el-tooltip content="开始推广" :visible-arrow=false placement="bottom" effect="light">
-                        <i
-                          v-if="!scope.row.onlineStatus"
-                          class="iconfont icon-kaishi iconSelector hidden-btn"
-                          @click="promotionIcon(1,scope.row.crowdId)"></i>
-                      </el-tooltip>
-                    </div>
-                    <span class="title">{{scope.row.name}}</span>
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                :width="150"
-                label="人群评级"
-                prop="level"
-                :formatter="formatterPeopleRate">
-              </el-table-column>
-              <el-table-column
-                :min-width="tableCellWidth"
-                v-for="itemData in finalCheckIndexList"
-                sortable
-                :prop="itemData.name"
-                :label="itemData.label"
-                :formatter="formatterPercent">
-              </el-table-column>
-            </el-table>
+        <div
+          v-for="(item,index) in groupList"
+          :key="index"
+          class="groups">
+          <div class="groupHeader">
+            <i v-if="!item.extend" class="el-icon-plus add" @click="showTable(index)"></i>
+            <i v-else class="el-icon-minus add" @click="showTable(index)"></i>
+            <span class="groupName">{{item.groupName}}</span>
+            <!-- 传入ref -->
+            <el-button v-if="item.groupName !== '未标签化群组'" type="text" @click="selectAllCheck('table' + index, index)" :class="'select-all-people'+index">全选</el-button>
+            <el-button v-if="item.groupName !== '未标签化群组'" type="text" @click="createCrowd(index)">创建人群</el-button>
+            <el-button v-if="item.groupName !== '未标签化群组'" type="text" @click="updateGroupName(index)">修改群组名称</el-button>
+            <el-button v-if="item.groupName !== '未标签化群组'" type="text" @click="moveCrowd('table' + index, index)">人群移动</el-button>
+            <el-button v-if="item.groupName !== '未标签化群组'" type="text" @click="deleteGroup(index)">删除</el-button>
           </div>
-        </el-collapse-transition>
-      </div>
+          <el-collapse-transition>
+            <div class="groupNameDiv" v-if="item.extend">
+              <el-table
+                :show-summary="true"
+                :summary-method="getGroupSummary"
+                :ref="'table' + index"
+                :data="item.list"
+                :show-header=false
+                :key="index"
+                :class="['scroll-group' + index, {'no-data': item.groupName === '未标签化群组'}]"
+                class="groupBody scroll-groups"
+                @select="handleSelectPeople"
+                @cell-mouse-enter="hoverShowBtn"
+                @cell-mouse-leave="hoverHideBtn">
+                <el-table-column
+                  fixed
+                  type="selection"
+                  width="60">
+                </el-table-column>
+                <el-table-column
+                  fixed
+                  prop="name"
+                  :width="250">
+                  <template slot-scope="scope">
+                    <div class="crowdName">
+                      <div class="tooltip-box">
+                        <el-tooltip :content="scope.row.warning | crowdTip" :visible-arrow=false placement="bottom" effect="light">
+                          <i v-if="scope.row.warning" class="iconfont warmFlag">&#xe655;</i>
+                        </el-tooltip>
+                        <el-tooltip content="暂停推广" :visible-arrow=false placement="bottom" effect="light">
+                          <i
+                            v-if="scope.row.onlineStatus"
+                            class="iconfont icon-zanting
+                            iconSelector hidden-btn"
+                            @click="promotionIcon(0,scope.row.crowdId)"></i>
+                        </el-tooltip>
+                        <el-tooltip content="开始推广" :visible-arrow=false placement="bottom" effect="light">
+                          <i
+                            v-if="!scope.row.onlineStatus"
+                            class="iconfont icon-kaishi iconSelector hidden-btn"
+                            @click="promotionIcon(1,scope.row.crowdId)"></i>
+                        </el-tooltip>
+                      </div>
+                      <span class="title">{{scope.row.name}}</span>
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  :width="150"
+                  label="人群评级"
+                  prop="level"
+                  :formatter="formatterPeopleRate">
+                </el-table-column>
+                <el-table-column
+                  :min-width="tableCellWidth"
+                  v-for="itemData in finalCheckIndexList"
+                  sortable
+                  :prop="itemData.name"
+                  :label="itemData.label"
+                  :formatter="formatterPercent">
+                </el-table-column>
+              </el-table>
+            </div>
+          </el-collapse-transition>
+        </div>
       </draggable>
     </el-card>
   </div>
@@ -409,7 +412,12 @@
     </div>
   </el-dialog>
   <!-- 修改溢价 -->
-  <el-dialog :visible.sync="premiumDialog" :show-close=false v-loading="premiumLoading" :modal=false class="premium">
+  <el-dialog
+    :visible.sync="premiumDialog"
+    :show-close=false
+    v-loading="premiumLoading"
+    :modal=false
+    class="premium">
     <div slot="title" class="header">
       <h2>修改溢价</h2>
       <el-button icon="el-icon-close" @click="premiumcloseModal"></el-button>
@@ -425,7 +433,12 @@
     </div>
   </el-dialog>
   <!-- peoplemove -->
-  <el-dialog :visible.sync="peopleMoveDialog" v-loading="peopleMoveLoading" :show-close=false :modal=false class="peopleMove">
+  <el-dialog
+    :visible.sync="peopleMoveDialog"
+    v-loading="peopleMoveLoading"
+    :show-close=false
+    :modal=false
+    class="peopleMove">
     <div slot="title" class="header">
       <h2>人群移动</h2>
       <el-button icon="el-icon-close" @click="peopleMovecloseModal"></el-button>
@@ -434,15 +447,34 @@
       <p>请选择目标群组：</p>
       <p>
         <el-select v-model="targetGroup" clearable>
-          <el-option v-for="item in groupList" :key="item.groupName" :label="item.groupName" :value="item.groupId">
+          <el-option
+            v-for="item in groupList"
+            v-if="item.groupName !== '未标签化群组'"
+            :key="item.groupName"
+            :label="item.groupName"
+            :value="item.groupId">
           </el-option>
         </el-select>
       </p>
-      <el-button type="primary" class="btnConfirm" :disabled="peopleMoveDisabled" @click="peopleMoveConfirm">确定</el-button>
-      <el-button type="primary" plain class="btnCancel" @click="peopleMoveCancel">取消</el-button>
+      <el-button
+        type="primary"
+        class="btnConfirm"
+        :disabled="peopleMoveDisabled"
+        @click="peopleMoveConfirm">确定</el-button>
+      <el-button
+        type="primary"
+        plain
+        class="btnCancel"
+        @click="peopleMoveCancel">取消</el-button>
     </div>
   </el-dialog>
-  <createPeople :createPeopleDialog="createPeopleDialog" :firstCat="currentFirstCat" :campaignId="currentCampaignId" :adGroupId="currentAdGroupId"
-    :groupId="currentCreateGroupId" @closeDialog="closeCreatePeopleDialog" @refreshData="refreshData"></createPeople>
+  <createPeople
+    :createPeopleDialog="createPeopleDialog"
+    :firstCat="currentFirstCat"
+    :campaignId="currentCampaignId"
+    :adGroupId="currentAdGroupId"
+    :groupId="currentCreateGroupId"
+    @closeDialog="closeCreatePeopleDialog"
+    @refreshData="refreshData"></createPeople>
   <loading :startLoadingComplete="isGlobalLoading" ref="loading"></loading>
 </div>
