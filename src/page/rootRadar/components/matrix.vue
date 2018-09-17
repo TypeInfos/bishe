@@ -116,6 +116,7 @@ export default {
   watch: {
     itemId () {
       this.data = {}
+      this.renderData = {}
       this.isLoading = true
     }
   }

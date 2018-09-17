@@ -1029,6 +1029,11 @@ export default {
                     }, resp.data[i]);
                   }
                   this.groupList = resp.data;
+                  this.groupList.forEach(g => {
+                    if (g.groupName === '未标签化群组') {
+                      g.list.push({})
+                    }
+                  })
                   this.initGroupLoading = false;
                   // this.startloadingComplete = true;
                   // hr: 在这里 为 groupList添加总和数据 添加事件和绑定
@@ -1444,7 +1449,13 @@ export default {
                       c.warning = '当前人群溢价比下一层级的最高溢价低，会导致该人群失效，请及时进行调整'
                     }
                   }
+                  if (g.groupName === '未分组人群') {
+                    c.warning = 0
+                  }
                 })
+                if (g.groupName === '未标签化群组') {
+                  g.list.push({})
+                }
                 return g
               })
               // hr: 绑定事件
@@ -1651,6 +1662,8 @@ export default {
         this.groupList.splice(newIndex, 1)
         this.groupList.splice(oldIndex, 0, movedG)
       }
+      const isMoveable = this.groupList.filter(g => g.oneKey).length !== 6
+      console.log(isMoveable)
       let gIDs = [1, 2333, 3333, 7777, 8888, 9999]
       let movedG = this.groupList[evt.newIndex]
       if (gIDs.includes(movedG.index)) {
