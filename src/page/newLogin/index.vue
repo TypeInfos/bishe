@@ -7,6 +7,7 @@
 </style>
 
 <script>
+import Vue from 'vue'
 export default {
   name: 'login',
   data() {
@@ -34,6 +35,12 @@ export default {
   },
   mounted() {
     this.getCookie();
+    var myFilter = Vue.filter('date');
+
+    // console.log(this)
+    // var myFilter = this.filter('date');
+    // console.log(myFilter);
+    // this.myGlobalMethod()
   },
   methods: {
     // 获取cookie

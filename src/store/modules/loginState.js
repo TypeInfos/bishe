@@ -5,12 +5,12 @@ const id = {
   test: 'cpnmealmpgcapggbgjgfahpiifbbooef',
   online: 'lnbdcilfaojoldgckojoidnafpagkjbn',
   testVersion: 'cpnmealmpgcapggbgjgfahpiifbbooef',
-  locality: ''
+  locality: 'cliiiblppljchgdlekfijlejmbfmglme'
 };
 const state = {
   isLogin: false,
   bindTaobaoName: '',
-  editorExtensionId: id.test, // 插件ID
+  editorExtensionId: id.locality, // 插件ID
 };
 // mutations
 const mutations = {
