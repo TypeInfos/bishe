@@ -76,14 +76,16 @@ export default {
           this.$message({
             showClose: true,
             message: '手机号格式错误',
-            type: 'warning'
+            type: 'warning',
+            customClass: 'message-g-zindex'
           });
         }
       } else {
         this.$message({
           showClose: true,
           message: '请先填写手机号',
-          type: 'warning'
+          type: 'warning',
+          customClass: 'message-g-zindex'
         });
       }
     },
@@ -109,25 +111,29 @@ export default {
         this.$message({
           showClose: true,
           message: '手机号不能为空',
-          type: 'warning'
+          type: 'warning',
+          customClass: 'message-g-zindex'
         });
       } else if (!this.code) {
         this.$message({
           showClose: true,
           message: '验证码不能为空',
-          type: 'warning'
+          type: 'warning',
+          customClass: 'message-g-zindex'
         });
       } else if (!this.pwd) {
         this.$message({
           showClose: true,
           message: '密码不能为空',
-          type: 'warning'
+          type: 'warning',
+          customClass: 'message-g-zindex'
         });
       } else if (this.pwd !== this.rePwd) {
         this.$message({
           showClose: true,
           message: '两次密码不相同',
-          type: 'warning'
+          type: 'warning',
+          customClass: 'message-g-zindex'
         });
       } else {
         this.$axios.post(this.$api.forget, {
@@ -139,7 +145,8 @@ export default {
           this.$message({
             showClose: true,
             message: '密码修改成功',
-            type: 'warning'
+            type: 'warning',
+            customClass: 'message-g-zindex'
           });
           this.resetData();
         });

@@ -362,6 +362,7 @@ export default {
           this.$message({
             message: res.message,
             type: 'warning',
+            customClass: 'message-g-zindex'
           });
           this.$router.push({ name: 'GuidePage', query: { type: -1, name: 'labelLab' } })
         }
@@ -391,12 +392,14 @@ export default {
             this.$message({
               type: 'success',
               message: '删除成功!',
+              customClass: 'message-g-zindex'
             });
           });
       }).catch(() => {
         this.$message({
           type: 'info',
           message: '已取消删除',
+          customClass: 'message-g-zindex'
         });
       });
     },
@@ -641,6 +644,7 @@ export default {
               showClose: true,
               message: '移动人群成功',
               type: 'success',
+              customClass: 'message-g-zindex'
             });
             this.getCrowdInfo();
           });
@@ -662,6 +666,7 @@ export default {
               showClose: true,
               message: '成功修改溢价',
               type: 'success',
+              customClass: 'message-g-zindex'
             });
             this.premiumLoading = false;
             // this.startloadingComplete = true;
@@ -771,6 +776,7 @@ export default {
             showClose: true,
             message: '修改人群评级成功',
             type: 'success',
+            customClass: 'message-g-zindex'
           });
           this.getCrowdInfo();
         });
@@ -829,7 +835,11 @@ export default {
                 }
               });
             } else {
-              this.$message.error('你当前没有登陆淘宝，请登陆淘宝！');
+              this.$message({
+                message: '你当前没有登陆淘宝，请登陆淘宝！',
+                type: 'error',
+                customClass: 'message-g-zindex'
+              });
               this.$router.push('/login');
               window.location.reload();
             }
@@ -920,6 +930,7 @@ export default {
           showClose: true,
           message: '创建群组成功',
           type: 'success',
+          customClass: 'message-g-zindex'
         });
         this.createGroupName = '';
         this.createGroupLoading = false;
@@ -1010,6 +1021,7 @@ export default {
                   this.$message({
                     type: 'success',
                     message: '创建成功!',
+                    customClass: 'message-g-zindex'
                   });
                   for (let i = 0; i < resp.data.length; i++) {
                     resp.data[i] = Object.assign({
@@ -1081,6 +1093,7 @@ export default {
             this.$message({
               type: 'warn',
               message: '没有安装正确的插件，请联系官网客服',
+              customClass: 'message-g-zindex'
             });
           },
         });
@@ -1137,12 +1150,14 @@ export default {
                 showClose: true,
                 message: '参与推广成功',
                 type: 'success',
+                customClass: 'message-g-zindex'
               });
             } else {
               this.$message({
                 showClose: true,
                 message: '暂停推广成功',
                 type: 'success',
+                customClass: 'message-g-zindex'
               });
             }
           });
@@ -1170,12 +1185,14 @@ export default {
               showClose: true,
               message: '参与推广成功',
               type: 'success',
+              customClass: 'message-g-zindex'
             });
           } else {
             this.$message({
               showClose: true,
               message: '暂停推广成功',
               type: 'success',
+              customClass: 'message-g-zindex'
             });
           }
         });
@@ -1213,18 +1230,21 @@ export default {
               this.$message({
                 type: 'success',
                 message: '删除成功!',
+                customClass: 'message-g-zindex'
               });
             });
         }).catch(() => {
           this.$message({
             type: 'info',
             message: '已取消删除',
+            customClass: 'message-g-zindex'
           });
         });
       } else {
         this.$message({
           type: 'info',
           message: '请选择人群!',
+          customClass: 'message-g-zindex'
         });
       }
     },
@@ -1672,6 +1692,7 @@ export default {
           this.$message({
             message: '移动群组成功',
             type: 'success',
+            customClass: 'message-g-zindex'
           });
         })
         .catch(err　=> {
