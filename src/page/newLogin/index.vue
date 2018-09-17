@@ -45,6 +45,40 @@
       },
       // 易数账号登录
       ysLogin() {
+        const getInfo = () => {
+          this.$axios.get(this.$api.info).then((resp) => {
+            this.loginLoading = false;
+            this.bindTaobaoName = resp.data.name;
+            try {
+              chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
+                  type: 'getShopInfo',
+                },
+                (response) => {
+                  if (response.code != 400) {
+                    if (response.shopInfo === '{}' || response.shopInfo === '') {
+                      this.isLoginTaobao = false;
+                      this.active = 1;
+                    } else {
+                      this.isLoginTaobao = true;
+                      this.taobaoName = response.shopInfo.runAsShopTitle;
+                      if (this.taobaoName !== this.bindTaobaoName) {
+                        this.active = 3;
+                      } else {
+                        this.active = 2;
+                      }
+                    }
+                  } else {
+                    this.isLoginTaobao = false;
+                    this.active = 1;
+                  }
+                })
+            } catch (error) {
+              this.$alert('请安装插件', '提示');
+            }
+          }).catch(error => {
+            console.log('get Info err', error)
+          })
+        }
         let data = '';
         try {
           chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
@@ -66,50 +100,19 @@
                 customClass: 'message-g-zindex'
               });
               this.token = res.data;
-              const curToken = this.token;
               try {
                 chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
                     type: 'token',
-                    token: curToken,
+                    token: this.token,
                   },
-                  () => {
+                  (response) => {
                     console.log(response)
                   });
               } catch (error) {
                 alert('插件的版本id与抖数id不同')
               }
-              this.$axios.get(this.$api.info).then((resp) => {
-                this.loginLoading = false;
-                this.bindTaobaoName = resp.data.name;
-                try {
-                  chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
-                      type: 'getShopInfo',
-                    },
-                    (response) => {
-                      if (response.code != 400) {
-                        if (response.shopInfo === '{}' || response.shopInfo === '') {
-                          this.isLoginTaobao = false;
-                          this.active = 1;
-                        } else {
-                          this.isLoginTaobao = true;
-                          this.taobaoName = response.shopInfo.runAsShopTitle;
-                          if (this.taobaoName !== this.bindTaobaoName) {
-                            this.active = 3;
-                          } else {
-                            this.active = 2;
-                          }
-                        }
-                      }else{
-                        this.isLoginTaobao = false;
-                        this.active = 1;
-                      }
-                    })
-                } catch (error) {
-                  this.$alert('请安装插件', '提示');
-                }
-              }).catch(error => {
-                console.log('get Info err', error)
-              })
+              // getInfo
+              getInfo();
             }).catch(err => {
               this.loginLoading = false;
             });
@@ -146,35 +149,23 @@
       },
       // 跳转直通车登录
       loginToTaobao() {
-        this.$axios.get('https://login.taobao.com/member/login.jhtml')
-        .then(()=>{
-          console.log('succeed')
-        })
-        try{
+        try {
           chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
-          type: 'logout'
-        },
-        response => {
-          try {
-            if(response.code === 200){
-              this.taobaoLoading = true;
-        this.watchLogin();
-        window.open('https://subway.simba.taobao.com/');
-            }else{
-              this.taobaoLoading = true;
-              this.watchLogin();
-              window.open('https://subway.simba.taobao.com/');
-            }
-          } catch (error) {
-            console.log('退出直通车出错');
-          }
-        })
-      }catch(error){
-        alert('插件ID与前端不匹配')
-        this.$router.push('/login')
-        window.location.reload()
-      }
-
+              type: 'logout'
+            },
+            response => {
+              try {
+                  this.taobaoLoading = true;
+                  this.watchLogin();
+                  window.open('https://subway.simba.taobao.com/');
+              } catch (error) {
+                console.log('退出直通车出错');
+              }
+            })
+        } catch (error) {
+          alert('插件ID与前端不匹配')
+          this.$router.push('/login')
+        }
       },
       // 完成登录
       finishLogin() {
