@@ -79,8 +79,8 @@ export default new Router({
     {
       path: '/labelLab',
       name: 'labelLab',
-      component: labelLab,
-      // component: wisdomSearch,
+      // component: labelLab,
+      component: wisdomSearch,
     },
     {
       path: '/guide',
@@ -95,8 +95,8 @@ export default new Router({
     {
       path: '/help',
       name: 'Help',
-      // component: wisdomSearch,
-      component: () => import('@/page/help'),
+      component: wisdomSearch,
+      // component: () => import('@/page/help'),
     }
   ],
 });

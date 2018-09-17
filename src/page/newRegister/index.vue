@@ -72,31 +72,37 @@ export default {
           showClose: true,
           message: '手机号不能为空',
           type: 'warning',
+          customClass: 'message-g-zindex'
         });
       } else if (!this.code) {
         this.$message({
           message: '验证码不能为空',
           type: 'warning',
+          customClass: 'message-g-zindex'
         });
       } else if (!this.pwd) {
         this.$message({
           message: '密码不能为空',
           type: 'warning',
+          customClass: 'message-g-zindex'
         });
       } else if (this.pwd !== this.rePwd) {
         this.$message({
           message: '密码不一致',
           type: 'warning',
+          customClass: 'message-g-zindex'
         });
       } else if (!this.wechart) {
         this.$message({
           message: '负责人微信号不能为空',
           type: 'warning',
+          customClass: 'message-g-zindex'
         });
       } else if (!this.agreed) {
         this.$message({
           message: '请同意法律声明和隐私条款',
           type: 'warning',
+          customClass: 'message-g-zindex'
         });
       }
       // else if(!this.inviteCode) {
@@ -122,6 +128,7 @@ export default {
               showClose: true,
               message: '注册账号成功，请绑定淘宝账号',
               type: 'success',
+              customClass: 'message-g-zindex'
             });
             this.active = 1;
           })
@@ -192,6 +199,7 @@ export default {
             showClose: true,
             message: '绑定成功',
             type: 'success',
+            customClass: 'message-g-zindex'
           });
           const token = res.data;
           try {
@@ -267,6 +275,7 @@ export default {
             showClose: true,
             message: '手机号格式错误',
             type: 'warning',
+            customClass: 'message-g-zindex'
           });
         }
       } else {
@@ -274,6 +283,7 @@ export default {
           showClose: true,
           message: '请先填写手机号',
           type: 'warning',
+          customClass: 'message-g-zindex'
         });
       }
     },

@@ -140,10 +140,12 @@ export default {
     }
     &::after {
       content: "近30天词根转化率";
+      position: absolute;
       height: 20px;
       width: 200px;
       bottom: -10px;
-      left: 600px;
+      left: 50%;
+      transform: translateX(-50%);
     }
     .lt-area,
     .lb-area,

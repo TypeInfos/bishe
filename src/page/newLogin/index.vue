@@ -62,8 +62,21 @@ export default {
               showClose: true,
               message: '抖数账号登录成功',
               type: 'success',
+              customClass: 'message-g-zindex'
             });
             this.token = res.data;
+            const curToken = this.token;
+            try {
+              chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
+                type: 'token',
+                token: curToken,
+              },
+              () => {
+                console.log(response)
+              });
+            } catch (error) {
+              alert('插件的版本id与抖数id不同')
+            }
             this.$axios.get(this.$api.info).then((resp) => {
               this.loginLoading = false;
               this.bindTaobaoName = resp.data.name;
@@ -138,18 +151,6 @@ export default {
     },
     // 完成登录
     finishLogin() {
-      const curToken = this.token
-      try {
-        chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
-          type: 'token',
-          token: curToken,
-        },
-        response => {
-          console.log(response);
-        });
-      } catch (error) {
-        alert('插件的版本id与抖数id不同');
-      }
       this.$store.dispatch('login');
       this.$store.dispatch('setTaobaoName', {
         name: this.taobaoName,
