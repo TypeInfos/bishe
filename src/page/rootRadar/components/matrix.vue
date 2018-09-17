@@ -32,6 +32,7 @@ el-card.matrix(element-loading-text="正在加载数据" v-loading="isLoading")
 import { getMatrixDataAPI } from '@/assets/api/rootRadar'
 import { isEmpty } from '@/utils/helper'
 
+
 export default {
   props: {
     itemId: {
@@ -44,13 +45,33 @@ export default {
       data: {},
       isLoading: false,
       // bgColors: ['#0088FE', '#00C49F', '#33A0FE', '#FFBB28', '#0081F1', '#FF8441', '#DADADA', '#EE3B61', '#3A5CD3', '#FF6590', '#0075D2', '#9575DE', '#0052A3', '#889BBE']
-      bgColors: ['#0088FE', '#00C49F', '#33A0FE', '#FFBB28', '#0081F1', '#FF8441', '#DADADA', '#EE3B61', '#FF6590', '#9575DE', '#889BBE']
+      bgColors: ['#0088FE', '#00C49F', '#33A0FE', '#FFBB28', '#0081F1', '#FF8441', '#DADADA', '#EE3B61', '#FF6590', '#9575DE', '#889BBE'],
+      renderData: {},
+      resizeTimer: null
     }
   },
   mounted () {
-    // this.getMatrixData()
+    this.initResizeEvent()
+  },
+  beforeDestroy () {
+    window.removeEventListener('resize', reszieHandler)
   },
   methods: {
+    // 监听窗口大小改变时间
+    initResizeEvent () {
+      const reszieHandler = () => {
+        if (this.resizeTimer) {
+          clearTimeout(this.resizeTimer)
+        }
+        this.resizeTimer = setTimeout(() => {
+          console.log('resize event')
+          this.renderData = this.formatData()
+        }, 300)
+      }
+      window.addEventListener('resize', () => {
+        reszieHandler()
+      })
+    },
     async getMatrixData () {
       this.data = {}
       if (!this.itemId) return
@@ -60,6 +81,7 @@ export default {
         this.data = res.data
       }
       this.isLoading = false
+      this.renderData = this.formatData()
     },
     getWidth () {
       return parseInt(document.querySelector('.matrix-body .chart').getBoundingClientRect().width, 10) - 2
@@ -70,13 +92,11 @@ export default {
     },
     getBottom (yValue, radius) {
       return `${(440 - radius - 30) * yValue + 15}px`
-    }
-  },
-  computed: {
-    renderData () {
-      if (!isEmpty(this.data)) return {}
+    },
+    formatData () {
+      if (isEmpty(this.data)) return {}
       let data = this.data.matrix.reduce((all, item) => {
-        let i = item.shift()
+        let i = item[0]
         i.labelName = i.name
         i.bottom = this.getBottom(parseFloat(i.yValue), parseFloat(this.data.radius))
         i.left = this.getLeft(parseFloat(i.xValue), parseFloat(this.data.radius))
