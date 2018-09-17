@@ -69,7 +69,7 @@ export default {
       return `${(width - radius - 30) * xValue + 15}px`
     },
     getBottom (yValue, radius) {
-      return `${(400 - radius - 30) * yValue + 15}px`
+      return `${(440 - radius - 30) * yValue + 15}px`
     }
   },
   computed: {
@@ -95,7 +95,8 @@ export default {
   },
   watch: {
     itemId () {
-      this.getMatrixData()
+      this.data = {}
+      this.isLoading = true
     }
   }
 }
@@ -111,7 +112,6 @@ export default {
     font-weight: 500;
   }
   .chart {
-    width: 1400px;
     height: 440px;
     margin: 0 auto;
     border: 1px solid #ADADAD;

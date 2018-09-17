@@ -46,6 +46,7 @@ service.interceptors.response.use(
         }
       });
       if (!flag) {
+        if (response.data.message === '词根为空' || response.data.message === '关键词为空') return
         Message({
           message: response.data.message,
           title: 'warning',
