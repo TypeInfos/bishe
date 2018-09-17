@@ -37,16 +37,19 @@
 }
 .createPeople{
   .el-dialog__body{
-    height: 380px;
+    // height: 380px;
     background: rgba(216, 216, 216, 0.08539999999999999);
     .createPeopleContent{
       width: 520px;
-      height: 380px;
+      // height: 380px;
       // margin: 0 auto;
       margin-left: 100px;
       display: flex;
       flex-direction: column;
       justify-content: space-around;
+      .radioBtn{
+        padding-left: 110px;
+      }
         .name{
           margin-top: 20px;
           margin-bottom: 10px;
@@ -54,8 +57,12 @@
           .star{
             color: red;
             position: absolute;
-            left: -10px;
+            left: 55px;
             top: 8px;
+          }
+          .nameSpan{
+            width: 100px;
+            text-align: right;
           }
           .el-input{
             width: 200px;
@@ -72,159 +79,31 @@
             color: red;
           }
         }
-      .peopleProperty{
+      .twoProperty{
         display: flex;
         flex-direction: column;
         width: 80%; 
-        //设置所有的多选框 宽度都为100px
-        .el-checkbox{
-          width: 100px;
-          margin-left: 10px;
-        }
-        .prefix0{
+        .control-group{
           display: flex;
-          flex-wrap: wrap;
           justify-content: start;
-          .prefixspan{
-            position: relative;
-            left: -40px;
+          .control-span{
+            width: 100px;
+            text-align: right;
+            margin-right: 10px;
           }
           .el-checkbox-group{
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            width: 88%;
-            margin-left: -27px;
-            margin-top: 4px;
-            .prefix3{
-              margin-left: 0;
+            width: 75%;
+            label:nth-child(1){
+              margin-left: 10px;
             }
-          }
-        }
-        .prefix1{
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: start;
-          .el-checkbox-group{
-            display: flex;
-            flex-wrap: wrap;
-            margin-left: 15px;
-            margin-top: 4px;
-            .el-checkbox{
-              width: 40px;
-            }
-          }
-        }
-        .prefix2{
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: start;
-          .el-checkbox-group{
-            display: flex;
-            flex-wrap: wrap;
-            margin-left: 15px;
-            margin-top: 4px;
-            width: 88%;
-            .prefix3{
-              margin-left: 0;
-            }
-            .prefix6{
-              margin-left: 0;
-            }
-          }
-        }
-        .prefix3{
-          display: flex;
-          flex-wrap: wrap;
-          justify-content: start;
-          .prefixspan{
-            position: relative;
-            left: -55px;
-          }
-          .el-checkbox-group{
-            display: flex;
-            flex-wrap: wrap;
-            margin-left: 47px;
-            margin-top: -15px;
-            width: 90%;
-            .prefix3{
-              margin-left: 0;
-            }
-            .prefix6{
-              margin-left: 0;
-            }
-          }
-        }
-      }
-      .weatherProperty{
-        display: flex;
-        flex-direction: column;
-        width: 80%; 
-        //设置所有的多选框 宽度都为100px
-        .el-checkbox{
-          margin-left: 10px;
-        }
-        .prefix0{
-          display: flex;
-          flex-wrap: wrap;
-          .el-checkbox-group{
-            display: flex;
-            flex-wrap: wrap;
-            margin-left: 15px;
-            margin-top: 4px;
-            width: 88%;
-            .el-checkbox{
-              width: 60px;
-            }
-            .prefix4{
-              margin-left: 0;
-            }
-          }
-        }
-        .prefix1{
-          display: flex;
-          flex-wrap: wrap;
-          .prefixspan{
-            position: relative;
-            left: -27px;
-          }
-          .el-checkbox-group{
-            display: flex;
-            flex-wrap: wrap;
-            margin-left: -13px;
-            margin-top: 4px;
-            width: 80%;
-            .prefix2{
-              margin-left: 0;
-            }
-            .prefix3{
-              margin-left: 0;
-            }
-            .prefix4{
-              margin-left: 0;
-            }
-          }
-        }
-        .prefix2{
-          display: flex;
-          flex-wrap: wrap;
-          .prefixspan{
-            position: relative;
-            left: -27px;
-          }
-          .el-checkbox-group{
-            display: flex;
-            flex-wrap: wrap;
-            margin-left: -13px;
-            margin-top: 4px;
-            width: 80%;
           }
         }
       }
         .premium{
           margin-top: 15px;
           .premiumP{
-            // width:84px;
+            width:100px;
+            text-align: right;
             height:17px;
             // font-size:12px;
             color:rgba(51,51,51,1);
@@ -262,8 +141,7 @@
         }
         .twoBtn{
           margin-top: 30px;
-          // text-align: center;
-
+          padding-left: 60px;
           .btnCancel{
             border-radius: 4px;
             padding: 0 16px; //宽度由padding左右16px决定

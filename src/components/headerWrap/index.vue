@@ -75,6 +75,9 @@ export default {
         this.$router.push('/register');
       }
     },
+    sendMsgToExtension(type){
+      
+    },
     // 退出登录
     loginOut() {
       this.$store.dispatch('logout');

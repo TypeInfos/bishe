@@ -1656,6 +1656,7 @@ export default {
     initDiv() {
       this.$refs.loading.showLoading();
     },
+
     moveGroupListEnd(evt) {
       const resetGroupList = (oldIndex, newIndex) => {
         let movedG = this.groupList[newIndex]
@@ -1884,7 +1885,7 @@ export default {
     },
     groupAnalyzePopStatus() {
       this.checkIndexList = this.tempCheckIndexList;
-    }
+    },
   },
   filters: {
     crowdTip (warning) {

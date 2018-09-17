@@ -47,11 +47,13 @@ export default {
     // 绑定群组滑动事件
     initTableScroll() {
       this.$nextTick(() => {
+        console.log('触发了 initTableScroll');
         window.removeEventListener('scroll', windowScrollEve);
         window.addEventListener('scroll', windowScrollEve);
         const groups = document.querySelectorAll('.scroll-groups');
         groups.forEach(i => {
           let currentGroup = i.querySelector('.el-table__body-wrapper');
+          console.log(currentGroup)
           currentGroup.removeEventListener('scroll', groupScrollEve);
           currentGroup.addEventListener('scroll', groupScrollEve);
         });

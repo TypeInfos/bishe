@@ -71,9 +71,11 @@ import {
 } from 'element-ui';
 import './utils/filter'; // 过滤器
 import * as utils from './utils/helper';
+import test from './utils/test'
 import axios from './axios';
 import api from './api';
 
+Vue.use(test);
 Vue.component(CollapseTransition.name, CollapseTransition);
 Vue.use(VueCookies);
 Vue.use(Pagination);

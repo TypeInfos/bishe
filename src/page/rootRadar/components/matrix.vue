@@ -77,9 +77,7 @@ export default {
       if (!this.itemId) return
       this.isLoading = true
       let res = await getMatrixDataAPI({ itemId: this.itemId })
-      if (res && res.code === 'ACK') {
-        this.data = res.data
-      }
+      this.data = res.data
       this.isLoading = false
       this.renderData = this.formatData()
     },

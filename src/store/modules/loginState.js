@@ -2,15 +2,16 @@
 const id = {
   lhr: 'lajbffnlgcnmlkkbbogpkpgjkfmpmjbf',
   kzp: 'hnchopnjjannphjdengkbapneapdoadh',
+  gjf: 'kgjgpmnjjnooebjcjnoacofabhpejgck',
   test: 'cpnmealmpgcapggbgjgfahpiifbbooef',
   online: 'lnbdcilfaojoldgckojoidnafpagkjbn',
   testVersion: 'cpnmealmpgcapggbgjgfahpiifbbooef',
-  locality: ''
+  locality: 'cliiiblppljchgdlekfijlejmbfmglme'
 };
 const state = {
   isLogin: false,
   bindTaobaoName: '',
-  editorExtensionId: id.lhr, // 插件ID
+  editorExtensionId: id.locality, // 插件ID
 };
 // mutations
 const mutations = {
