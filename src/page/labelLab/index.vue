@@ -40,6 +40,7 @@ export default {
   },
   data() {
     return {
+      showCreateGroupFlag: false,
       expiredDays: -1,
       editorExtensionId: 'bjddgpdnmmkpmdhoajcfpgkfnjkmbcmj', // 插件ID
       czd: '全部终端', // 终端展示
@@ -928,12 +929,13 @@ export default {
         groupName: this.createGroupName,
         adGroupId: this.currentAdGroupId,
       }).then(() => {
-        this.$message({
-          showClose: true,
-          message: '创建群组成功',
-          type: 'success',
-          customClass: 'message-g-zindex'
-        });
+        // this.$message({
+        //   showClose: true,
+        //   message: '创建群组成功',
+        //   type: 'success',
+        //   customClass: 'message-g-zindex'
+        // });
+        this.showCreateGroupFlag = true;
         this.createGroupName = '';
         this.createGroupLoading = false;
         // this.startloadingComplete = true;
@@ -1916,6 +1918,17 @@ export default {
     groupAnalyzePopStatus() {
       this.checkIndexList = this.tempCheckIndexList;
     },
+    isGlobalLoading(val) {
+      if (val === true && this.showCreateGroupFlag) {
+        this.$message({
+          showClose: true,
+          message: '创建群组成功',
+          type: 'success',
+          customClass: 'message-g-zindex'
+        });
+        this.showCreateGroupFlag = false;
+      }
+    }
   },
   filters: {
     crowdTip (warning) {
