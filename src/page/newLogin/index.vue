@@ -64,7 +64,7 @@
                       if (this.taobaoName !== this.bindTaobaoName) {
                         this.active = 3;
                       } else {
-                        this.active = 2;
+                        this.finishLogin()
                       }
                     }
                   } else {

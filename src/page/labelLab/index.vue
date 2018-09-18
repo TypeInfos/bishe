@@ -18,6 +18,7 @@ import lineChart from '@/components/newLineChart/index';
 import createPeople from '@/components/createPeople/index';
 import expired from '@/components/expired'
 import Loading from '@/components/Loading'
+import { setStore, getStore } from '@/utils/localStorage';
 import groupMixins from './mixins/group';
 import errorTipsMixins from './mixins/errorTips'
 
@@ -357,6 +358,7 @@ export default {
       }).then((res) => {
         this.expiredDays = res.data
         if (res.data > 0) {
+          // 从localStorage读入数据
           this.getShopId();
         } else {
           this.$message({
@@ -1064,6 +1066,8 @@ export default {
         });
         this.loginName = res.data.loginName;
         this.currentToken = res.data.token;
+        // 读入本地数据，用于储存
+        this.readLocalStorge();
         // this.giveTokenToExtension();
         const checkCookie = this.$cookies.isKey(`${this.loginName}Item`);
         if (checkCookie) {
@@ -1324,6 +1328,8 @@ export default {
         }
       }
       this.tempCheckIndexList = this.checkIndexList;
+      const localKey = `${this.$store.getters.taobaoName}TargetList`
+      setStore(localKey, this.checkIndexList)
     },
     // kzp: 全选
     handleCheckAllChange(v) {
@@ -1502,6 +1508,7 @@ export default {
       // 改变终端时重新请求当前数据
       this.czd = val;
       if (this.currentAdGroupId !== '') {
+        setStore('labelLabEnd', this.czd);
         this.getCrowdInfo();
       }
     },
@@ -1511,6 +1518,7 @@ export default {
     chooseLy(val) {
       this.source = val;
       if (this.currentAdGroupId !== '') {
+        setStore('labelLabSource', this.source);
         this.getCrowdInfo();
       }
     },
@@ -1740,6 +1748,16 @@ export default {
       this.loadingPlans = false
       this.promotionLoading = false
       this.$refs.loading.cancelLoading()
+    },
+    readLocalStorge() {
+      this.czd = getStore('labelLabEnd') ? getStore('labelLabEnd') : '全部终端'
+      this.source = getStore('labelLabSource') ? getStore('labelLabSource') : '全部来源'
+      // console.log(this.$store.getters.taobaoName)
+      if (getStore(`${this.$store.getters.taobaoName}TargetList`)) {
+        this.checkIndexList = JSON.parse(getStore(`${this.$store.getters.taobaoName}TargetList`));
+        this.showIndexConfirm();
+        console.log(this.checkIndexList);
+      }
     }
   },
   beforeCreate() {},
