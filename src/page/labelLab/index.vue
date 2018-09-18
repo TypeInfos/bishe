@@ -1663,10 +1663,44 @@ export default {
         this.groupList.splice(newIndex, 1)
         this.groupList.splice(oldIndex, 0, movedG)
       }
-      const isMoveable = this.groupList.filter(g => g.oneKey).length !== 6
-      console.log(isMoveable)
-      let gIDs = [1, 2333, 3333, 7777, 8888, 9999]
+      const sendRequest = () => {
+        let param = {
+          adGroupId: this.currentAdGroupId,
+          groupIds: []
+        }
+        this.groupList.forEach(g => { param.groupIds.push(g.groupId) })
+        this.$axios.post(this.$api.moveGroup, param)
+          .then(() => {
+            this.$message({
+              message: '移动群组成功',
+              type: 'success',
+              customClass: 'message-g-zindex'
+            });
+          })
+          .catch(() => {
+            this.$error('移动群组失败')
+            resetGroupList(evt.oldIndex, evt.newIndex)
+          })
+      }
       let movedG = this.groupList[evt.newIndex]
+      // 禁止移动未标签化群组和未分组人群
+      if (movedG.index === 8888 || movedG.index === 9999) {
+        this.showGroupErr('不允许移动该群组')
+        resetGroupList(evt.oldIndex, evt.newIndex)
+        return
+      }
+      // 禁止移动到最底部
+      if (evt.newIndex === this.groupList.length - 1 || evt.newIndex === this.groupList.length - 2) {
+        this.showGroupErr('不允许移动到该位置')
+        resetGroupList(evt.oldIndex, evt.newIndex)
+        return
+      }
+      const isMoveable = this.groupList.filter(g => g.oneKey).length !== 6
+      if (isMoveable) {
+        sendRequest()
+        return
+      }
+      let gIDs = [1, 2333, 3333, 7777, 8888, 9999]
       if (gIDs.includes(movedG.index)) {
         this.showGroupErr('不允许移动标准群组')
         resetGroupList(evt.oldIndex, evt.newIndex)
@@ -1689,29 +1723,7 @@ export default {
         resetGroupList(evt.oldIndex, evt.newIndex)
         return
       }
-      let param = {
-        adGroupId: this.currentAdGroupId
-      }
-      let arrays = this.groupList.reduce((all, g) => {
-        if (!gIDs.includes(g.index)) all.push(g.groupId)
-        return all
-      }, [])
-      let map = ['groupA', 'groupB', 'groupC']
-      arrays.forEach((i, index) => {
-        param[map[index]] = i
-      })
-      this.$axios.post(this.$api.moveGroup, param)
-        .then(res => {
-          this.$message({
-            message: '移动群组成功',
-            type: 'success',
-            customClass: 'message-g-zindex'
-          });
-        })
-        .catch(err　=> {
-          this.$error('移动群组失败')
-          resetGroupList(evt.oldIndex, evt.newIndex)
-        })
+      sendRequest()
     },
     // 加载框 加载完成时 隐形！
     completeLoading(res) {
