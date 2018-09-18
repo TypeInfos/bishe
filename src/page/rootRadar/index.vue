@@ -591,10 +591,11 @@ export default {
     },
     // 日期
     initData () {
-      if (getStore('rootRadarDate').includes('自定义')) {
+      // console.log(getStore('rootRadarDate').includes('自定义'))
+      const str = getStore('rootRadarDate') || ''
+      if (str.includes('自定义')) {
         // 正则匹配出开始时间和结束时间
         let reg = /\d{4}(\-|\/|.)\d{1,2}\1\d{1,2}/g;
-        let str = getStore('rootRadarDate')
         this.customTime = str.match(reg)
       } else {
         const myDate = new Date()

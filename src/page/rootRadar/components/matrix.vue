@@ -54,7 +54,7 @@ export default {
     this.initResizeEvent()
   },
   beforeDestroy () {
-    window.removeEventListener('resize', reszieHandler)
+    window.removeEventListener('resize')
   },
   methods: {
     // 监听窗口大小改变时间
