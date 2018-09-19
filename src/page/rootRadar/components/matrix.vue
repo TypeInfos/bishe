@@ -54,22 +54,21 @@ export default {
     this.initResizeEvent()
   },
   beforeDestroy () {
-    window.removeEventListener('resize')
+    window.removeEventListener('resize',this.reszieHandler)
   },
   methods: {
-    // 监听窗口大小改变时间
-    initResizeEvent () {
-      const reszieHandler = () => {
+    reszieHandler(){
         if (this.resizeTimer) {
           clearTimeout(this.resizeTimer)
         }
         this.resizeTimer = setTimeout(() => {
-          console.log('resize event')
           this.renderData = this.formatData()
         }, 300)
-      }
+      },
+    // 监听窗口大小改变时间
+    initResizeEvent () {
       window.addEventListener('resize', () => {
-        reszieHandler()
+        this.reszieHandler()
       })
     },
     async getMatrixData () {

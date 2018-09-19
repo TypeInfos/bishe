@@ -12,6 +12,7 @@ import myOrder from '@/page/myOrder/index'
 import funcView from '@/page/funcView/index'
 import test from '@/components/datePicker/index';
 import labelLab from '@/page/labelLab/index'
+import shenqiHigh from '@/page/shenqiHigh'
 
 Vue.use(Router);
 
@@ -97,6 +98,11 @@ export default new Router({
       name: 'Help',
       component: wisdomSearch,
       // component: () => import('@/page/help'),
-    }
+    },
+    {
+      path: '/shenqiHigh',
+      name: 'shenqiHigh',
+      component: shenqiHigh,
+    },
   ],
 });

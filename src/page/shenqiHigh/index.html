@@ -1,0 +1,44 @@
+<div class="shenqiHighContainer">
+    <div class="shenqiHighContent">
+        <!-- <div class="header">
+            <span>声明：数据结果为模拟计算的结果，有一定的误差，该工具仅限自己使用，请勿广泛传播及用于任何商业用途，否则后果一律自己承担！</span>
+        </div> -->
+        <div class="exponentContainer">
+            <ul class="tb">
+                <li class="" id="li" v-for="(item,index) in tbList" @click="chooseLi(index)">{{ item.label }}</li>
+            </ul>
+        </div>
+        <div class="mainContainer">
+            <div class="main_left">
+                <h2><i class="el-icon-share"></i>{{ currentLi[0] }}</h2>
+                <span class="btn" @click="emptyInput">清空输入框</span>
+                <p>请输入要计算的交易指数，一行一个（支持从excel复制粘贴），单次最大支持10000个指数同时批量计算！</p>
+                <el-input
+                    type="textarea"
+                    placeholder="请在这里输入需要计算的指数，多个值请直接换行"
+                    v-model="textareaInputValue">
+                </el-input>
+            </div>
+            <div class="main_center">
+                <el-button icon="el-icon-search" type="primary" @click="submit">换算为转化率</el-button>
+                <p>
+                    <img src="../../assets/gzh.jpg" alt="">
+                    如需帮助 微信扫一扫,加我为好友!
+                </p>
+            </div>
+            <div class="main_right">
+                <h2><i class="el-icon-view"></i>{{ currentLi[1] }}</h2>
+                <span class="btn copyBtn" :data-clipboard-text="textareaResultValue" @click="copy">复制计算结果</span>
+                <p>批量计算结果可以直接复制粘贴到excel使用，误差在0.01%左右，如果需验证帮助可联系微信！</p>
+                <el-input
+                    class="resultTextarea"
+                    type="textarea"
+                    placeholder="实际值"
+                    v-model="textareaResultValue"
+                    disabled>
+                </el-input>
+            </div>
+        </div>
+    </div>
+    <goBuyDialog :createPeopleDialog="createPeopleDialog" @closeDialog="closeCreatePeopleDialog"></goBuyDialog>
+</div>

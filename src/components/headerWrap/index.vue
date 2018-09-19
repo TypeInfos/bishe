@@ -53,15 +53,18 @@ export default {
           this.$router.push('/labelLab');
           break;
         case '4':
-          this.$router.push('/wisdomSearch');
+          this.$router.push('/shenqiHigh');
           break;
         case '5':
-          this.$router.push('/buy1');
+          this.$router.push('/wisdomSearch');
           break;
         case '6':
-          this.$router.push('/download');
+          this.$router.push('/buy1');
           break;
         case '7':
+          this.$router.push('/download');
+          break;
+        case '8':
           this.$router.push('/help');
           break;
         default:

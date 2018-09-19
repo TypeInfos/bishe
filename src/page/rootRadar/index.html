@@ -143,7 +143,7 @@
         <div class="loading-alert" v-if="checkGoodsInfoDataLoading">
           <span class="title">您的数据正在准备中，请勿关闭浏览器或者退出登录，否则可能导致数据异常~</span>
         </div>
-      </el-alert>
+      <!-- </el-alert> -->
     <div class="card">
         <div class="wrap-title">
           <div class="m-select">
@@ -271,14 +271,14 @@
             最多选择4项，可以切换哦～
           </div>
         </div>
-        <div class="roots">
+        <div class="roots" v-loading="itemLoading">
           <el-checkbox-group
             class="rootContent"
             v-model="checkListRoot"
             :max="4"
             @click.native="checkCheckbox3"
             size="medium"
-            v-loading="itemLoading">
+            >
             <el-checkbox-button v-for="(item, index) in root" :label="item" :key="index">{{item}}</el-checkbox-button>
           </el-checkbox-group>
         </div>

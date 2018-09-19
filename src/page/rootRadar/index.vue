@@ -433,7 +433,6 @@ export default {
           this.firstFocusGoods = true
           this.unFocusList()
         } else {
-          // this.initDiv()
           this.isLoading = false;
           this.firstInit()
         }
@@ -537,59 +536,6 @@ export default {
           this.firstComplete = true
           this.isLoading = true
         })
-    },
-    // 加载框 百分比
-    initDiv () {
-      // this.startLoading = this.$loading({
-      //   lock: true,
-      //   text: 'Loading',
-      //   spinner: 'el-icon-loading',
-      //   background: 'rgba(0, 0, 0, 0.7)',
-      //   customClass: 'startLoading'
-      // })
-      // document.querySelector('.startLoading').innerHTML = `<div class="startLoadingContainer">
-      //                                                       <h2>温馨提示</h2>
-      //                                                       <div class="anim">
-      //                                                         <div class="spinner">
-      //                                                           <div class="spinner-container container1">
-      //                                                             <div class="circle1"></div>
-      //                                                             <div class="circle2"></div>
-      //                                                             <div class="circle3"></div>
-      //                                                             <div class="circle4"></div>
-      //                                                           </div>
-      //                                                           <div class="spinner-container container2">
-      //                                                             <div class="circle1"></div>
-      //                                                             <div class="circle2"></div>
-      //                                                             <div class="circle3"></div>
-      //                                                             <div class="circle4"></div>
-      //                                                           </div>
-      //                                                           <!-- container3为了让正方形的四个球效果更好点，相当于延长动画的效果0.1秒 -->
-      //                                                           <div class="spinner-container container3">
-      //                                                             <div class="circle1"></div>
-      //                                                             <div class="circle2"></div>
-      //                                                             <div class="circle3"></div>
-      //                                                             <div class="circle4"></div>
-      //                                                           </div>
-      //                                                         </div>
-      //                                                         <p>数据正在加载中</p>
-      //                                                       </div>
-      //                                                     <p class="bottomP">进度<span id="startLoadingNumber"></span>%</p>
-      //                                                     <p>请耐心等待~</p>
-      //                                                   </div>`
-      // this.startLoadingElement = document.getElementById('startLoadingNumber')
-      // this.startLoadingTimer = setInterval(() => {
-      //   if (this.startLoadingnumber < 90) {
-      //     this.startLoadingnumber = this.startLoadingnumber + (Math.random() * 1.5)
-      //   } else {
-      //     this.startLoadingnumber = this.startLoadingnumber + (Math.random() * 0.4)
-      //     if (this.startLoadingnumber >= 99.6) {
-      //       clearInterval(this.startLoadingTimer)
-      //     }
-      //     if (this.firstComplete) {
-      //       this.startLoadingnumber = 100
-      //     }
-      //   }
-      // }, 500)
     },
     // 日期
     initData () {
@@ -1450,8 +1396,6 @@ export default {
         this.initData()
         this.focusList()
         this.unFocusList()
-        // console.log('fffffffffffffffffffffffffirt')
-        // this.watchLogin();
         //      关注列表
       }
     },
