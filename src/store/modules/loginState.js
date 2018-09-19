@@ -5,7 +5,6 @@ const id = {
   gjf: 'kgjgpmnjjnooebjcjnoacofabhpejgck',
   test: 'cpnmealmpgcapggbgjgfahpiifbbooef',
   online: 'lnbdcilfaojoldgckojoidnafpagkjbn',
-  testVersion: 'cpnmealmpgcapggbgjgfahpiifbbooef',
   locality: 'cliiiblppljchgdlekfijlejmbfmglme'
 };
 const state = {
