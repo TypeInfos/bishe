@@ -1,0 +1,17 @@
+<div class="goBuyDialog">
+    <el-dialog :visible.sync="createPeopleDialog" :show-close=false :modal=false :close-on-click-modal=false class="goBuy">
+    <div slot="title" class="header">
+        <h2>立即订购</h2>
+        <el-button icon="el-icon-close" @click="closeModal"></el-button>
+        <div v-if="addWordSucceed" class="m-checkbox-tip">
+        </div>
+    </div>
+    <div class="goBuyContent">
+        <p>该版本仅支持1万以内的指数换算，如果您有更高的换算需求，请点击前往订购抖数</p>
+        <div class="twoBtn">
+            <el-button type="primary" plain class="btnCancel" @click="closeModal">取消</el-button>
+            <el-button type="primary" class="btnConfirm" @click="goBuy">立即订购</el-button>
+        </div>
+    </div>
+    </el-dialog>
+</div>
