@@ -121,7 +121,7 @@ export default {
                     params.push(sp[i]);
                 }
             }
-            this.$axios.post('http://w9z622.natappfree.cc/edoushu/shenqi', { indexIn: params })
+            this.$axios.post(this.$api.shenqi, { indexIn: params })
             .then(res => {
                 res = res.data.indexOut
                 sp.forEach(source => {
