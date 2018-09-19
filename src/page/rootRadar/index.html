@@ -197,6 +197,7 @@
           type="primary"
           :loading="repairDataStatus"
           @click="repairData"
+          :disabled="fixDataDisabled"
           plain>修复数据</el-button>
         <el-button
           class="importBtn"

@@ -1376,6 +1376,7 @@ export default {
       this.currentProductId = this.resultGoods[index].productId;
       this.currentFirstCat = this.resultGoods[index].firstCat;
       this.groupList = null; // 清空右侧数据展示区数据
+      this.tagScore = 0; // 还原标签化程度
       this.getCrowdInfo();
       // 下面显示数据
       // 相当于刷新数据，重新请求groupList

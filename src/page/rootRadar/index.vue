@@ -17,6 +17,7 @@ import tableData from './tableData'
 import keyWord from './components/keyWord'
 import matrix from './components/matrix'
 
+moment.locale('zh-cn');
 export default {
   name: 'rootRadar',
   components: {
@@ -37,6 +38,7 @@ export default {
   },
   data() {
     return {
+      fixDataDisabled: false, // 修复数据按钮是否可点击
       isLoading: false, // 初始6个圈圈加载框是否显示
       expiredDays: -1,
       expiredTop: 0,
@@ -652,6 +654,9 @@ export default {
             customClass: 'message-g-zindex'
           })
           this.repairDataStatus = false
+          this.fixDataDisabled = true;
+          const limitTime = moment().add(5, 'minutes').format();
+          setStore(`${this.currentItemId}-fixdata`, limitTime);
         }).catch(() => {
           this.repairDataStatus = false
         })
@@ -737,6 +742,10 @@ export default {
             }
             this.recursionCheckDataSecond()
           })
+      }
+      const limitData = getStore(`${this.currentItemId}-fixdata`)
+      if (limitData && moment().isBefore(limitData)) {
+        this.fixDataDisabled = true;
       }
     },
     // 左侧商品展示 点击商品后请求的
