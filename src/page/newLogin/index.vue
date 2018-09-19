@@ -34,6 +34,7 @@
       }
     },
     mounted() {
+      this.addListenerToSubmit();
       this.getCookie();
     },
     methods: {
@@ -43,9 +44,23 @@
         this.vipPwd = this.$cookies.get('vipPwd');
         this.rememberPwd = true;
       },
+      addListenerToSubmit() {
+        const btn = document.querySelector('.el-form');
+        btn.addEventListener('keydown',this.clickBtn)
+      },
+      removeListenerToSubmit(){
+        const btn = document.querySelector('.el-form');
+        btn.removeEventListener('keydown',this.clickBtn)
+      },
+      clickBtn(e) {
+        if (e.keyCode === 13) {
+          document.querySelector('.loginBtn').click();
+        }
+      },
       // 易数账号登录
       ysLogin() {
         const getInfo = () => {
+          this.removeListenerToSubmit();
           this.$axios.get(this.$api.info).then((resp) => {
             this.loginLoading = false;
             this.bindTaobaoName = resp.data.name;
@@ -99,6 +114,7 @@
                 type: 'success',
                 customClass: 'message-g-zindex'
               });
+
               this.token = res.data;
               try {
                 chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
@@ -155,9 +171,9 @@
             },
             response => {
               try {
-                  this.taobaoLoading = true;
-                  this.watchLogin();
-                  window.open('https://subway.simba.taobao.com/');
+                this.taobaoLoading = true;
+                this.watchLogin();
+                window.open('https://subway.simba.taobao.com/');
               } catch (error) {
                 console.log('退出直通车出错');
               }
