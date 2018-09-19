@@ -12,7 +12,7 @@
             <div class="main_left">
                 <h2><i class="el-icon-share"></i>{{ currentLi[0] }}</h2>
                 <span class="btn" @click="emptyInput">清空输入框</span>
-                <p>请输入要计算的交易指数，一行一个（支持从excel复制粘贴），单次最大支持10000个指数同时批量计算！</p>
+                <p>请输入指定换算的指数，一行一个（支持从excel复制粘贴），单次最大支持100个指数同时批量计算！</p>
                 <el-input
                     type="textarea"
                     placeholder="请在这里输入需要计算的指数，多个值请直接换行"
@@ -23,7 +23,7 @@
                 <el-button icon="el-icon-search" type="primary" @click="submit">换算为转化率</el-button>
                 <p>
                     <img src="../../assets/gzh.jpg" alt="">
-                    如需帮助 微信扫一扫,加我为好友!
+                    更多详情，可关注老草老师公众号
                 </p>
             </div>
             <div class="main_right">

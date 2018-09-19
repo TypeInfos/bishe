@@ -13,7 +13,7 @@ export default {
         return{
             createPeopleDialog: false, // 创建人群的dialog
             limitNum:10000,  //未订购的限制为1万
-            textareaInputValue:'请在这里输入需要计算的指数，多个值请直接换行',  //多行文本输入值
+            textareaInputValue:'',  //多行文本输入值
             textareaResultValue:'', //多行文本结果值 
             tbList:[{
                 value: '选项1',
@@ -56,6 +56,7 @@ export default {
                 this.limitNum = 450000;
             }else{
                 this.limitNum = 10000;
+                this.createPeopleDialog = true;
             }
         })
     },
@@ -114,6 +115,7 @@ export default {
                     continue
                 }
                 if(sp[i] > this.limitNum){
+                    params.push(sp[i]);
                     continue;
                 }else if(sp[i] <= 0){
                     continue;
@@ -131,7 +133,7 @@ export default {
                         this.textareaResultValue += `${res[index]}\n`
                     } else {
                         if(source > this.limitNum ){
-                            // this.textareaResultValue += `请输入小于${limitNum}的数字\n`
+                            this.textareaResultValue += `请输入小于${limitNum}的数字\n`
                             this.createPeopleDialog = true;
                         }
                         else if(source < 0 ){

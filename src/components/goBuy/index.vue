@@ -18,7 +18,7 @@ export default {
       this.$emit('closeDialog');
     },
     goBuy(){
-      location.href='https://www.doushudata.com/#/buy1';
+      this.$router.push('buy1');
     }
   }
 }
