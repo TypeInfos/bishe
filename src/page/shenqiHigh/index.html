@@ -14,13 +14,14 @@
                 <span class="btn" @click="emptyInput">清空输入框</span>
                 <p>请输入指定换算的指数，一行一个（支持从excel复制粘贴），单次最大支持100个指数同时批量计算！</p>
                 <el-input
+                    class="originInput"
                     type="textarea"
                     placeholder="请在这里输入需要计算的指数，多个值请直接换行"
                     v-model="textareaInputValue">
                 </el-input>
             </div>
             <div class="main_center">
-                <el-button icon="el-icon-search" type="primary" @click="submit">换算为转化率</el-button>
+                <el-button icon="el-icon-search" type="primary" @click="submit">进行换算</el-button>
                 <p>
                     <img src="../../assets/gzh.jpg" alt="">
                     更多详情，可关注老草老师公众号
