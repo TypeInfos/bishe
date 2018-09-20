@@ -539,7 +539,6 @@ export default {
     },
     // 日期
     initData () {
-      // console.log(getStore('rootRadarDate').includes('自定义'))
       const str = getStore('rootRadarDate') || ''
       if (str.includes('自定义')) {
         // 正则匹配出开始时间和结束时间
@@ -1470,7 +1469,6 @@ export default {
     },
     // 词根显示的个数的监听
     checkListRoot (val) {
-      console.log(this.concealData)
       if (val.length >= 4) {
         this.maxEcharts = true
       } else {

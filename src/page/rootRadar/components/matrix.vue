@@ -2,23 +2,46 @@
 el-card.matrix(element-loading-text="正在加载数据" v-loading="isLoading")
   .matrix-title(slot="header") 单品词根波士顿矩阵
   .matrix-body
-    .chart
+    .mode-choose
+      .mode-item(@click="changeMode(1)" :class="{active: mode === 1}") 模式一
+      .mode-item(@click="changeMode(2)" :class="{active: mode === 2}") 模式二
+    .checkbox-container
+      el-checkbox-group(v-model="checked" @change="renderData=formatData()")
+        el-checkbox(
+          v-for="(i, index) in dataCopy"
+          :key="index"
+          :label="i.name")
+    .chart(
+      :data-x-title="mode === 1 ? '最近30天词根转化率' : '最近30天词根加购率'"
+      :data-y-title="mode === 1 ? '最近30天词根成交量' : '最近30天词根加购量'")
       .lt-area
-        span.tag ?
+        el-tooltip(effect="dark" placement="top-start")
+          div(slot="content") 针对性优化页面、主图、文案等信息<br>提高该词根搜索用户的转化率
+          span.tag 问题词根?
       .rt-area
-        span.tag ?
+        el-tooltip(effect="dark" placement="top-start")
+          div(slot="content") 直通车添加相关关键词<br>搜索标题匹配相关关键词
+          span.tag 明星词根?
       .lb-area
-        span.tag ?
+        el-tooltip(effect="dark" placement="top-start")
+          div(slot="content") 做词根减法，去除拉低整体转化的词根<br>提高“商品原始排名”
+          span.tag 瘦狗词根?
       .rb-area
-        span.tag ?
+        el-tooltip(effect="dark" placement="left")
+          div(slot="content") 宝贝前中期重点突破词根<br>观察竞品词根成交量制定超越计划
+          span.tag 金牛词根?
       el-popover(
           v-for="(item, index) in renderData.matrix"
           :key="item.name"
           trigger="hover")
         .label
           .label-title 词根：{{ item.labelName }}
+          .info(v-if="mode === 2") 最近30天词根加购量：{{ item.buyNumber }}
+          .info(v-if="mode === 2") 最近30天词根加购率：{{ item.buyRatio }}%
           .info 最近30天词根成交量：{{ item.dealNumber }}
           .info 最近30天词根转化率：{{ item.convertRatio }}%
+          .info(v-if="mode === 1") 最近30天词根加购量：{{ item.buyNumber }}
+          .info(v-if="mode === 1") 最近30天词根加购率：{{ item.buyRatio }}%
         .root-data(
           slot="reference"
           :style=`{ width: renderData.radius + 'px',
@@ -31,11 +54,15 @@ el-card.matrix(element-loading-text="正在加载数据" v-loading="isLoading")
 <script>
 import { getMatrixDataAPI } from '@/assets/api/rootRadar'
 import { isEmpty } from '@/utils/helper'
-
+import { Message } from 'element-ui';
 
 export default {
   props: {
     itemId: {
+      type: [Number, String],
+      default: ''
+    },
+    shopId: {
       type: [Number, String],
       default: ''
     }
@@ -47,7 +74,10 @@ export default {
       // bgColors: ['#0088FE', '#00C49F', '#33A0FE', '#FFBB28', '#0081F1', '#FF8441', '#DADADA', '#EE3B61', '#3A5CD3', '#FF6590', '#0075D2', '#9575DE', '#0052A3', '#889BBE']
       bgColors: ['#0088FE', '#00C49F', '#33A0FE', '#FFBB28', '#0081F1', '#FF8441', '#DADADA', '#EE3B61', '#FF6590', '#9575DE', '#889BBE'],
       renderData: {},
-      resizeTimer: null
+      dataCopy: [],
+      resizeTimer: null,
+      mode: 1,
+      checked: []
     }
   },
   mounted () {
@@ -57,6 +87,23 @@ export default {
     window.removeEventListener('resize', this.reszieHandler)
   },
   methods: {
+    changeMode (val) {
+      if (this.mode === val) return
+      if (val === 2 && !this.data.buyFlow) {
+        Message({
+          message: '请先购买流量纵横',
+          title: 'warning',
+          showClose: true,
+          type: 'warning',
+          duration: 4000, // 显示时长  单位s
+          customClass: 'message-g-zindex'
+        });
+        return
+      }
+      this.mode = val
+      this.data.matrix = JSON.parse(JSON.stringify(this.dataCopy))
+      this.renderData = this.formatData()
+    },
     reszieHandler() {
       if (this.resizeTimer) {
         clearTimeout(this.resizeTimer)
@@ -73,10 +120,14 @@ export default {
     },
     async getMatrixData () {
       this.data = {}
-      if (!this.itemId) return
+      if (!this.itemId || !this.shopId) return
       this.isLoading = true
-      let res = await getMatrixDataAPI({ itemId: this.itemId })
+      let res = await getMatrixDataAPI({ itemId: this.itemId, shopId: this.shopId, terminal: 1 })
       this.data = res.data
+      this.dataCopy = JSON.parse(JSON.stringify(res.data.matrix))
+      this.dataCopy.forEach(i => {
+        this.checked.push(i.name)
+      })
       this.isLoading = false
       this.renderData = this.formatData()
     },
@@ -90,17 +141,55 @@ export default {
     getBottom (yValue, radius) {
       return `${(440 - radius - 30) * yValue + 15}px`
     },
+    convertPosition () {
+      console.log(this.data.matrix)
+      const maxName = this.data.matrix.sort((a, b) => b.name.length - a.name.length)[0].name.length
+      let maxXValue = this.data.matrix.sort((a, b) => (this.mode === 1 ? b.convertRatio - a.convertRatio : b.buyRatio - a.buyRatio))[0]
+      let maxYValue = this.data.matrix.sort((a, b) => (this.mode === 1 ? b.dealNumber - a.dealNumber : b.buyNumber - a.buyNumber))[0]
+      maxXValue = this.mode === 1 ? maxXValue.convertRatio : maxXValue.buyRatio
+      maxYValue = this.mode === 1 ? maxYValue.dealNumber : maxYValue.buyNumber
+      console.log(maxName, maxXValue, maxYValue)
+      this.data.radius = (Math.ceil(Math.sqrt(maxName)) + 3) * 14
+      this.data.matrix.forEach(i => {
+        let x = this.mode === 1 ? i.convertRatio : i.buyRatio
+        let y = this.mode === 1 ? i.dealNumber : i.buyNumber
+        i.xValue = maxXValue ? x / maxXValue : 0
+        i.yValue = maxYValue ? y / maxYValue : 0
+      })
+      let tempArr = JSON.parse(JSON.stringify(this.data.matrix)).sort((a, b) => a.xValue - b.xValue)
+      let res = []
+      tempArr.forEach(i => {
+        if (!res.length) {
+          res.push([i])
+        } else {
+          let pre = res.pop()
+          let el = pre.pop()
+          if (el.xValue === i.xValue && el.yValue === i.yValue) {
+            pre.push(el, i)
+            res.push(pre)
+          } else {
+            pre.push(el)
+            res.push(pre, [i])
+          }
+        }
+      })
+      this.data.matrix = res
+    },
     formatData () {
+      this.data.matrix = this.dataCopy.filter(i => this.checked.indexOf(i.name) > -1)
       if (isEmpty(this.data)) return {}
+      if (isEmpty(this.data.matrix)) return {}
+      this.convertPosition()
       let data = this.data.matrix.reduce((all, item) => {
         let i = item[0]
-        i.labelName = i.name
+        i.labelName = ''
         i.bottom = this.getBottom(parseFloat(i.yValue), parseFloat(this.data.radius))
         i.left = this.getLeft(parseFloat(i.xValue), parseFloat(this.data.radius))
         i.labelName += item.reduce((plus, name) => {
-          plus += `、${name.name}`
+          plus += `${name.name}、`
           return plus
         }, '')
+        i.labelName = i.labelName.slice(0, i.labelName.length - 1)
         all.push(i)
         return all
       }, [])
@@ -129,6 +218,31 @@ export default {
     color: #333;
     font-weight: 500;
   }
+  .mode-choose {
+    border: 1px solid #1CCADA;
+    display: inline-block;
+    margin-bottom: 10px;
+    .mode-item {
+      font-size: 16px;
+      color: #333;
+      background: #EAFCF8;
+      padding: 5px 30px;
+      display: inline-block;
+      cursor: pointer;
+      &.active {
+        background: #1CCADA;
+      }
+    }
+  }
+  .checkbox-container {
+    margin-bottom: 10px;
+    .el-checkbox {
+      margin-right: 10px;
+      &__label {
+        font-size: 14px;
+      }
+    }
+  }
   .chart {
     height: 440px;
     margin: 0 auto;
@@ -150,14 +264,14 @@ export default {
       z-index: 12;
     }
     &::before {
-      content: "近30天词根成交量";
+      content: attr(data-y-title);
       width: 20px;
       height: 200px;
       top: 120px;
       left: -10px;
     }
     &::after {
-      content: "近30天词根转化率";
+      content: attr(data-x-title);
       position: absolute;
       height: 20px;
       width: 200px;
@@ -189,12 +303,12 @@ export default {
     .tag {
       color: #69676A;
       background: #F1EBF9;
-      width: 20px;
-      height: 20px;
+      padding: 0 15px;
+      height: 18px;
       text-align: center;
-      line-height: 20px;
+      line-height: 18px;
       position: absolute;
-      border-radius: 50%;
+      border-radius: 4px;
       cursor: pointer;
     }
     .rt-area .tag,

@@ -2,8 +2,8 @@
 // let path = 'http://w9z622.natappfree.cc/edoushu'; // 阿炳
 // let path = 'http://v99hmx.natappfree.cc/edoushu';
 // let path = 'https://data.doushudata.com/edoushu'; // 上线版
-let path = 'https://data.yishubox.com/edoushu'; // 测试版
-// let path = 'http://192.168.1.105:8082/edoushu' // 老庄的接口
+// let path = 'https://data.yishubox.com/edoushu'; // 测试版
+let path = 'http://192.168.1.103:8082/edoushu' // 老庄的接口
 // if (absUrl.match('edoushu.com')) {
 //   path = 'https://www.edoushu.com/';
 // }
@@ -84,7 +84,7 @@ const api = {
   getHelp: `${path}/getHelp`, // 获取公告以及课程
 
   // 神器高级版页面
-  shenqi: `${path}/shenqi`, //指数转化
+  shenqi: `${path}/shenqi`, // 指数转化
 };
 
 export default api;
