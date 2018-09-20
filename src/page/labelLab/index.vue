@@ -1620,6 +1620,9 @@ export default {
       if (column.label === '溢价') {
         return `${row.discount}%`;
       }
+      if(column.label === '点击率'){
+        return `${row.ctr}%`;
+      }
       return row[this.finalCheckIndexList.filter(i => i.label === column.label)[0].name];
     },
     formatterPeopleRate(row) {
@@ -1640,7 +1643,6 @@ export default {
       let prices = this.groupList.reduce((all, g) => {
         let p = {}
         let a = g.list.sort((n, b) => n.discount - b.discount)
-        console.log(g)
         if (a.length > 0) {
           p.min = a[0].discount
           p.max = a[a.length - 1].discount
