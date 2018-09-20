@@ -37,11 +37,11 @@ el-card.matrix(element-loading-text="正在加载数据" v-loading="isLoading")
         .label
           .label-title 词根：{{ item.labelName }}
           .info(v-if="mode === 2") 最近30天词根加购量：{{ item.buyNumber }}
-          .info(v-if="mode === 2") 最近30天词根加购率：{{ item.buyRatio }}%
+          .info(v-if="mode === 2") 最近30天词根加购率：{{ item.buyRatio < 0.01 ? '<0.01' : item.buyRatio.toFixed(2) }}%
           .info 最近30天词根成交量：{{ item.dealNumber }}
-          .info 最近30天词根转化率：{{ item.convertRatio }}%
+          .info 最近30天词根转化率：{{ item.convertRatio < 0.01 ? '<0.01' : item.convertRatio.toFixed(2) }}%
           .info(v-if="mode === 1") 最近30天词根加购量：{{ item.buyNumber }}
-          .info(v-if="mode === 1") 最近30天词根加购率：{{ item.buyRatio }}%
+          .info(v-if="mode === 1") 最近30天词根加购率：{{ item.buyRatio < 0.01 ? '<0.01' : item.buyRatio.toFixed(2) }}%
         .root-data(
           slot="reference"
           :style=`{ width: renderData.radius + 'px',
@@ -223,7 +223,7 @@ export default {
     display: inline-block;
     margin-bottom: 10px;
     .mode-item {
-      font-size: 16px;
+      font-size: 12px;
       color: #333;
       background: #EAFCF8;
       padding: 5px 30px;
@@ -238,8 +238,11 @@ export default {
     margin-bottom: 10px;
     .el-checkbox {
       margin-right: 10px;
+      &.is-checked .el-checkbox__label {
+        color: #606266;
+      }
       &__label {
-        font-size: 14px;
+        font-size: 12px;
       }
     }
   }
