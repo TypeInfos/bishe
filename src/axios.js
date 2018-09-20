@@ -46,7 +46,6 @@ service.interceptors.response.use(
         }
       });
       if (!flag) {
-        // if (response.data.message === '词根为空' || response.data.message === '关键词为空') return
         Message({
           message: response.data.message,
           title: 'warning',
@@ -63,19 +62,19 @@ service.interceptors.response.use(
     }
     return response.data;
   },
-  (error) => {
-    if (error.message !== undefined && error.request !== undefined) {
-      Message({
-        message: '服务器未知错误',
-        title: 'error',
-        type: 'error',
-        showClose: true,
-        duration: 4000, // 显示时长  单位s
-        customClass: 'message-g-zindex'
-      });
-    }
-    return Promise.reject(error);
-  },
+  // (error) => {
+  //   if (error.message !== undefined && error.request !== undefined) {
+  //     Message({
+  //       message: '服务器未知错误',
+  //       title: 'error',
+  //       type: 'error',
+  //       showClose: true,
+  //       duration: 4000, // 显示时长  单位s
+  //       customClass: 'message-g-zindex'
+  //     });
+  //   }
+  //   return Promise.reject(error);
+  // },
 );
 
 service.defaults.paramsSerializer = params => qs.stringify(params, { indices: false });
