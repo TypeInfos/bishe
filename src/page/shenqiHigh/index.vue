@@ -140,7 +140,11 @@ export default {
                             this.textareaResultValue += '请输入大于0的数字\n'
                         }
                         else{
-                            this.textareaResultValue += '该行数据不符合规则\n'
+                            if(source == ''){
+                                this.textareaResultValue += '\n'
+                            }else{
+                                this.textareaResultValue += '该行数据不符合规则\n'
+                            }
                         }
                     }
                 })
