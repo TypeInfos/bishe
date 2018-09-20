@@ -108,7 +108,7 @@ export default {
         },
         submit(){
             let sp = this.textareaInputValue.split('\n');
-            sp = sp.map(str => parseInt(str.split('').filter(char => !/[^0-9]+-/.test(char)).join('')))
+            sp = sp.map(str => parseInt(str.split('').filter(char => !/[^0-9]/.test(char)).join('')))
             const params = []
             for(let i = 0;i < sp.length; i++){
                 if (isNaN(sp[i])) {
