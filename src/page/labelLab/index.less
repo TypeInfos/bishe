@@ -279,7 +279,10 @@
           }
           &.no-data {
             .el-table__body-wrapper {
-              display: none;
+              // display: none;
+              visibility: hidden;
+              width: 0;
+              height: 0;
             }
             .el-table__footer-wrapper {
               .el-table__footer {
@@ -917,7 +920,7 @@
         margin-top: 40px;
         font-size:14px;
         color:rgba(51,51,51,1);
-        
+
       }
       p:nth-child(2){
         text-align: center;
@@ -1069,7 +1072,7 @@
         position: absolute;
       }
       th{
-        font-size: 12px; 
+        font-size: 12px;
       }
     }
   }

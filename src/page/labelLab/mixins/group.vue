@@ -53,7 +53,6 @@ export default {
         const groups = document.querySelectorAll('.scroll-groups');
         groups.forEach(i => {
           let currentGroup = i.querySelector('.el-table__body-wrapper');
-          console.log(currentGroup)
           currentGroup.removeEventListener('scroll', groupScrollEve);
           currentGroup.addEventListener('scroll', groupScrollEve);
         });

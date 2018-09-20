@@ -44,6 +44,7 @@ export default {
         }
     },
     mounted () {
+        this.addListener();
         this.getUserInfo();
         //加载页面，默认为第一个指标
         document.querySelectorAll('#li')[0].classList.add('currentLi');
@@ -51,7 +52,6 @@ export default {
         this.$axios.post(this.$api.checkOrder,{
             pid:1
         }).then((res) => {
-            console.log(res)
             if(res.data > 0){
                 this.limitNum = 450000;
             }else{
@@ -59,6 +59,9 @@ export default {
                 this.createPeopleDialog = true;
             }
         })
+    },
+    beforeDestroy(){
+        this.removeListener();
     },
     methods:{
         // 获取用户信息
@@ -93,6 +96,15 @@ export default {
             this.currentLi.push(this.tbList[index].label);
             this.currentLi.push(this.tbList[index].relation);
         },
+        addListener(){
+            document.querySelector('.originInput').addEventListener('keydown',this.enterKeyDown)
+        },
+        removeListener(){
+            document.querySelector('.originInput').removeEventListener('keydown',this.enterKeyDown)
+        },
+        enterKeyDown(e){
+                this.textareaInputValue = this.textareaInputValue.replace(/\n+/g,"\n");                
+        },
         //清空输入框
         emptyInput(){
             this.textareaInputValue = '';
@@ -107,8 +119,12 @@ export default {
             let clipboard = new Clipboard('.copyBtn');
         },
         submit(){
+            //如果输入框的最后一行为空 ，则删除
+            if(this.textareaInputValue[this.textareaInputValue.length - 1] === '\n'){
+                this.textareaInputValue = this.textareaInputValue.slice(0,this.textareaInputValue.length - 1);
+            }
             let sp = this.textareaInputValue.split('\n');
-            sp = sp.map(str => parseInt(str.split('').filter(char => !/[^0-9]+-/.test(char)).join('')))
+            sp = sp.map(str => parseInt(str.split('').filter(char => !/[^0-9]/.test(char)).join('')))
             const params = []
             for(let i = 0;i < sp.length; i++){
                 if (isNaN(sp[i])) {
@@ -149,6 +165,7 @@ export default {
             .catch(err => {
                 console.log('request failed', err)
             })
+            
             this.textareaResultValue = ''; //每次转化完 要清空多行文本框的结果。
         },
     },
