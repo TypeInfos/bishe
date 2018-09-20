@@ -1035,13 +1035,13 @@ export default {
                   this.groupList = resp.data;
                   this.groupList.forEach(g => {
                     if (g.groupName === '未标签化群组') {
-                      g.list.push({})
+                      g.list.push(g.total[0])
                     }
                   })
                   this.initGroupLoading = false;
                   // this.startloadingComplete = true;
                   // hr: 在这里 为 groupList添加总和数据 添加事件和绑定
-                  this.initTableEvents();
+                  this.initTableScroll();
                   this.trapezoid();
                   this.getScoreRenderTag();
                   this.labelTendency();

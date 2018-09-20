@@ -1,5 +1,5 @@
 // const absUrl = window.location.href;
-// let path = 'http://w9z622.natappfree.cc/edoushu'; // 阿炳
+// let path = 'http://uvzhmk.natappfree.cc/edoushu'; // 阿炳
 // let path = 'http://v99hmx.natappfree.cc/edoushu';
 // let path = 'https://data.doushudata.com/edoushu'; // 上线版
 let path = 'https://data.yishubox.com/edoushu'; // 测试版
@@ -84,7 +84,7 @@ const api = {
   getHelp: `${path}/getHelp`, // 获取公告以及课程
 
   // 神器高级版页面
-  shenqi: `${path}/shenqi`, //指数转化
+  shenqi: `${path}/shenqi`, // 指数转化
 };
 
 export default api;
