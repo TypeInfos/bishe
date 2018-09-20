@@ -1012,9 +1012,9 @@ export default {
             closeOnClickModal: false,
             type: 'warning',
           }).then(() => {
-            // this.initDiv('意见创建人群');
+            // this.initDiv('一见创建人群');
             this.initGroupLoading = true;
-            this.groupList = null; // 清空grouplist数据
+            this.groupList = []; // 清空grouplist数据
             this.$axios.post(this.$api.initGroup, {
               adGroupId: this.currentAdGroupId,
               productId: this.currentProductId,
@@ -1472,8 +1472,8 @@ export default {
               this.trapezoid();
               this.getScoreRenderTag();
               this.labelTendency();
-            });
-        });
+            })
+        })
     },
     // 返回计划列表
     backPlan() {
@@ -1640,6 +1640,7 @@ export default {
       let prices = this.groupList.reduce((all, g) => {
         let p = {}
         let a = g.list.sort((n, b) => n.discount - b.discount)
+        console.log(g)
         if (a.length > 0) {
           p.min = a[0].discount
           p.max = a[a.length - 1].discount
@@ -1650,9 +1651,11 @@ export default {
         all.push(p)
         return all
       }, [])
+      console.log('price',prices)
       prices.forEach((p, index) => {
+        console.log(index)
         if (p.min === 99999) {
-          p.min = prices[index - 1].min
+          p.min = prices[index].min
         }
       })
       for (let i = prices.length - 1; i >= 0; i--) {
