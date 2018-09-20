@@ -84,7 +84,7 @@ const api = {
   getHelp: `${path}/getHelp`, // 获取公告以及课程
 
   // 神器高级版页面
-  shenqi: `${path}/shenqi`, //指数转化
+  shenqi: `${path}/shenqi`, // 指数转化
 };
 
 export default api;
