@@ -480,6 +480,7 @@ export default {
         }
         // 传参 给后端删除词根 页面div被移除 其他保持不变
         this.$axios.post(this.$api.deleteRoot, param).then(() => {
+          this.$refs.matrix.getMatrixData()
           this.$message({
             showClose: true,
             message: '删除成功',
@@ -568,12 +569,14 @@ export default {
           itemId: this.currentItemId
         }
         this.$axios.post(this.$api.addRoot, params).then(() => {
+          this.$refs.matrix.getMatrixData()
           this.$message({
             showClose: true,
             message: '添加成功',
             type: 'success',
             customClass: 'message-g-zindex'
           })
+
           this.customerRootQueue.push(this.wordInput)
           this.root.splice(0, 0, this.wordInput)
           this.addCustomerRoot(this.customerRootQueue)
