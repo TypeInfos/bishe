@@ -133,7 +133,7 @@ export default {
                 if(sp[i] > this.limitNum){
                     params.push(sp[i]);
                     continue;
-                }else if(sp[i] <= 0){
+                }else if(sp[i] < 0){
                     continue;
                 } else {
                     params.push(sp[i]);
@@ -150,7 +150,7 @@ export default {
                     } else {
                         if(source > this.limitNum ){
                             this.textareaResultValue += `请输入小于${limitNum}的数字\n`
-                            this.createPeopleDialog = true;
+                            // this.createPeopleDialog = true;
                         }
                         else if(source < 0 ){
                             this.textareaResultValue += '请输入大于0的数字\n'
