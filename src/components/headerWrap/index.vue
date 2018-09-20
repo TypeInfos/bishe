@@ -50,7 +50,7 @@ export default {
           this.$router.push('/rootRadar');
           break;
         case '3':
-          this.$router.push('/tempBqsys');
+          this.$router.push('/labelLab');
           break;
         case '4':
           this.$router.push('/shenqiHigh');
