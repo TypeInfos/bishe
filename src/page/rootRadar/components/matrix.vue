@@ -54,17 +54,17 @@ export default {
     this.initResizeEvent()
   },
   beforeDestroy () {
-    window.removeEventListener('resize',this.reszieHandler)
+    window.removeEventListener('resize', this.reszieHandler)
   },
   methods: {
-    reszieHandler(){
-        if (this.resizeTimer) {
-          clearTimeout(this.resizeTimer)
-        }
-        this.resizeTimer = setTimeout(() => {
-          this.renderData = this.formatData()
-        }, 300)
-      },
+    reszieHandler() {
+      if (this.resizeTimer) {
+        clearTimeout(this.resizeTimer)
+      }
+      this.resizeTimer = setTimeout(() => {
+        this.renderData = this.formatData()
+      }, 300)
+    },
     // 监听窗口大小改变时间
     initResizeEvent () {
       window.addEventListener('resize', () => {
