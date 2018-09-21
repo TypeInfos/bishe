@@ -69,22 +69,18 @@
         type="primary">确定</el-button>
     </div>
   </el-dialog>
-  <el-dialog
-    v-loading="addGoodsFocusloading"
-    element-loading-text="正在为您添加商品监控"
-    class="initGoodsInfo in"
-    :visible.sync="addGoodsFocusDialog"
-    :close-on-click-modal=false
-    :lock-scroll=true
-    :modal=true>
-    <div slot="title" class="header addWordDialog">
-      <h2>添加关注商品</h2>
-      <div v-if="overflowSurplus" class="m-checkbox-tip">
-        <i class="el-icon-success"></i>
-        添加成功
+  <el-dialog v-loading="addGoodsFocusloading"
+  element-loading-text="正在为您添加商品监控"
+  class="initGoodsInfo in"
+  :visible.sync="addGoodsFocusDialog"
+  :close-on-click-modal=false
+  :show-close=false
+  :modal=false>
+      <div slot="title" class="header">
+        <h2>添加关注商品</h2>
+        <el-button icon="el-icon-close" @click="addGoodsFocusDialog = false"></el-button>
       </div>
-    </div>
-    <el-input
+      <el-input
       placeholder="请输入内容"
       v-model="initGoodsName"
       prefix-icon="el-icon-search"
@@ -130,7 +126,8 @@
         :disabled="selectSurplus < 1 ? true : false"
         type="primary">确定</el-button>
     </div>
-  </el-dialog>
+    </el-dialog>
+<!--  -->
   <div class="containerContent">
     <div class="content">
       <!-- <el-alert
@@ -362,22 +359,10 @@
           <span>添加自定义词根</span>
         </div>
       </el-card>
-      <!-- 删除词根 -->
-      <el-dialog :visible.sync="deleteWorldVisible" :show-close=false>
-        <div slot="title" class="header">
-          <h2>删除词根</h2>
-          <el-button icon="el-icon-close" @click="deleteWorldVisible = false"></el-button>
-        </div>
-        <div class="deleteWordContent">
-          <p>是否确定删除词根“”?</p>
-          <div class="deleteWordButton">
-            <el-button type="primary" @click="saveAddWord">确定</el-button>
-            <el-button type="primary" @click="deleteWorldVisible = false">取消</el-button>
-          </div>
-        </div>
-      </el-dialog>
       <!-- 添加自定义词根 -->
-      <el-dialog :visible.sync="addWorldVisible" :show-close=false>
+      <el-dialog :visible.sync="addWorldVisible"
+      :show-close=false
+      :modal=false>
         <div slot="title" class="header">
           <h2>添加自定义词根</h2>
           <el-button icon="el-icon-close" @click="addWorldVisible = false"></el-button>

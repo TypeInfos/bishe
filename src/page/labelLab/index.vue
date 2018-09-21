@@ -74,7 +74,7 @@ export default {
       modifyGroupsDialog: false, // 修改群组名字的dialog
       modifyGroupRepeat: false, // 修改群组名字 检查是否名字重复
       modifyGroupName: '', // 修改群组名字input
-      modifyGroupNameDisable: false,
+      modifyGroupNameDisable: true,
       initGroupLoading: true, // 初始化群组 loading
       initGroupLoadingText: '加载中，请稍后',
       peopleMoveLoading: false, // 人群移动弹窗的loading
@@ -108,7 +108,7 @@ export default {
       operatIngIndex: '', // 正在操作的 index
       createGroupDialog: false, // 创建人群 提示框flag
       createGroupName: '',
-      createGroupDisabled: false, // 创建人群的确定按钮
+      createGroupDisabled: true, // 创建人群的确定按钮
       showErrorCreateGroup: false,
       createGroupLoading: false,
       premiumDialog: false, // 修改溢价的dialog
