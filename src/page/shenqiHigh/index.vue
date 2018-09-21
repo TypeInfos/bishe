@@ -48,7 +48,7 @@ export default {
                 label: '转化指数',
                 relation:'转化率'
             }],
-            currentLi:['交易指数','交易金额'] //当前选中的指标
+            currentLi:['交易指数','成交件数'] //当前选中的指标
         }
     },
     mounted () {
@@ -166,7 +166,7 @@ export default {
                             // console.log('source', source, params.indexOf(source), params)
                             const index = params.indexOf(source)
                             if (index > -1) {
-                                this.textareaResultValue += `${res[index]}\n`
+                                this.textareaResultValue += `${res[index]}%\n`
                             } else {
                                 if(source > 500 ){
                                     this.textareaResultValue += '请输入小于500的数字\n'
