@@ -6,46 +6,46 @@ const id = {
   test: 'cpnmealmpgcapggbgjgfahpiifbbooef',
   online: 'lnbdcilfaojoldgckojoidnafpagkjbn',
   cjh: 'cliiiblppljchgdlekfijlejmbfmglme'
-};
+}
 const state = {
   isLogin: false,
   bindTaobaoName: '',
-  editorExtensionId: id.lhr, // 插件ID
-};
+  editorExtensionId: id.kzp, // 插件ID
+}
 // mutations
 const mutations = {
   login(state) {
-    state.isLogin = true;
+    state.isLogin = true
   },
   logout(state) {
-    state.isLogin = false;
+    state.isLogin = false
   },
   setTaobaoName(state, payload) {
-    state.bindTaobaoName = payload.name;
+    state.bindTaobaoName = payload.name
   },
-};
+}
 // actions
 const actions = {
   login(context) {
-    context.commit('login');
+    context.commit('login')
   },
   logout(context) {
-    context.commit('logout');
+    context.commit('logout')
   },
   setTaobaoName(context, payload) {
-    context.commit('setTaobaoName', payload);
+    context.commit('setTaobaoName', payload)
   },
-};
+}
 
 const getters = {
   login: state => state.isLogin,
   taobaoName: state => state.bindTaobaoName,
   editorExtensionId: state => state.editorExtensionId,
-};
+}
 
 export default {
   state,
   getters,
   actions,
   mutations,
-};
+}
