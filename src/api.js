@@ -1,5 +1,5 @@
 // const absUrl = window.location.href;
-// let path = 'http://ghtsp7.natappfree.cc/edoushu'; // 阿炳
+// let path = 'http://tv8r2m.natappfree.cc/edoushu'; // 阿炳
 // let path = 'http://v99hmx.natappfree.cc/edoushu';
 // let path = 'https://data.doushudata.com/edoushu'; // 上线版
 let path = 'https://data.yishubox.com/edoushu'; // 测试版

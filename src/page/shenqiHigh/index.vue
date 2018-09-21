@@ -18,7 +18,7 @@ export default {
             tbList:[{
                 value: '选项1',
                 label: '交易指数',
-                relation:'交易金额'
+                relation:'成交件数'
                 }, {
                 value: '选项2',
                 label: '流量指数',
@@ -39,6 +39,14 @@ export default {
                 value: '选项6',
                 label: '加购人气',
                 relation:'加购人数'
+                },{
+                value: '选项7',
+                label: '客群指数',
+                relation:'支付买家数'
+                },{
+                value: '选项8',
+                label: '转化指数',
+                relation:'转化率'
             }],
             currentLi:['交易指数','交易金额'] //当前选中的指标
         }
@@ -53,7 +61,7 @@ export default {
             pid:1
         }).then((res) => {
             if(res.data > 0){
-                this.limitNum = 450000;
+                this.limitNum = 500000;
             }else{
                 this.limitNum = 10000;
                 this.createPeopleDialog = true;
@@ -139,33 +147,69 @@ export default {
                     params.push(sp[i]);
                 }
             }
-            this.$axios.post(this.$api.shenqi, { indexIn: params })
-            .then(res => {
-                res = res.data.indexOut
-                sp.forEach(source => {
-                    // console.log('source', source, params.indexOf(source), params)
-                    const index = params.indexOf(source)
-                    if (index > -1) {
-                        this.textareaResultValue += `${res[index]}\n`
-                    } else {
-                        if(source > this.limitNum ){
-                            this.textareaResultValue += `请输入小于${limitNum}的数字\n`
-                            // this.createPeopleDialog = true;
-                        }
-                        else if(source < 0 ){
-                            this.textareaResultValue += '请输入大于0的数字\n'
-                        }
-                        else{
-                            this.textareaResultValue += '该行数据不符合规则\n'
-                        }
+            if(this.currentLi[0] == '转化指数'){
+                this.$axios.post(this.$api.shenqi,{
+                    indexIn:params,
+                    type:2
+                }).then(res => {
+                    console.log(res)
+                    if(res.code == 'NACK'){
+                        this.$message({
+                            type:'warning',
+                            message:`${res.data.message}`
+                        })
+                        // this.createPeopleDialog = true;
                     }
+                    if(res.code == 'ACK'){
+                        res = res.data.indexOutTrans
+                        sp.forEach(source => {
+                            // console.log('source', source, params.indexOf(source), params)
+                            const index = params.indexOf(source)
+                            if (index > -1) {
+                                this.textareaResultValue += `${res[index]}\n`
+                            } else {
+                                if(source > 500 ){
+                                    this.textareaResultValue += '请输入小于500的数字\n'
+                                    this.createPeopleDialog = true;
+                                }
+                                else if(source < 0 ){
+                                    this.textareaResultValue += '请输入大于0的数字\n'
+                                }
+                                else{
+                                    this.textareaResultValue += '该行数据不符合规则\n'
+                                }
+                            }
+                        })
+                    }
+                });
+            }else{
+                this.$axios.post(this.$api.shenqi, { indexIn: params })
+                .then(res => {
+                    res = res.data.indexOut
+                    sp.forEach(source => {
+                        // console.log('source', source, params.indexOf(source), params)
+                        const index = params.indexOf(source)
+                        if (index > -1) {
+                            this.textareaResultValue += `${res[index]}\n`
+                        } else {
+                            if(source > this.limitNum ){
+                                this.textareaResultValue += `请输入小于${limitNum}的数字\n`
+                                // this.createPeopleDialog = true;
+                            }
+                            else if(source < 0 ){
+                                this.textareaResultValue += '请输入大于0的数字\n'
+                            }
+                            else{
+                                this.textareaResultValue += '该行数据不符合规则\n'
+                            }
+                        }
+                    })
+                    
                 })
-                
-            })
-            .catch(err => {
-                console.log('request failed', err)
-            })
-            
+                .catch(err => {
+                    console.log('request failed', err)
+                })
+            }
             this.textareaResultValue = ''; //每次转化完 要清空多行文本框的结果。
         },
     },
