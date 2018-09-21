@@ -71,8 +71,12 @@ export default {
           } else {
             let p = group.total[0][c.property]
             p = p || p === 0 ? p : '-'
+
             if (c.property === 'discount') {
               p = '-'
+            }
+            if(c.property === 'ctr'){
+              p = `${p}%`
             }
             sums.push(p)
           }

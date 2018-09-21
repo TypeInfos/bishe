@@ -2,12 +2,12 @@
 // let path = 'http://tv8r2m.natappfree.cc/edoushu'; // 阿炳
 // let path = 'http://v99hmx.natappfree.cc/edoushu';
 // let path = 'https://data.doushudata.com/edoushu'; // 上线版
-let path = 'https://data.yishubox.com/edoushu'; // 测试版
+let path = 'https://data.yishubox.com/edoushu' // 测试版
 // let path = 'http://192.168.1.103:8082/edoushu' // 老庄的接口
 // if (absUrl.match('edoushu.com')) {
 //   path = 'https://www.edoushu.com/';
 // }
-let lelePath = 'https://service.api.doushudata.com/?service=App.Service.GetVer';
+let lelePath = 'https://service.api.doushudata.com/?service=App.Service.GetVer'
 
 const api = {
   login: `${path}/login`, // 易数登录
@@ -85,6 +85,6 @@ const api = {
 
   // 神器高级版页面
   shenqi: `${path}/shenqi`, // 指数转化
-};
+}
 
-export default api;
+export default api

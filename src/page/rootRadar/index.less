@@ -13,6 +13,11 @@
 }
 
 .root-radar{
+  .el-checkbox.is-checked {
+    .el-checkbox__label {
+      color: #606266;
+    }
+  }
   .expired-wrapper {
     position: fixed;
     left: 0;
@@ -23,6 +28,14 @@
     text-align: center;
     .el-dialog{
       width: 750px;
+      .header{
+        h2{
+          text-align: left;
+        }
+        button{
+          float: right;
+        }
+      }
     }
     .el-dialog__body{
       height: 400px;

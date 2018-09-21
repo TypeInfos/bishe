@@ -375,7 +375,7 @@
         <p class="errorP" v-if="showErrorCreateGroup">群组名称重复</p>
       </div>
       <el-button type="primary" class="btnConfirm" :disabled="createGroupDisabled" @click="btnCreateConfirm">确定</el-button>
-      <el-button type="primary" plain class="btnCancel" @click="btnCreateCancel">取消</el-button>
+      <el-button type="primary" class="btnCancel" @click="btnCreateCancel">取消</el-button>
     </div>
   </el-dialog>
   <!-- 修改群组名字 -->
@@ -389,8 +389,10 @@
         <el-input placeholder="请输入群组名称" v-model="modifyGroupName"></el-input>
       </p>
       <p class="errorP" v-if="modifyGroupRepeat">群组名称重复</p>
-      <el-button type="primary" :disabled="modifyGroupNameDisable" class="btnConfirm" @click="modifyGroupConfirm(modifyGroupName)">确定</el-button>
-      <el-button type="primary" plain class="btnCancel" @click="modifyGroupCancel">取消</el-button>
+      <div class="includeBtn">
+          <el-button type="primary"  :disabled="modifyGroupNameDisable" class="btnConfirm" @click="modifyGroupConfirm(modifyGroupName)">确定</el-button>
+          <el-button type="primary"  class="btnCancel" @click="modifyGroupCancel">取消</el-button>
+      </div>
     </div>
   </el-dialog>
   <!-- 人群评级 -->
@@ -429,7 +431,7 @@
       </p>
       <p class="errorP" v-if="premiumError">您所输入的溢价范围有误</p>
       <el-button type="primary" class="btnConfirm" :disabled="premiumDisable" @click="premiumConfirm">确定</el-button>
-      <el-button type="primary" plain class="btnCancel" @click="premiumCancel">取消</el-button>
+      <el-button type="primary" class="btnCancel" @click="premiumCancel">取消</el-button>
     </div>
   </el-dialog>
   <!-- peoplemove -->
@@ -463,7 +465,6 @@
         @click="peopleMoveConfirm">确定</el-button>
       <el-button
         type="primary"
-        plain
         class="btnCancel"
         @click="peopleMoveCancel">取消</el-button>
     </div>
