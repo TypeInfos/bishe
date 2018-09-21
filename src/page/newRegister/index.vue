@@ -154,6 +154,24 @@
             });
         }
       },
+      loginToTaobao() {
+        try {
+          chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
+              type: 'logout'
+            },
+            response => {
+              try {
+                window.open('https://subway.simba.taobao.com/');
+                this.watchLogin();
+              } catch (error) {
+                console.log('退出直通车出错');
+              }
+            })
+        } catch (error) {
+          alert('插件ID与前端不匹配')
+          this.$router.push('/login')
+        }
+      },
       // 开启监控
       watchLogin() {
         this.timer = setInterval(() => {
@@ -163,6 +181,7 @@
                 type: 'getShopInfo',
               },
               (response) => {
+                console.log(response)
                 if (response.code == 400) {
                   this.isLoginTaobao = false;
                 } else {
@@ -182,12 +201,6 @@
             clearInterval(this.timer);
           }
         }, 500);
-      },
-      // 跳转直通车登录
-      loginToTaobao() {
-        this.taobaoLoading = true;
-        this.watchLogin();
-        window.open('https://subway.simba.taobao.com/');
       },
       countDown() {
         this.timeFlag = true;
@@ -254,7 +267,6 @@
       },
       getCode() {
         if (this.phoneNum) {
-          // const myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
           const myreg = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
           if (myreg.test(this.phoneNum)) {
             this.codeLoading = true;
@@ -306,8 +318,10 @@
       },
       finish() {
         this.$router.push('/funcView');
-        location.reload();
       },
     },
+    beforeDestroy(){
+      clearInterval(this.timer);
+    }
   };
 </script>
