@@ -57,7 +57,6 @@ export default {
       overflowSurplus: false, // 初始化选择超过20个
       goodsInfoLoading: false, // 左侧商品列表loading
       firstInitComplete: null,
-      deleteWorldVisible: false, // 删除关键词 弹窗
       checkGoodsInfoDataLoadingFlag: false, // 请求 商品前先请求 后端是否有数据， flag
       checkGoodsInfoDataLoading: null, // loading
       addGoodsFocusloading: false, //

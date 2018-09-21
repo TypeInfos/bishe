@@ -869,6 +869,12 @@
       width: 220px;
       margin: 0 auto;
       position: relative;
+      .includeBtn{
+        width: 180px;
+        margin-left: 20px;
+        display: flex;
+        justify-content: space-between;
+      }
       p:nth-child(1){
         margin-top: 43px;
         .el-input{
@@ -890,18 +896,19 @@
         color: @red;
         position: absolute;
         top: 30px;
+        margin-left: 20px;
       }
       .btnCancel{
         border-radius: 4px;
         padding: 0 16px; //宽度由padding左右16px决定
         @cancle();
-        border:1px solid @green;
+        // border:1px solid @green;
       }
       .btnConfirm{
         border-radius: 4px;
         padding: 0 16px; //宽度由padding左右16px决定
         @confirm();
-        border:1px solid @green;
+        // border:1px solid @green;
       }
     }
   }
@@ -1038,28 +1045,14 @@
         padding: 0 16px; //宽度由padding左右16px决定
         height: 36px;
         font-size: 14px;
-        background: @white;
-        color: @green;
-        border:1px solid @green;
         margin-left: 53px;
-      }
-      .btnCancel:hover{
-        background: @green;
-        color: @white;
       }
       .btnConfirm{
         border-radius: 4px;
         padding: 0 16px; //宽度由padding左右16px决定
         height: 36px;
         font-size: 14px;
-        background: @white;
-        color: @green;
-        border:1px solid @green;
         margin-left: 0 !important;
-      }
-      .btnConfirm:hover{
-        background: @green;
-        color: @white;
       }
     }
   }
