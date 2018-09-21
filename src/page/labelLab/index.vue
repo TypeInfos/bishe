@@ -697,23 +697,26 @@ export default {
       }
       for (let i = 0; i < this.groupList.length; i++) {
         const tableS = `table${i}`;
-        const selection = this.$refs[tableS][0].selection;
-        if (selection.length !== 0) {
-          if (!tips.flag && i > 0) {
-            let min = prices[i - 1].min
-            if (min < param.discount) {
-              tips.flag = true
-              tips.cnt = '当前标签溢价高于上层人群，将会导致这些标签中的部分人群失效，<a>了解详情</a>，是否确定修改溢价'
+        let table = this.$refs[tableS]
+        if (table && table[0] && table[0].selection) {
+          let selection = table[0].selection
+          if (selection.length !== 0) {
+            if (!tips.flag && i > 0) {
+              let min = prices[i - 1].min
+              if (min < param.discount) {
+                tips.flag = true
+                tips.cnt = '当前标签溢价高于上层人群，将会导致这些标签中的部分人群失效，<a>了解详情</a>，是否确定修改溢价'
+              }
+            } else if (!tips.flag && i < this.groupList.length - 1) {
+              let max = prices[i + 1].max
+              if (max > param.discount) {
+                tips.flag = true
+                tips.cnt = '当前标签溢价低于下层人群，将会导致这些标签中的部分人群失效，<a>了解详情</a>，是否确定修改溢价'
+              }
             }
-          } else if (!tips.flag && i < this.groupList.length - 1) {
-            let max = prices[i + 1].max
-            if (max > param.discount) {
-              tips.flag = true
-              tips.cnt = '当前标签溢价低于下层人群，将会导致这些标签中的部分人群失效，<a>了解详情</a>，是否确定修改溢价'
+            for (const v of selection) {
+              param.crowdIdList.push(v.crowdId);
             }
-          }
-          for (const v of selection) {
-            param.crowdIdList.push(v.crowdId);
           }
         }
       }
@@ -761,10 +764,13 @@ export default {
       };
       for (let i = 0; i < this.groupList.length; i++) {
         const tableS = `table${i}`;
-        const selection = this.$refs[tableS][0].selection;
-        if (selection.length !== 0) {
-          for (let v of selection) {
-            param.crowdIdList.push(v.crowdId);
+        let table = this.$refs[tableS]
+        if (table && table[0] && table[0].selection) {
+          let selection = table[0].selection
+          if (selection.length !== 0) {
+            for (let v of selection) {
+              param.crowdIdList.push(v.crowdId);
+            }
           }
         }
       }
@@ -1143,10 +1149,13 @@ export default {
       };
       for (let i = 0; i < this.groupList.length; i++) {
         const tableS = `table${i}`;
-        const selection = this.$refs[tableS][0].selection;
-        if (selection.length !== 0) {
-          for (const v of selection) {
-            param.crowdIdList.push(v.crowdId);
+        let table = this.$refs[tableS]
+        if (table && table[0] && table[0].selection) {
+          let selection = table[0].selection
+          if (selection.length !== 0) {
+            for (const v of selection) {
+              param.crowdIdList.push(v.crowdId);
+            }
           }
         }
       }
@@ -1218,10 +1227,13 @@ export default {
       };
       for (let i = 0; i < this.groupList.length; i++) {
         const tableS = `table${i}`;
-        const selection = this.$refs[tableS][0].selection;
-        if (selection.length !== 0) {
-          for (const v of selection) {
-            param.crowdIdList.push(v.crowdId);
+        let table = this.$refs[tableS]
+        if (table && table[0] && table[0].selection) {
+          let selection = table[0].selection
+          if (selection.length !== 0) {
+            for (const v of selection) {
+              param.crowdIdList.push(v.crowdId);
+            }
           }
         }
       }
@@ -1620,7 +1632,7 @@ export default {
       if (column.label === '溢价') {
         return `${row.discount}%`;
       }
-      if(column.label === '点击率'){
+      if (column.label === '点击率') {
         return `${row.ctr}%`;
       }
       return row[this.finalCheckIndexList.filter(i => i.label === column.label)[0].name];
@@ -1653,7 +1665,7 @@ export default {
         all.push(p)
         return all
       }, [])
-      console.log('price',prices)
+      console.log('price', prices)
       prices.forEach((p, index) => {
         console.log(index)
         if (p.min === 99999) {
