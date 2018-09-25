@@ -29,7 +29,7 @@
             </div>
             <div class="main_right">
                 <h2><i class="el-icon-view"></i>{{ currentLi[1] }}</h2>
-                <p style="position:absolute;top: 50px;" v-if="currentLi[0] == '交易指数' ">注：竞品关键词中的交易指数是由商品的成交件数拟合而成</p>
+                <p style="position:absolute;top: 50px;" v-if="currentLi[0] == '交易指数' ">注：若交易指数来源为成交关键词，则换算结果代表支付件数</p>
                 <span class="btn copyBtn" :data-clipboard-text="textareaResultValue" @click="copy">复制计算结果</span>
                 <p>批量计算结果可以直接复制粘贴到excel使用，误差在0.01%左右，如果需验证帮助可联系微信！</p>
                 <el-input

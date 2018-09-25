@@ -18,7 +18,7 @@ export default {
             tbList:[{
                 value: '选项1',
                 label: '交易指数',
-                relation:'成交金额/件数'
+                relation:'成交金额'
                 }, {
                 value: '选项2',
                 label: '流量指数',
@@ -48,7 +48,7 @@ export default {
                 label: '转化指数',
                 relation:'转化率'
             }],
-            currentLi:['交易指数','成交金额/件数'] //当前选中的指标
+            currentLi:['交易指数','成交金额'] //当前选中的指标
         }
     },
     mounted () {
