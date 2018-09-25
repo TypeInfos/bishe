@@ -175,7 +175,6 @@ export default {
     },
   },
   mounted() {
-    // console.log(this.focusOn)
     window.addEventListener('scroll', this.handleScroll)
   },
   beforeDestroy() {
