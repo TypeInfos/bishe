@@ -5,6 +5,9 @@ el-card.matrix(element-loading-text="正在加载数据" v-loading="isLoading")
     .mode-choose
       .mode-item(@click="changeMode(1)" :class="{active: mode === 1}") 模式一
       .mode-item(@click="changeMode(2)" :class="{active: mode === 2}") 模式二
+      .add-root
+        el-button(type="primary" plain @click="showAddRootDialog") +
+        span.text 添加自定义词根
     .checkbox-container
       el-checkbox-group(v-model="checked" @change="renderData=formatData()")
         el-checkbox(
@@ -200,6 +203,9 @@ export default {
         radius: this.data.radius,
         matrix: data
       }
+    },
+    showAddRootDialog() {
+      this.$emit('showAddRootDialog')
     }
   },
   watch: {
@@ -221,9 +227,32 @@ export default {
     color: #333;
     font-weight: 500;
   }
+  .add-root {
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+    .text {
+      margin-left: 5px;
+    }
+    button {
+      border-radius: 8px;
+      height: 24px;
+      width: 34px;
+      padding: 0;
+      // position: relative;
+      // line-height: 40px;
+      span {
+        font-size: 25px;
+        font-weight: 400;
+        text-align: center;
+        width:34px;
+      }
+    }
+  }
   .mode-choose {
-    border: 1px solid #1CCADA;
-    display: inline-block;
+    // border: 1px solid #1CCADA;
+    // display: inline-block;
+    display: flex;
     margin-bottom: 10px;
     .mode-item {
       font-size: 12px;
@@ -232,6 +261,7 @@ export default {
       padding: 5px 30px;
       display: inline-block;
       cursor: pointer;
+      border: 1px solid #1CCADA;
       &.active {
         background: #1CCADA;
       }
