@@ -11,13 +11,13 @@ import guidance from '@/components/guidance/index'
 import lineChart from '@/components/newLineChart'
 import showGoodsAside from '@/components/showGoodsList'
 import expired from '@/components/expired'
-import { setStore, getStore } from '@/utils/localStorage';
+import { setStore, getStore } from '@/utils/localStorage'
 import backTop from '../../components/backToTop'
 import tableData from './tableData'
 import keyWord from './components/keyWord'
 import matrix from './components/matrix'
 
-moment.locale('zh-cn');
+moment.locale('zh-cn')
 export default {
   name: 'rootRadar',
   components: {
@@ -33,7 +33,7 @@ export default {
   },
   computed: {
     isGlobalLoading() {
-      return this.isLoading;
+      return this.isLoading
     }
   },
   data() {
@@ -287,8 +287,8 @@ export default {
           {
             text: '最近三十天',
             onClick(picker) {
-              const end = new Date();
-              const start = new Date();
+              const end = new Date()
+              const start = new Date()
               start.setTime(start.getTime() - (3600 * 1000 * 24 * 30))
               end.setTime(end.getTime() - (3600 * 1000 * 24))
               picker.$emit('pick', [start, end])
@@ -334,6 +334,17 @@ export default {
   },
   filters: {},
   methods: {
+    // 波士顿矩阵删除词根
+    handleMatrixDelete (word) {
+      console.log('dddd', word)
+      let index = -1
+      this.root.forEach((i, id) => {
+        if (i === word.name) {
+          index = id
+        }
+      })
+      this.deleteAnaysis(index)
+    },
     // gjfAdd 进入页面先判断是否订购产品
     checkOrder () {
       this.$axios.post(this.$api.checkOrder, {
@@ -432,7 +443,7 @@ export default {
           this.firstFocusGoods = true
           this.unFocusList()
         } else {
-          this.isLoading = false;
+          this.isLoading = false
           this.firstInit()
         }
       })
@@ -445,8 +456,8 @@ export default {
           this.initFocusGoodsList = false
           this.initGoodsFocusLoading = false
           this.firstFocusGoods = false
-          this.firstComplete = false;
-          this.isLoading = false;
+          this.firstComplete = false
+          this.isLoading = false
           this.firstInit()
         })
     },
@@ -468,13 +479,14 @@ export default {
     },
     // 删除弹窗
     deleteAnaysis (index) {
-      this.$confirm(`确定删除该“${this.wrapData[index].rootName}”词根?`, '删除词根', {
+      let rootName = this.wrapData[index] ? this.wrapData[index].rootName : this.root[index]
+      this.$confirm(`确定删除该“${rootName}”词根?`, '删除词根', {
         confirmButtonText: '确 定',
         cancelButtonText: '取 消',
         type: 'warning'
       }).then(() => {
         const param = {
-          rootName: this.wrapData[index].rootName,
+          rootName: rootName,
           itemId: this.currentItemId
         }
         // 传参 给后端删除词根 页面div被移除 其他保持不变
@@ -487,14 +499,14 @@ export default {
             customClass: 'message-g-zindex'
           })
           for (let i = 0; i < this.root.length; i++) {
-            if (this.wrapData[index].rootName === this.root[i]) {
+            if (rootName === this.root[i]) {
               // 删掉词根的名字
               this.root.splice(i, 1)
               break
             }
           }
           for (let i = 0; i < this.checkListRoot.length; i++) {
-            if (this.wrapData[index].rootName === this.checkListRoot[i]) {
+            if (rootName === this.checkListRoot[i]) {
               // 删掉 checklist的词根名
               this.checkListRoot.splice(i, 1)
               break
@@ -516,8 +528,8 @@ export default {
       this.$axios.get(this.$api.initialComplete)
         .then(res => {
           if (res) {
-            this.firstComplete = true;
-            this.isLoading = true;
+            this.firstComplete = true
+            this.isLoading = true
           } else {
             this.firstInitComplete = setInterval(() => {
               this.$axios.get(this.$api.initialComplete)
@@ -542,7 +554,7 @@ export default {
       const str = getStore('rootRadarDate') || ''
       if (str.includes('自定义')) {
         // 正则匹配出开始时间和结束时间
-        let reg = /\d{4}(\-|\/|.)\d{1,2}\1\d{1,2}/g;
+        let reg = /\d{4}(\-|\/|.)\d{1,2}\1\d{1,2}/g
         this.customTime = str.match(reg)
       } else {
         const myDate = new Date()
@@ -655,9 +667,9 @@ export default {
             customClass: 'message-g-zindex'
           })
           this.repairDataStatus = false
-          this.fixDataDisabled = true;
-          const limitTime = moment().add(5, 'minutes').format();
-          setStore(`${this.currentItemId}-fixdata`, limitTime);
+          this.fixDataDisabled = true
+          const limitTime = moment().add(5, 'minutes').format()
+          setStore(`${this.currentItemId}-fixdata`, limitTime)
         }).catch(() => {
           this.repairDataStatus = false
         })
@@ -746,7 +758,7 @@ export default {
       }
       const limitData = getStore(`${this.currentItemId}-fixdata`)
       if (limitData && moment().isBefore(limitData)) {
-        this.fixDataDisabled = true;
+        this.fixDataDisabled = true
       }
     },
     // 左侧商品展示 点击商品后请求的
@@ -847,8 +859,8 @@ export default {
       })
     },
     getFilterUnFocusList () {
-      this.firstFocusGoodsCurrentPage = 1;
-      this.unFocusList();
+      this.firstFocusGoodsCurrentPage = 1
+      this.unFocusList()
     },
     // 获取关注列表
     focusList () {
@@ -877,7 +889,7 @@ export default {
     },
     eightSecondRefreshFocusList () {
       setInterval(() => {
-        this.focusList();
+        this.focusList()
       }, 10000)
     },
     // checkCheckbox 提示不能选择超过2个
@@ -1157,10 +1169,10 @@ export default {
     },
     // 获取单品整体分析数据
     getSingleItem () {
-      this.singleItemLoading = true;
+      this.singleItemLoading = true
       let terminal = 0
       if (this.czd === '全部终端') {
-        terminal = 0;
+        terminal = 0
       } else if (this.czd === 'PC端') {
         terminal = 1
       } else {
@@ -1258,7 +1270,7 @@ export default {
           this.getRootData(newRoot)
         }).catch(() => {
           this.itemLoading = false
-        });
+        })
       } else {
         this.itemLoading = false
       }

@@ -69,25 +69,25 @@
 </template>
 
 <script>
-  export default {
-    props: ["tableData", "totalData"],
-    methods: {
-      getSummaries(param) {
-        const {
-          columns,
-        } = param;
-        const sums = [];
-        columns.forEach((column, index) => {
+export default {
+  props: ['tableData', 'totalData'],
+  methods: {
+    getSummaries(param) {
+      const {
+        columns,
+      } = param
+      const sums = []
+      columns.forEach((column, index) => {
         // 将后端请求的数据放入合计
-          sums[index] = this.totalData[column.property];
-          if (column.property === "zConversion" || column.property === "nConversion" || column.property === "allConversion") {
-            sums[index] += "%"
-          }
-        })
-        return sums;
-      },
+        sums[index] = this.totalData[column.property]
+        if (column.property === 'zConversion' || column.property === 'nConversion' || column.property === 'allConversion') {
+          sums[index] += '%'
+        }
+      })
+      return sums
     },
-  };
+  },
+}
 </script>
 
 <style lang="less">

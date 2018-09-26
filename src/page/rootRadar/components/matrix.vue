@@ -5,17 +5,21 @@ el-card.matrix(element-loading-text="正在加载数据" v-loading="isLoading")
     .mode-choose
       .mode-item(@click="changeMode(1)" :class="{active: mode === 1}") 模式一
       .mode-item(@click="changeMode(2)" :class="{active: mode === 2}") 模式二
+      .add-root
+        el-button(type="primary" plain @click="showAddRootDialog") +
+        span.text 添加自定义词根
     .checkbox-container
       el-checkbox-group(v-model="checked" @change="renderData=formatData()")
         el-checkbox(
           v-for="(i, index) in dataCopy"
           :key="index"
-          :label="i.name")
+          :label="i.name") {{ i.name }}
+          i.el-icon-error(@click="handleDelete(i)")
     .chart(
       :data-x-title="mode === 1 ? '最近30天词根转化率' : '最近30天词根加购率'"
       :data-y-title="mode === 1 ? '最近30天词根成交量' : '最近30天词根加购量'")
       .lt-area
-        el-tooltip(effect="dark" placement="top-start")
+        el-tooltip(effect="dark" placement="bottom")
           div(slot="content") 针对性优化页面、主图、文案等信息<br>提高该词根搜索用户的转化率
           span.tag 问题词根?
       .rt-area
@@ -54,7 +58,7 @@ el-card.matrix(element-loading-text="正在加载数据" v-loading="isLoading")
 <script>
 import { getMatrixDataAPI } from '@/assets/api/rootRadar'
 import { isEmpty } from '@/utils/helper'
-import { Message } from 'element-ui';
+import { Message } from 'element-ui'
 
 export default {
   props: {
@@ -97,7 +101,7 @@ export default {
           type: 'warning',
           duration: 4000, // 显示时长  单位s
           customClass: 'message-g-zindex'
-        });
+        })
         return
       }
       this.mode = val
@@ -111,6 +115,10 @@ export default {
       this.resizeTimer = setTimeout(() => {
         this.renderData = this.formatData()
       }, 300)
+    },
+    handleDelete (word) {
+      console.log(word)
+      this.$emit('del', word)
     },
     // 监听窗口大小改变时间
     initResizeEvent () {
@@ -142,13 +150,11 @@ export default {
       return `${(440 - radius - 30) * yValue + 15}px`
     },
     convertPosition () {
-      console.log(this.data.matrix)
       const maxName = this.data.matrix.sort((a, b) => b.name.length - a.name.length)[0].name.length
       let maxXValue = this.data.matrix.sort((a, b) => (this.mode === 1 ? b.convertRatio - a.convertRatio : b.buyRatio - a.buyRatio))[0]
       let maxYValue = this.data.matrix.sort((a, b) => (this.mode === 1 ? b.dealNumber - a.dealNumber : b.buyNumber - a.buyNumber))[0]
       maxXValue = this.mode === 1 ? maxXValue.convertRatio : maxXValue.buyRatio
       maxYValue = this.mode === 1 ? maxYValue.dealNumber : maxYValue.buyNumber
-      console.log(maxName, maxXValue, maxYValue)
       this.data.radius = (Math.ceil(Math.sqrt(maxName)) + 3) * 14
       this.data.matrix.forEach(i => {
         let x = this.mode === 1 ? i.convertRatio : i.buyRatio
@@ -197,6 +203,9 @@ export default {
         radius: this.data.radius,
         matrix: data
       }
+    },
+    showAddRootDialog() {
+      this.$emit('showAddRootDialog')
     }
   },
   watch: {
@@ -218,9 +227,32 @@ export default {
     color: #333;
     font-weight: 500;
   }
+  .add-root {
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+    .text {
+      margin-left: 5px;
+    }
+    button {
+      border-radius: 8px;
+      height: 24px;
+      width: 34px;
+      padding: 0;
+      // position: relative;
+      // line-height: 40px;
+      span {
+        font-size: 25px;
+        font-weight: 400;
+        text-align: center;
+        width:34px;
+      }
+    }
+  }
   .mode-choose {
-    border: 1px solid #1CCADA;
-    display: inline-block;
+    // border: 1px solid #1CCADA;
+    // display: inline-block;
+    display: flex;
     margin-bottom: 10px;
     .mode-item {
       font-size: 12px;
@@ -229,6 +261,7 @@ export default {
       padding: 5px 30px;
       display: inline-block;
       cursor: pointer;
+      border: 1px solid #1CCADA;
       &.active {
         background: #1CCADA;
       }
@@ -238,11 +271,22 @@ export default {
     margin-bottom: 10px;
     .el-checkbox {
       margin-right: 10px;
+      position: relative;
       &.is-checked .el-checkbox__label {
         color: #606266;
       }
       &__label {
         font-size: 12px;
+        padding-right: 15px;
+        .el-icon-error {
+          position: absolute;
+          right: 0;
+          top: 0;
+          display: none;
+        }
+        &:hover .el-icon-error {
+          display: block;
+        }
       }
     }
   }

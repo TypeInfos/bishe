@@ -248,7 +248,12 @@
           </lineChart>
         </div>
       </el-card>
-      <matrix :shopId="currentShopid" :itemId="currentItemId" ref="matrix"></matrix>
+      <matrix
+        :shopId="currentShopid"
+        :itemId="currentItemId"
+        ref="matrix"
+        @del="handleMatrixDelete"
+        @showAddRootDialog="addWorldVisible = true"></matrix>
       <el-card
         v-if="isShow"
         element-loading-text="为您加载商品详细数据，请稍后"
@@ -277,7 +282,9 @@
             size="medium"
             >
             <el-checkbox-button v-for="(item, index) in root" :label="item" :key="index">{{item}}</el-checkbox-button>
+          <div class="addCustomerRoot"><el-button type="primary" plain @click="addWorldVisible = true">+</el-button><span class="customerText">添加自定义词根</span></div>
           </el-checkbox-group>
+
         </div>
         <div class="checkListContainer2">
           <div class="sortData" v-if="rootAnalysisCompleteLoading">
@@ -297,6 +304,7 @@
           <el-checkbox-group class="checkListDiv" v-model="checkList2" :max="2">
             <el-checkbox v-for="(item, index) in checkListGroup2" :key="index" :label="item.label" @click.native="checkCheckbox2">
             </el-checkbox>
+
           </el-checkbox-group>
           <div class="selectSurplus">
             <span>已选 {{checkSurplus2}}/2</span>
@@ -354,10 +362,6 @@
           style="height:100px;"></div>
         <h3 v-if="maxEcharts" class="maxH3">最多只能显示四个词根的数据哦～</h3>
         <h3 v-else="maxEcharts" class="maxH3">最多可以显示四个词根的数据哦～</h3>
-        <div class="add-world mb20">
-          <p @click="addWorldVisible = true">+</p>
-          <span>添加自定义词根</span>
-        </div>
       </el-card>
       <!-- 添加自定义词根 -->
       <el-dialog :visible.sync="addWorldVisible"
