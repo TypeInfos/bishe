@@ -34,7 +34,7 @@ export default {
     userTip
   },
   mounted () {
-    console.log(navigator.plugins)
+    // console.log(navigator.plugins)
   },
   data () {
     return {

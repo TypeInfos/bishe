@@ -34,8 +34,11 @@ Vue.filter('timestamp', (value) => {
 
 // 保留 N 位小数
 Vue.filter('number', (value, num = 2) => {
-  parseFloat(value).toFixed(num);
+   return parseFloat(value).toFixed(num);
 });
+
+// var myFilter = Vue.filter('number')
+// console.log(myFilter(222.2222))
 
 // 金额格式化
 // Vue.filter('currency', (value, symbol = '￥', num = 2) => {
