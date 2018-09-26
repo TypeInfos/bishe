@@ -13,13 +13,13 @@ el-card.matrix(element-loading-text="正在加载数据" v-loading="isLoading")
         el-checkbox(
           v-for="(i, index) in dataCopy"
           :key="index"
-          :label="i.name")
-
+          :label="i.name") {{ i.name }}
+          i.el-icon-error(@click="handleDelete(i)")
     .chart(
       :data-x-title="mode === 1 ? '最近30天词根转化率' : '最近30天词根加购率'"
       :data-y-title="mode === 1 ? '最近30天词根成交量' : '最近30天词根加购量'")
       .lt-area
-        el-tooltip(effect="dark" placement="top-start")
+        el-tooltip(effect="dark" placement="bottom")
           div(slot="content") 针对性优化页面、主图、文案等信息<br>提高该词根搜索用户的转化率
           span.tag 问题词根?
       .rt-area
@@ -116,6 +116,10 @@ export default {
         this.renderData = this.formatData()
       }, 300)
     },
+    handleDelete (word) {
+      console.log(word)
+      this.$emit('del', word)
+    },
     // 监听窗口大小改变时间
     initResizeEvent () {
       window.addEventListener('resize', () => {
@@ -146,13 +150,11 @@ export default {
       return `${(440 - radius - 30) * yValue + 15}px`
     },
     convertPosition () {
-      console.log(this.data.matrix)
       const maxName = this.data.matrix.sort((a, b) => b.name.length - a.name.length)[0].name.length
       let maxXValue = this.data.matrix.sort((a, b) => (this.mode === 1 ? b.convertRatio - a.convertRatio : b.buyRatio - a.buyRatio))[0]
       let maxYValue = this.data.matrix.sort((a, b) => (this.mode === 1 ? b.dealNumber - a.dealNumber : b.buyNumber - a.buyNumber))[0]
       maxXValue = this.mode === 1 ? maxXValue.convertRatio : maxXValue.buyRatio
       maxYValue = this.mode === 1 ? maxYValue.dealNumber : maxYValue.buyNumber
-      console.log(maxName, maxXValue, maxYValue)
       this.data.radius = (Math.ceil(Math.sqrt(maxName)) + 3) * 14
       this.data.matrix.forEach(i => {
         let x = this.mode === 1 ? i.convertRatio : i.buyRatio
@@ -269,11 +271,22 @@ export default {
     margin-bottom: 10px;
     .el-checkbox {
       margin-right: 10px;
+      position: relative;
       &.is-checked .el-checkbox__label {
         color: #606266;
       }
       &__label {
         font-size: 12px;
+        padding-right: 15px;
+        .el-icon-error {
+          position: absolute;
+          right: 0;
+          top: 0;
+          display: none;
+        }
+        &:hover .el-icon-error {
+          display: block;
+        }
       }
     }
   }
