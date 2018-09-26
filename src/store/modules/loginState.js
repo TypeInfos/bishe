@@ -10,7 +10,7 @@ const id = {
 const state = {
   isLogin: false,
   bindTaobaoName: '',
-  editorExtensionId: id.cjh , // 插件ID
+  editorExtensionId: id.lhr, // 插件ID
 }
 // mutations
 const mutations = {

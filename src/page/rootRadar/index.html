@@ -248,7 +248,11 @@
           </lineChart>
         </div>
       </el-card>
-      <matrix :shopId="currentShopid" :itemId="currentItemId" ref="matrix"></matrix>
+      <matrix
+        :shopId="currentShopid"
+        :itemId="currentItemId"
+        ref="matrix"
+        @del="handleMatrixDelete"></matrix>
       <el-card
         v-if="isShow"
         element-loading-text="为您加载商品详细数据，请稍后"
