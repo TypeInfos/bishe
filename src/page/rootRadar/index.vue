@@ -325,6 +325,14 @@ export default {
     this.czd = getStore('rootRadarEnd') ? getStore('rootRadarEnd') : '全部终端'
     // 进入页面先判断是否订购产品
     this.checkOrder()
+    //百度统计
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c57e72051f343c53c00efb5c530743bc";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll)
