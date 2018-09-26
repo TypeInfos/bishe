@@ -752,17 +752,12 @@ export default {
       if (this.currentItemId !== itemId) {
         this.currentItemId = itemId
         this.currentTitle = title
-        let temp = []
-        temp.push(this.currentTitle)
         this.checkGoodsInfoDataLoading = true
-        this.$axios.post(this.$api.checkData, this.setParams(temp))
-          .then(() => {
             if (this.setintervalCheckItemDataId !== null) {
               clearInterval(this.setintervalCheckItemDataId)
               this.setintervalCheckItemDataId = null
             }
             this.recursionCheckDataSecond()
-          })
       }
       const limitData = getStore(`${this.currentItemId}-fixdata`)
       if (limitData && moment().isBefore(limitData)) {

@@ -17,10 +17,11 @@ import shenqiHigh from '@/page/shenqiHigh'
 Vue.use(Router);
 
 export default new Router({
+  mode:'history',
   routes: [
     {
       path: '/',
-      component: newLogin,
+      redirect: '/login',
     },
     {
       path: '/login',
