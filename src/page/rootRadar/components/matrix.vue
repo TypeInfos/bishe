@@ -5,12 +5,16 @@ el-card.matrix(element-loading-text="正在加载数据" v-loading="isLoading")
     .mode-choose
       .mode-item(@click="changeMode(1)" :class="{active: mode === 1}") 模式一
       .mode-item(@click="changeMode(2)" :class="{active: mode === 2}") 模式二
+      .add-root
+        el-button(type="primary" plain @click="showAddRootDialog") +
+        span.text 添加自定义词根
     .checkbox-container
       el-checkbox-group(v-model="checked" @change="renderData=formatData()")
         el-checkbox(
           v-for="(i, index) in dataCopy"
           :key="index"
           :label="i.name")
+
     .chart(
       :data-x-title="mode === 1 ? '最近30天词根转化率' : '最近30天词根加购率'"
       :data-y-title="mode === 1 ? '最近30天词根成交量' : '最近30天词根加购量'")
@@ -54,7 +58,7 @@ el-card.matrix(element-loading-text="正在加载数据" v-loading="isLoading")
 <script>
 import { getMatrixDataAPI } from '@/assets/api/rootRadar'
 import { isEmpty } from '@/utils/helper'
-import { Message } from 'element-ui';
+import { Message } from 'element-ui'
 
 export default {
   props: {
@@ -97,7 +101,7 @@ export default {
           type: 'warning',
           duration: 4000, // 显示时长  单位s
           customClass: 'message-g-zindex'
-        });
+        })
         return
       }
       this.mode = val
@@ -197,6 +201,9 @@ export default {
         radius: this.data.radius,
         matrix: data
       }
+    },
+    showAddRootDialog() {
+      this.$emit('showAddRootDialog')
     }
   },
   watch: {
@@ -218,9 +225,32 @@ export default {
     color: #333;
     font-weight: 500;
   }
+  .add-root {
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+    .text {
+      margin-left: 5px;
+    }
+    button {
+      border-radius: 8px;
+      height: 24px;
+      width: 34px;
+      padding: 0;
+      // position: relative;
+      // line-height: 40px;
+      span {
+        font-size: 25px;
+        font-weight: 400;
+        text-align: center;
+        width:34px;
+      }
+    }
+  }
   .mode-choose {
-    border: 1px solid #1CCADA;
-    display: inline-block;
+    // border: 1px solid #1CCADA;
+    // display: inline-block;
+    display: flex;
     margin-bottom: 10px;
     .mode-item {
       font-size: 12px;
@@ -229,6 +259,7 @@ export default {
       padding: 5px 30px;
       display: inline-block;
       cursor: pointer;
+      border: 1px solid #1CCADA;
       &.active {
         background: #1CCADA;
       }
