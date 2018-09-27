@@ -455,6 +455,7 @@ export default {
         clickList.push(this.toFix(data[i].click))
         costList.push(this.toFix(data[i].cost))
         ctrList.push(this.toFix(data[i].ctr))
+        cpcList.push(this.toFix(data[i].cpc))
         cpmList.push(this.toFix(data[i].cpm))
         directtransactionList.push(this.toFix(data[i].directtransaction))
         directtransactionshippingList.push(this.toFix(data[i].directtransactionshipping))

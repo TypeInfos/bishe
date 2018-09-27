@@ -34,6 +34,10 @@ export default {
     userTip
   },
   mounted () {
+    console.log(navigator.userAgent.indexOf('Chrome'))
+    if(navigator.userAgent.indexOf('Chrome') == -1 || navigator.userAgent.indexOf('Edge') > -1){
+      alert('该产品目前只支持谷歌和360浏览器！');
+    }
     // console.log(navigator.plugins)
   },
   data () {
