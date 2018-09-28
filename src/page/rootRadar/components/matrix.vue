@@ -93,6 +93,17 @@ export default {
   methods: {
     changeMode (val) {
       if (this.mode === val) return
+      if (!this.itemId) {
+        Message({
+          message: '请先选择商品',
+          title: 'warning',
+          showClose: true,
+          type: 'warning',
+          duration: 4000, // 显示时长  单位s
+          customClass: 'message-g-zindex'
+        })
+        return
+      }
       if (val === 2 && !this.data.buyFlow) {
         Message({
           message: '请先购买流量纵横',
