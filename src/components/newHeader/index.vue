@@ -11,19 +11,19 @@ export default{
   methods: {
     logoClick() {
       // 开发阶段先定义为刷新当前页面，上线后定位到首页。
-      location.reload();
+      location.reload()
     },
 
     resetActiveIndex(type) {
       if (type === 0) {
-        this.$router.push('/login');
+        this.$router.push('/login')
       } else {
-        this.$router.push('/register');
+        this.$router.push('/register')
       }
-      window.location.reload();
+      window.location.reload()
     },
     getTaobaoData() {
-      const data = document.getElementById('taobao-extension-data').value;
+      const data = document.getElementById('taobao-extension-data').value
     },
   }
 }

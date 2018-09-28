@@ -7,17 +7,17 @@ export default {
   name: 'modifyGroups',
   data () {
     return {
-      addWordSucceed:true,
-      addGoodsFocuDialog:true,
-      groupName:'',
-      showErrorP:false,
+      addWordSucceed: true,
+      addGoodsFocuDialog: true,
+      groupName: '',
+      showErrorP: false,
     }
   },
-  methods:{
-    closeModal(){
-      this.addGoodsFocuDialog = ! this.addGoodsFocuDialog ;
+  methods: {
+    closeModal() {
+      this.addGoodsFocuDialog = !this.addGoodsFocuDialog
     },
-    nameRepeat(){
+    nameRepeat() {
       // if(this.groupName){
       //   this.showErrorP = true ;
       // }

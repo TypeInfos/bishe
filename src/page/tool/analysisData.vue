@@ -66,11 +66,11 @@ export default {
           clickChangeRate: 3.2, // 点击转化率
         },
       ],
-    };
+    }
   },
   mounted() {
   },
   methods: {
   },
-};
+}
 </script>

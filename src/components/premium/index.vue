@@ -7,21 +7,21 @@ export default {
   name: 'premium',
   data () {
     return {
-      addWordSucceed:true,
-      addGoodsFocuDialog:true,
-      price:'',
-      showErrorP:false,
+      addWordSucceed: true,
+      addGoodsFocuDialog: true,
+      price: '',
+      showErrorP: false,
     }
   },
-  methods:{
-    closeModal(){
-      this.addGoodsFocuDialog = ! this.addGoodsFocuDialog ;
+  methods: {
+    closeModal() {
+      this.addGoodsFocuDialog = !this.addGoodsFocuDialog
     },
-    betweenRange(){
-      if(this.price>300 || this.price<5) {
-        this.showErrorP = true;
-      }else{
-        this.showErrorP = false;
+    betweenRange() {
+      if (this.price > 300 || this.price < 5) {
+        this.showErrorP = true
+      } else {
+        this.showErrorP = false
       }
     },
   }

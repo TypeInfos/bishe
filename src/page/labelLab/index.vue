@@ -403,18 +403,8 @@ export default {
           .then(() => {
             this.showAllMessage.deleteGroupFlagS = true
             this.getCrowdInfo()
-            // this.$message({
-            //   type: 'success',
-            //   message: '删除成功!',
-            //   customClass: 'message-g-zindex'
-            // })
           })
       }).catch(() => {
-        // this.$message({
-        //   type: 'info',
-        //   message: '已取消删除',
-        //   customClass: 'message-g-zindex'
-        // })
         this.showAllMessage.deleteGroupFlagF = true
       })
     },
@@ -650,18 +640,10 @@ export default {
       }
       if (param.crowdIdList.length > 0) {
         this.peopleMoveLoading = false
-        // this.startloadingComplete = true;
         this.$axios.post(this.$api.moveCrowd, param)
           .then(() => {
             this.peopleMoveLoading = false
-            // this.startloadingComplete = true;
             this.peopleMoveDialog = false
-            // this.$message({
-            //   showClose: true,
-            //   message: '移动人群成功',
-            //   type: 'success',
-            //   customClass: 'message-g-zindex'
-            // })
             this.showAllMessage.movePeopleFlag = true
             this.getCrowdInfo()
           })
@@ -679,12 +661,6 @@ export default {
         this.groupList = null
         this.$axios.post(this.$api.updateDiscount, param)
           .then(() => {
-            // this.$message({
-            //   showClose: true,
-            //   message: '成功修改溢价',
-            //   type: 'success',
-            //   customClass: 'message-g-zindex'
-            // });
             this.showAllMessage.updateDiscountFlag = true
             this.premiumLoading = false
             // this.startloadingComplete = true;
@@ -692,7 +668,7 @@ export default {
             this.premium = ''
             this.getCrowdInfo()
           })
-          .catch(err => {
+          .catch(() => {
             this.premiumLoading = false
           })
       }
@@ -744,7 +720,7 @@ export default {
           dangerouslyUseHTMLString: true
         }).then(() => {
           changePremium()
-        }).catch((err) => {
+        }).catch(() => {
           this.premiumLoading = false
           // this.startloadingComplete = true;
           this.premiumDialog = false
@@ -796,13 +772,6 @@ export default {
           this.peopleRateDialog = false
           this.peopleRateLoading = false
           this.showAllMessage.peopleRateFlag = true
-          // this.startloadingComplete = true;
-          // this.$message({
-          //   showClose: true,
-          //   message: '修改人群评级成功',
-          //   type: 'success',
-          //   customClass: 'message-g-zindex'
-          // });
           this.getCrowdInfo()
         })
       // 接口
@@ -904,14 +873,6 @@ export default {
     // 创建群组
     radioChange() {
       this.createGroupName = ''
-      // if (this.radio === 1) {
-      //   this.showStandardGroup = true;
-      //   this.showMyDefinedGroup = false;
-      // }
-      // if (this.radio === 2) {
-      //   this.showMyDefinedGroup = true;
-      //   this.showStandardGroup = false;
-      // }
     },
     closeCreateModal() {
       this.createGroupDialog = false
@@ -946,21 +907,13 @@ export default {
     btnCreateConfirm() {
       this.groupList = null
       this.createGroupLoading = true
-      // this.initDiv('创建群组');
       this.$axios.post(this.$api.addGroup, {
         groupName: this.createGroupName,
         adGroupId: this.currentAdGroupId,
       }).then(() => {
-        // this.$message({
-        //   showClose: true,
-        //   message: '创建群组成功',
-        //   type: 'success',
-        //   customClass: 'message-g-zindex'
-        // });
         this.showAllMessage.createGroupFlag = true
         this.createGroupName = ''
         this.createGroupLoading = false
-        // this.startloadingComplete = true;
         this.createGroupDialog = false
         // 重新请求数据，重新渲染金字塔
         this.getCrowdInfo()
@@ -1027,14 +980,12 @@ export default {
           if (!res) {
             str = '您的操作将会删除所有已有标签人群，重新根据金字塔标准化模型进行标准建模，是否确定要一键创建？'
           }
-          // if (res) {
           this.$confirm(str, '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             closeOnClickModal: false,
             type: 'warning',
           }).then(() => {
-            // this.initDiv('一见创建人群');
             this.initGroupLoading = true
             this.groupList = [] // 清空grouplist数据
             this.$axios.post(this.$api.initGroup, {
@@ -1072,13 +1023,6 @@ export default {
           }).catch(() => {
             this.initGroupLoading = false
           })
-          // } else {
-          //   this.initGroupLoading = false;
-          //   this.$message({
-          //     type: 'warning',
-          //     message: '该商品已一键创建人群，无需重复点击',
-          //   });
-          // }
         })
     },
     // 获取用户信息
@@ -1092,7 +1036,6 @@ export default {
         this.currentToken = res.data.token
         // 读入本地数据，用于储存
         this.readLocalStorge()
-        // this.giveTokenToExtension();
         const checkCookie = this.$cookies.isKey(`${this.loginName}Item`)
         if (checkCookie) {
           const result = JSON.parse(this.$cookies.get(`${this.loginName}Item`))
@@ -1138,7 +1081,6 @@ export default {
       this.operatIngIndex = index
       this.modifyGroupsDialog = true
       this.currentUpdateGroupId = this.groupList[index].groupId
-      // this.modifyGroupName = this.groupList[index].groupName;
     },
     // 人群移动
     moveCrowd(refValue, index) {
@@ -1182,20 +1124,8 @@ export default {
             this.promotionLoading = false
             this.getCrowdInfo()
             if (onlineStatus === 1) {
-              // this.$message({
-              //   showClose: true,
-              //   message: '参与推广成功',
-              //   type: 'success',
-              //   customClass: 'message-g-zindex'
-              // })
               this.showAllMessage.startStatus = true
             } else {
-              // this.$message({
-              //   showClose: true,
-              //   message: '暂停推广成功',
-              //   type: 'success',
-              //   customClass: 'message-g-zindex'
-              // })
               this.showAllMessage.stopStatus = true
             }
           })
@@ -1219,20 +1149,8 @@ export default {
           this.promotionLoading = false
           this.getCrowdInfo()
           if (onlineStatus === 1) {
-            // this.$message({
-            //   showClose: true,
-            //   message: '参与推广成功',
-            //   type: 'success',
-            //   customClass: 'message-g-zindex'
-            // })
             this.showAllMessage.startStatus = true
           } else {
-            // this.$message({
-            //   showClose: true,
-            //   message: '暂停推广成功',
-            //   type: 'success',
-            //   customClass: 'message-g-zindex'
-            // })
             this.showAllMessage.stopStatus = true
           }
         })
@@ -1685,9 +1603,7 @@ export default {
         all.push(p)
         return all
       }, [])
-      console.log('price', prices)
       prices.forEach((p, index) => {
-        console.log(index)
         if (p.min === 99999) {
           p.min = prices[index].min
         }
@@ -1719,11 +1635,6 @@ export default {
         this.groupList.forEach(g => { param.groupIds.push(g.groupId) })
         this.$axios.post(this.$api.moveGroup, param)
           .then(() => {
-            // this.$message({
-            //   message: '移动群组成功',
-            //   type: 'success',
-            //   customClass: 'message-g-zindex'
-            // })
             this.showAllMessage.moveGroupFlag = true
           })
           .catch(() => {
@@ -1780,7 +1691,6 @@ export default {
     },
     // 取消进度弹框
     cancelLoading () {
-      console.log('cancelLoading')
       this.initGroupLoading = false
       this.peopleMoveLoading = false
       this.premiumLoading = false
@@ -1793,11 +1703,9 @@ export default {
     readLocalStorge() {
       this.czd = getStore('labelLabEnd') ? getStore('labelLabEnd') : '全部终端'
       this.source = getStore('labelLabSource') ? getStore('labelLabSource') : '全部来源'
-      // console.log(this.$store.getters.taobaoName)
       if (getStore(`${this.$store.getters.taobaoName}TargetList`)) {
         this.checkIndexList = JSON.parse(getStore(`${this.$store.getters.taobaoName}TargetList`))
         this.showIndexConfirm()
-        console.log(this.checkIndexList)
       }
     }
   },

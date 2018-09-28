@@ -79,8 +79,9 @@ export default {
       const sums = []
       columns.forEach((column, index) => {
         // 将后端请求的数据放入合计
-        sums[index] = this.totalData[column.property]
-        if (column.property === 'zConversion' || column.property === 'nConversion' || column.property === 'allConversion') {
+        let name = column.property
+        sums[index] = this.totalData[name]
+        if (name === 'zConversion' || name === 'nConversion' || name === 'allConversion') {
           sums[index] += '%'
         }
       })

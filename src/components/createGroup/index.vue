@@ -36,23 +36,23 @@ export default {
         label: '未标签化群组',
       }],
       createGroups: '',
-    };
+    }
   },
   methods: {
     radioChange() {
-      if (this.radio == 1) {
-        this.showStandardGroup = true;
-        this.showMyDefinedGroup = false;
+      if (this.radio === 1) {
+        this.showStandardGroup = true
+        this.showMyDefinedGroup = false
       }
-      if (this.radio == 2) {
-        this.showMyDefinedGroup = true;
-        this.showStandardGroup = false;
+      if (this.radio === 2) {
+        this.showMyDefinedGroup = true
+        this.showStandardGroup = false
       }
     },
     closeModal() {
-      this.createGroupDialogFlag = false;
+      this.createGroupDialogFlag = false
     },
   },
-};
+}
 </script>
 

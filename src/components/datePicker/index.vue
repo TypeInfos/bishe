@@ -7,8 +7,8 @@
 </style>
 
 <script>
-import moment from 'moment';
-import { setStore, getStore } from '@/utils/localStorage';
+import moment from 'moment'
+import { setStore, getStore } from '@/utils/localStorage'
 
 export default {
   name: 'myDatePicker',
@@ -24,72 +24,72 @@ export default {
         shortcuts: [{
           text: '最近三十天',
           onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-            end.setTime(end.getTime() - 3600 * 1000 * 24);
-            picker.$emit('pick', [start, end]);
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+            end.setTime(end.getTime() - 3600 * 1000 * 24)
+            picker.$emit('pick', [start, end])
           },
         }],
         disabledDate(time) {
-          let curDate = (new Date()).getTime();
-          let one = 30 * 24 * 3600 * 1000;
-          let oneMonths = curDate - one;
-          return time.getTime() > Date.now() || time.getTime() < oneMonths;
+          let curDate = (new Date()).getTime()
+          let one = 30 * 24 * 3600 * 1000
+          let oneMonths = curDate - one
+          return time.getTime() > Date.now() || time.getTime() < oneMonths
         },
       },
-    };
+    }
   },
   mounted() {
     this.finalContent = getStore('labelLabTime') ? getStore('labelLabTime') : '今天'
-    this.changeDate(this.finalContent);
+    this.changeDate(this.finalContent)
   },
   methods: {
     changeDate(val) {
       switch (val) {
         case '今天':
-          this.finalContent = '今天';
-          break;
+          this.finalContent = '今天'
+          break
         case '昨天':
-          this.finalContent = '昨天';
-          break;
+          this.finalContent = '昨天'
+          break
         case '过去7天':
-          this.finalContent = '过去7天';
-          break;
+          this.finalContent = '过去7天'
+          break
         case '过去14天':
-          this.finalContent = '过去14天';
-          break;
+          this.finalContent = '过去14天'
+          break
         case '过去30天':
-          this.finalContent = '过去30天';
-          break;
+          this.finalContent = '过去30天'
+          break
         default:
           console.log(this.finalContent)
           this.myDateTime = this.finalContent.split('至')
           console.log(this.myDateTime)
-          break;
+          break
       }
-      this.myDatePopStatus = false;
+      this.myDatePopStatus = false
     },
     // 取消按钮
     cancel() {
-      this.myDatePopStatus = false;
+      this.myDatePopStatus = false
     },
     hide() {
-      this.myDatePopStatus = false;
+      this.myDatePopStatus = false
     },
     show() {
-      this.myDatePopStatus = true;
+      this.myDatePopStatus = true
     },
     // 确认时间
     confirmDate() {
-      this.finalContent = `${this.myDateTime[0]}至${this.myDateTime[1]}`;
+      this.finalContent = `${this.myDateTime[0]}至${this.myDateTime[1]}`
       // 标签实验室刷新数据
-      this.myDatePopStatus = false;
+      this.myDatePopStatus = false
     },
   },
   watch: {
     myDatePopStatus(val) {
-      this.myDateTime = [this.startTime, this.endTime];
+      this.myDateTime = [this.startTime, this.endTime]
     },
     finalContent(val) {
       if (val === '今天') {
@@ -108,8 +108,8 @@ export default {
         this.startTime = moment().subtract(30, 'days').format('YYYY-MM-DD')
         this.endTime = moment().subtract(1, 'days').format('YYYY-MM-DD')
       } else {
-        this.startTime = this.myDateTime[0];
-        this.endTime = this.myDateTime[1];
+        this.startTime = this.myDateTime[0]
+        this.endTime = this.myDateTime[1]
       }
       this.myDateTime = [this.startTime, this.endTime]
       if (this.startTime > this.endTime) {
@@ -120,5 +120,5 @@ export default {
       }
     },
   },
-};
+}
 </script>

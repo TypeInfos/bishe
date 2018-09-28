@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     showLoading() {
-      this.init();
+      this.init()
       this.startLoading = this.$loading({
         lock: true,
         text: 'Loading',
@@ -57,20 +57,20 @@ export default {
                                                                   <p class="bottomP">进度<span id="startLoadingNumber"></span>%</p>
                                                                   <p>请耐心等待~</p>
                                                                   </div>`
-      let loadingDom = document.getElementById('startLoadingNumber');
+      let loadingDom = document.getElementById('startLoadingNumber')
       // this.startLoading.show();
       // console.log(loadingDom);
-      loadingDom.innerText = 0;
+      loadingDom.innerText = 0
       this.startLoadingTimer = setInterval(() => {
         // console.log('111111');
-        loadingDom.innerText = this.startLoadingnumber;
+        loadingDom.innerText = this.startLoadingnumber
         // console.log(this.startLoadingComplete);
         // console.log(this.startLoadingnumber);
         if (this.startLoadingComplete) {
-          loadingDom.innerText = 100;
+          loadingDom.innerText = 100
           clearInterval(this.startLoadingTimer)
           // console.log('清除定时器');
-          this.cancelLoading();
+          this.cancelLoading()
           // this.startLoading = null;
         }
         if (parseFloat(this.startLoadingnumber) < 90) {
@@ -81,18 +81,18 @@ export default {
             clearInterval(this.startLoadingTimer)
           }
         }
-      }, 500);
+      }, 500)
       // this.startLoadingTimer = setInterval(loadEvent, 500)
     },
     init() {
-      this.startLoadingnumber = 0;
+      this.startLoadingnumber = 0
     },
     cancelLoading () {
-      this.startLoading.close();
+      this.startLoading.close()
     }
   },
   mounted() {
-    this.showLoading();
+    this.showLoading()
   },
   watch: {
     startLoadingComplete (value) {
