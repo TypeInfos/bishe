@@ -162,6 +162,7 @@
             response => {
               try {
                 window.open('https://subway.simba.taobao.com/');
+                this.taobaoLoading = true;
                 this.watchLogin();
               } catch (error) {
                 console.log('退出直通车出错');
