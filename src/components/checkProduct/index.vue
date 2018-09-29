@@ -7,23 +7,22 @@
 <script>
 export default {
   name: 'checkProduct',
-  props:['day'],
+  props: ['day'],
   data () {
     return {
-      addWordSucceed:true,
-      addGoodsFocuDialog:true,
+      addWordSucceed: true,
+      addGoodsFocuDialog: true,
     }
   },
-  methods:{
-    closeModal(){
+  methods: {
+    closeModal() {
       this.addGoodsFocuDialog = false
-      this.$emit('cjy',this.addGoodsFocuDialog);
+      this.$emit('cjy', this.addGoodsFocuDialog)
     },
-    goBuy(){
-      this.$router.push('/buy1');
+    goBuy() {
+      this.$router.push('/buy1')
     }
   }
 }
 </script>
-
 

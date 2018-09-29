@@ -12,8 +12,7 @@ export default {
         closeOnClickModal: true,
         closeOnPressEscape: true,
       }).catch((res) => {
-
-      });
+      })
     },
     open2() {
       this.$alert('<img class="footerImg2" src="http://www.doushudata.com/img/dsgzh.d5dd62f.jpg"></img>', '扫描二维码，关注 ‘抖数’ 公众号', {
@@ -23,9 +22,8 @@ export default {
         center: true,
         showConfirmButton: false,
       }).catch((res) => {
-
-      });
+      })
     },
   },
-};
+}
 </script>

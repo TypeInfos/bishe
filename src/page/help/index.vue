@@ -62,40 +62,40 @@ export default {
   },
   methods: {
     changeElMainClass() {
-      document.querySelector('.el-main').style.padding = '0px';
+      document.querySelector('.el-main').style.padding = '0px'
     },
     restoreElMainClass() {
-      document.querySelector('.el-main').style.padding = '10px 100px';
+      document.querySelector('.el-main').style.padding = '10px 100px'
     },
     getInfo() {
       this.$axios.get(this.$api.getHelp)
         .then(res => {
-          this.notices = res.data.notices;
-          this.courses = res.data.courses;
+          this.notices = res.data.notices
+          this.courses = res.data.courses
         }).catch(err => {
-          console.log(err);
+          console.log(err)
         })
     },
     showDialog(info) {
-      this.isShowDialog = true;
-      const jsonInfo = JSON.parse(info);
-      this.title = jsonInfo.title;
-      this.content = jsonInfo.content;
-      this.img = jsonInfo.img_url;
+      this.isShowDialog = true
+      const jsonInfo = JSON.parse(info)
+      this.title = jsonInfo.title
+      this.content = jsonInfo.content
+      this.img = jsonInfo.img_url
     },
     closeDialog(done) {
-      this.title = '';
-      this.content = '';
-      this.img = null;
-      done();
+      this.title = ''
+      this.content = ''
+      this.img = null
+      done()
     }
   },
   mounted() {
-    this.changeElMainClass();
-    this.getInfo();
+    this.changeElMainClass()
+    this.getInfo()
   },
   beforeDestroy() {
-    this.restoreElMainClass();
+    this.restoreElMainClass()
   }
 }
 </script>

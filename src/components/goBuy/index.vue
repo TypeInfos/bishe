@@ -5,20 +5,20 @@
 <script>
 export default {
   name: 'goBuy',
-  props:[
+  props: [
     'createPeopleDialog',
   ],
   data () {
     return {
-      addWordSucceed:true,
+      addWordSucceed: true,
     }
   },
-  methods:{
-    closeModal(){
-      this.$emit('closeDialog');
+  methods: {
+    closeModal() {
+      this.$emit('closeDialog')
     },
-    goBuy(){
-      this.$router.push('buy1');
+    goBuy() {
+      this.$router.push('buy1')
     }
   }
 }

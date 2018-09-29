@@ -30,7 +30,7 @@
     </div>
 </template>
 <script>
-import lineChart from '../../components/lineChart';
+import lineChart from '../../components/lineChart'
 
 export default {
   props: ['index', 'comparedData', 'loading', 'grailRevel', 'root', 'checkList2'],
@@ -100,54 +100,54 @@ export default {
       ],
       turnWrapData: [],
       checkboxListFlag: false,
-    };
+    }
   },
   mounted() {
-    this.checkList = this.checkList2;
+    this.checkList = this.checkList2
     // this.init();
   },
   methods: {
     init() {
       // 拷贝一份 数据
-      const comparedData = Object.assign([], this.comparedData);
+      const comparedData = Object.assign([], this.comparedData)
       comparedData.forEach((item) => {
         this.checkListGroup.forEach((item1) => {
-          item1.isActive = false;
-        });
+          item1.isActive = false
+        })
         this.checkList.forEach((item2) => {
           this.checkListGroup.forEach((subItem) => {
             if (item2 === subItem.label) {
-              subItem.isActive = true;
+              subItem.isActive = true
             }
-          });
-        });
-        item.wrapChartData = this.turnData(this.checkList, item, this.checkListGroup);
-      });
-      this.turnWrapData = comparedData;
+          })
+        })
+        item.wrapChartData = this.turnData(this.checkList, item, this.checkListGroup)
+      })
+      this.turnWrapData = comparedData
     },
     // 转换数据
     turnData(checkList, data, checkListGroup) {
-      const arr = [];
+      const arr = []
       checkListGroup.forEach((item) => {
         if (item.isActive) {
           arr.push({
             name: item.label,
             box: data[item.name],
-          });
+          })
         }
-      });
+      })
       // xAxisData
-      const xAxisData = [];
+      const xAxisData = []
       arr[0].box.forEach((item) => {
-        xAxisData.push(item.date);
-      });
+        xAxisData.push(item.date)
+      })
       // yAxis
-      const yAxis = [];
-      const colors = ['#FFBC2F', '#7DC92B', '#7DC2FD'];
+      const yAxis = []
+      const colors = ['#FFBC2F', '#7DC92B', '#7DC2FD']
       checkList.forEach((item, index) => {
-        let position = 'left';
+        let position = 'left'
         if (index === 1) {
-          position = 'right';
+          position = 'right'
         }
         yAxis.push({
           type: 'value',
@@ -167,52 +167,52 @@ export default {
           axisTick: {
             show: false,
           },
-        });
-      });
+        })
+      })
       // series
-      const series = [];
+      const series = []
       arr.forEach((item, index) => {
-        let yAxisIndex = 0;
+        let yAxisIndex = 0
         if (index === 1) {
-          yAxisIndex = 1;
+          yAxisIndex = 1
         }
-        const seriesData = [];
+        const seriesData = []
         item.box.forEach((subItem) => {
-          seriesData.push(subItem.value);
-        });
+          seriesData.push(subItem.value)
+        })
         series.push({
           name: item.name,
           smooth: true,
           type: 'line',
           yAxisIndex,
           data: seriesData,
-        });
-      });
+        })
+      })
       const wrap = {
         checkList,
         xAxisData,
         yAxis,
         series,
-      };
-      return wrap;
+      }
+      return wrap
     },
     changeCheck() {
-      this.init();
+      this.init()
     },
     // checkCheckbox
     checkCheckbox(val) {
-      const name = val.toElement.defaultValue || val.toElement.innerText;
+      const name = val.toElement.defaultValue || val.toElement.innerText
       if (this.checkList.length === 2) {
-        let flag = false;
+        let flag = false
         this.checkList.forEach((item) => {
           if (item === name) {
-            flag = true;
+            flag = true
           }
-        });
+        })
         if (!flag) {
-          this.checkboxListFlag = true;
+          this.checkboxListFlag = true
         } else {
-          this.checkboxListFlag = false;
+          this.checkboxListFlag = false
         }
       }
     },
@@ -220,9 +220,9 @@ export default {
   watch: {
     comparedData(val) {
       if (val.length > 0) {
-        this.init();
+        this.init()
       }
     },
   },
-};
+}
 </script>

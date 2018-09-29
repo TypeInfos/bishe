@@ -6,10 +6,10 @@
 
 </style>
 <script>
-  export default{
-    name:'temp',
-    mounted(){
-      
-    },
-  }
+export default{
+  name: 'temp',
+  mounted() {
+
+  },
+}
 </script>

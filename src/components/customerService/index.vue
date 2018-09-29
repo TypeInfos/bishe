@@ -10,7 +10,7 @@ export default {
   name: 'customerService',
   data() {
     return {
-    };
+    }
   },
-};
+}
 </script>

@@ -69,37 +69,37 @@ export default {
   props: ['tableData', 'loading'],
   data() {
     return {
-    };
+    }
   },
   mounted() {
   },
   methods: {
     getSummaries(param) {
-      const { columns, data } = param;
-      const sums = [];
+      const { columns, data } = param
+      const sums = []
       columns.forEach((column, index) => {
         if (index === 0) {
-          sums[index] = '合计';
-          return;
+          sums[index] = '合计'
+          return
         }
-        const values = data.map(item => Number(item[column.property]));
+        const values = data.map(item => Number(item[column.property]))
         if (!values.every(value => isNaN(value))) {
           sums[index] = values.reduce((prev, curr) => {
-            const value = Number(curr);
+            const value = Number(curr)
             if (!isNaN(value)) {
-              return prev + curr;
+              return prev + curr
             }
-            return prev;
-          }, 0);
+            return prev
+          }, 0)
           if (column.label === '直通车转化率' || column.label === '自然搜索转化率') {
-            sums[index] += '%';
+            sums[index] += '%'
           }
         } else {
-          sums[index] = 'N/A';
+          sums[index] = 'N/A'
         }
-      });
-      return sums;
+      })
+      return sums
     },
-  },
-};
+  }
+}
 </script>

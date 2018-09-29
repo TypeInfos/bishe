@@ -11,13 +11,13 @@ export default {
       pid: '',
       day: '', // 产品剩余使用期限
       showCheckProduct: false, // 显示过期的弹框
-    };
+    }
   },
   components: {
     checkProduct,
   },
   mounted() {
-    this.getUserInfo();
+    this.getUserInfo()
   },
   methods: {
     cjy(data) {
@@ -28,21 +28,21 @@ export default {
       this.$axios
         .get(this.$api.info)
         .then(res => {
-          this.$store.dispatch('login');
+          this.$store.dispatch('login')
           this.$store.dispatch('setTaobaoName', {
             name: res.data.name,
-          });
+          })
         })
         .catch(error => {
-          console.log(error);
-        });
+          console.log(error)
+        })
     },
     use(item, pid) {
-      this.pid = pid;
+      this.pid = pid
       this.$axios.post(this.$api.checkOrder, {
         pid: this.pid,
       }).then((res) => {
-        this.day = res.data;
+        this.day = res.data
         if (res.data === -1) {
           this.$router.push({ name: 'GuidePage', query: { type: -1, name: item } })
         } else if (res.data === -2) {
@@ -50,31 +50,31 @@ export default {
         } else {
           switch (item) {
             case 'rootRadar':
-              this.$router.push('/rootRadar');
-              break;
+              this.$router.push('/rootRadar')
+              break
             case 'labelLab':
-              this.$router.push('/wisdomSearch');
-              break;
+              this.$router.push('/wisdomSearch')
+              break
             default:
-              break;
+              break
           }
         }
-      });
+      })
     },
     lookUseVideo(item) {
       switch (item) {
         case 'rootRadar':
-          window.open('https://v.doushudata.com/video.html');
-          break;
+          window.open('https://v.doushudata.com/video.html')
+          break
         case 'labelLab':
-          window.open('about:blank');
-          break;
+          window.open('about:blank')
+          break
         default:
-          break;
+          break
       }
     },
   },
-};
+}
 </script>
 
 <style lang="less" src="./index.less">

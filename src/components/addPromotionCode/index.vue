@@ -15,16 +15,16 @@ export default {
   },
   methods: {
     closeModal() {
-      this.addGoodsFocuDialog = !this.addGoodsFocuDialog;
+      this.addGoodsFocuDialog = !this.addGoodsFocuDialog
     },
     cancelDialog() {
-      this.closeModal();
+      this.closeModal()
     },
     addPromotionCode() {
       if (this.price > 300 || this.price < 5) {
-        this.showErrorP = true;
+        this.showErrorP = true
       } else {
-        this.showErrorP = false;
+        this.showErrorP = false
       }
     },
   },

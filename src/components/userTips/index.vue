@@ -41,13 +41,13 @@ export default {
       this.$emit('close')
     },
     startDownload() {
-      let iframe = document.createElement('iframe');
-      iframe.style.display = 'none';
-      iframe.src = this.downloadLink;
+      let iframe = document.createElement('iframe')
+      iframe.style.display = 'none'
+      iframe.src = this.downloadLink
       iframe.onload = function() {
-        document.body.removeChild(iframe);
-      };
-      document.body.appendChild(iframe);
+        document.body.removeChild(iframe)
+      }
+      document.body.appendChild(iframe)
       // window.open(this.downloadLink);
     },
     toMv() {

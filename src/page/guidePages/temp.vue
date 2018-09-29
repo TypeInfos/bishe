@@ -35,7 +35,7 @@ export default {
     goBuy () {
       this.$router.push({ name: this.buyName })
     },
-        // 获取用户信息
+    // 获取用户信息
     getUserInfo () {
       this.$axios.get(this.$api.info).then(res => {
         this.$store.dispatch('login')
@@ -47,8 +47,8 @@ export default {
       })
     },
   },
-  created(){
-    this.getUserInfo();
+  created() {
+    this.getUserInfo()
   },
 }
 </script>
