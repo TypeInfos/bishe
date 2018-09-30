@@ -183,7 +183,6 @@ export default {
           try {
             this.taobaoLoading = true
             this.watchLogin()
-            window.open('https://subway.simba.taobao.com/')
           } catch (error) {
             console.log('退出直通车出错')
           }
@@ -252,5 +251,13 @@ export default {
       }, 500)
     },
   },
+  watch:{
+    taobaoLoading(val){
+      if(val){
+        let n = window.open("","_blank");
+        n.location = 'https://subway.simba.taobao.com/';
+      }
+    }
+  }
 }
 </script>

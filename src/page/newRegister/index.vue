@@ -161,7 +161,6 @@
             },
             response => {
               try {
-                window.open('https://subway.simba.taobao.com/');
                 this.taobaoLoading = true;
                 this.watchLogin();
               } catch (error) {
@@ -217,39 +216,37 @@
       },
       // 绑定淘宝店铺名
       bindTaobao() {
-        if (true) {
-          const params = {
-            id: this.id,
-            shopname: this.taobaoName,
-          };
-          this.registerLoading = true;
-          this.$axios.post(this.$api.bind, params).then(res => {
-            this.registerLoading = false;
-            this.bindState = true;
-            this.$message({
-              showClose: true,
-              message: '绑定成功',
-              type: 'success',
-              customClass: 'message-g-zindex'
-            });
-            const token = res.data;
-            try {
-              chrome.runtime.sendMessage(
-                this.$store.getters.editorExtensionId, {
-                  type: 'token',
-                  token,
-                },
-                response => {
-                  console.log(response);
-                },
-              );
-            } catch (error) {
-              console.log('插件id不同');
-            }
-            this.$store.dispatch('login');
-            this.active = 3;
+        const params = {
+          id: this.id,
+          shopname: this.taobaoName,
+        };
+        this.registerLoading = true;
+        this.$axios.post(this.$api.bind, params).then(res => {
+          this.registerLoading = false;
+          this.bindState = true;
+          this.$message({
+            showClose: true,
+            message: '绑定成功',
+            type: 'success',
+            customClass: 'message-g-zindex'
           });
-        }
+          const token = res.data;
+          this.$store.dispatch('login');
+          this.active = 3;
+          try {
+            chrome.runtime.sendMessage(
+              this.$store.getters.editorExtensionId, {
+                type: 'token',
+                token,
+              },
+              response => {
+                console.log(response);
+              },
+            );
+          } catch (error) {
+            console.log('插件id不同');
+          }
+        });
       },
       /**
        * 二维码弹窗
@@ -321,8 +318,16 @@
         this.$router.push('/funcView');
       },
     },
-    beforeDestroy(){
+    beforeDestroy() {
       clearInterval(this.timer);
+    },
+    watch:{
+      taobaoLoading(val){
+        if(val){
+          let n = window.open("","_blank");
+          n.location = 'https://subway.simba.taobao.com/';
+        }
+      }
     }
   };
 </script>
