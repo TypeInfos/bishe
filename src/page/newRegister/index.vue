@@ -171,6 +171,7 @@
           alert('插件ID与前端不匹配')
           this.$router.push('/login')
         }
+        document.querySelector('#goSubway').click();
       },
       // 开启监控
       watchLogin() {
@@ -321,13 +322,5 @@
     beforeDestroy() {
       clearInterval(this.timer);
     },
-    watch:{
-      taobaoLoading(val){
-        if(val){
-          let n = window.open("","_blank");
-          n.location = 'https://subway.simba.taobao.com/';
-        }
-      }
-    }
   };
 </script>
