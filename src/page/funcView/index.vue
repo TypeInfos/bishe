@@ -64,7 +64,7 @@ export default {
     lookUseVideo(item) {
       switch (item) {
         case 'rootRadar':
-          window.open('https://v.doushudata.com/video.html')
+          window.open('https://v.doushudata.com/cgld.html')
           break
         case 'labelLab':
           window.open('about:blank')
