@@ -105,7 +105,11 @@ export default {
         itemId: this.deleteItemId
       }).then(res => {
         this.cancelFocus = false
-        this.$notify('取消关注成功', 'success', 'success')
+        this.$message({
+            message: '取消关注成功',
+            type: 'success',
+            customClass: 'message-g-zindex'
+          })
         this.firstComplete = true
         this.$emit('updateFocusData')
       })
