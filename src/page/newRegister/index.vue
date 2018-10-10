@@ -121,14 +121,16 @@ export default {
           customClass: 'message-g-zindex'
         })
       }
-      // else if(!this.inviteCode) {
-      //     this.$message({
-      //       message: '无效的邀请码',
-      //       type: 'warning'
-      //     });
-      //   }
       else {
-        this.registerLoading = true
+        try {
+          chrome.runtime.sendMessage(this.$store.getters.editorExtensionId,{
+            type: 'version'
+          },res => {
+            if(!res){
+              this.$emit('VersionErr')
+              return;
+            }
+            this.registerLoading = true
         this.$axios
           .post(this.$api.register, {
             phone: this.phoneNum,
@@ -152,6 +154,11 @@ export default {
           .catch(res => {
             this.registerLoading = false
           })
+          })
+        } catch (error) {
+          this.$alert('请安装插件', '提示')
+          console.log('请安装插件');
+        }
       }
     },
     loginToTaobao() {
@@ -162,6 +169,7 @@ export default {
         response => {
           try {
             this.taobaoLoading = true
+            console.log(this.taobaoLoading);
             this.watchLogin()
           } catch (error) {
             console.log('退出直通车出错')
@@ -199,6 +207,7 @@ export default {
             },
           )
         } catch (error) {
+          this.$alert('请安装插件', '提示')
           clearInterval(this.timer)
         }
       }, 500)
