@@ -127,7 +127,7 @@ export default {
             type: 'version'
           },res => {
             if(!res){
-              this.$emit('VersionErr')
+              this.$emit('versionErr')
               return;
             }
             this.registerLoading = true
@@ -156,7 +156,6 @@ export default {
           })
           })
         } catch (error) {
-          this.$alert('请安装插件', '提示')
           console.log('请安装插件');
         }
       }
