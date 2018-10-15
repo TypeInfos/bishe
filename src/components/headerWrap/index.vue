@@ -55,9 +55,9 @@ export default {
         case '4':
           this.$router.push('/shenqiHigh')
           break
-        case '5':
-          this.$router.push('/wisdomSearch')
-          break
+        // case '5':
+        //   this.$router.push('/wisdomSearch')
+        //   break
         case '6':
           this.$router.push('/buy1')
           break
