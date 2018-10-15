@@ -204,8 +204,9 @@ export default {
         let haveCookie = this.$cookies.isKey('finalItemId')
         if (haveCookie) {
           let finalItemId = this.$cookies.get('finalItemId')
+              console.log(this.filterFocusOn)
           for (let i = 0; i < this.filterFocusOn.length; i++) {
-            if (this.filterFocusOn[i].itemId === finalItemId) {
+            if (Number(this.filterFocusOn[i].itemId) === Number(finalItemId)) {
               this.searchGoods(i)
               break
             }
