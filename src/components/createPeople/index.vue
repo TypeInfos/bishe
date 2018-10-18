@@ -57,6 +57,7 @@ export default {
       },
       response => {
         this.peoplePropertyObj = response.layout[1].dimDTOs // 将返回来的人口属性人群的信息都保存下来
+        console.log(this.peoplePropertyObj,'check')
         this.weatherPropertyObj = response.layout[0].dimDTOs // 将返回来的天气属性人群的信息都保存下来
         this.wordList = response.wordList // 保存插件需要的一大串文字
       })
