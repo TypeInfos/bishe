@@ -36,8 +36,8 @@
                         <el-checkbox
                             v-for="(postfix,postfixIndex) in prefix.tagOptions"
                             :key="postfixIndex"
-                            :label="postfix.tagName"
-                            @change="checkboxChange(postfix,prefixIndex,postfixIndex,peoplePropertyObj)">{{ postfix.tagName }}</el-checkbox>
+                            :label="postfix.tagName+prefix.name"
+                            @change="checkboxChange(prefix,postfix,prefixIndex,postfixIndex,peoplePropertyObj)">{{ postfix.tagName }}</el-checkbox>
                     </el-checkbox-group>
                 </div>
             </div>
