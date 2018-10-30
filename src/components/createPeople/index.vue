@@ -94,18 +94,18 @@ export default {
       }
       return false
     },
-    checkboxChange(postfix, prefixIndex, postfixIndex, obj) {
-      let ckState = this.contains(this.peopleCheckList, postfix.tagName)
+    checkboxChange(prefix,postfix, prefixIndex, postfixIndex, obj) {
+      let ckState = this.contains(this.peopleCheckList, postfix.tagName+prefix.name)
       if (ckState) {
         // this.peopleCheckList.push(postfix.tagName);  //把每次点击的字段添加到数组    //不用手动添加了 element的label自动添加到v-model的peopleCheckList数组里了
         this.para.push(obj[prefixIndex].tagOptions[postfixIndex]) // 添加一个tagOptions数组
+        console.log(this.para)
       } else {
         let i = this.peopleCheckList.indexOf(postfix)
         if (i > -1) {
           this.peopleCheckList.splice(i, 1)
         }
         // this.peopleCheckList.splice(postfix.tagName,1);  //把每次点击的字段从数组删除   //splice删除不精确 最好是遍历再splice删除
-        // console.log(this.peopleCheckList);
         let tagNameState = this.contains(this.para, postfix.tagName)
         // console.log('tagNameState的状态是'+tagNameState);
         if (!tagNameState) {

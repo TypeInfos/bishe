@@ -11,7 +11,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/mdm':{
-        target: 'http://192.168.1.118:8080',
+        target: 'http://192.168.1.112:8080',
         pathRewrite:{
           '^/mdm':'/mdm'
         }
@@ -20,7 +20,7 @@ module.exports = {
 
     // Various Dev Server settings
     // host: 'localhost', // can be overwritten by process.env.HOST
-    host: 'http://192.168.1.118',
+    host: 'http://192.168.1.112',
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
