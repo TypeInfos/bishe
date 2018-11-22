@@ -1,5 +1,5 @@
-import Vue from 'vue';
-import Router from 'vue-router';
+import Vue from 'vue'
+import Router from 'vue-router'
 import NewRegister from '@/page/newRegister/index'
 import newLogin from '@/page/newLogin/index'
 import rootRadar from '@/page/rootRadar/index'
@@ -10,14 +10,14 @@ import buy1 from '@/page/buy1/index'
 import buy2 from '@/page/buy2/index'
 import myOrder from '@/page/myOrder/index'
 import funcView from '@/page/funcView/index'
-import test from '@/components/datePicker/index';
+import test from '@/components/datePicker/index'
 import labelLab from '@/page/labelLab/index'
 import shenqiHigh from '@/page/shenqiHigh'
 
-Vue.use(Router);
+Vue.use(Router)
 
 export default new Router({
-  mode:'history',
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -100,10 +100,10 @@ export default new Router({
       component: wisdomSearch,
       // component: () => import('@/page/help'),
     },
-    {
-      path: '/shenqiHigh',
-      name: 'shenqiHigh',
-      component: shenqiHigh,
-    },
+    // {
+    //   path: '/shenqiHigh',
+    //   name: 'shenqiHigh',
+    //   component: shenqiHigh,
+    // },
   ],
-});
+})

@@ -120,43 +120,42 @@ export default {
           type: 'warning',
           customClass: 'message-g-zindex'
         })
-      }
-      else {
+      } else {
         try {
-          chrome.runtime.sendMessage(this.$store.getters.editorExtensionId,{
+          chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
             type: 'version'
-          },res => {
-            if(!res){
+          }, res => {
+            if (!res) {
               this.$emit('versionErr')
-              return;
+              return
             }
             this.registerLoading = true
-        this.$axios
-          .post(this.$api.register, {
-            phone: this.phoneNum,
-            type: 1,
-            code: this.code,
-            password: this.pwd,
-            wechat: this.wechart,
-            inviteCode: this.inviteCode,
-          })
-          .then(() => {
-            this.registerLoading = false
-            this.$message({
-              showClose: true,
-              message: '注册账号成功，请绑定淘宝账号',
-              type: 'success',
-              customClass: 'message-g-zindex'
-            })
-            this.removeListenerToSubmit()
-            this.active = 1
-          })
-          .catch(res => {
-            this.registerLoading = false
-          })
+            this.$axios
+              .post(this.$api.register, {
+                phone: this.phoneNum,
+                type: 1,
+                code: this.code,
+                password: this.pwd,
+                wechat: this.wechart,
+                inviteCode: this.inviteCode,
+              })
+              .then(() => {
+                this.registerLoading = false
+                this.$message({
+                  showClose: true,
+                  message: '注册账号成功，请绑定淘宝账号',
+                  type: 'success',
+                  customClass: 'message-g-zindex'
+                })
+                this.removeListenerToSubmit()
+                this.active = 1
+              })
+              .catch(res => {
+                this.registerLoading = false
+              })
           })
         } catch (error) {
-          console.log('请安装插件');
+          console.log('请安装插件')
         }
       }
     },
@@ -168,7 +167,7 @@ export default {
         response => {
           try {
             this.taobaoLoading = true
-            console.log(this.taobaoLoading);
+            console.log(this.taobaoLoading)
             this.watchLogin()
           } catch (error) {
             console.log('退出直通车出错')

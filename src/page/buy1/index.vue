@@ -7,10 +7,10 @@
 </style>
 
 <script>
-import moment from 'moment';
-import orderBlock from '../../components/orderBlock';
+import moment from 'moment'
+import orderBlock from '../../components/orderBlock'
 
-moment.locale('zh-cn');
+moment.locale('zh-cn')
 export default {
   components: {
     orderBlock,
@@ -76,11 +76,11 @@ export default {
     // 获取用户信息
     getUserInfo() {
       this.$axios.get(this.$api.info).then((res) => {
-        this.$store.dispatch('login');
+        this.$store.dispatch('login')
         this.$store.dispatch('setTaobaoName', {
           name: res.data.name,
         })
-        this.userBuyGoods();
+        this.userBuyGoods()
       }).catch(error => {
         console.log(error)
       })
@@ -88,7 +88,7 @@ export default {
     userBuyGoods() {
       this.$axios.get(this.$api.checkUserType).then((res) => {
         // 有试用版记录
-        this.loading = false;
+        this.loading = false
         // res.data = null;
         // res.data.type = 0;
         // res.data.endTime = '2017-3-10';
@@ -96,30 +96,30 @@ export default {
         //  啥都没订过
         if (res.data === null) {
           this.orderBlockInfos.forEach((i) => {
-            i.isBuy = false;
-          });
+            i.isBuy = false
+          })
         } else // 正在试用中
         if (res.data.type === 0) {
-          this.orderBlockInfos[0].isBuy = true;
+          this.orderBlockInfos[0].isBuy = true
           if (moment(res.data.endTime).isAfter(moment())) {
             this.orderBlockInfos[0].endTime = moment(res.data.endTime).format('YYYY-MM-DD')
           } else {
-            this.orderBlockInfos[0].isDisabled = true;
+            this.orderBlockInfos[0].isDisabled = true
           }
           this.orderBlockInfos[1].btnText = '升级到标准版'
         } else // 基础版使用中
         if (res.data.type === 1) {
           // 目前默认1就是已经订购过了，并且到期了
-          this.orderBlockInfos[0].isBuy = true;
-          this.orderBlockInfos[0].isDisabled = true;
+          this.orderBlockInfos[0].isBuy = true
+          this.orderBlockInfos[0].isDisabled = true
           this.orderBlockInfos[0].btnText = '立即使用'
           if (moment(res.data.endTime).isAfter(moment())) {
-            this.orderBlockInfos[1].isBuy = true;
-            this.orderBlockInfos[1].endTime = moment(res.data.endTime).format('YYYY-MM-DD');
-            this.orderBlockInfos[1].btnText = '继续订购';
+            this.orderBlockInfos[1].isBuy = true
+            this.orderBlockInfos[1].endTime = moment(res.data.endTime).format('YYYY-MM-DD')
+            this.orderBlockInfos[1].btnText = '继续订购'
           } else {
-            this.orderBlockInfos[1].isDisabled = true;
-            this.orderBlockInfos[1].btnText = '立即订购';
+            this.orderBlockInfos[1].isDisabled = true
+            this.orderBlockInfos[1].btnText = '立即订购'
           }
         }
       }).catch(error => {
@@ -128,7 +128,7 @@ export default {
     },
   },
   mounted() {
-    this.getUserInfo();
+    this.getUserInfo()
   },
 }
 </script>

@@ -17,7 +17,7 @@ export default {
     checkProduct,
   },
   mounted() {
-    this.getUserInfo()
+    // this.getUserInfo()
   },
   methods: {
     cjy(data) {

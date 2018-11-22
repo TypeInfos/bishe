@@ -190,7 +190,7 @@ export default {
         alert('插件ID与前端不匹配')
         this.$router.push('/login')
       }
-        document.querySelector('#goSubway').click();
+      document.querySelector('#goSubway').click()
     },
     // 完成登录
     finishLogin() {

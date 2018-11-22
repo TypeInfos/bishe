@@ -18,10 +18,10 @@
 </template>
 
 <script>
-import headerWrap from './components/headerWrap';
-import newFooter from './components/finalFooter';
-import customerService from './components/customerService';
-import backToTop from './components/backToTop';
+import headerWrap from './components/headerWrap'
+import newFooter from './components/finalFooter'
+import customerService from './components/customerService'
+import backToTop from './components/backToTop'
 import userTip from './components/userTips'
 
 export default {
@@ -34,9 +34,8 @@ export default {
     userTip
   },
   mounted () {
-    console.log(navigator.userAgent.indexOf('Chrome'))
-    if(navigator.userAgent.indexOf('Chrome') == -1 || navigator.userAgent.indexOf('Edge') > -1){
-      alert('该产品目前只支持谷歌和360浏览器！');
+    if (navigator.userAgent.indexOf('Chrome') == -1 || navigator.userAgent.indexOf('Edge') > -1) {
+      alert('该产品目前只支持谷歌和360浏览器！')
     }
     // console.log(navigator.plugins)
   },
@@ -48,10 +47,10 @@ export default {
   methods: {
     versionErr () {
       console.log('versionErr')
-      this.userTipShow = true;
+      this.userTipShow = true
     }
   }
-};
+}
 </script>
 
 <style lang="less" src="./assets/common.less"></style>

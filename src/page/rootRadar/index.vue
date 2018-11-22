@@ -325,14 +325,14 @@ export default {
     this.czd = getStore('rootRadarEnd') ? getStore('rootRadarEnd') : '全部终端'
     // 进入页面先判断是否订购产品
     this.checkOrder()
-    //百度统计
+    // 百度统计
     var _hmt = _hmt || [];
     (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?c57e72051f343c53c00efb5c530743bc";
-      var s = document.getElementsByTagName("script")[0]; 
-      s.parentNode.insertBefore(hm, s);
-    })();
+      let hm = document.createElement('script')
+      hm.src = 'https://hm.baidu.com/hm.js?c57e72051f343c53c00efb5c530743bc'
+      let s = document.getElementsByTagName('script')[0]
+      s.parentNode.insertBefore(hm, s)
+    }())
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll)
@@ -753,11 +753,11 @@ export default {
         this.currentItemId = itemId
         this.currentTitle = title
         this.checkGoodsInfoDataLoading = true
-            if (this.setintervalCheckItemDataId !== null) {
-              clearInterval(this.setintervalCheckItemDataId)
-              this.setintervalCheckItemDataId = null
-            }
-            this.recursionCheckDataSecond()
+        if (this.setintervalCheckItemDataId !== null) {
+          clearInterval(this.setintervalCheckItemDataId)
+          this.setintervalCheckItemDataId = null
+        }
+        this.recursionCheckDataSecond()
       }
       const limitData = getStore(`${this.currentItemId}-fixdata`)
       if (limitData && moment().isBefore(limitData)) {
@@ -1070,8 +1070,41 @@ export default {
         console.log(error)
       })
     },
+    sortCheckList(oldCheckList) {
+      if (oldCheckList.length !== 2) return oldCheckList
+      const checkListIndex = new Map()
+      let one = 0
+      let two = 0
+      checkListIndex
+        .set(1, '直通车花费')
+        .set(2, '直通车访客数')
+        .set(3, '自然搜索访客数')
+        .set(4, '总访客数')
+        .set(5, '直通车转化率')
+        .set(6, '自然搜索转化率')
+        .set(7, '总转化率')
+        .set(8, '直通车成交量')
+        .set(9, '自然搜索成交量')
+        .set(10, '总成交量')
+        .set(11, '直通车加购人数')
+        .set(12, '直通车收藏人数')
+      for (let [key, value] of checkListIndex.entries()) {
+        if (value === oldCheckList[0]) {
+          console.log(one)
+          one = key
+        } else if (value === oldCheckList[1]) {
+          two = key
+        }
+      }
+      if (one > two) {
+        let newCheckList = [oldCheckList[1], oldCheckList[0]]
+        return newCheckList
+      }
+      return oldCheckList
+    },
     // 转换数据
     turnData (checkList, allList, checkListGroup) {
+      checkList = this.sortCheckList(checkList)
       checkListGroup.forEach((item) => {
         item.isActive = false
       })
@@ -1465,6 +1498,7 @@ export default {
         this.globalAnalysisShow = true
       }
       this.checkSurplus = this.checkList.length
+      this.singleTableData = 0
       this.singleChartsData = this.turnData(val, this.saveSingleData, this.checkListGroup)
     },
     // 改变单品CheckBox2
