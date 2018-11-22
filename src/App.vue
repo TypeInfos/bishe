@@ -7,11 +7,10 @@
       <el-main>
         <router-view @versionErr="versionErr"/>
       </el-main>
-      <el-footer height="80" style="padding:0;">
+      <el-footer height="40" style="padding:0;">
         <newFooter></newFooter>
       </el-footer>
     </el-container>
-    <customerService></customerService>
     <backToTop></backToTop>
     <user-tip :userTipShow="userTipShow" @close="userTipShow = false"></user-tip>
   </div>
@@ -20,7 +19,6 @@
 <script>
 import headerWrap from './components/headerWrap';
 import newFooter from './components/finalFooter';
-import customerService from './components/customerService';
 import backToTop from './components/backToTop';
 import userTip from './components/userTips'
 
@@ -29,7 +27,6 @@ export default {
   components: {
     newFooter,
     headerWrap,
-    customerService,
     backToTop,
     userTip
   },

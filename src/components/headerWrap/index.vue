@@ -36,10 +36,6 @@ export default {
   //  this.getUserInfo();
   // },
   methods: {
-    logoClick() {
-      // 开发阶段先定义为刷新当前页面，上线后定位到首页。
-      this.$router.push('/rootRadar');
-    },
     handleSelect(key) {
       this.activeIndex = key
       switch (key) {
@@ -77,9 +73,6 @@ export default {
       } else {
         this.$router.push('/register');
       }
-    },
-    sendMsgToExtension(type){
-      
     },
     // 退出登录
     loginOut() {
