@@ -17,25 +17,10 @@ export default {
     checkProduct,
   },
   mounted() {
-    // this.getUserInfo()
   },
   methods: {
     cjy(data) {
       this.showCheckProduct = data
-    },
-    // 获取用户信息
-    getUserInfo() {
-      this.$axios
-        .get(this.$api.info)
-        .then(res => {
-          this.$store.dispatch('login')
-          this.$store.dispatch('setTaobaoName', {
-            name: res.data.name,
-          })
-        })
-        .catch(error => {
-          console.log(error)
-        })
     },
     use(item, pid) {
       this.pid = pid

@@ -5,7 +5,7 @@
             <!-- <i class="iconfont logo">&#xe625;</i> -->
             <img src="../../assets/logo_login.png" width="80" height="87" alt="">
         </div>
-        <h1 v-if="active === 0">登录抖数账号</h1>
+        <h1 v-if="active === 0">登录账号</h1>
         <h1 v-else-if="active === 1">登录淘宝账号</h1>
         <h1 v-else-if="active === 2">店铺名称</h1>
         <h1 v-else-if="active === 3">使用淘宝账号登陆</h1>
@@ -26,11 +26,11 @@
             <div class="boxS">
               <p>
                   <el-checkbox style="float: left;" label="记住密码" v-model="rememberPwd"></el-checkbox>
-                  <span  class="registerAndForget"><router-link  to="/register">注册抖数账号</router-link> | <router-link to="/forgetPassword">忘记密码?</router-link></span>
+                  <span  class="registerAndForget"><router-link  to="/register">注册账号</router-link> | <router-link to="/forgetPassword">忘记密码?</router-link></span>
               </p>
             </div>
             <div class="boxS">
-                <el-button class="loginBtn" type="primary" @click="douShuLogin">登录抖数账号</el-button>
+                <el-button class="loginBtn" type="primary" @click="douShuLogin">登录账号</el-button>
             </div>
         </div>
         <div v-if="active === 1" class="wrapBox" style="height: 170px; margin-top: 100px;">

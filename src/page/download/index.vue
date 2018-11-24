@@ -16,7 +16,6 @@
          div.text-center
           img(src="../../assets/download/Chrome.png" width="30px" height="30px;")
           span.btn-text 立即下载
-        .opration-text(@click="toMv") 查看视频教程
   .download-use-course
     .course-content
       span.course-center Chrome浏览器插件-安装教程
@@ -35,7 +34,6 @@
           p(style="text-indent:4.2em;text-align:left;") 其次将下载好的插件鼠标拖动到扩展程序页面
           p(style="text-indent:4.2em;text-align:left;") 到此，即可完成插件安装操作
         img(src="../../assets/download/download_step_2.jpg" width="100%" height="60%")
-      span.course-footer 其他浏览器的插件将陆续推出，敬请期待~
 </template>
 
 <script>
@@ -48,49 +46,49 @@ export default {
       updateTime: '2018-09-05',
       downloadLink: 'https://static.doushudata.com/doushu.zip',
       mvLink: 'https://v.doushudata.com/video.html',
-    };
+    }
   },
   methods: {
     startDownload() {
-      let iframe = document.createElement('iframe');
-      iframe.style.display = 'none';
-      iframe.src = this.downloadLink;
+      let iframe = document.createElement('iframe')
+      iframe.style.display = 'none'
+      iframe.src = this.downloadLink
       iframe.onload = function() {
-        document.body.removeChild(iframe);
-      };
-      document.body.appendChild(iframe);
+        document.body.removeChild(iframe)
+      }
+      document.body.appendChild(iframe)
       // window.open(this.downloadLink);
     },
     toMv() {
-      window.open(this.mvLink, '_blank');
+      window.open(this.mvLink, '_blank')
     },
     getInfo() {
       this.$axios.post(this.$api.getDownloadInfo).then((res) => {
-        this.size = res.data.size;
-        this.version = res.data.version;
-        this.explore = res.data.explore;
-        this.updateTime = res.data.updatetime;
-        this.downloadLink = res.data.downloadLink;
-        this.mvLink = res.data.mvLink;
+        this.size = res.data.size
+        this.version = res.data.version
+        this.explore = res.data.explore
+        this.updateTime = res.data.updatetime
+        this.downloadLink = res.data.downloadLink
+        this.mvLink = res.data.mvLink
       }).catch((err) => {
-        console.log(err);
+        console.log(err)
       })
     },
     // 动态修改全局el-main的padding
     // 销毁之前进行还原
     changeElMainClass() {
-      document.querySelector('.el-main').style.padding = '0px';
+      document.querySelector('.el-main').style.padding = '0px'
     },
     restoreElMainClass() {
-      document.querySelector('.el-main').style.padding = '10px 100px';
+      document.querySelector('.el-main').style.padding = '10px 100px'
     }
   },
   mounted() {
-    this.getInfo();
-    this.changeElMainClass();
+    this.getInfo()
+    this.changeElMainClass()
   },
   beforeDestroy() {
-    this.restoreElMainClass();
+    this.restoreElMainClass()
   }
 }
 </script>

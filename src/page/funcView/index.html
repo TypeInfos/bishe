@@ -29,7 +29,6 @@
             </div>
         </div>
         <div class="twoBtn">
-            <el-button slot="reference" type="primary" @click="lookUseVideo('rootRadar')">查看教程</el-button>
             <el-button type="primary" style="margin-left: 50px;"  @click="use('rootRadar','1')">立即使用</el-button>
         </div>
     </div>
@@ -59,33 +58,7 @@
             </div>
         </div>
         <div class="twoBtn">
-            <el-button slot="reference" type="primary" @click="lookUseVideo('labelLab')">查看教程</el-button>
             <el-button type="primary" style="margin-left: 50px;"  @click="use('labelLab','2')">立即使用</el-button>
-        </div>
-    </div>
-    <div class="hole">
-        <div class="title">
-            <h1>智慧搜索<span style="position: absolute;right: 150px;top:5px;font-size: 26px;">(计划10月份上线)</span></h1>
-            <div class="line"></div>
-        </div>
-        <div class="smallHoleContainer">
-            <div class="smallHole">
-                <i class="iconfontFuncView funcViewIcon">&#xe604;</i>
-                <p class="smallHoleBP">波士顿矩阵</p>
-                <p>转化、搜索量、成交量不同的各类词根，智能引导不同优化方案。</p>
-                <p class="slogan">聚类分析 各司其职</p>
-            </div>
-            <div class="smallHole">
-                <i class="iconfontFuncView funcViewIcon">&#xe623;</i>
-                <p class="smallHoleBP">智能补词</p>
-                <p>智能检测标题未包含的宝贝高权重词根，快速挽回流量损失。</p>
-                <p class="slogan">智能检测 快速补词</p>
-            </div>
-            <!-- <div class="smallHole">
-                <i class="iconfontFuncView funcViewIcon">&#xe664;</i>
-                <p class="smallHoleBP">人群打标</p>
-                <p>群组测试数据结果排序、 人群打标</p>
-            </div> -->
         </div>
     </div>
     <checkProduct :day="day" @cjy="cjy" v-if="showCheckProduct"></checkProduct>

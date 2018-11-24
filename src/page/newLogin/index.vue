@@ -120,7 +120,7 @@ export default {
           }).then((res) => {
             this.$message({
               showClose: true,
-              message: '抖数账号登录成功',
+              message: '账号登录成功',
               type: 'success',
               customClass: 'message-g-zindex'
             })
@@ -134,7 +134,7 @@ export default {
                 console.log(response)
               })
             } catch (error) {
-              alert('插件的版本id与抖数id不同')
+              alert('插件的版本id与id不同')
             }
             // getInfo
             getInfo()
