@@ -108,12 +108,6 @@ export default {
           type: 'warning',
           customClass: 'message-g-zindex'
         })
-      } else if (!this.wechart) {
-        this.$message({
-          message: '负责人微信号不能为空',
-          type: 'warning',
-          customClass: 'message-g-zindex'
-        })
       } else if (!this.agreed) {
         this.$message({
           message: '请同意法律声明和隐私条款',
