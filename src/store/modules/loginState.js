@@ -5,12 +5,13 @@ const id = {
   gjf: 'gcjogcpanepngmnfdoeocopcjmcleflp',
   test: 'cpnmealmpgcapggbgjgfahpiifbbooef',
   online: 'lnbdcilfaojoldgckojoidnafpagkjbn',
-  cjh: 'khbmmjakbbdbeidajecnmeomhpjoifoi'
+  cjh: 'khbmmjakbbdbeidajecnmeomhpjoifoi',
+  taishi: 'pmecleajeefaplagogafadcgndghjbgc'
 }
 const state = {
   isLogin: false,
   bindTaobaoName: '',
-  editorExtensionId: id.cjh, // 插件ID
+  editorExtensionId: id.taishi, // 插件ID
 }
 // mutations
 const mutations = {
