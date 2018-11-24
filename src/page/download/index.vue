@@ -16,7 +16,6 @@
          div.text-center
           img(src="../../assets/download/Chrome.png" width="30px" height="30px;")
           span.btn-text 立即下载
-        .opration-text(@click="toMv") 查看视频教程
   .download-use-course
     .course-content
       span.course-center Chrome浏览器插件-安装教程
@@ -35,15 +34,14 @@
           p(style="text-indent:4.2em;text-align:left;") 其次将下载好的插件鼠标拖动到扩展程序页面
           p(style="text-indent:4.2em;text-align:left;") 到此，即可完成插件安装操作
         img(src="../../assets/download/download_step_2.jpg" width="100%" height="60%")
-      span.course-footer 其他浏览器的插件将陆续推出，敬请期待~
 </template>
 
 <script>
 export default {
   data() {
     return {
-      size: '11.75MB',
-      version: '0.2.2',
+      size: '237KB',
+      version: '0.2.5',
       explore: 'Chrome 65及以上',
       updateTime: '2018-09-05',
       downloadLink: 'https://static.doushudata.com/doushu.zip',
