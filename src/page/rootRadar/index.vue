@@ -317,11 +317,6 @@ export default {
   },
   // 在这里请求axios
   created() {
-    if (this.$cookies.isKey('isFirstTime') === false) {
-      this.showGuidance = true
-    } else {
-      this.showGuidance = false
-    }
     this.czd = getStore('rootRadarEnd') ? getStore('rootRadarEnd') : '全部终端'
     // 进入页面先判断是否订购产品
     this.checkOrder()
