@@ -11,7 +11,6 @@
         <newFooter></newFooter>
       </el-footer>
     </el-container>
-    <customerService></customerService>
     <backToTop></backToTop>
     <user-tip :userTipShow="userTipShow" @close="userTipShow = false"></user-tip>
   </div>
@@ -20,7 +19,6 @@
 <script>
 import headerWrap from './components/headerWrap'
 import newFooter from './components/finalFooter'
-import customerService from './components/customerService'
 import backToTop from './components/backToTop'
 import userTip from './components/userTips'
 
@@ -29,7 +27,6 @@ export default {
   components: {
     newFooter,
     headerWrap,
-    customerService,
     backToTop,
     userTip
   },
