@@ -35,7 +35,6 @@
     <el-card class="box-card mt20 labGroup" v-loading="groupListLoading" shadow="hover">
       <div slot="header" class="clearfix">
         <span class="headerContent">标签群组分层概况</span>
-        <el-button class="annotation" type="text">指标注释</el-button>
       </div>
       <div class="groupInfo">
         <div v-if="tagScore <= 30" class="labelLevel">
@@ -132,7 +131,6 @@
       <div slot="header" class="clearfix">
         <span class="headerContent">标签整体数据趋势</span>
         <!-- 先不加等8月份后再进行优化 -->
-        <el-button class="annotation" type="text">指标注释</el-button>
         <div v-if="checkboxListFlag" class="m-checkbox-tip">
           <i class="el-icon-warning"></i>
           最多选择2项

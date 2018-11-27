@@ -73,18 +73,13 @@ const api = {
   getPay: `${path}/getPay`, // 提交订单
   getOrderList: `${path}/getOrderList`, // 获取订单列表
   getOrderStatus: `${path}/getOrderStatus`, // 获取当前订单号的支付状态
-
   checkOrder: `${path}/checkOrder`, // 进入每个功能页面前判断是否订购该功能产品
   checkUserType: `${path}/checkUserType`, // 判断用户使用的是否是试用版
-
   // 插件下载
   getDownloadInfo: `${lelePath}`, // 获取下载插件的具体信息
 
-  // 帮助页面
-  getHelp: `${path}/getHelp`, // 获取公告以及课程
 
   // 神器高级版页面
-  shenqi: `${path}/shenqi`, // 指数转化
 }
 
 export default api
