@@ -1649,12 +1649,12 @@ export default {
         resetGroupList(evt.oldIndex, evt.newIndex)
         return
       }
-      // 禁止移动到最底部
-      if (evt.newIndex === this.groupList.length - 1 || evt.newIndex === this.groupList.length - 2) {
-        this.showGroupErr('不允许移动到该位置')
-        resetGroupList(evt.oldIndex, evt.newIndex)
-        return
-      }
+      // // 禁止移动到最底部
+      // if (evt.newIndex === this.groupList.length - 1 || evt.newIndex === this.groupList.length - 2) {
+      //   this.showGroupErr('不允许移动到该位置')
+      //   resetGroupList(evt.oldIndex, evt.newIndex)
+      //   return
+      // }
       const isMoveable = this.groupList.filter(g => g.oneKey).length !== 6
       if (isMoveable) {
         sendRequest()

@@ -59,7 +59,7 @@ const api = {
   updateStatus: `${path}/updateStatus`, // 参与推广
   deleteCrowd: `${path}/deleteCrowd`, // 删除人群
   deleteGroup: `${path}/deleteGroup`, // 删除群组
-  ifFirstTag: `${path}/ifFirstTag`, // 判断是否是首次进入
+  ifFirstTag: `${path}/ifFirstTag`, // 判断是否是首次进入
   initGroup: `${path}/initGroup`, // 自动创建人群
   updateGroup: `${path}/updateGroup`, // 更改群组名称
   checkGroupName: `${path}/checkGroupName`, // 检测群组名称是否可用
