@@ -6,8 +6,8 @@
         img(src="../../assets/download/download_mac.png")
     .info-content
       .info-text
-        span.info-text-title 抖数精灵
-        span.info-text-depict 使用抖数产品前，需要先下载此插件，帮您高效整理数据
+        span.info-text-title 淘宝直通车的数据整合与分析
+        span.info-text-depict 使用该产品前，需要先下载此插件，帮您高效整理数据
         span.info-text-main 大小：{{this.size}}&nbsp;&nbsp;&nbsp版本：{{this.version}}
         span.info-text-main 适用浏览器： {{this.explore}}
         span.info-text-main 更新时间：{{this.updateTime}}
@@ -40,7 +40,7 @@
 export default {
   data() {
     return {
-      size: '11.75MB',
+      size: '0.24MB',
       version: '0.2.2',
       explore: 'Chrome 65及以上',
       updateTime: '2018-09-05',
@@ -84,7 +84,7 @@ export default {
     }
   },
   mounted() {
-    this.getInfo()
+    // this.getInfo()
     this.changeElMainClass()
   },
   beforeDestroy() {

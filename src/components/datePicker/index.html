@@ -7,7 +7,7 @@
     @show="show"
     width="500" trigger="click">
         <div class="selectDateContent">
-          <div class="range">
+          <!-- <div class="range">
               <h3>日期范围</h3>
               <el-date-picker
               v-model="myDateTime"
@@ -21,7 +21,7 @@
               start-placeholder="开始日期"
               end-placeholder="结束日期">
             </el-date-picker>
-          </div>
+          </div> -->
           <div class="select">
               <h3>快捷选择</h3>
               <div class="dateTimeBtn">
@@ -34,10 +34,10 @@
                     </el-radio-group>
               </div>
           </div>
-          <div class="confirm">
+          <!-- <div class="confirm">
               <el-button type="primary" @click="cancel">取消</el-button>
               <el-button type="primary" @click="confirmDate">确定</el-button>
-          </div>
+          </div> -->
         </div>
         <div slot="reference" class="selectDate">
         {{finalContent}}
