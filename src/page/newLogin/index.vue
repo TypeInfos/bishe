@@ -97,6 +97,7 @@ export default {
       }
       let data = '';
       try {
+        console.log(this.$store.getters.editorExtensionId)
         chrome.runtime.sendMessage(this.$store.getters.editorExtensionId, {
           type: 'version'
         }, response => {
