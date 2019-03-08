@@ -90,10 +90,10 @@ export default {
         let oDate = new Date(str);
         let oYear = oDate.getFullYear();
         let oMonth = oDate.getMonth() + 1;
-        oMonth = oMonth >= 10 ? oMonth : `0${  oMonth}`;
+        oMonth = oMonth >= 10 ? oMonth : `0${oMonth}`;
         let oDay = oDate.getDate();
-        oDay = oDay >= 10 ? oDay : `0${  oDay}`;
-        var theDate = `${oYear  }-${  oMonth  }-${  oDay}`;
+        oDay = oDay >= 10 ? oDay : `0${oDay}`;
+        var theDate = `${oYear }-${oMonth}-${oDay}`;
       } else {
         theDate = '';
       }
@@ -152,7 +152,7 @@ export default {
         }
       } else {
         if (getComputedStyle(ele, null).position == 'fixed') {
-          ele.style.left = `${100 - scrollLeft  }px`;
+          ele.style.left = `${100 - scrollLeft}px`;
         }
         if (scrollTop < 50) {
           this.asideFixed = false;
@@ -163,7 +163,7 @@ export default {
     focusListFresh() {
       if (this.searchState.trim() == '') {
         this.filterFocusOn = this.focusOn;
-      } else{
+      } else {
         let arr = [];
         for (let v of this.focusOn) {
           if (v.title.includes(this.searchState.trim())) {
@@ -186,7 +186,7 @@ export default {
     focusOn(val) {
       if (this.searchState.trim() == '') {
         this.filterFocusOn = this.focusOn;
-      } else{
+      } else {
         let arr = [];
         for (let v of this.focusOn) {
           if (v.title.includes(this.searchState.trim())) {
@@ -207,7 +207,7 @@ export default {
               break;
             }
           }
-        }else {
+        } else {
           this.searchGoods(0)
         }
       }
@@ -215,7 +215,7 @@ export default {
     searchState(val) {
       if (val.trim() == '') {
         this.filterFocusOn = this.focusOn;
-      }else {
+      } else {
         let arr = [];
         for (let v of this.focusOn) {
           if (v.title.includes(val)) {

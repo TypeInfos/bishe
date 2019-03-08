@@ -1,19 +1,21 @@
 <div class="hello">
-    <el-dialog :visible.sync="addGoodsFocuDialog" :show-close=false :modal=false class="promotionCode">
+  <el-dialog :visible.sync="addGoodsFocuDialog" :show-close=false :modal=false class="promotionCode">
     <div slot="title" class="header">
-        <h2>添加订购码</h2>
-        <el-button icon="el-icon-close" @click="closeModal"></el-button>
-        <div v-if="addWordSucceed" class="m-checkbox-tip">
+      <h2>添加订购码</h2>
+      <el-button icon="el-icon-close" @click="closeModal"></el-button>
+      <div v-if="addWordSucceed" class="m-checkbox-tip">
         <!-- <i class="el-icon-success"></i>
         添加成功 -->
-        </div>
+      </div>
     </div>
     <div class="promotionCodeContent">
-    <p>您的订购码为：</p>
-    <p><el-input placeholder="订购码" v-on:input="addPromotionCode()" v-model="promotionCode"></el-input></p>
-    <p class="errorP" v-if="showErrorP">您所输入的订购码有误</p>
-    <el-button type="primary" plain class="btnCancel" @click="cancelDialog">取消</el-button>
-    <el-button type="primary" class="btnConfirm">确定</el-button>
+      <p>您的订购码为：</p>
+      <p>
+        <el-input placeholder="订购码" v-on:input="addPromotionCode()" v-model="promotionCode"></el-input>
+      </p>
+      <p class="errorP" v-if="showErrorP">您所输入的订购码有误</p>
+      <el-button type="primary" plain class="btnCancel" @click="cancelDialog">取消</el-button>
+      <el-button type="primary" class="btnConfirm">确定</el-button>
     </div>
-    </el-dialog>
+  </el-dialog>
 </div>

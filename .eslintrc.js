@@ -34,7 +34,6 @@ module.exports = {
       js: 'never',
       vue: 'never'
     }],
-    'semi': 0,
     'space-before-function-paren': ['off', 'error'],
     // disallow reassignment of function parameters
     // disallow parameter object manipulation except for specific exclusions
@@ -51,23 +50,24 @@ module.exports = {
       optionalDependencies: ['test/unit/index.js']
     }],
     "no-underscore-dangle": [
-      "error", 
-      { "allow": ["_d", "_date"] }
+      "error",
+      {
+        "allow": ["_d", "_date"]
+      }
     ],
     'no-param-reassign': 'off', // 允许修改函数引用类型入参
     'no-plusplus': 'off', // 允许 ++
     'class-methods-use-this': 'off',
     'no-restricted-syntax': [ // 覆盖掉对 for-in 和 for-of 的限制
-        'error',
-        'LabeledStatement',
-        'WithStatement',
+      'error',
+      'LabeledStatement',
+      'WithStatement',
     ],
     "no-shadow": [
-        "error",
-        { 
-            "allow":
-            ["state"] 
-        }
+      "error",
+      {
+        "allow": ["state"]
+      }
     ],
     'import/extensions': ['off', 'never'],
     'no-console': 0,

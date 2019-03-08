@@ -57,11 +57,11 @@
 </template>
 
 <script>
-import { getAllPlans } from '@/assets/api/labelLab'
-import { getUserInfoAPI } from '@/assets/api/common'
+import { getAllPlans } from '@/assets/api/labelLab';
+import { getUserInfoAPI } from '@/assets/api/common';
 
 export default {
-  data () {
+  data() {
     return {
       groupListLoading: false,
       loadingPlans: false,
@@ -75,66 +75,70 @@ export default {
       allPlanStatus: [
         {
           value: -1,
-          label: '全部计划',
+          label: '全部计划'
         },
         {
           value: 1,
-          label: '推广中',
+          label: '推广中'
         },
         {
           value: 0,
-          label: '暂停',
-        },
+          label: '暂停'
+        }
       ],
       resultPlans: [],
       resultGoods: [],
       allPlans: [],
       filterInputPlans: [],
       loginName: ''
-    }
+    };
   },
-  mounted () {
-    this.getPlans()
-    this.getUserInfo()
+  mounted() {
+    this.getPlans();
+    this.getUserInfo();
   },
   methods: {
     selectPlan(index) {
       // 此处传回currentCampaignId
       this.currentCampaignId = this.resultPlans[index].campaignId;
       this.loadingPlans = true;
-      this.$axios.post(this.$api.getCampItems, {
-        campaignId: this.currentCampaignId,
-      }).then((res) => {
-        this.planName = this.resultPlans[index].title;
-        this.selectPlanFlag = false;
-        this.planOfGoodsList = res.data;
-        this.resultGoods = res.data;
-        this.loadingPlans = false;
-      })
+      this.$axios
+        .post(this.$api.getCampItems, {
+          campaignId: this.currentCampaignId
+        })
+        .then(res => {
+          this.planName = this.resultPlans[index].title;
+          this.selectPlanFlag = false;
+          this.planOfGoodsList = res.data;
+          this.resultGoods = res.data;
+          this.loadingPlans = false;
+        });
     },
-    async getPlans () {
-      this.loadingPlans = true
-      const plans = await getAllPlans()
-      this.loadingPlans = false
-      if (!plans) return
-      this.allPlans = plans.data
-      this.resultPlans = this.allPlans
-      this.filterInputPlans = this.allPlans
+    async getPlans() {
+      this.loadingPlans = true;
+      const plans = await getAllPlans();
+      this.loadingPlans = false;
+      if (!plans) return;
+      this.allPlans = plans.data;
+      this.resultPlans = this.allPlans;
+      this.filterInputPlans = this.allPlans;
     },
-    async getUserInfo () {
-      let info = await getUserInfoAPI()
-      if (!info) return
-      this.$store.dispatch('login')
-      this.$store.dispatch('setTaobaoName', { name: res.data.name })
+    async getUserInfo() {
+      let info = await getUserInfoAPI();
+      if (!info) return;
+      this.$store.dispatch('login');
+      this.$store.dispatch('setTaobaoName', {
+        name: res.data.name
+      });
       // 此处应该提供父组件token和loginName
-      const isCookie = this.$cookies.isKey(`${info.loginName}Item`)
-      if (!isCookie) return
-      const result = JSON.parse(this.$cookies.get(`${info.loginName}Item`))
-      this.imgUrl = result.imgUrl
+      const isCookie = this.$cookies.isKey(`${info.loginName}Item`);
+      if (!isCookie) return;
+      const result = JSON.parse(this.$cookies.get(`${info.loginName}Item`));
+      this.imgUrl = result.imgUrl;
       // 此处传回currentFirstCat、linkUrl、currentProductId、currentCampaignId、currentAdGroupId
-      this.goodsPrice = result.price
-      this.goodsName = result.title
-      this.planName = result.planName
+      this.goodsPrice = result.price;
+      this.goodsName = result.title;
+      this.planName = result.planName;
       // 补丁：需要传给父组件的数据
       const backData = {
         currentToken: info.data.token,
@@ -145,11 +149,11 @@ export default {
         currentCampaignId: result.campaignId,
         currentAdGroupId: result.adGroupId,
         methods: ['getCrowdInfo']
-      }
-      this.$emit('packData', backData)
+      };
+      this.$emit('packData', backData);
     }
   }
-}
+};
 </script>
 
 <style lang="less">
